@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
-  <div class="url">
+<div class="url">
   <div class="vote-container">
     <div class="vote-buttons">
       <a class="vote-btn" href="https://minecraft-mp.com/server/352192/vote/">Vote 1</a>
@@ -31,18 +22,22 @@
   margin-top: 50px;
 }
 
+/* Container utama: flex horizontal di desktop */
 .vote-container {
   display: flex;
-  gap: 20px; /* Jarak antara tombol dan video */
-  align-items: center;
+  gap: 20px; /* jarak tombol dan video */
+  align-items: flex-start;
+  flex-wrap: wrap; /* biar bisa turun di mobile */
 }
 
+/* Tombol vote: flex vertikal */
 .vote-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Jarak antar tombol */
+  gap: 12px; /* jarak antar tombol */
 }
 
+/* Style tombol */
 .vote-btn {
   display: block;
   color: black;
@@ -55,10 +50,28 @@
   border-radius: 5px;
 }
 
+/* Video style */
 .video-wrapper video {
   border: 2px solid greenyellow;
   border-radius: 8px;
+  max-width: 100%;
+}
+
+/* ===== MEDIA QUERY UNTUK MOBILE ===== */
+@media (max-width: 768px) {
+  .vote-container {
+    flex-direction: column; /* stack tombol + video */
+    align-items: center;
+  }
+
+  .video-wrapper {
+    order: 1; /* video muncul setelah tombol */
+    margin-top: 20px; /* jarak dari tombol terakhir */
+  }
+
+  .vote-buttons {
+    order: 0; /* tombol tetap di atas */
+    align-items: center; /* center tombol di mobile */
+  }
 }
 </style>
-</body>
-</html>
