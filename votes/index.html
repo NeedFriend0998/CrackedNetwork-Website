@@ -1,118 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: black !important;
-        }
-
-        .url .vote-url {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-        }
-        
-        .url .video {
-          
-          }
-
-        .url #Vote1 {
-          position: ;
-          top: 20%;
-          color: Black;
-          background-color: greenyellow;
-          width: 40%;
-          text-align: center;
-          height: 40px;
-        }
-
-        .url #Vote2 {
-          position: absolute;
-          top: 30%;
-          color: Black;
-          background-color: greenyellow;
-          width: 40%;
-          text-align: center;
-          height: 40px;
-        }
-
-        .url #Vote3 {
-          position: absolute;
-          top: 40%;
-          color: Black;
-          background-color: greenyellow;
-          width: 40%;
-          text-align: center;
-          height: 40px;
-        }
-
-        .url #Vote4 {
-          position: absolute;
-          top: 50%;
-          color: Black;
-          background-color: greenyellow;
-          width: 40%;
-          text-align: center;
-          height: 40px;
-        }
-
-        .url #Vote5 {
-          position: absolute;
-          top: 60%;
-          color: Black;
-          background-color: greenyellow;
-          width: 40%;
-          text-align: center;
-          height: 40px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 <body>
-      <nav class="navbar navbar-dark bg-dark fi">
-      <a class="navbar-brand" href="#"></a>
-      <button class="navbutton navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"></h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#rules">Rules</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/changelogs">ChangeLogs</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/store">Store</a>
-            </li>
-          
-        </div>
-      </div>
-  </nav>
-
-  <div class="url"> 
-    <div class="vote-btn"
-    <a id="Vote1" href="https://minecraft-mp.com/server/352192/vote/">Vote</a>
-    <a id="Vote2" href="a">Vote</a>
-    <a id="Vote3" href="a">Vote</a>
-    <a id="Vote4" href="a">Vote</a>
-    <a id="Vote5" href="a">Vote</a>
-
-    <video class="video" controls controlsList="nodownload">
-    <source src="a.com">
-    </video>
+  <div class="url">
+  <div class="vote-container">
+    <div class="vote-buttons">
+      <a class="vote-btn" href="https://minecraft-mp.com/server/352192/vote/">Vote 1</a>
+      <a class="vote-btn" href="#">Vote 2</a>
+      <a class="vote-btn" href="#">Vote 3</a>
+      <a class="vote-btn" href="#">Vote 4</a>
+      <a class="vote-btn" href="#">Vote 5</a>
+    </div>
+    <div class="video-wrapper">
+      <video class="video" controls controlsList="nodownload" width="400">
+        <source src="a.com">
+      </video>
+    </div>
   </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</div>
+
+<style>
+.url {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.vote-container {
+  display: flex;
+  gap: 20px; /* Jarak antara tombol dan video */
+  align-items: center;
+}
+
+.vote-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Jarak antar tombol */
+}
+
+.vote-btn {
+  display: block;
+  color: black;
+  background-color: greenyellow;
+  width: 150px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.video-wrapper video {
+  border: 2px solid greenyellow;
+  border-radius: 8px;
+}
+</style>
 </body>
-</html> 
+</html>
