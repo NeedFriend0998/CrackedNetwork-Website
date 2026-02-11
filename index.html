@@ -259,7 +259,7 @@
   <div id="player-count">Loading...</div>
 <script>
   function updatePlayerCount() {
-    fetch('https://api.mcsrvstat.us/2/nl-01.freezehost.pro:8695')
+    fetch('https://api.mcstatus.io/status/java/crackednetwork.mcgg.nl')
       .then(res => res.json())
       .then(data => {
         const count = data.players && data.players.online !== undefined
