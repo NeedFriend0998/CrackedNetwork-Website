@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrackedNetwork - Minecraft Server</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-secondary: #12121a;
+            --fg: #e8e8ec;
+            --muted: #6b6b7b;
+            --accent: #00e5a0;
+            --accent-glow: rgba(0, 229, 160, 0.3);
+            --card: #16161f;
+            --border: #2a2a3a;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --premium: #ffd700;
+            --legendary: #ff6b9d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(0, 229, 160, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(0, 180, 216, 0.06) 0%, transparent 50%),
+                var(--bg);
+        }
+
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            padding: 0.75rem 2rem;
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--fg);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--bg);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            padding: 0.6rem 1.2rem;
+            color: var(--muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--fg);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--fg);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .pages {
+            padding-top: 80px;
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(0, 229, 160, 0.1);
+            border: 1px solid rgba(0, 229, 160, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title span {
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 1.8rem;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--card);
+            color: var(--fg);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-secondary);
+            border-color: var(--accent);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .ip-box {
+            margin-top: 2rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: fit-content;
+        }
+
+        .ip-label {
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ip-address {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .copy-btn {
+            background: rgba(0, 229, 160, 0.1);
+            border: none;
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+
+        .copy-btn:hover {
+            background: rgba(0, 229, 160, 0.2);
+        }
+
+        .copy-btn.copied {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .hero-visual {
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.1), rgba(0, 180, 216, 0.1));
+            border-color: rgba(0, 229, 160, 0.3);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(0, 229, 160, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--accent);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .online-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(0, 229, 160, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 0.5rem;
+        }
+
+        .online-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.2), rgba(0, 180, 216, 0.2));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--accent);
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        /* Rules Page */
+        .rules-page {
+            padding: 4rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .rules-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .rules-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .rule-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .rule-header {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .rule-header:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .rule-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--bg);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .rule-title {
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .rule-toggle {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .rule-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--muted);
+        }
+
+        .rule-card.open .rule-toggle {
+            transform: rotate(180deg);
+        }
+
+        .rule-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .rule-card.open .rule-content {
+            max-height: 500px;
+        }
+
+        .rule-body {
+            padding: 0 1.5rem 1.5rem 4.25rem;
+            color: var(--muted);
+        }
+
+        .rule-body ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .rule-body li {
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .rule-body li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .punishment-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+        }
+
+        .punishment-tag.warn {
+            background: rgba(255, 165, 2, 0.15);
+            color: var(--warning);
+        }
+
+        .punishment-tag.ban {
+            background: rgba(255, 71, 87, 0.15);
+            color: var(--danger);
+        }
+
+        /* Vote Page */
+        .vote-page {
+            padding: 4rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .vote-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .vote-intro {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .vote-intro h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .vote-intro p {
+            color: var(--muted);
+        }
+
+        .vote-sites {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .vote-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .vote-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .vote-site-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.15), rgba(0, 180, 216, 0.15));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .vote-site-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--accent);
+        }
+
+        .vote-site-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .vote-site-desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .vote-btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ========== STORE PAGE ========== */
+        .store-page {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .store-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Category Tabs */
+        .store-categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .category-tab:hover {
+            border-color: var(--accent);
+            color: var(--fg);
+        }
+
+        .category-tab.active {
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.15), rgba(0, 180, 216, 0.15));
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .category-tab svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.3rem 0.8rem;
+            background: linear-gradient(135deg, var(--premium), #ffaa00);
+            color: var(--bg);
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .product-badge.legendary {
+            background: linear-gradient(135deg, var(--legendary), #ff3366);
+        }
+
+        .product-badge.new {
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+        }
+
+        .product-image {
+            height: 140px;
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.1), rgba(0, 180, 216, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        .product-icon {
+            width: 64px;
+            height: 64px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            filter: drop-shadow(0 0 20px var(--accent-glow));
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            min-height: 40px;
+        }
+
+        .product-features {
+            margin-bottom: 1.25rem;
+        }
+
+        .product-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--fg);
+            margin-bottom: 0.4rem;
+        }
+
+        .product-feature svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--accent);
+            flex-shrink: 0;
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .product-price span {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .btn-buy {
+            padding: 0.6rem 1.25rem;
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+            color: var(--bg);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .btn-buy:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px var(--accent-glow);
+        }
+
+        /* Coins Card Special */
+        .product-card.coins .product-image {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 170, 0, 0.05));
+        }
+
+        .product-card.coins .product-icon svg {
+            stroke: var(--premium);
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4));
+        }
+
+        .product-card.coins .product-price {
+            color: var(--premium);
+        }
+
+        /* Cosmetic Card Special */
+        .product-card.cosmetic .product-image {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.15), rgba(255, 51, 102, 0.05));
+        }
+
+        .product-card.cosmetic .product-icon svg {
+            stroke: var(--legendary);
+            filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4));
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            max-width: 450px;
+            width: 100%;
+            padding: 2rem;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .modal-desc {
+            color: var(--muted);
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--fg);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.25s ease;
+        }
+
+        .modal-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .modal-input::placeholder {
+            color: var(--muted);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.25s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--fg);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand p {
+            color: var(--muted);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-title {
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.25s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 900px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .hero-visual {
+                order: -1;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-card.featured {
+                grid-column: span 2;
+            }
+
+            .footer-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0.75rem 1rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 15, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.25rem;
+                border-bottom: 1px solid var(--border);
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.open {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .mobile-toggle.open span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .mobile-toggle.open span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .mobile-toggle.open span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+
+            .hero {
+                padding: 1.5rem;
+            }
+
+            .hero-title {
+                font-size: 2.25rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                justify-content: center;
+            }
+
+            .ip-box {
+                flex-direction: column;
+                text-align: center;
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card.featured {
+                grid-column: span 1;
+            }
+
+            .store-categories {
+                gap: 0.5rem;
+            }
+
+            .category-tab {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="bg-canvas"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="#" class="logo" data-page="home">
+                <div class="logo-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                CrackedNetwork
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#" class="nav-link active" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="rules">Rules</a>
+                <a href="#" class="nav-link" data-page="vote">Vote</a>
+                <a href="#" class="nav-link" data-page="store">Store</a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pages">
+        <!-- Home Page -->
+        <section class="page active" id="home">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            Java & Bedrock Support
+                        </div>
+                        <h1 class="hero-title">
+                            Welcome to<br><span>CrackedNetwork</span>
+                        </h1>
+                        <p class="hero-desc">
+                            Server Minecraft terbaik dengan komunitas yang aktif dan friendly. 
+                            Survival, SkyBlock, dan game mode menarik lainnya menunggu kamu!
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#" class="btn btn-primary" data-page="store">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                                    <line x1="3" y1="6" x2="21" y2="6"/>
+                                    <path d="M16 10a4 4 0 01-8 0"/>
+                                </svg>
+                                Visit Store
+                            </a>
+                            <a href="#" class="btn btn-secondary" data-page="vote">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
+                                </svg>
+                                Vote Now
+                            </a>
+                        </div>
+                        <div class="ip-box">
+                            <div>
+                                <div class="ip-label">Server IP</div>
+                                <div class="ip-address" id="serverIP">crackednetwork.mcgg.nl</div>
+                            </div>
+                            <button class="copy-btn" id="copyBtn" aria-label="Copy server IP">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="stats-grid">
+                            <div class="stat-card featured">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-value" id="playerCount">--</div>
+                                <div class="stat-label">Players Online</div>
+                                <div class="online-indicator">
+                                    <span class="online-dot"></span>
+                                    Server Online
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="3" y1="9" x2="21" y2="9"/>
+                                        <line x1="9" y1="21" x2="9" y2="9"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-value">5+</div>
+                                <div class="stat-label">Game Modes</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-value">1000+</div>
+                                <div class="stat-label">Total Votes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <section class="features">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Why Choose Us</h2>
+                    <p class="section-subtitle">
+                        Server dengan fitur lengkap dan komunitas yang menyenangkan
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">24/7 Uptime</h3>
+                        <p class="feature-desc">
+                            Server online 24 jam setiap hari dengan uptime 99.9%. 
+                            Main kapanpun kamu mau!
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Anti-Cheat System</h3>
+                        <p class="feature-desc">
+                            Sistem anti-cheat terbaik untuk pengalaman bermain yang adil 
+                            dan menyenangkan.
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Active Community</h3>
+                        <p class="feature-desc">
+                            Komunitas yang aktif dan staff yang selalu siap membantu 
+                            kapanpun dibutuhkan.
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Custom Plugins</h3>
+                        <p class="feature-desc">
+                            Plugin custom eksklusif yang membuat gameplay lebih 
+                            seru dan unik!
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                <line x1="8" y1="21" x2="16" y2="21"/>
+                                <line x1="12" y1="17" x2="12" y2="21"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Cross-Platform</h3>
+                        <p class="feature-desc">
+                            Support Java & Bedrock Edition. Main bareng teman 
+                            dari berbagai platform!
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 20V10"/>
+                                <path d="M18 20V4"/>
+                                <path d="M6 20v-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Regular Updates</h3>
+                        <p class="feature-desc">
+                            Update rutin dengan konten baru dan perbaikan bug 
+                            untuk pengalaman terbaik.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- Rules Page -->
+        <section class="page" id="rules">
+            <div class="rules-page">
+                <div class="rules-header">
+                    <h1 class="section-title">Server Rules</h1>
+                    <p class="section-subtitle">
+                        Harap baca dan patuhi semua rules untuk pengalaman bermain yang menyenangkan
+                    </p>
+                </div>
+                <div class="rules-grid" id="rulesGrid"></div>
+            </div>
+        </section>
+
+        <!-- Vote Page -->
+        <section class="page" id="vote">
+            <div class="vote-page">
+                <div class="vote-header">
+                    <h1 class="section-title">Vote for Us</h1>
+                    <p class="section-subtitle">
+                        Dukung server dengan vote dan dapatkan reward menarik!
+                    </p>
+                </div>
+                <div class="vote-intro">
+                    <h3>Vote Rewards</h3>
+                    <p>Setiap vote akan mendapatkan reward in-game seperti coins, items eksklusif, dan lainnya!</p>
+                </div>
+                <div class="vote-sites" id="voteSites"></div>
+            </div>
+        </section>
+
+        <!-- Store Page -->
+        <section class="page" id="store">
+            <div class="store-page">
+                <div class="store-header">
+                    <h1 class="section-title">Server Store</h1>
+                    <p class="section-subtitle">
+                        Dukung server dengan membeli ranks dan items eksklusif
+                    </p>
+                </div>
+
+                <div class="store-categories" id="storeCategories"></div>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Purchase Modal -->
+    <div class="modal-overlay" id="purchaseModal">
+        <div class="modal">
+            <h2 class="modal-title" id="modalTitle">Purchase Item</h2>
+            <p class="modal-desc" id="modalDesc">Masukkan username Minecraft kamu</p>
+            <input type="text" class="modal-input" id="usernameInput" placeholder="Username Minecraft">
+            <div class="modal-actions">
+                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button class="btn btn-primary" id="confirmBtn">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="#" class="logo" data-page="home">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    CrackedNetwork
+                </a>
+                <p>Server Minecraft terbaik dengan komunitas yang aktif dan friendly. Join sekarang dan rasakan pengalaman bermain yang seru!</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#" data-page="home">Home</a></li>
+                    <li><a href="#" data-page="rules">Rules</a></li>
+                    <li><a href="#" data-page="vote">Vote</a></li>
+                    <li><a href="#" data-page="store">Store</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>2024 CrackedNetwork. All rights reserved.</span>
+            <span>IP: crackednetwork.mcgg.nl</span>
+        </div>
+    </footer>
+
+    <script>
+        // ========== DATA ==========
+        const rules = [
+            {
+                title: "No Cheating / Hacking",
+                content: [
+                    "Menggunakan client hack, x-ray, atau cheat lainnya dilarang keras",
+                    "Auto-clicker dan macro tidak diizinkan",
+                    "Exploit bug untuk keuntungan akan dihukum"
+                ],
+                punishment: "ban",
+                punishmentText: "Permanent Ban"
+            },
+            {
+                title: "Respect All Players",
+                content: [
+                    "Dilarang bullying, harassment, atau hate speech",
+                    "Racism dan discrimination akan ditindak tegas",
+                    "Jangan toxic kepada pemain lain"
+                ],
+                punishment: "warn",
+                punishmentText: "Warning / Temp Ban"
+            },
+            {
+                title: "No Griefing or Stealing",
+                content: [
+                    "Menghancurkan bangunan orang lain dilarang",
+                    "Mencuri items dari claim orang lain tidak diizinkan",
+                    "Report jika ada yang grief base kamu"
+                ],
+                punishment: "ban",
+                punishmentText: "Temp Ban / Permanent Ban"
+            },
+            {
+                title: "No Spam or Advertising",
+                content: [
+                    "Spam chat atau command tidak diizinkan",
+                    "Advertise server lain dilarang keras",
+                    "Berpromosi tanpa izin akan diwarn"
+                ],
+                punishment: "warn",
+                punishmentText: "Mute / Warning"
+            },
+            {
+                title: "No Scamming",
+                content: [
+                    "Menipu pemain lain dalam trading dilarang",
+                    "Fake drop atau giveaway tidak diizinkan",
+                    "Jika ketahuan scam, items akan dikembalikan ke korban"
+                ],
+                punishment: "ban",
+                punishmentText: "Permanent Ban"
+            },
+            {
+                title: "No Inappropriate Content",
+                content: [
+                    "Skin yang tidak pantas dilarang",
+                    "Build dengan konten NSFW akan dihapus",
+                    "Nama username yang offensive wajib diganti"
+                ],
+                punishment: "warn",
+                punishmentText: "Warning / Ban"
+            },
+            {
+                title: "Listen to Staff",
+                content: [
+                    "Patuhi instruksi dari staff server",
+                    "Tidak boleh argue berlebihan dengan staff",
+                    "Report masalah melalui channel yang benar"
+                ],
+                punishment: "warn",
+                punishmentText: "Warning / Temp Ban"
+            },
+            {
+                title: "Fair Play",
+                content: [
+                    "No teaming in solo games",
+                    "No stat boosting atau win trading",
+                    "No account sharing untuk leaderboard"
+                ],
+                punishment: "warn",
+                punishmentText: "Stats Reset / Ban"
+            }
+        ];
+
+        const voteSites = [
+            {
+                name: "MinecraftServers",
+                desc: "Top Minecraft server listing site",
+                url: "https://minecraftservers.org/"
+            },
+            {
+                name: "Planet Minecraft",
+                desc: "Large Minecraft community platform",
+                url: "https://www.planetminecraft.com/"
+            },
+            {
+                name: "Minecraft-Server-List",
+                desc: "Popular server listing directory",
+                url: "https://minecraft-server-list.com/"
+            },
+            {
+                name: "TopMC",
+                desc: "Minecraft server ranking site",
+                url: "https://topmc.org/"
+            }
+        ];
+
+        const storeCategories = [
+            { id: 'bedwars', name: 'Bedwars', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' },
+            { id: 'survival', name: 'Survival', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' },
+            { id: 'practice', name: 'Practice', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>' },
+            { id: 'hideandseek', name: 'Hide And Seek', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' },
+            { id: 'coins', name: 'Coins', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M8 14h8"/></svg>' },
+            { id: 'cosmetics', name: 'Kosmetik', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' }
+        ];
+
+        const storeProducts = {
+            bedwars: [
+                {
+                    name: "VIP",
+                    desc: "Rank starter untuk Bedwars",
+                    price: "Rp 25.000",
+                    badge: null,
+                    features: ["Chat Prefix [VIP]", "Join Full Games", "2x Coins Bonus", "VIP Kit Monthly"]
+                },
+                {
+                    name: "MVP",
+                    desc: "Rank premium dengan banyak fitur",
+                    price: "Rp 50.000",
+                    badge: "popular",
+                    features: ["Chat Prefix [MVP]", "All VIP Features", "5x Coins Bonus", "Exclusive Cosmetics", "Priority Queue"]
+                },
+                {
+                    name: "Legend",
+                    desc: "Ultimate rank dengan semua fitur",
+                    price: "Rp 100.000",
+                    badge: "legendary",
+                    features: ["Chat Prefix [Legend]", "All MVP Features", "10x Coins Bonus", "All Cosmetics Unlocked", "Private Games Access", "Custom Kill Effects"]
+                }
+            ],
+            survival: [
+                {
+                    name: "Citizen",
+                    desc: "Rank dasar untuk Survival",
+                    price: "Rp 20.000",
+                    badge: null,
+                    features: ["Chat Prefix", "3 Home Locations", "Basic Kit", "10k Starting Money"]
+                },
+                {
+                    name: "Noble",
+                    desc: "Rank menengah dengan extra features",
+                    price: "Rp 45.000",
+                    badge: null,
+                    features: ["Fancy Prefix", "10 Home Locations", "Daily Rewards", "50k Starting Money", "Particle Trails"]
+                },
+                {
+                    name: "King",
+                    desc: "Rank premium untuk para raja",
+                    price: "Rp 85.000",
+                    badge: "popular",
+                    features: ["Royal Prefix", "20 Home Locations", "Fly in Claims", "Exclusive Pets", "100k Starting Money", "Custom Enchants Access"]
+                },
+                {
+                    name: "Emperor",
+                    desc: "Rank tertinggi dengan kekuatan penuh",
+                    price: "Rp 150.000",
+                    badge: "legendary",
+                    features: ["Emperor Prefix & Tag", "Unlimited Homes", "Fly Everywhere", "All Pets Unlocked", "500k Starting Money", "NPC in Claims", "Custom Biome Access"]
+                }
+            ],
+            practice: [
+                {
+                    name: "Fighter",
+                    desc: "Rank untuk para petarung",
+                    price: "Rp 30.000",
+                    badge: null,
+                    features: ["Fighter Prefix", "2x Elo Gain", "Exclusive Arena", "Fighter Kit"]
+                },
+                {
+                    name: "Champion",
+                    desc: "Rank untuk juara sejati",
+                    price: "Rp 65.000",
+                    badge: "popular",
+                    features: ["Champion Prefix", "5x Elo Gain", "All Arenas Access", "Custom Kill Messages", "Leaderboard Highlight"]
+                },
+                {
+                    name: "Grandmaster",
+                    desc: "Rank tertinggi untuk legenda",
+                    price: "Rp 120.000",
+                    badge: "legendary",
+                    features: ["Grandmaster Prefix", "10x Elo Gain", "All Features Unlocked", "Exclusive Cape", "Custom Ranked Matches", "Tournament Access"]
+                }
+            ],
+            hideandseek: [
+                {
+                    name: "Hider",
+                    desc: "Rank dasar untuk Hide And Seek",
+                    price: "Rp 15.000",
+                    badge: null,
+                    features: ["Hider Prefix", "Extra Disguises", "2x Coins", "Monthly Hider Kit"]
+                },
+                {
+                    name: "Seeker",
+                    desc: "Rank untuk para pencari",
+                    price: "Rp 35.000",
+                    badge: "popular",
+                    features: ["Seeker Prefix", "All Disguises", "5x Coins", "Pro Seeker Kit", "Hide Duration Extended"]
+                },
+                {
+                    name: "Master",
+                    desc: "Rank master Hide And Seek",
+                    price: "Rp 75.000",
+                    badge: "legendary",
+                    features: ["Master Prefix", "Premium Disguises", "10x Coins", "All Kits Unlocked", "Custom Taunts", "Map Voting Power"]
+                }
+            ],
+            coins: [
+                {
+                    name: "1,000 Coins",
+                    desc: "Koin kecil untuk belanja in-game",
+                    price: "Rp 10.000",
+                    badge: null,
+                    features: ["1,000 Coins", "All Game Modes", "Instant Delivery"]
+                },
+                {
+                    name: "5,000 Coins",
+                    desc: "Koin dengan bonus 10%",
+                    price: "Rp 45.000",
+                    badge: "popular",
+                    features: ["5,500 Coins Total", "10% Bonus", "All Game Modes"]
+                },
+                {
+                    name: "15,000 Coins",
+                    desc: "Paket koin besar dengan bonus 20%",
+                    price: "Rp 120.000",
+                    badge: "best",
+                    features: ["18,000 Coins Total", "20% Bonus", "All Game Modes", "VIP Chat Color (7 Days)"]
+                },
+                {
+                    name: "50,000 Coins",
+                    desc: "Paket terbesar dengan bonus 30%",
+                    price: "Rp 350.000",
+                    badge: "legendary",
+                    features: ["65,000 Coins Total", "30% Bonus", "All Game Modes", "VIP Chat Color (30 Days)", "Exclusive Coin Icon"]
+                }
+            ],
+            cosmetics: [
+                {
+                    name: "Particle Pack",
+                    desc: "Koleksi efek partikel keren",
+                    price: "Rp 25.000",
+                    badge: "new",
+                    features: ["20+ Particle Effects", "All Game Modes", "Toggle Anytime"]
+                },
+                {
+                    name: "Cape Bundle",
+                    desc: "Koleksi cape eksklusif",
+                    price: "Rp 40.000",
+                    badge: null,
+                    features: ["10 Exclusive Capes", "Animated Capes", "Custom Designs"]
+                },
+                {
+                    name: "Pet Collection",
+                    desc: "Semua pet dalam satu paket",
+                    price: "Rp 55.000",
+                    badge: "popular",
+                    features: ["30+ Pets", "Pet Hats & Accessories", "Pet Names", "Pet Rides"]
+                },
+                {
+                    name: "Ultimate Bundle",
+                    desc: "Semua kosmetik dalam satu paket",
+                    price: "Rp 150.000",
+                    badge: "legendary",
+                    features: ["All Particles", "All Capes", "All Pets", "All Kill Effects", "All Win Animations", "Future Cosmetics Included"]
+                }
+            ]
+        };
+
+        // ========== INITIALIZATION ==========
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            particles = [];
+            const count = Math.min(80, Math.floor(window.innerWidth / 20));
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.3,
+                    vy: (Math.random() - 0.5) * 0.3,
+                    radius: Math.max(1, Math.random() * 2),
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach((p, i) => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0) p.x = canvas.width;
+                if (p.x > canvas.width) p.x = 0;
+                if (p.y < 0) p.y = canvas.height;
+                if (p.y > canvas.height) p.y = 0;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 229, 160, ${p.opacity})`;
+                ctx.fill();
+
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(0, 229, 160, ${0.1 * (1 - dist / 120)})`;
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            requestAnimationFrame(drawParticles);
+        }
+
+        if (!prefersReducedMotion) {
+            resizeCanvas();
+            createParticles();
+            drawParticles();
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                createParticles();
+            });
+        }
+
+        // ========== NAVIGATION ==========
+        const navLinks = document.querySelectorAll('.nav-link, [data-page]');
+        const pages = document.querySelectorAll('.page');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinksContainer = document.getElementById('navLinks');
+        const nav = document.querySelector('.nav');
+
+        function showPage(pageId) {
+            pages.forEach(page => page.classList.remove('active'));
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) targetPage.classList.add('active');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            navLinksContainer.classList.remove('open');
+            mobileToggle.classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(observeElements, 100);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                if (pageId) showPage(pageId);
+            });
+        });
+
+        mobileToggle.addEventListener('click', () => {
+            mobileToggle.classList.toggle('open');
+            navLinksContainer.classList.toggle('open');
+        });
+
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ========== COPY IP ==========
+        const copyBtn = document.getElementById('copyBtn');
+        const serverIP = document.getElementById('serverIP');
+
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(serverIP.textContent);
+                copyBtn.textContent = 'Copied!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            } catch (err) {
+                const textarea = document.createElement('textarea');
+                textarea.value = serverIP.textContent;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                copyBtn.textContent = 'Copied!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'Copy';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }
+        });
+
+        // ========== RENDER RULES ==========
+        const rulesGrid = document.getElementById('rulesGrid');
+        rules.forEach((rule, index) => {
+            const card = document.createElement('div');
+            card.className = 'rule-card';
+            card.innerHTML = `
+                <div class="rule-header" tabindex="0" role="button" aria-expanded="false">
+                    <div class="rule-number">${index + 1}</div>
+                    <div class="rule-title">${rule.title}</div>
+                    <div class="rule-toggle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="rule-content">
+                    <div class="rule-body">
+                        <ul>
+                            ${rule.content.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        <span class="punishment-tag ${rule.punishment}">
+                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                                ${rule.punishment === 'ban' 
+                                    ? '<circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>'
+                                    : '<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'}
+                            </svg>
+                            ${rule.punishmentText}
+                        </span>
+                    </div>
+                </div>
+            `;
+
+            const header = card.querySelector('.rule-header');
+            header.addEventListener('click', () => {
+                const isOpen = card.classList.contains('open');
+                card.classList.toggle('open');
+                header.setAttribute('aria-expanded', !isOpen);
+            });
+
+            header.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    header.click();
+                }
+            });
+
+            rulesGrid.appendChild(card);
+        });
+
+        // ========== RENDER VOTE SITES ==========
+        const voteSitesGrid = document.getElementById('voteSites');
+        voteSites.forEach(site => {
+            const card = document.createElement('div');
+            card.className = 'vote-card';
+            card.innerHTML = `
+                <div class="vote-site-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
+                    </svg>
+                </div>
+                <h3 class="vote-site-name">${site.name}</h3>
+                <p class="vote-site-desc">${site.desc}</p>
+                <a href="${site.url}" target="_blank" rel="noopener noreferrer" class="btn btn-primary vote-btn">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    Vote Now
+                </a>
+            `;
+            voteSitesGrid.appendChild(card);
+        });
+
+        // ========== RENDER STORE ==========
+        const storeCategoriesEl = document.getElementById('storeCategories');
+        const productsGrid = document.getElementById('productsGrid');
+        let activeCategory = 'bedwars';
+
+        // Render category tabs
+        storeCategories.forEach(cat => {
+            const tab = document.createElement('button');
+            tab.className = `category-tab ${cat.id === activeCategory ? 'active' : ''}`;
+            tab.innerHTML = `${cat.icon}<span>${cat.name}</span>`;
+            tab.addEventListener('click', () => {
+                activeCategory = cat.id;
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                renderProducts(cat.id);
+            });
+            storeCategoriesEl.appendChild(tab);
+        });
+
+        function getProductIcon(category) {
+            const icons = {
+                bedwars: '<svg viewBox="0 0 24 24" fill="none"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8" stroke-width="1.5"/></svg>',
+                survival: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-width="1.5"/></svg>',
+                practice: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke-width="1.5"/></svg>',
+                hideandseek: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 16v-4M12 8h.01" stroke-width="2" stroke-linecap="round"/></svg>',
+                coins: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 6v12M8 10h8M8 14h8" stroke-width="1.5"/></svg>',
+                cosmetics: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="1.5"/></svg>'
+            };
+            return icons[category] || icons.bedwars;
+        }
+
+        function renderProducts(category) {
+            productsGrid.innerHTML = '';
+            const products = storeProducts[category] || [];
+            
+            products.forEach(product => {
+                const card = document.createElement('div');
+                let cardClass = 'product-card';
+                if (category === 'coins') cardClass += ' coins';
+                if (category === 'cosmetics') cardClass += ' cosmetic';
+
+                let badgeHTML = '';
+                if (product.badge) {
+                    const badgeText = product.badge === 'legendary' ? 'Legendary' : 
+                                     product.badge === 'popular' ? 'Popular' : 
+                                     product.badge === 'new' ? 'New' : 'Best Value';
+                    badgeHTML = `<span class="product-badge ${product.badge === 'legendary' ? 'legendary' : ''}">${badgeText}</span>`;
+                }
+
+                card.className = cardClass;
+                card.innerHTML = `
+                    ${badgeHTML}
+                    <div class="product-image">
+                        <div class="product-icon">
+                            ${getProductIcon(category)}
+                        </div>
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">${product.name}</h3>
+                        <p class="product-desc">${product.desc}</p>
+                        <div class="product-features">
+                            ${product.features.map(f => `
+                                <div class="product-feature">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="20 6 9 17 4 12"/>
+                                    </svg>
+                                    ${f}
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">${product.price}</div>
+                            <button class="btn-buy" data-product="${product.name}" data-price="${product.price}">Buy Now</button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+
+            // Add buy button listeners
+            document.querySelectorAll('.btn-buy').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    openPurchaseModal(btn.dataset.product, btn.dataset.price);
+                });
+            });
+        }
+
+        renderProducts(activeCategory);
+
+        // ========== MODAL ==========
+        const modal = document.getElementById('purchaseModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const usernameInput = document.getElementById('usernameInput');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+
+        function openPurchaseModal(product, price) {
+            modalTitle.textContent = `Purchase ${product}`;
+            modalDesc.textContent = `Price: ${price} - Enter your Minecraft username`;
+            usernameInput.value = '';
+            modal.classList.add('active');
+            usernameInput.focus();
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        cancelBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        confirmBtn.addEventListener('click', () => {
+            const username = usernameInput.value.trim();
+            if (username) {
+                alert(`Terima kasih ${username}!\n\nPembelian akan diproses.\nUntuk pembayaran, silakan hubungi admin via Discord.`);
+                closeModal();
+            } else {
+                usernameInput.style.borderColor = 'var(--danger)';
+                setTimeout(() => {
+                    usernameInput.style.borderColor = 'var(--border)';
+                }, 2000);
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                navLinksContainer.classList.remove('open');
+                mobileToggle.classList.remove('open');
+            }
+        });
+
+        // ========== PLAYER COUNT ==========
+        const playerCountEl = document.getElementById('playerCount');
+        function updatePlayerCount() {
+            const base = 45;
+            const variance = Math.floor(Math.random() * 30);
+            playerCountEl.textContent = base + variance;
+        }
+        updatePlayerCount();
+        setInterval(updatePlayerCount, 30000);
+
+        // ========== SCROLL REVEAL ==========
+        function observeElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => entry.target.classList.add('visible'), index * 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(el => observer.observe(el));
+        }
+        observeElements();
+    </script>
+</body>
+</html>
