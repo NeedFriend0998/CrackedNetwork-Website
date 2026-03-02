@@ -382,7 +382,6 @@
             border-color: rgba(0, 229, 160, 0.3);
         }
 
-        /* Style untuk Status Offline */
         .stat-card.offline {
             border-color: rgba(255, 71, 87, 0.3);
             background: linear-gradient(135deg, rgba(255, 71, 87, 0.1), rgba(200, 50, 60, 0.05));
@@ -429,7 +428,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Style untuk Indicator Offline */
         .online-indicator.offline {
             background: rgba(255, 71, 87, 0.1);
             color: var(--danger);
@@ -519,6 +517,283 @@
         .feature-desc {
             color: var(--muted);
             font-size: 0.95rem;
+        }
+
+        /* ===== GAMEMODES PAGE (NEW) ===== */
+        .gamemodes-page {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gamemode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .gamemode-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gamemode-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .gamemode-image {
+            height: 200px;
+            background: linear-gradient(135deg, rgba(0, 229, 160, 0.2), rgba(0, 180, 216, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gamemode-image::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            opacity: 0.2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .gamemode-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gamemode-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--fg);
+            stroke-width: 1.5;
+        }
+
+        .gamemode-content {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .gamemode-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 229, 160, 0.1);
+            color: var(--accent);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .gamemode-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+        }
+
+        .gamemode-desc {
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            min-height: 50px;
+        }
+
+        .gamemode-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .gm-feature {
+            padding: 0.4rem 0.8rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: var(--fg);
+            border: 1px solid var(--border);
+        }
+
+        /* ===== WIKI PAGE (NEW) ===== */
+        .wiki-page {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .wiki-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+            overflow-x: auto;
+        }
+
+        .wiki-tab {
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--muted);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.25s ease;
+        }
+
+        .wiki-tab:hover {
+            color: var(--fg);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .wiki-tab.active {
+            background: var(--card);
+            border-color: var(--border);
+            color: var(--accent);
+        }
+
+        .wiki-content {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .wiki-section {
+            display: none;
+        }
+
+        .wiki-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-box {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .info-box h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-box p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .staff-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .staff-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #00b4d8);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--bg);
+        }
+
+        .staff-name {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .staff-role {
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        /* FAQ in Wiki */
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 1.25rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--muted);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-question svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            color: var(--muted);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
         }
 
         /* ===== RULES PAGE ===== */
@@ -1209,7 +1484,7 @@
                 text-align: center;
             }
 
-            .products-grid {
+            .products-grid, .gamemode-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1329,6 +1604,8 @@
             </a>
             <div class="nav-links" id="navLinks">
                 <a href="#" class="nav-link active" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="gamemodes">Gamemodes</a>
+                <a href="#" class="nav-link" data-page="wiki">Wiki</a>
                 <a href="#" class="nav-link" data-page="rules">Rules</a>
                 <a href="#" class="nav-link" data-page="vote">Vote</a>
                 <a href="#" class="nav-link" data-page="store">Store</a>
@@ -1520,6 +1797,93 @@
             </section>
         </section>
 
+        <!-- GAMEMODES PAGE (NEW) -->
+        <section class="page" id="gamemodes">
+            <div class="gamemodes-page">
+                <div class="section-header">
+                    <h1 class="section-title">Server Gamemodes</h1>
+                    <p class="section-subtitle">
+                        Pilih mode permainan favoritmu dan mulai petualangan sekarang!
+                    </p>
+                </div>
+
+                <div class="gamemode-grid" id="gamemodeGrid"></div>
+            </div>
+        </section>
+
+        <!-- WIKI PAGE (NEW) -->
+        <section class="page" id="wiki">
+            <div class="wiki-page">
+                <div class="section-header">
+                    <h1 class="section-title">Server Wiki</h1>
+                    <p class="section-subtitle">
+                        Pelajari segala hal tentang CrackedNetwork disini
+                    </p>
+                </div>
+
+                <div class="wiki-tabs">
+                    <button class="wiki-tab active" data-tab="getting-started">Getting Started</button>
+                    <button class="wiki-tab" data-tab="staff">Staff Team</button>
+                    <button class="wiki-tab" data-tab="faq">FAQ</button>
+                </div>
+
+                <div class="wiki-content">
+                    <!-- Getting Started -->
+                    <div class="wiki-section active" id="getting-started">
+                        <h3 style="margin-bottom: 1rem;">Cara Bergabung ke Server</h3>
+                        <p style="color: var(--muted); margin-bottom: 1.5rem;">
+                            Ikuti langkah-langkah mudah berikut untuk memulai permainan di CrackedNetwork.
+                        </p>
+                        <div class="info-grid">
+                            <div class="info-box">
+                                <h4>Server IP</h4>
+                                <p style="color: var(--accent);">crackednetwork.mcgg.nl</p>
+                            </div>
+                            <div class="info-box">
+                                <h4>Port Java</h4>
+                                <p>25565 (Default)</p>
+                            </div>
+                            <div class="info-box">
+                                <h4>Port Bedrock</h4>
+                                <p>19132</p>
+                            </div>
+                            <div class="info-box">
+                                <h4>Versi</h4>
+                                <p>1.8 - 1.20.4</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem;">Langkah-Langkah:</h4>
+                            <ol style="color: var(--muted); padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <li>Buka Minecraft (Java atau Bedrock Edition)</li>
+                                <li>Klik tombol "Multiplayer" atau "Play" -> "Servers"</li>
+                                <li>Klik "Add Server" atau "Add External Server"</li>
+                                <li>Masukkan IP: <strong style="color: var(--accent);">crackednetwork.mcgg.nl</strong></li>
+                                <li>Klik "Done" lalu pilih server dan klik "Join Server"</li>
+                                <li>Selamat bermain!</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Staff Team -->
+                    <div class="wiki-section" id="staff">
+                        <h3 style="margin-bottom: 1rem;">Staff Team</h3>
+                        <p style="color: var(--muted);">Tim yang mengelola dan menjaga server tetap menyenangkan.</p>
+                        
+                        <div class="staff-grid" id="staffGrid"></div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="wiki-section" id="faq">
+                        <h3 style="margin-bottom: 1rem;">Frequently Asked Questions</h3>
+                        
+                        <div id="faqContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- RULES PAGE -->
         <section class="page" id="rules">
             <div class="rules-page">
@@ -1606,6 +1970,8 @@
                 <h4 class="footer-title">Quick Links</h4>
                 <ul class="footer-links">
                     <li><a href="#" data-page="home">Home</a></li>
+                    <li><a href="#" data-page="gamemodes">Gamemodes</a></li>
+                    <li><a href="#" data-page="wiki">Wiki</a></li>
                     <li><a href="#" data-page="rules">Rules</a></li>
                     <li><a href="#" data-page="vote">Vote</a></li>
                     <li><a href="#" data-page="store">Store</a></li>
@@ -1889,6 +2255,75 @@
             }
         ];
 
+        // NEW DATA: Gamemodes
+        const gamemodes = [
+            {
+                name: "Survival",
+                tag: "PvE / Economy",
+                desc: "Mode survival klasik dengan fitur economy, land claim, dan komunitas yang aktif. Bangun base, farming, dan trading dengan pemain lain.",
+                features: ["Land Claim", "Economy", "Custom Enchants", "Player Shops", "Jobs"],
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>'
+            },
+            {
+                name: "SkyBlock",
+                tag: "Island / Grinding",
+                desc: "Mulai dari sebuah pulau kecil di langit. Kembangkan pulaumu, buat farm otomatis, dan jadilah terkuat di langit!",
+                features: ["Custom Islands", "Minions", "Quests", "Bazaar", "Minions"],
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'
+            },
+            {
+                name: "Bedwars",
+                tag: "PvP / Team",
+                desc: "Lindungi tempat tidurmu dan hancurkan tempat tidur musuh! Game PvP tim yang seru dan menegangkan.",
+                features: ["Solo/Duo/Trio/Squad", "Ranked Mode", "Custom Maps", "Stats Tracking", "Leaderboards"],
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>'
+            },
+            {
+                name: "Practice",
+                tag: "PvP / Duel",
+                desc: "Latih skill PvPmu melawan pemain lain dalam berbagai mode duel. Dari No Debuff hingga Build UHC.",
+                features: ["Build UHC", "No Debuff", "Gapple", "Combo", "Sumo"],
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'
+            },
+            {
+                name: "Hide And Seek",
+                tag: "Mini Game",
+                desc: "Sembunyi sebagai block atau cari para penyembunyi! Game casual yang seru buat rileks bareng teman.",
+                features: ["Block Disguise", "Props", "Multiple Maps", "Taunts", "Effects"],
+                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
+            }
+        ];
+
+        // NEW DATA: Staff
+        const staffTeam = [
+            { name: "OwnerName", role: "Owner", initial: "O" },
+            { name: "AdminOne", role: "Admin", initial: "A" },
+            { name: "AdminTwo", role: "Admin", initial: "A" },
+            { name: "ModLeader", role: "Head Mod", initial: "HM" },
+            { name: "ModPro", role: "Moderator", initial: "M" },
+            { name: "HelperTeam", role: "Helper", initial: "H" }
+        ];
+
+        // NEW DATA: FAQ
+        const faqData = [
+            {
+                q: "Bagaimana cara claim land di Survival?",
+                a: "Gunakan golden shovel untuk claim. Klik kiri pada titik awal dan klik kanan pada titik akhir claim kamu."
+            },
+            {
+                q: "Apakah server support Bedrock?",
+                a: "Ya! Server support Bedrock Edition dengan port 19132. Gunakan IP yang sama: crackednetwork.mcgg.nl"
+            },
+            {
+                q: "Bagaimana cara mendapatkan rank?",
+                a: "Kamu bisa membeli rank di Store kami atau mendapatkannya melalui event dan giveaway di Discord."
+            },
+            {
+                q: "Game version apa yang didukung?",
+                a: "Server mendukung Minecraft Java Edition versi 1.8 sampai 1.20.4."
+            }
+        ];
+
         // ========== PARTICLES ==========
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
@@ -2031,7 +2466,7 @@
             }
         });
 
-        // ========== REALTIME SERVER STATUS (API MCSRVSAT.US) ==========
+        // ========== REALTIME SERVER STATUS ==========
         const playerCountEl = document.getElementById('playerCount');
         const statusIndicator = document.getElementById('statusIndicator');
         const statusDot = document.getElementById('statusDot');
@@ -2040,30 +2475,22 @@
 
         async function fetchServerStatus() {
             try {
-                // Ganti IP dengan IP servermu jika berbeda
                 const response = await fetch('https://api.mcsrvstat.us/2/crackednetwork.mcgg.nl');
                 const data = await response.json();
 
                 if (data.online) {
-                    // Server Online
                     const online = data.players ? data.players.online : 0;
-                    const max = data.players ? data.players.max : 0;
-                    
                     playerCountEl.textContent = online;
                     
                     statusCard.classList.remove('offline');
                     statusIndicator.classList.remove('offline');
                     statusDot.classList.remove('offline');
-                    
                     statusText.textContent = 'Server Online';
                 } else {
-                    // Server Offline
                     playerCountEl.textContent = "0";
-                    
                     statusCard.classList.add('offline');
                     statusIndicator.classList.add('offline');
                     statusDot.classList.add('offline');
-                    
                     statusText.textContent = 'Server Offline';
                 }
             } catch (error) {
@@ -2075,9 +2502,81 @@
             }
         }
 
-        // Panggil saat load dan setiap 60 detik
         fetchServerStatus();
-        setInterval(fetchServerStatus, 60000); // 60000ms = 1 menit
+        setInterval(fetchServerStatus, 60000);
+
+        // ========== RENDER GAMEMODES (NEW) ==========
+        const gamemodeGrid = document.getElementById('gamemodeGrid');
+        gamemodes.forEach(gm => {
+            const card = document.createElement('div');
+            card.className = 'gamemode-card';
+            card.innerHTML = `
+                <div class="gamemode-image">
+                    <div class="gamemode-icon">${gm.icon}</div>
+                </div>
+                <div class="gamemode-content">
+                    <span class="gamemode-tag">${gm.tag}</span>
+                    <h3 class="gamemode-title">${gm.name}</h3>
+                    <p class="gamemode-desc">${gm.desc}</p>
+                    <div class="gamemode-features">
+                        ${gm.features.map(f => `<span class="gm-feature">${f}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            gamemodeGrid.appendChild(card);
+        });
+
+        // ========== RENDER STAFF (NEW) ==========
+        const staffGrid = document.getElementById('staffGrid');
+        staffTeam.forEach(staff => {
+            const card = document.createElement('div');
+            card.className = 'staff-card';
+            card.innerHTML = `
+                <div class="staff-avatar">${staff.initial}</div>
+                <div class="staff-name">${staff.name}</div>
+                <div class="staff-role">${staff.role}</div>
+            `;
+            staffGrid.appendChild(card);
+        });
+
+        // ========== RENDER FAQ (NEW) ==========
+        const faqContainer = document.getElementById('faqContainer');
+        faqData.forEach(item => {
+            const faqItem = document.createElement('div');
+            faqItem.className = 'faq-item';
+            faqItem.innerHTML = `
+                <div class="faq-question">
+                    ${item.q}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    <p>${item.a}</p>
+                </div>
+            `;
+            
+            faqItem.querySelector('.faq-question').addEventListener('click', () => {
+                faqItem.classList.toggle('open');
+            });
+            
+            faqContainer.appendChild(faqItem);
+        });
+
+        // ========== WIKI TABS (NEW) ==========
+        const wikiTabs = document.querySelectorAll('.wiki-tab');
+        const wikiSections = document.querySelectorAll('.wiki-section');
+
+        wikiTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                wikiTabs.forEach(t => t.classList.remove('active'));
+                wikiSections.forEach(s => s.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const target = document.getElementById(tab.dataset.tab);
+                if (target) target.classList.add('active');
+            });
+        });
 
         // ========== RENDER RULES ==========
         const rulesGrid = document.getElementById('rulesGrid');
