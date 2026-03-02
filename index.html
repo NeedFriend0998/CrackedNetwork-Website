@@ -2759,7 +2759,7 @@
             const products = TIP4SERV_PRODUCTS[category] || [];
             
             if(products.length === 0) {
-                productsGrid.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); grid-column: 1/-1;">Produk belum tersedia untuk kategori ini.</div>`;
+                productsGrid.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); grid-column: 1/-1;">Product is not available for this category.</div>`;
                 return;
             }
 
