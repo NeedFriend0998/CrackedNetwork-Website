@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* ===== CSS VARIABLES ===== */
         :root {
             --bg: #0a0a0f;
             --bg-secondary: #12121a;
@@ -23,6 +24,7 @@
             --legendary: #ff6b9d;
         }
 
+        /* ===== BASE RESET ===== */
         * {
             margin: 0;
             padding: 0;
@@ -42,6 +44,7 @@
             line-height: 1.6;
         }
 
+        /* ===== ANIMATED BACKGROUND ===== */
         .bg-canvas {
             position: fixed;
             top: 0;
@@ -65,7 +68,7 @@
             pointer-events: none;
         }
 
-        /* Navigation */
+        /* ===== NAVIGATION ===== */
         .nav {
             position: fixed;
             top: 0;
@@ -169,6 +172,7 @@
             border-radius: 2px;
         }
 
+        /* ===== PAGES CONTAINER ===== */
         .pages {
             padding-top: 80px;
         }
@@ -186,7 +190,7 @@
             transform: translateY(0);
         }
 
-        /* Hero Section */
+        /* ===== HERO SECTION ===== */
         .hero {
             min-height: calc(100vh - 80px);
             display: flex;
@@ -346,6 +350,7 @@
             color: var(--bg);
         }
 
+        /* ===== STATS GRID ===== */
         .hero-visual {
             animation: fadeInUp 0.8s ease 0.2s forwards;
             opacity: 0;
@@ -425,7 +430,7 @@
             animation: pulse 2s infinite;
         }
 
-        /* Features Section */
+        /* ===== FEATURES SECTION ===== */
         .features {
             padding: 6rem 2rem;
             background: var(--bg-secondary);
@@ -498,7 +503,7 @@
             font-size: 0.95rem;
         }
 
-        /* Rules Page */
+        /* ===== RULES PAGE ===== */
         .rules-page {
             padding: 4rem 2rem;
             max-width: 900px;
@@ -634,7 +639,7 @@
             color: var(--danger);
         }
 
-        /* Vote Page */
+        /* ===== VOTE PAGE ===== */
         .vote-page {
             padding: 4rem 2rem;
             max-width: 1000px;
@@ -722,7 +727,7 @@
             justify-content: center;
         }
 
-        /* ========== STORE PAGE ========== */
+        /* ===== STORE PAGE ===== */
         .store-page {
             padding: 3rem 2rem;
             max-width: 1400px;
@@ -734,7 +739,6 @@
             margin-bottom: 3rem;
         }
 
-        /* Category Tabs */
         .store-categories {
             display: flex;
             flex-wrap: wrap;
@@ -775,7 +779,6 @@
             height: 18px;
         }
 
-        /* Products Grid */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -935,7 +938,6 @@
             box-shadow: 0 5px 20px var(--accent-glow);
         }
 
-        /* Coins Card Special */
         .product-card.coins .product-image {
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 170, 0, 0.05));
         }
@@ -949,7 +951,6 @@
             color: var(--premium);
         }
 
-        /* Cosmetic Card Special */
         .product-card.cosmetic .product-image {
             background: linear-gradient(135deg, rgba(255, 107, 157, 0.15), rgba(255, 51, 102, 0.05));
         }
@@ -959,7 +960,7 @@
             filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.4));
         }
 
-        /* Modal */
+        /* ===== CHECKOUT MODAL ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -982,83 +983,100 @@
             opacity: 1;
         }
 
-        .modal {
+        .modal-checkout {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            max-width: 450px;
+            border-radius: 16px;
             width: 100%;
-            padding: 2rem;
-            transform: scale(0.9);
+            max-width: 500px;
+            height: 80vh;
+            max-height: 700px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.95);
             transition: transform 0.3s ease;
         }
 
-        .modal-overlay.active .modal {
+        .modal-overlay.active .modal-checkout {
             transform: scale(1);
         }
 
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .modal-desc {
-            color: var(--muted);
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-input {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            background: var(--bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--fg);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            transition: border-color 0.25s ease;
-        }
-
-        .modal-input:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .modal-input::placeholder {
-            color: var(--muted);
-        }
-
-        .modal-actions {
+        .modal-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
             display: flex;
-            gap: 1rem;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .modal-actions .btn {
-            flex: 1;
-            justify-content: center;
+        .modal-header h3 {
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
             background: none;
             border: none;
             color: var(--muted);
             cursor: pointer;
             padding: 0.5rem;
             transition: color 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-close:hover {
             color: var(--fg);
         }
 
-        /* Footer */
+        .modal-close svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .iframe-container {
+            flex: 1;
+            width: 100%;
+            position: relative;
+        }
+
+        .checkout-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #fff;
+        }
+
+        .loader-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== FOOTER ===== */
         .footer {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border);
@@ -1115,7 +1133,7 @@
             font-size: 0.9rem;
         }
 
-        /* Animations */
+        /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -1143,7 +1161,7 @@
             transform: translateY(0);
         }
 
-        /* Mobile Responsive */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 900px) {
             .hero-content {
                 grid-template-columns: 1fr;
@@ -1306,7 +1324,7 @@
     </nav>
 
     <main class="pages">
-        <!-- Home Page -->
+        <!-- HOME PAGE -->
         <section class="page active" id="home">
             <div class="hero">
                 <div class="hero-content">
@@ -1484,7 +1502,7 @@
             </section>
         </section>
 
-        <!-- Rules Page -->
+        <!-- RULES PAGE -->
         <section class="page" id="rules">
             <div class="rules-page">
                 <div class="rules-header">
@@ -1497,7 +1515,7 @@
             </div>
         </section>
 
-        <!-- Vote Page -->
+        <!-- VOTE PAGE -->
         <section class="page" id="vote">
             <div class="vote-page">
                 <div class="vote-header">
@@ -1514,13 +1532,13 @@
             </div>
         </section>
 
-        <!-- Store Page -->
+        <!-- STORE PAGE -->
         <section class="page" id="store">
             <div class="store-page">
                 <div class="store-header">
-                    <h1 class="section-title">Server Store</h1>
+                    <h1 class="section-title">Official Store</h1>
                     <p class="section-subtitle">
-                        Dukung server dengan membeli ranks dan items eksklusif
+                        Dukung server dengan membeli ranks dan items. Pembayaran diproses aman oleh Tip4Serv.
                     </p>
                 </div>
 
@@ -1530,15 +1548,24 @@
         </section>
     </main>
 
-    <!-- Purchase Modal -->
-    <div class="modal-overlay" id="purchaseModal">
-        <div class="modal">
-            <h2 class="modal-title" id="modalTitle">Purchase Item</h2>
-            <p class="modal-desc" id="modalDesc">Masukkan username Minecraft kamu</p>
-            <input type="text" class="modal-input" id="usernameInput" placeholder="Username Minecraft">
-            <div class="modal-actions">
-                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                <button class="btn btn-primary" id="confirmBtn">Continue</button>
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-checkout">
+            <div class="modal-header">
+                <h3>Complete Your Purchase</h3>
+                <button class="modal-close" id="closeModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="iframe-container">
+                <div class="loader-container" id="iframeLoader">
+                    <div class="loader"></div>
+                    <span>Memuat Pembayaran...</span>
+                </div>
+                <iframe id="checkoutFrame" class="checkout-iframe" src="about:blank"></iframe>
             </div>
         </div>
     </div>
@@ -1578,11 +1605,165 @@
         </div>
         <div class="footer-bottom">
             <span>2024 CrackedNetwork. All rights reserved.</span>
-            <span>IP: crackednetwork.mcgg.nl</span>
+            <span>Powered by Tip4Serv</span>
         </div>
     </footer>
 
     <script>
+        // ========== CONFIGURATION ==========
+        // GANTI DENGAN PRODUCT ID ASLI DARI DASHBOARD TIP4SERV KAMU
+        const TIP4SERV_PRODUCTS = {
+            bedwars: [
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV", 
+                    name: "VIP",
+                    desc: "Rank starter untuk Bedwars",
+                    price: "Rp 25.000",
+                    badge: null,
+                    features: ["Chat Prefix [VIP]", "Join Full Games", "2x Coins Bonus", "VIP Kit Monthly"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "MVP",
+                    desc: "Rank premium dengan banyak fitur",
+                    price: "Rp 50.000",
+                    badge: "popular",
+                    features: ["Chat Prefix [MVP]", "All VIP Features", "5x Coins Bonus", "Exclusive Cosmetics", "Priority Queue"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Legend",
+                    desc: "Ultimate rank dengan semua fitur",
+                    price: "Rp 100.000",
+                    badge: "legendary",
+                    features: ["Chat Prefix [Legend]", "All MVP Features", "10x Coins Bonus", "All Cosmetics Unlocked", "Private Games Access"]
+                }
+            ],
+            survival: [
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Citizen",
+                    desc: "Rank dasar untuk Survival",
+                    price: "Rp 20.000",
+                    badge: null,
+                    features: ["Chat Prefix", "3 Home Locations", "Basic Kit", "10k Starting Money"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Noble",
+                    desc: "Rank menengah dengan extra features",
+                    price: "Rp 45.000",
+                    badge: null,
+                    features: ["Fancy Prefix", "10 Home Locations", "Daily Rewards", "50k Starting Money"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "King",
+                    desc: "Rank premium untuk para raja",
+                    price: "Rp 85.000",
+                    badge: "popular",
+                    features: ["Royal Prefix", "20 Home Locations", "Fly in Claims", "Exclusive Pets", "100k Starting Money"]
+                }
+            ],
+            practice: [
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Fighter",
+                    desc: "Rank untuk para petarung",
+                    price: "Rp 30.000",
+                    badge: null,
+                    features: ["Fighter Prefix", "2x Elo Gain", "Exclusive Arena", "Fighter Kit"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Champion",
+                    desc: "Rank untuk juara sejati",
+                    price: "Rp 65.000",
+                    badge: "popular",
+                    features: ["Champion Prefix", "5x Elo Gain", "All Arenas Access", "Custom Kill Messages"]
+                }
+            ],
+            hideandseek: [
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Hider",
+                    desc: "Rank dasar untuk Hide And Seek",
+                    price: "Rp 15.000",
+                    badge: null,
+                    features: ["Hider Prefix", "Extra Disguises", "2x Coins", "Monthly Hider Kit"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Seeker",
+                    desc: "Rank untuk para pencari",
+                    price: "Rp 35.000",
+                    badge: "popular",
+                    features: ["Seeker Prefix", "All Disguises", "5x Coins", "Pro Seeker Kit"]
+                }
+            ],
+            coins: [
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "1,000 Coins",
+                    desc: "Koin kecil untuk belanja in-game",
+                    price: "Rp 10.000",
+                    badge: null,
+                    features: ["1,000 Coins", "All Game Modes", "Instant Delivery"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "5,000 Coins",
+                    desc: "Koin dengan bonus 10%",
+                    price: "Rp 45.000",
+                    badge: "popular",
+                    features: ["5,500 Coins Total", "10% Bonus", "All Game Modes"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "15,000 Coins",
+                    desc: "Paket koin besar dengan bonus 20%",
+                    price: "Rp 120.000",
+                    badge: "new",
+                    features: ["18,000 Coins Total", "20% Bonus", "All Game Modes"]
+                }
+            ],
+            cosmetics: [
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Particle Pack",
+                    desc: "Koleksi efek partikel keren",
+                    price: "Rp 25.000",
+                    badge: "new",
+                    features: ["20+ Particle Effects", "All Game Modes", "Toggle Anytime"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Cape Bundle",
+                    desc: "Koleksi cape eksklusif",
+                    price: "Rp 40.000",
+                    badge: null,
+                    features: ["10 Exclusive Capes", "Animated Capes", "Custom Designs"]
+                },
+                {
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
+                    name: "Ultimate Bundle",
+                    desc: "Semua kosmetik dalam satu paket",
+                    price: "Rp 150.000",
+                    badge: "legendary",
+                    features: ["All Particles", "All Capes", "All Pets", "All Kill Effects"]
+                }
+            ]
+        };
+
+        const storeCategories = [
+            { id: 'bedwars', name: 'Bedwars', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' },
+            { id: 'survival', name: 'Survival', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' },
+            { id: 'practice', name: 'Practice', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>' },
+            { id: 'hideandseek', name: 'Hide And Seek', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' },
+            { id: 'coins', name: 'Coins', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M8 14h8"/></svg>' },
+            { id: 'cosmetics', name: 'Kosmetik', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' }
+        ];
+
         // ========== DATA ==========
         const rules = [
             {
@@ -1690,178 +1871,7 @@
             }
         ];
 
-        const storeCategories = [
-            { id: 'bedwars', name: 'Bedwars', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' },
-            { id: 'survival', name: 'Survival', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>' },
-            { id: 'practice', name: 'Practice', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>' },
-            { id: 'hideandseek', name: 'Hide And Seek', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>' },
-            { id: 'coins', name: 'Coins', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M8 10h8M8 14h8"/></svg>' },
-            { id: 'cosmetics', name: 'Kosmetik', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' }
-        ];
-
-        const storeProducts = {
-            bedwars: [
-                {
-                    name: "VIP",
-                    desc: "Rank starter untuk Bedwars",
-                    price: "Rp 25.000",
-                    badge: null,
-                    features: ["Chat Prefix [VIP]", "Join Full Games", "2x Coins Bonus", "VIP Kit Monthly"]
-                },
-                {
-                    name: "MVP",
-                    desc: "Rank premium dengan banyak fitur",
-                    price: "Rp 50.000",
-                    badge: "popular",
-                    features: ["Chat Prefix [MVP]", "All VIP Features", "5x Coins Bonus", "Exclusive Cosmetics", "Priority Queue"]
-                },
-                {
-                    name: "Legend",
-                    desc: "Ultimate rank dengan semua fitur",
-                    price: "Rp 100.000",
-                    badge: "legendary",
-                    features: ["Chat Prefix [Legend]", "All MVP Features", "10x Coins Bonus", "All Cosmetics Unlocked", "Private Games Access", "Custom Kill Effects"]
-                }
-            ],
-            survival: [
-                {
-                    name: "Citizen",
-                    desc: "Rank dasar untuk Survival",
-                    price: "Rp 20.000",
-                    badge: null,
-                    features: ["Chat Prefix", "3 Home Locations", "Basic Kit", "10k Starting Money"]
-                },
-                {
-                    name: "Noble",
-                    desc: "Rank menengah dengan extra features",
-                    price: "Rp 45.000",
-                    badge: null,
-                    features: ["Fancy Prefix", "10 Home Locations", "Daily Rewards", "50k Starting Money", "Particle Trails"]
-                },
-                {
-                    name: "King",
-                    desc: "Rank premium untuk para raja",
-                    price: "Rp 85.000",
-                    badge: "popular",
-                    features: ["Royal Prefix", "20 Home Locations", "Fly in Claims", "Exclusive Pets", "100k Starting Money", "Custom Enchants Access"]
-                },
-                {
-                    name: "Emperor",
-                    desc: "Rank tertinggi dengan kekuatan penuh",
-                    price: "Rp 150.000",
-                    badge: "legendary",
-                    features: ["Emperor Prefix & Tag", "Unlimited Homes", "Fly Everywhere", "All Pets Unlocked", "500k Starting Money", "NPC in Claims", "Custom Biome Access"]
-                }
-            ],
-            practice: [
-                {
-                    name: "Fighter",
-                    desc: "Rank untuk para petarung",
-                    price: "Rp 30.000",
-                    badge: null,
-                    features: ["Fighter Prefix", "2x Elo Gain", "Exclusive Arena", "Fighter Kit"]
-                },
-                {
-                    name: "Champion",
-                    desc: "Rank untuk juara sejati",
-                    price: "Rp 65.000",
-                    badge: "popular",
-                    features: ["Champion Prefix", "5x Elo Gain", "All Arenas Access", "Custom Kill Messages", "Leaderboard Highlight"]
-                },
-                {
-                    name: "Grandmaster",
-                    desc: "Rank tertinggi untuk legenda",
-                    price: "Rp 120.000",
-                    badge: "legendary",
-                    features: ["Grandmaster Prefix", "10x Elo Gain", "All Features Unlocked", "Exclusive Cape", "Custom Ranked Matches", "Tournament Access"]
-                }
-            ],
-            hideandseek: [
-                {
-                    name: "Hider",
-                    desc: "Rank dasar untuk Hide And Seek",
-                    price: "Rp 15.000",
-                    badge: null,
-                    features: ["Hider Prefix", "Extra Disguises", "2x Coins", "Monthly Hider Kit"]
-                },
-                {
-                    name: "Seeker",
-                    desc: "Rank untuk para pencari",
-                    price: "Rp 35.000",
-                    badge: "popular",
-                    features: ["Seeker Prefix", "All Disguises", "5x Coins", "Pro Seeker Kit", "Hide Duration Extended"]
-                },
-                {
-                    name: "Master",
-                    desc: "Rank master Hide And Seek",
-                    price: "Rp 75.000",
-                    badge: "legendary",
-                    features: ["Master Prefix", "Premium Disguises", "10x Coins", "All Kits Unlocked", "Custom Taunts", "Map Voting Power"]
-                }
-            ],
-            coins: [
-                {
-                    name: "1,000 Coins",
-                    desc: "Koin kecil untuk belanja in-game",
-                    price: "Rp 10.000",
-                    badge: null,
-                    features: ["1,000 Coins", "All Game Modes", "Instant Delivery"]
-                },
-                {
-                    name: "5,000 Coins",
-                    desc: "Koin dengan bonus 10%",
-                    price: "Rp 45.000",
-                    badge: "popular",
-                    features: ["5,500 Coins Total", "10% Bonus", "All Game Modes"]
-                },
-                {
-                    name: "15,000 Coins",
-                    desc: "Paket koin besar dengan bonus 20%",
-                    price: "Rp 120.000",
-                    badge: "best",
-                    features: ["18,000 Coins Total", "20% Bonus", "All Game Modes", "VIP Chat Color (7 Days)"]
-                },
-                {
-                    name: "50,000 Coins",
-                    desc: "Paket terbesar dengan bonus 30%",
-                    price: "Rp 350.000",
-                    badge: "legendary",
-                    features: ["65,000 Coins Total", "30% Bonus", "All Game Modes", "VIP Chat Color (30 Days)", "Exclusive Coin Icon"]
-                }
-            ],
-            cosmetics: [
-                {
-                    name: "Particle Pack",
-                    desc: "Koleksi efek partikel keren",
-                    price: "Rp 25.000",
-                    badge: "new",
-                    features: ["20+ Particle Effects", "All Game Modes", "Toggle Anytime"]
-                },
-                {
-                    name: "Cape Bundle",
-                    desc: "Koleksi cape eksklusif",
-                    price: "Rp 40.000",
-                    badge: null,
-                    features: ["10 Exclusive Capes", "Animated Capes", "Custom Designs"]
-                },
-                {
-                    name: "Pet Collection",
-                    desc: "Semua pet dalam satu paket",
-                    price: "Rp 55.000",
-                    badge: "popular",
-                    features: ["30+ Pets", "Pet Hats & Accessories", "Pet Names", "Pet Rides"]
-                },
-                {
-                    name: "Ultimate Bundle",
-                    desc: "Semua kosmetik dalam satu paket",
-                    price: "Rp 150.000",
-                    badge: "legendary",
-                    features: ["All Particles", "All Capes", "All Pets", "All Kill Effects", "All Win Animations", "Future Cosmetics Included"]
-                }
-            ]
-        };
-
-        // ========== INITIALIZATION ==========
+        // ========== PARTICLES ==========
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         let particles = [];
@@ -2082,7 +2092,6 @@
         const productsGrid = document.getElementById('productsGrid');
         let activeCategory = 'bedwars';
 
-        // Render category tabs
         storeCategories.forEach(cat => {
             const tab = document.createElement('button');
             tab.className = `category-tab ${cat.id === activeCategory ? 'active' : ''}`;
@@ -2110,8 +2119,13 @@
 
         function renderProducts(category) {
             productsGrid.innerHTML = '';
-            const products = storeProducts[category] || [];
+            const products = TIP4SERV_PRODUCTS[category] || [];
             
+            if(products.length === 0) {
+                productsGrid.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); grid-column: 1/-1;">Produk belum tersedia untuk kategori ini.</div>`;
+                return;
+            }
+
             products.forEach(product => {
                 const card = document.createElement('div');
                 let cardClass = 'product-card';
@@ -2149,67 +2163,58 @@
                         </div>
                         <div class="product-footer">
                             <div class="product-price">${product.price}</div>
-                            <button class="btn-buy" data-product="${product.name}" data-price="${product.price}">Buy Now</button>
+                            <button class="btn-buy" data-id="${product.id}">Buy Now</button>
                         </div>
                     </div>
                 `;
                 productsGrid.appendChild(card);
             });
 
-            // Add buy button listeners
             document.querySelectorAll('.btn-buy').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    openPurchaseModal(btn.dataset.product, btn.dataset.price);
+                    openCheckout(btn.dataset.id);
                 });
             });
         }
 
         renderProducts(activeCategory);
 
-        // ========== MODAL ==========
-        const modal = document.getElementById('purchaseModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalDesc = document.getElementById('modalDesc');
-        const usernameInput = document.getElementById('usernameInput');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const confirmBtn = document.getElementById('confirmBtn');
+        // ========== CHECKOUT MODAL ==========
+        const modal = document.getElementById('checkoutModal');
+        const checkoutFrame = document.getElementById('checkoutFrame');
+        const iframeLoader = document.getElementById('iframeLoader');
+        const closeModalBtn = document.getElementById('closeModal');
 
-        function openPurchaseModal(product, price) {
-            modalTitle.textContent = `Purchase ${product}`;
-            modalDesc.textContent = `Price: ${price} - Enter your Minecraft username`;
-            usernameInput.value = '';
+        function openCheckout(productId) {
+            if (!productId || productId.startsWith("GANTI_DENGAN_ID_")) {
+                alert("Error: Produk ini belum dikonfigurasi ID Tip4Serv-nya. Silakan masukkan Product ID yang benar di dalam kode JavaScript (cari bagian TIP4SERV_PRODUCTS).");
+                return;
+            }
+
             modal.classList.add('active');
-            usernameInput.focus();
+            checkoutFrame.src = "about:blank";
+            iframeLoader.style.display = "flex";
+            
+            const checkoutUrl = `https://tip4serv.com/checkout/${productId}`;
+            checkoutFrame.src = checkoutUrl;
         }
+
+        checkoutFrame.addEventListener('load', () => {
+            if (checkoutFrame.src !== "about:blank") {
+                iframeLoader.style.display = "none";
+            }
+        });
 
         function closeModal() {
             modal.classList.remove('active');
+            setTimeout(() => {
+                checkoutFrame.src = "about:blank";
+            }, 300);
         }
 
-        cancelBtn.addEventListener('click', closeModal);
+        closeModalBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
-        });
-
-        confirmBtn.addEventListener('click', () => {
-            const username = usernameInput.value.trim();
-            if (username) {
-                alert(`Terima kasih ${username}!\n\nPembelian akan diproses.\nUntuk pembayaran, silakan hubungi admin via Discord.`);
-                closeModal();
-            } else {
-                usernameInput.style.borderColor = 'var(--danger)';
-                setTimeout(() => {
-                    usernameInput.style.borderColor = 'var(--border)';
-                }, 2000);
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-                navLinksContainer.classList.remove('open');
-                mobileToggle.classList.remove('open');
-            }
         });
 
         // ========== PLAYER COUNT ==========
@@ -2235,6 +2240,15 @@
             reveals.forEach(el => observer.observe(el));
         }
         observeElements();
+
+        // ========== KEYBOARD NAVIGATION ==========
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                navLinksContainer.classList.remove('open');
+                mobileToggle.classList.remove('open');
+            }
+        });
     </script>
 </body>
 </html>
