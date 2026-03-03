@@ -2174,7 +2174,7 @@
         </div>
     </footer>
 
-    <script>
+        <script>
         // ========== CONFIGURATION ==========
         const TIP4SERV_PRODUCTS = {
             bedwars: [
@@ -2654,8 +2654,16 @@
         const nav = document.querySelector('.nav');
 
         function showPage(pageId) {
+            // FIX: Hilangkan trailing slash jika ada (misal: 'store/' jadi 'store')
+            pageId = pageId.replace(/\/$/, '');
+
             const targetPage = document.getElementById(pageId);
-            if (!targetPage) return;
+            if (!targetPage) {
+                // Fallback jika halaman tidak ditemukan
+                console.warn('Page not found:', pageId, 'Redirecting to home');
+                showPage('home');
+                return;
+            }
 
             pages.forEach(page => page.classList.remove('active'));
             targetPage.classList.add('active');
@@ -2695,11 +2703,19 @@
             }
         });
 
-        // Initial Load
+        // Initial Load - FIX: Handle Trailing Slash dari Netlify
         let currentPath = window.location.pathname;
+        
+        // Jika Netlify menambahkan slash di belakang (misal /store/), hapus slash tersebut
+        if (currentPath.endsWith('/') && currentPath.length > 1) {
+             // Hapus slash terakhir, kecuali jika cuma '/' root
+             currentPath = currentPath.slice(0, -1);
+        }
+        
         if (currentPath === '/' || currentPath === '') currentPath = '/home';
-        const initialPage = currentPath.substring(1);
+        const initialPage = currentPath.substring(1); // Hilangkan slash depan
 
+        // Replace state agar history bersih (tanpa trailing slash)
         window.history.replaceState({ page: initialPage }, "", currentPath);
         showPage(initialPage);
 
