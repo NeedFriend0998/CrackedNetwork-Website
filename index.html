@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <base href="/"> <!-- PENTING: Base URL untuk Netlify SPA -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CrackedNetwork - Minecraft Server</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1692,7 +1693,7 @@
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-inner">
-            <a href="#home" class="logo" data-page="home">
+            <a href="/home" class="logo" data-page="home">
                 <div class="logo-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -1701,13 +1702,13 @@
                 CrackedNetwork
             </a>
                         <div class="nav-links" id="navLinks">
-                <a href="#home" class="nav-link active" data-page="home">Home</a>
-                <a href="#gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
-                <a href="#wiki" class="nav-link" data-page="wiki">Wiki</a>
-                <a href="#rules" class="nav-link" data-page="rules">Rules</a>
-                <a href="#vote" class="nav-link" data-page="vote">Vote</a>
-                <a href="#store" class="nav-link" data-page="store">Store</a>
-                <a href="#discord" class="nav-link" data-page="discord">Discord</a>
+                <a href="/home" class="nav-link active" data-page="home">Home</a>
+                <a href="/gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
+                <a href="/wiki" class="nav-link" data-page="wiki">Wiki</a>
+                <a href="/rules" class="nav-link" data-page="rules">Rules</a>
+                <a href="/vote" class="nav-link" data-page="vote">Vote</a>
+                <a href="/store" class="nav-link" data-page="store">Store</a>
+                <a href="/discord" class="nav-link" data-page="discord">Discord</a>
             </div>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
                 <span></span>
@@ -1757,7 +1758,7 @@
                             Survival, SkyBlock, and other exciting game modes await you!
                         </p>
                         <div class="hero-actions">
-                            <a href="#store" class="btn btn-primary" data-page="store">
+                            <a href="/store" class="btn btn-primary" data-page="store">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                                     <line x1="3" y1="6" x2="21" y2="6"/>
@@ -1765,7 +1766,7 @@
                                 </svg>
                                 Visit Store
                             </a>
-                            <a href="#vote" class="btn btn-secondary" data-page="vote">
+                            <a href="/vote" class="btn btn-secondary" data-page="vote">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
                                 </svg>
@@ -2136,7 +2137,7 @@
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-brand">
-                <a href="#home" class="logo" data-page="home">
+                <a href="/home" class="logo" data-page="home">
                     <div class="logo-icon">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -2149,18 +2150,18 @@
             <div>
                 <h4 class="footer-title">Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="#home" data-page="home">Home</a></li>
-                    <li><a href="#gamemodes" data-page="gamemodes">Gamemodes</a></li>
-                    <li><a href="#wiki" data-page="wiki">Wiki</a></li>
-                    <li><a href="#rules" data-page="rules">Rules</a></li>
-                    <li><a href="#vote" data-page="vote">Vote</a></li>
-                    <li><a href="#store" data-page="store">Store</a></li>
+                    <li><a href="/home" data-page="home">Home</a></li>
+                    <li><a href="/gamemodes" data-page="gamemodes">Gamemodes</a></li>
+                    <li><a href="/wiki" data-page="wiki">Wiki</a></li>
+                    <li><a href="/rules" data-page="rules">Rules</a></li>
+                    <li><a href="/vote" data-page="vote">Vote</a></li>
+                    <li><a href="/store" data-page="store">Store</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="footer-title">Connect</h4>
                 <ul class="footer-links">
-                    <li><a href="#discord" data-page="discord">Discord</a></li>
+                    <li><a href="/discord" data-page="discord">Discord</a></li>
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">YouTube</a></li>
                     <li><a href="#">TikTok</a></li>
@@ -2645,7 +2646,7 @@
             });
         }
 
-        // ========== NAVIGATION & ROUTER ==========
+        // ========== NAVIGATION (HISTORY API - CLEAN URL) ==========
         const navLinks = document.querySelectorAll('.nav-link, [data-page]');
         const pages = document.querySelectorAll('.page');
         const mobileToggle = document.getElementById('mobileToggle');
@@ -2653,55 +2654,55 @@
         const nav = document.querySelector('.nav');
 
         function showPage(pageId) {
-            // Validasi
             const targetPage = document.getElementById(pageId);
             if (!targetPage) return;
 
-            // Toggle Page Class
             pages.forEach(page => page.classList.remove('active'));
             targetPage.classList.add('active');
 
-            // Toggle Nav Link Class
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${pageId}`) {
+                if (link.getAttribute('data-page') === pageId) {
                     link.classList.add('active');
                 }
             });
 
-            // Close Mobile Menu
             navLinksContainer.classList.remove('open');
             mobileToggle.classList.remove('open');
-
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            // Trigger animations
             setTimeout(observeElements, 100);
         }
 
-        // --- Handle Click on Links ---
+        // Handle Click Links -> Push State
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
+                const url = link.getAttribute('href');
                 
-                // Update Hash URL
-                window.location.hash = pageId;
+                // Push state biar URL berubah
+                window.history.pushState({ page: pageId }, "", url);
+                showPage(pageId);
             });
         });
 
-        // --- Handle Hash Change (Back/Forward Button) ---
-        window.addEventListener('hashchange', () => {
-            const pageId = window.location.hash.substring(1) || 'home';
-            showPage(pageId);
+        // Handle Back/Forward Button
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page) {
+                showPage(e.state.page);
+            } else {
+                showPage('home');
+            }
         });
 
-        // --- Initial Load ---
-        const initialPage = window.location.hash.substring(1) || 'home';
+        // Initial Load
+        let currentPath = window.location.pathname;
+        if (currentPath === '/' || currentPath === '') currentPath = '/home';
+        const initialPage = currentPath.substring(1);
+
+        window.history.replaceState({ page: initialPage }, "", currentPath);
         showPage(initialPage);
 
-        // Mobile Toggle
         mobileToggle.addEventListener('click', () => {
             mobileToggle.classList.toggle('open');
             navLinksContainer.classList.toggle('open');
