@@ -1585,6 +1585,30 @@
             outline: 2px solid var(--accent);
             outline-offset: 2px;
         }
+        
+                /* ===== DISCORD PAGE ===== */
+        .discord-page {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .discord-widget-wrapper {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: inline-block;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .discord-widget-wrapper:hover {
+            transform: translateY(-5px);
+        }
     </style>
 </head>
 <body>
