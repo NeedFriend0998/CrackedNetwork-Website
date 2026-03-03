@@ -1609,6 +1609,84 @@
         .discord-widget-wrapper:hover {
             transform: translateY(-5px);
         }
+        
+                /* ===== WIKI TREE DIAGRAM STYLE ===== */
+        .wiki-tree {
+            margin-top: 2rem;
+        }
+
+        .tree-root {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .tree-root > li {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tree-children {
+            list-style: none;
+            padding-left: 25px; /* Indentasi anak */
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        /* Garis Vertikal Induk */
+        .tree-children::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 10px;
+            width: 2px;
+            background: var(--border);
+            border-radius: 2px;
+        }
+
+        .tree-children li {
+            position: relative;
+            padding: 8px 0 8px 25px; /* Ruang untuk garis */
+            color: var(--fg);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Garis Horizontal Penyambung */
+        .tree-children li::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 18px;
+            width: 15px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        /* Titik (Node) */
+        .tree-children li::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 15px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Highlight nomor */
+        .tree-children li strong {
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
