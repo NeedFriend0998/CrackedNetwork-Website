@@ -519,7 +519,7 @@
             font-size: 0.95rem;
         }
 
-        /* ===== GAMEMODES PAGE (NEW) ===== */
+        /* ===== GAMEMODES PAGE ===== */
         .gamemodes-page {
             padding: 4rem 2rem;
             max-width: 1400px;
@@ -622,7 +622,7 @@
             border: 1px solid var(--border);
         }
 
-        /* ===== WIKI PAGE (NEW) ===== */
+        /* ===== WIKI PAGE ===== */
         .wiki-page {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -1632,12 +1632,11 @@
 
         .tree-children {
             list-style: none;
-            padding-left: 25px; /* Indentasi anak */
+            padding-left: 25px;
             margin-top: 1rem;
             position: relative;
         }
 
-        /* Garis Vertikal Induk */
         .tree-children::before {
             content: '';
             position: absolute;
@@ -1651,13 +1650,12 @@
 
         .tree-children li {
             position: relative;
-            padding: 8px 0 8px 25px; /* Ruang untuk garis */
+            padding: 8px 0 8px 25px;
             color: var(--fg);
             font-weight: 400;
             line-height: 1.5;
         }
 
-        /* Garis Horizontal Penyambung */
         .tree-children li::before {
             content: '';
             position: absolute;
@@ -1668,7 +1666,6 @@
             background: var(--border);
         }
 
-        /* Titik (Node) */
         .tree-children li::after {
             content: '';
             position: absolute;
@@ -1681,7 +1678,6 @@
             z-index: 1;
         }
 
-        /* Highlight nomor */
         .tree-children li strong {
             color: var(--accent);
             font-weight: 700;
@@ -1696,7 +1692,7 @@
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Main navigation">
         <div class="nav-inner">
-            <a href="#" class="logo" data-page="home">
+            <a href="#home" class="logo" data-page="home">
                 <div class="logo-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -1705,14 +1701,13 @@
                 CrackedNetwork
             </a>
                         <div class="nav-links" id="navLinks">
-                <a href="#" class="nav-link active" data-page="home">Home</a>
-                <a href="#" class="nav-link" data-page="gamemodes">Gamemodes</a>
-                <a href="#" class="nav-link" data-page="wiki">Wiki</a>
-                <a href="#" class="nav-link" data-page="rules">Rules</a>
-                <a href="#" class="nav-link" data-page="vote">Vote</a>
-                <a href="#" class="nav-link" data-page="store">Store</a>
-                <!-- TAMBAHKAN INI: -->
-                <a href="#" class="nav-link" data-page="discord">Discord</a>
+                <a href="#home" class="nav-link active" data-page="home">Home</a>
+                <a href="#gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
+                <a href="#wiki" class="nav-link" data-page="wiki">Wiki</a>
+                <a href="#rules" class="nav-link" data-page="rules">Rules</a>
+                <a href="#vote" class="nav-link" data-page="vote">Vote</a>
+                <a href="#store" class="nav-link" data-page="store">Store</a>
+                <a href="#discord" class="nav-link" data-page="discord">Discord</a>
             </div>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
                 <span></span>
@@ -1762,7 +1757,7 @@
                             Survival, SkyBlock, and other exciting game modes await you!
                         </p>
                         <div class="hero-actions">
-                            <a href="#" class="btn btn-primary" data-page="store">
+                            <a href="#store" class="btn btn-primary" data-page="store">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                                     <line x1="3" y1="6" x2="21" y2="6"/>
@@ -1770,7 +1765,7 @@
                                 </svg>
                                 Visit Store
                             </a>
-                            <a href="#" class="btn btn-secondary" data-page="vote">
+                            <a href="#vote" class="btn btn-secondary" data-page="vote">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
                                 </svg>
@@ -1923,7 +1918,7 @@
             </section>
         </section>
 
-        <!-- GAMEMODES PAGE (NEW) -->
+        <!-- GAMEMODES PAGE -->
         <section class="page" id="gamemodes">
             <div class="gamemodes-page">
                 <div class="section-header">
@@ -1937,7 +1932,7 @@
             </div>
         </section>
 
-        <!-- WIKI PAGE (NEW) -->
+        <!-- WIKI PAGE -->
         <section class="page" id="wiki">
             <div class="wiki-page">
                 <div class="section-header">
@@ -1949,7 +1944,7 @@
 
                             <div class="wiki-tabs">
                 <button class="wiki-tab active" data-tab="getting-started">Getting Started</button>
-                <button class="wiki-tab" data-tab="how-it-works">How It Works</button> <!-- TAB BARU -->
+                <button class="wiki-tab" data-tab="how-it-works">How It Works</button>
                 <button class="wiki-tab" data-tab="staff">Staff Team</button>
                 <button class="wiki-tab" data-tab="faq">FAQ</button>
             </div>
@@ -2141,7 +2136,7 @@
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-brand">
-                <a href="#" class="logo" data-page="home">
+                <a href="#home" class="logo" data-page="home">
                     <div class="logo-icon">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
@@ -2154,18 +2149,18 @@
             <div>
                 <h4 class="footer-title">Quick Links</h4>
                 <ul class="footer-links">
-                    <li><a href="#" data-page="home">Home</a></li>
-                    <li><a href="#" data-page="gamemodes">Gamemodes</a></li>
-                    <li><a href="#" data-page="wiki">Wiki</a></li>
-                    <li><a href="#" data-page="rules">Rules</a></li>
-                    <li><a href="#" data-page="vote">Vote</a></li>
-                    <li><a href="#" data-page="store">Store</a></li>
+                    <li><a href="#home" data-page="home">Home</a></li>
+                    <li><a href="#gamemodes" data-page="gamemodes">Gamemodes</a></li>
+                    <li><a href="#wiki" data-page="wiki">Wiki</a></li>
+                    <li><a href="#rules" data-page="rules">Rules</a></li>
+                    <li><a href="#vote" data-page="vote">Vote</a></li>
+                    <li><a href="#store" data-page="store">Store</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="footer-title">Connect</h4>
                 <ul class="footer-links">
-                    <li><a href="#" data-page="discord">Discord</a></li>
+                    <li><a href="#discord" data-page="discord">Discord</a></li>
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">YouTube</a></li>
                     <li><a href="#">TikTok</a></li>
@@ -2180,7 +2175,6 @@
 
     <script>
         // ========== CONFIGURATION ==========
-        // GANTI DENGAN PRODUCT ID ASLI DARI DASHBOARD TIP4SERV KAMU
         const TIP4SERV_PRODUCTS = {
             bedwars: [
                 {
@@ -2651,7 +2645,7 @@
             });
         }
 
-        // ========== NAVIGATION ==========
+        // ========== NAVIGATION & ROUTER ==========
         const navLinks = document.querySelectorAll('.nav-link, [data-page]');
         const pages = document.querySelectorAll('.page');
         const mobileToggle = document.getElementById('mobileToggle');
@@ -2659,32 +2653,55 @@
         const nav = document.querySelector('.nav');
 
         function showPage(pageId) {
-            pages.forEach(page => page.classList.remove('active'));
-            navLinks.forEach(link => link.classList.remove('active'));
-            
+            // Validasi
             const targetPage = document.getElementById(pageId);
-            if (targetPage) targetPage.classList.add('active');
-            
+            if (!targetPage) return;
+
+            // Toggle Page Class
+            pages.forEach(page => page.classList.remove('active'));
+            targetPage.classList.add('active');
+
+            // Toggle Nav Link Class
             navLinks.forEach(link => {
-                if (link.getAttribute('data-page') === pageId) {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${pageId}`) {
                     link.classList.add('active');
                 }
             });
 
+            // Close Mobile Menu
             navLinksContainer.classList.remove('open');
             mobileToggle.classList.remove('open');
+
+            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Trigger animations
             setTimeout(observeElements, 100);
         }
 
+        // --- Handle Click on Links ---
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const pageId = link.getAttribute('data-page');
-                if (pageId) showPage(pageId);
+                
+                // Update Hash URL
+                window.location.hash = pageId;
             });
         });
 
+        // --- Handle Hash Change (Back/Forward Button) ---
+        window.addEventListener('hashchange', () => {
+            const pageId = window.location.hash.substring(1) || 'home';
+            showPage(pageId);
+        });
+
+        // --- Initial Load ---
+        const initialPage = window.location.hash.substring(1) || 'home';
+        showPage(initialPage);
+
+        // Mobile Toggle
         mobileToggle.addEventListener('click', () => {
             mobileToggle.classList.toggle('open');
             navLinksContainer.classList.toggle('open');
@@ -2762,7 +2779,7 @@
         fetchServerStatus();
         setInterval(fetchServerStatus, 60000);
 
-        // ========== RENDER GAMEMODES (NEW) ==========
+        // ========== RENDER GAMEMODES ==========
         const gamemodeGrid = document.getElementById('gamemodeGrid');
         gamemodes.forEach(gm => {
             const card = document.createElement('div');
@@ -2783,7 +2800,7 @@
             gamemodeGrid.appendChild(card);
         });
 
-        // ========== RENDER STAFF (NEW) ==========
+        // ========== RENDER STAFF ==========
         const staffGrid = document.getElementById('staffGrid');
         staffTeam.forEach(staff => {
             const card = document.createElement('div');
@@ -2796,7 +2813,7 @@
             staffGrid.appendChild(card);
         });
 
-        // ========== RENDER FAQ (NEW) ==========
+        // ========== RENDER FAQ ==========
         const faqContainer = document.getElementById('faqContainer');
         faqData.forEach(item => {
             const faqItem = document.createElement('div');
@@ -2820,7 +2837,7 @@
             faqContainer.appendChild(faqItem);
         });
 
-        // ========== WIKI TABS (NEW) ==========
+        // ========== WIKI TABS ==========
         const wikiTabs = document.querySelectorAll('.wiki-tab');
         const wikiSections = document.querySelectorAll('.wiki-section');
 
