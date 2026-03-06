@@ -3221,6 +3221,54 @@
                 mobileToggle.classList.remove('open');
             }
         });
+        
+                // ========== DISCORD CHAT SYSTEM ==========
+
+        // GANTI INI DENGAN URL BOT KAMU YANG SUDAH DEPLOY!
+        // Kalau masih testing lokal di komputer sendiri, pakai: http://localhost:3000
+        // Kalau sudah di upload ke Railway/Render, pakai URL mereka (contoh: https://botmu.up.railway.app)
+        const BOT_API_ENDPOINT = 'http://ca-01.rrhosting.eu:8029'; 
+
+        async function loadDiscordChat() {
+            const container = document.getElementById('discordChatBox');
+            
+            try {
+                const response = await fetch(`${BOT_API_ENDPOINT}/api/chat`);
+                const messages = await response.json();
+
+                if (messages.error) {
+                    container.innerHTML = '<div class="loader-chat">Gagal memuat chat.</div>';
+                    return;
+                }
+
+                // Render Messages
+                container.innerHTML = messages.map(msg => `
+                    <div class="chat-message">
+                        <img class="chat-avatar" src="${msg.avatar}" alt="${msg.username}">
+                        <div class="chat-content-wrapper">
+                            <div class="chat-user-info">
+                                <span class="chat-username">${msg.username}</span>
+                                <span class="chat-timestamp">${msg.timestamp}</span>
+                            </div>
+                            <div class="chat-text">${msg.content}</div>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Auto scroll ke bawah (pesan terbaru)
+                container.scrollTop = container.scrollHeight;
+
+            } catch (error) {
+                console.error('Error fetching chat:', error);
+                container.innerHTML = '<div class="loader-chat">Bot sedang tidur (Offline).</div>';
+            }
+        }
+
+        // Panggil saat halaman dibuka
+        loadDiscordChat();
+        
+        // Auto refresh setiap 5 detik biar chat update
+        setInterval(loadDiscordChat, 5000);
     </script>
 </body>
 </html>
