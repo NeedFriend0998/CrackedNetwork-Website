@@ -1730,33 +1730,13 @@
                 </div>
 
                 <div class="discord-widget-wrapper">
-                   <!-- Contoh tampilan sederhana -->
-<div id="member-display">
-   Memuat data...
-</div>
-
-<script>
-   // Ganti URL dengan domain hosting bot kamu + port (jika ada)
-   const apiURL = 'http://ca-01.rrhosting.eu:8029/api/members'; 
-   // Jika hosting pakai port 80/443 standar, hilangkan :3000
-
-   async function updateDisplay() {
-       try {
-           const response = await fetch(apiURL);
-           const data = await response.json();
-           
-           // Tampilkan ke layar
-           document.getElementById('member-display').innerText = 
-               `Member Online: ${online}`;
-       } catch (error) {
-           console.log("Gagal ambil data");
-       }
-   }
-
-   updateDisplay();
-   // Update setiap 60 detik
-   setInterval(updateDisplay, 60000);
-</script>
+                    <iframe src="https://discord.com/widget?id=1315221155539587172" 
+                    width="350"
+                    height="500" 
+                    allowtransparency="true" 
+                        frameborder="0" 
+                        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+                    </iframe>
                 </div>
             </div>
         </section>
