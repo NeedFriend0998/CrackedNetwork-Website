@@ -3155,8 +3155,8 @@
             return icons[category] || icons.bedwars;
         }
 
-        function renderProducts(category) {
-            productsGrid.innerHTML = '';
+                function renderProducts(category) {
+            productsGrid.innerHTML = ''; 
             const products = TIP4SERV_PRODUCTS[category] || [];
             
             if(products.length === 0) {
@@ -3170,17 +3170,16 @@
                 if (category === 'coins') cardClass += ' coins';
                 if (category === 'cosmetics') cardClass += ' cosmetic';
 
+                // --- MODIFIKASI: Cek apakah produk sudah ada di cart ---
+                const isInCart = cart.some(item => item.id === product.id);
+
                 let badgeHTML = '';
                 if (product.badge) {
                     const badgeText = product.badge === 'legendary' ? 'Legendary' : 
                                      product.badge === 'popular' ? 'Popular' : 
-                    
-                    product.badge === 'cheapest' ? 'Cheapest' :
-                    
-                    product.badge === 'unavailable' ? 'Not Available' :
-                    
-                    product.badge === 'new' ? 'New' : 'Best Value';
-                    badgeHTML = `<span class="product-badge ${product.badge === 'legendary' ? 'legendary' : ''}">${badgeText}</span>`;
+                                     product.badge === 'cheapest' ? 'Cheapest' : 
+                                     product.badge === 'new' ? 'New' : 'Best Value';
+                    badgeHTML = `<span class="product-badge ${product.badge === 'legendary' ? 'legendary' : product.badge === 'new' ? 'new' : ''}">${badgeText}</span>`;
                 }
 
                 card.className = cardClass;
@@ -3206,16 +3205,27 @@
                         </div>
                         <div class="product-footer">
                             <div class="product-price">${product.price}</div>
-                            <button class="btn-add-cart" data-id="${product.id}" data-category="${category}">+ Add</button>
+                            <button class="btn-add-cart ${isInCart ? 'in-cart' : ''}" data-id="${product.id}" data-category="${category}">
+                                ${isInCart ? '✓ In Cart' : 'Add to Cart'}
+                            </button>
                         </div>
-                    </div>
-                `;
+                    </div>`;
                 productsGrid.appendChild(card);
             });
 
             document.querySelectorAll('.btn-add-cart').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    openProductModal(btn.dataset.id, btn.dataset.category);
+                    const productId = btn.dataset.id;
+                    const category = btn.dataset.category;
+
+                    // --- MODIFIKASI: Logika Toggle ---
+                    if (cart.some(item => item.id === productId)) {
+                        // Jika sudah di cart, klik -> Hapus
+                        removeFromCart(productId);
+                    } else {
+                        // Jika belum, klik -> Buka Modal
+                        openProductModal(productId, category);
+                    }
                 });
             });
         }
