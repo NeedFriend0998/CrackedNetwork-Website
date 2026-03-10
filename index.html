@@ -3300,8 +3300,7 @@
             currentProductAdding = null;
             closeModal();
         });
-
-        // Open Checkout Logic (Called from Sidebar)
+                // Open Checkout Logic (Called from Sidebar)
         function proceedToCheckout() {
             if (cart.length === 0) return;
 
@@ -3312,13 +3311,10 @@
             iframeLoader.style.display = "flex";
             modal.classList.add('active');
 
-            let checkoutUrl = "";
-            if (cart.length > 1) {
-                // More than 1 item -> Basket
-                checkoutUrl = `https://crackedshop.craftingstore.net/checkout/basket`;
-            } else :
-            // Need A FIX
-            // ERROR
+            // MODIFIKASI: Langsung arahkan ke basket, hapus logika IF/ELSE
+            // Karena keranjang visual kita sama dengan keranjang CraftingStore (manual input)
+            let checkoutUrl = `https://crackedshop.craftingstore.net/checkout/basket`;
+            
             checkoutFrame.src = checkoutUrl;
         }
 
