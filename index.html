@@ -3313,10 +3313,7 @@
             if (cart.length > 1) {
                 // More than 1 item -> Basket
                 checkoutUrl = `https://crackedshop.craftingstore.net/checkout/basket`;
-            } else {
-                // Exactly 1 item -> Direct Package
-                checkoutUrl = `https://crackedshop.craftingstore.net/package/${cart[0].id}`;
-            }
+            } 
             
             checkoutFrame.src = checkoutUrl;
         }
