@@ -230,7 +230,7 @@
             gap: 0.5rem;
             padding: 0.4rem 1rem;
             background: rgba(0, 229, 160, 0.1);
-            border: 1px solid rgba(0, 229, 160, 0.3);
+            
             border-radius: 50px;
             font-size: 0.85rem;
             color: var(--accent);
@@ -1031,7 +1031,7 @@
             justify-content: center;
         }
 
-        /* ===== STORE PAGE (MODIFIED) ===== */
+        /* ===== STORE PAGE ===== */
         .store-page {
             padding: 3rem 2rem;
             max-width: 1400px;
@@ -1041,34 +1041,6 @@
         .store-header {
             text-align: center;
             margin-bottom: 3rem;
-        }
-
-        /* CSS Tambahan untuk Tombol Basket */
-        .store-actions {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-        }
-        .btn-view-basket {
-            background: var(--card);
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: inherit;
-            font-size: 0.95rem;
-        }
-        .btn-view-basket:hover {
-            background: var(--accent);
-            color: var(--bg);
-            box-shadow: 0 5px 20px var(--accent-glow);
         }
 
         .store-categories {
@@ -1722,6 +1694,107 @@
             font-weight: 700;
             margin-right: 5px;
         }
+        
+                /* --- DISCORD CHAT PREVIEW --- */
+        .discord-chat-widget {
+            background: #36393f; /* Warna background Discord */
+            border-radius: 12px;
+            width: 100%;
+            max-width: 450px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+        }
+
+        .chat-header {
+            background: #202225;
+            padding: 12px 16px;
+            font-weight: 600;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+        }
+
+        .chat-header svg {
+            fill: #72767d;
+        }
+
+        .chat-messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-image: url('https://i.imgur.com/8t5dFjP.png'); /* Gambar background kosong optional */
+            background-size: cover;
+        }
+
+        .chat-message {
+            display: flex;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .chat-content-wrapper {
+            flex: 1;
+        }
+
+        .chat-user-info {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+
+        .chat-username {
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        .chat-timestamp {
+            color: #72767d;
+            font-size: 11px;
+        }
+
+        .chat-text {
+            color: #dcddde;
+            font-size: 14px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        /* Scrollbar Custom */
+        .chat-messages-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .chat-messages-container::-webkit-scrollbar-track {
+            background: #2f3136;
+        }
+        .chat-messages-container::-webkit-scrollbar-thumb {
+            background: #202225;
+            border-radius: 4px;
+        }
+        
+        .loader-chat {
+            text-align: center;
+            color: #72767d;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -2135,7 +2208,7 @@
             </div>
         </section>
 
-        <!-- STORE PAGE (MODIFIED HTML) -->
+        <!-- STORE PAGE -->
         <section class="page" id="store">
             <div class="store-page">
                 <div class="store-header">
@@ -2143,16 +2216,6 @@
                     <p class="section-subtitle">
                         Support the server by purchasing ranks and items. Payments are securely processed by CraftingStore.
                     </p>
-                    <!-- Tombol untuk melihat keranjang CraftingStore -->
-                    <div class="store-actions">
-                        <button class="btn-view-basket" id="btnViewBasket">
-                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
-                                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
-                            </svg>
-                            View Cart / Checkout
-                        </button>
-                    </div>
                 </div>
 
                 <div class="store-categories" id="storeCategories"></div>
@@ -2165,7 +2228,7 @@
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-checkout">
             <div class="modal-header">
-                <h3 id="modalTitle">Complete Your Purchase</h3>
+                <h3>Complete Your Purchase</h3>
                 <button class="modal-close" id="closeModal">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -3013,7 +3076,7 @@
             voteSitesGrid.appendChild(card);
         });
 
-        // ========== RENDER STORE (MODIFIED JS) ==========
+        // ========== RENDER STORE ==========
         const storeCategoriesEl = document.getElementById('storeCategories');
         const productsGrid = document.getElementById('productsGrid');
         let activeCategory = 'bedwars';
@@ -3035,7 +3098,10 @@
             const icons = {
                 bedwars: '<svg viewBox="0 0 24 24" fill="none"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8" stroke-width="1.5"/></svg>',
                 survival: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-width="1.5"/></svg>',
-                coins: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 6v12M8 10h8M8 14h8" stroke-width="1.5"/></svg>'
+                practice: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke-width="1.5"/></svg>',
+                hideandseek: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 16v-4M12 8h.01" stroke-width="2" stroke-linecap="round"/></svg>',
+                coins: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 6v12M8 10h8M8 14h8" stroke-width="1.5"/></svg>',
+                cosmetics: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke-width="1.5"/></svg>'
             };
             return icons[category] || icons.bedwars;
         }
@@ -3059,9 +3125,13 @@
                 if (product.badge) {
                     const badgeText = product.badge === 'legendary' ? 'Legendary' : 
                                      product.badge === 'popular' ? 'Popular' : 
-                                     product.badge === 'cheapest' ? 'Cheapest' : 
-                                     product.badge === 'new' ? 'New' : 'Best Value';
-                    badgeHTML = `<span class="product-badge ${product.badge === 'legendary' ? 'legendary' : product.badge === 'new' ? 'new' : ''}">${badgeText}</span>`;
+                    
+                    product.badge === 'cheapest' ? 'Cheapest' :
+                    
+                    product.badge === 'unavailable' ? 'Not Available' :
+                    
+                    product.badge === 'new' ? 'New' : 'Best Value';
+                    badgeHTML = `<span class="product-badge ${product.badge === 'legendary' ? 'legendary' : ''}">${badgeText}</span>`;
                 }
 
                 card.className = cardClass;
@@ -3103,13 +3173,11 @@
 
         renderProducts(activeCategory);
 
-        // ========== CHECKOUT MODAL (MODIFIED JS) ==========
+        // ========== CHECKOUT MODAL ==========
         const modal = document.getElementById('checkoutModal');
         const checkoutFrame = document.getElementById('checkoutFrame');
         const iframeLoader = document.getElementById('iframeLoader');
         const closeModalBtn = document.getElementById('closeModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const btnViewBasket = document.getElementById('btnViewBasket');
 
         function openCheckout(productId) {
             if (!productId || productId.startsWith("GANTI_DENGAN_ID_")) {
@@ -3117,7 +3185,6 @@
                 return;
             }
 
-            modalTitle.textContent = "Purchase Item";
             modal.classList.add('active');
             checkoutFrame.src = "about:blank";
             iframeLoader.style.display = "flex";
@@ -3125,19 +3192,6 @@
             const checkoutUrl = `https://crackedshop.craftingstore.net/package/${productId}`;
             checkoutFrame.src = checkoutUrl;
         }
-
-        function openBasket() {
-            modalTitle.textContent = "Shopping Basket / Checkout";
-            modal.classList.add('active');
-            checkoutFrame.src = "about:blank";
-            iframeLoader.style.display = "flex";
-            
-            const basketUrl = `https://crackedshop.craftingstore.net/checkout/basket`;
-            checkoutFrame.src = basketUrl;
-        }
-
-        // Event listener untuk tombol View Basket
-        btnViewBasket.addEventListener('click', openBasket);
 
         checkoutFrame.addEventListener('load', () => {
             if (checkoutFrame.src !== "about:blank") {
