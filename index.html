@@ -1752,7 +1752,7 @@ input, textarea {
                 </div>
                 CrackedNetwork
             </a>
-                        <div class="nav-links" id="navLinks">
+            <div class="nav-links" id="navLinks">
                 <a href="/home" class="nav-link active" data-page="home">Home</a>
                 <a href="/gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
                 <a href="/wiki" class="nav-link" data-page="wiki">Wiki</a>
@@ -1760,6 +1760,7 @@ input, textarea {
                 <a href="/vote" class="nav-link" data-page="vote">Vote</a>
                 <a href="/store" class="nav-link" data-page="store">Store</a>
                 <a href="/discord" class="nav-link" data-page="discord">Discord</a>
+                <!-- LINK BARU: About Server (Diperbaiki) -->
                 <a href="/about" class="nav-link" data-page="about">About Server</a>
             </div>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
@@ -1771,34 +1772,7 @@ input, textarea {
     </nav>
 
     <main class="pages">
-      
-    <!-- NEWS PAGE -->
-<section class="page" id="about">
-    <div class="rules-page"> <!-- Pake class rules-page biar rapi, atau bikin class baru kalo mau -->
-        <div class="rules-header">
-            <h1 class="section-title">Server News</h1>
-            <p class="section-subtitle">
-                Update terbaru dan event seru dari CrackedNetwork!
-            </p>
-        </div>
-        
-        <div class="rules-grid">
-            <!-- ISI KONTEN DI SINI -->
-            <div class="rule-card">
-                <div class="rule-header">
-                    <div class="rule-title"></div>
-                </div>
-                <div class="rule-content">
-                    <div class="rule-body">
-                        <p>Ada fitur baru lho di Survival! Cek sekarang.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-      <!-- DISCORD PAGE -->
+        <!-- DISCORD PAGE -->
         <section class="page" id="discord">
             <div class="discord-page">
                 <div class="section-header">
@@ -1821,6 +1795,7 @@ input, textarea {
                 </div>
             </div>
         </section>
+        
         <!-- HOME PAGE -->
         <section class="page active" id="home">
             <div class="hero">
@@ -1967,20 +1942,6 @@ input, textarea {
                             exciting and unique!
                         </p>
                     </div>
-                    <!--<div class="feature-card reveal">
-                        <div class="feature-icon">
-                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                <line x1="8" y1="21" x2="16" y2="21"/>
-                                <line x1="12" y1="17" x2="12" y2="21"/>
-                            </svg>
-                        </div>
-                        <h3 class="feature-title">Cross-Platform</h3>
-                        <p class="feature-desc">
-                            Supports Java & Bedrock Edition. Play with friends 
-                            from different platforms!
-                        </p>
-                    </div>-->
                     <div class="feature-card reveal">
                         <div class="feature-icon">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2197,6 +2158,85 @@ input, textarea {
 
                 <div class="store-categories" id="storeCategories"></div>
                 <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </section>
+        
+        <!-- NEW: ABOUT SERVER PAGE -->
+        <section class="page" id="about">
+            <div class="rules-page"> <!-- Using rules-page class for width/padding consistency -->
+                <div class="rules-header">
+                    <h1 class="section-title">About CrackedNetwork</h1>
+                    <p class="section-subtitle">
+                        Learn more about our journey, mission, and what makes us unique.
+                    </p>
+                </div>
+
+                <!-- Content Block 1 -->
+                <div class="rules-grid" style="margin-top: 2rem;">
+                    <div class="rule-card open" style="cursor: default;"> <!-- Open by default, no cursor pointer -->
+                        <div class="rule-header" style="cursor: default;">
+                            <div class="rule-number">01</div>
+                            <div class="rule-title">Who We Are</div>
+                        </div>
+                        <div class="rule-content" style="max-height: 1000px; overflow: visible;"> <!-- Always visible -->
+                            <div class="rule-body" style="padding-bottom: 1.5rem;">
+                                <p>
+                                    CrackedNetwork is a premier Minecraft server dedicated to providing a unique and exciting gaming experience for both premium and cracked players. Founded with the vision of creating a friendly and active community, we strive to deliver high-quality gameplay with custom plugins and regular updates. We believe in a fair play environment where every player has an equal opportunity to succeed.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Block 2 -->
+                    <div class="rule-card open" style="cursor: default;">
+                        <div class="rule-header" style="cursor: default;">
+                            <div class="rule-number">02</div>
+                            <div class="rule-title">Our Mission</div>
+                        </div>
+                        <div class="rule-content" style="max-height: 1000px; overflow: visible;">
+                            <div class="rule-body" style="padding-bottom: 1.5rem;">
+                                <p>
+                                    Our mission is to build a safe, inclusive, and fun environment where players from all backgrounds can come together to explore, build, and compete. We prioritize fair play through strict anti-cheat measures and an active staff team. We aim to be a home for Minecraft enthusiasts who want more than just a standard server experience.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Features Grid (Reusing feature-card style) -->
+                <div class="features-grid" style="margin-top: 3rem; padding: 0;">
+                    <div class="feature-card">
+                         <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3 class="feature-title">Secure & Stable</h3>
+                        <p class="feature-desc">Running on dedicated hardware with 99.9% uptime and DDoS protection.</p>
+                    </div>
+                     <div class="feature-card">
+                         <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                        </div>
+                        <h3 class="feature-title">Community First</h3>
+                        <p class="feature-desc">We listen to our players. Your feedback shapes the future of the server.</p>
+                    </div>
+                     <div class="feature-card">
+                         <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <h3 class="feature-title">Regular Events</h3>
+                        <p class="feature-desc">Weekly events, tournaments, and giveaways to keep the fun going.</p>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="/discord" class="btn btn-primary" data-page="discord">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                        </svg>
+                        Join Our Discord
+                    </a>
+                </div>
             </div>
         </section>
     </main>
