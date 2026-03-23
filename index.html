@@ -1735,6 +1735,111 @@ input, textarea {
   -webkit-user-select: text;
   user-select: text;
 }
+
+/* ===== PLUGIN INFO PAGE (FILE MANAGER STYLE) ===== */
+.file-manager {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.fm-header {
+    background: var(--bg-secondary);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.fm-path {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    border: 1px solid var(--border);
+}
+
+.fm-list-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 3fr; /* Name, Version, Author, Desc */
+    padding: 0.75rem 1.5rem;
+    background: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.fm-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 3fr;
+    padding: 1rem 1.5rem;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+}
+
+.fm-item:last-child { border-bottom: none; }
+.fm-item:hover { background: rgba(0, 229, 160, 0.03); }
+
+.fm-name {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 600;
+    color: var(--fg);
+}
+
+.fm-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, rgba(0, 229, 160, 0.1), rgba(0, 180, 216, 0.1));
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fm-icon svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--accent);
+}
+
+.fm-version { 
+    color: var(--accent); 
+    font-family: 'JetBrains Mono', monospace; 
+    font-size: 0.85rem; 
+}
+.fm-author { color: var(--muted); font-size: 0.9rem; }
+.fm-desc { 
+    color: var(--muted); 
+    font-size: 0.85rem; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+}
+
+/* Responsive File Manager */
+@media (max-width: 768px) {
+    .fm-list-header { display: none; }
+    .fm-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .fm-name { font-size: 1rem; }
+    .fm-desc { white-space: normal; }
+}
     </style>
 </head>
 <body>
@@ -1761,6 +1866,8 @@ input, textarea {
                 <a href="/store" class="nav-link" data-page="store">Store</a>
                 <a href="/discord" class="nav-link" data-page="discord">Discord</a>
                 <a href="/forums" class="nav-link" data-page="forums">Forums</a>
+                <!-- NEW NAV LINK -->
+                <a href="/plugins" class="nav-link" data-page="plugins">Plugin Info</a>
             </div>
             <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
                 <span></span>
@@ -1771,6 +1878,42 @@ input, textarea {
     </nav>
 
     <main class="pages">
+      <!-- PLUGIN INFO PAGE (NEW) -->
+      <section class="page" id="plugins">
+            <div class="rules-page"> <!-- Reusing rules-page class for layout consistency -->
+                <div class="rules-header">
+                    <h1 class="section-title">Plugin Information</h1>
+                    <p class="section-subtitle">
+                        List of plugins and modifications currently running on the server. Data is fetched dynamically.
+                    </p>
+                </div>
+
+                <div class="file-manager">
+                    <div class="fm-header">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                        <div class="fm-path">/home/server/plugins</div>
+                    </div>
+                    <div class="fm-list-header">
+                        <div>Plugin Name</div>
+                        <div>Version</div>
+                        <div>Author</div>
+                        <div>Description</div>
+                    </div>
+                    <div id="pluginListContainer">
+                        <!-- Loader -->
+                        <div class="fm-item">
+                            <div class="fm-name"><div class="loader" style="width:24px;height:24px;border-width:2px;"></div> Loading plugins...</div>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="vote-intro" style="margin-top: 2rem; text-align: left; border-color: var(--warning); background: rgba(255, 165, 2, 0.05); border: 1px solid;">
+                    <h3 style="color: var(--warning); font-size: 1rem;">Security Notice</h3>
+                    <p style="font-size: 0.9rem;">This list is automatically generated. Some sensitive administrative plugins are hidden for security purposes. Do not attempt to exploit any known plugin vulnerabilities.</p>
+                </div>
+            </div>
+        </section>
+
       <!--Forums-->
     <section class="page" id="forums">
             <div class="discord-page">
@@ -2624,9 +2767,7 @@ input, textarea {
             {
                 name: "Hide And Seek ( Coming Soon )",
                 tag: "Mini Game",
-                desc: "Hide as a block or search for the hiders! A fun casual game to relax with friends.",
-                features: ["Block Disguise", "Props", "Multiple Maps", "Taunts", "Effects"],
-                icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>'
+                desc: "Hide as a block or search for the hiders! A fun casual game to relax with friends."
             }
         ];
 
@@ -2766,6 +2907,12 @@ input, textarea {
             navLinksContainer.classList.remove('open');
             mobileToggle.classList.remove('open');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // === SPECIFIC PAGE ACTIONS ===
+            if (pageId === 'plugins') {
+                loadPlugins();
+            }
+            
             setTimeout(observeElements, 100);
         }
 
@@ -2898,7 +3045,7 @@ input, textarea {
                     <h3 class="gamemode-title">${gm.name}</h3>
                     <p class="gamemode-desc">${gm.desc}</p>
                     <div class="gamemode-features">
-                        ${gm.features.map(f => `<span class="gm-feature">${f}</span>`).join('')}
+                        ${gm.features ? gm.features.map(f => `<span class="gm-feature">${f}</span>`).join('') : ''}
                     </div>
                 </div>
             `;
@@ -3174,6 +3321,54 @@ input, textarea {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
         });
+
+        // ========== PLUGIN INFO LOADER ==========
+        const pluginListContainer = document.getElementById('pluginListContainer');
+
+        async function loadPlugins() {
+            try {
+                // Fetch plugins.txt
+                const response = await fetch('/plugins.txt');
+                if (!response.ok) throw new Error('File not found');
+                
+                const text = await response.text();
+                
+                // Parse JSON
+                const plugins = JSON.parse(text);
+                renderPlugins(plugins);
+            } catch (error) {
+                console.error('Failed to load plugins:', error);
+                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name" style="color:var(--danger);">Error loading plugins.txt</div></div>';
+            }
+        }
+
+        function renderPlugins(plugins) {
+            pluginListContainer.innerHTML = '';
+            
+            if (plugins.length === 0) {
+                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name">No plugins found.</div></div>';
+                return;
+            }
+
+            plugins.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'fm-item';
+                item.innerHTML = `
+                    <div class="fm-name">
+                        <div class="fm-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+                            </svg>
+                        </div>
+                        ${p.name || 'Unknown'}
+                    </div>
+                    <div class="fm-version">${p.version || '-'}</div>
+                    <div class="fm-author">${p.author || 'Unknown'}</div>
+                    <div class="fm-desc">${p.description || 'No description provided.'}</div>
+                `;
+                pluginListContainer.appendChild(item);
+            });
+        }
 
         // ========== SCROLL REVEAL ==========
         function observeElements() {
