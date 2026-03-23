@@ -1,0 +1,177 @@
+[
+    {
+      "name": "ADDON - Team Selector for BedWars1058",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "ArWarn",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "BedWars Cosmetics",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "BedWars1058",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "BedWars1058 Pop-up Towers",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "BedWars1058-GroupStats",
+      "version": "9.0-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "BedWars1058-MapSelector Addon",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "ChestCommands",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "Citizens",
+      "version": "2.0.33-b3393",
+      "author": null
+    },
+    {
+      "name": "DecentHolograms",
+      "version": "2.9.9",
+      "author": null
+    },
+    {
+      "name": "Essentials",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "EssentialsX",
+      "version": "2.21.2",
+      "author": null
+    },
+    {
+      "name": "FancyAnalytics",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "FancyHolograms",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "ItemJoin",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "LuckPerms",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "LuckPerms-Bukkit",
+      "version": "5.5.17",
+      "author": null
+    },
+    {
+      "name": "Parkour",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "PlaceholderAPI",
+      "version": "2.11.7",
+      "author": null
+    },
+    {
+      "name": "Player Report | 1.7 - 1.20 | GUI for",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "PluginMetrics",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "ProtocolLib",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "Vault",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "ViaBackwards",
+      "version": "5.7.2",
+      "author": null
+    },
+    {
+      "name": "ViaRewind",
+      "version": "4.1.0-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "ViaVersion",
+      "version": "5.7.3-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "WorldEdit",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "WorldGuard",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "[Addon] BedWars1058 - AntiDrop (Doesn't allow the players to drop the items into the void)",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "[Addon] BedWars1058 - Compass (Team Tracker, Quick Communications, Multi-language support)",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "ajLeaderboards",
+      "version": "2.10.1-b318",
+      "author": null
+    },
+    {
+      "name": "bStats",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "bedwars-plugin",
+      "version": "25.5-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "spark",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "worldedit-bukkit",
+      "version": "7.3.9",
+      "author": null
+    }
+  ]
