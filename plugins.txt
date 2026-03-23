@@ -1,8 +1,6 @@
 [
   {
-    "name": "AnimatedScoreboard",
-    "version": "0.3.8",
-    "author": "JasperJH"
+    "name": "AnimatedScoreboard"
   },
   {
     "name": "AuthMe",
