@@ -1,4 +1,5 @@
 [
+ "title": "A"
   {
     "name": "AnimatedScoreboard",
     "version": "0.3.8",
