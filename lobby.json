@@ -1,0 +1,147 @@
+[
+  {
+    "name": "AnimatedScoreboard",
+    "version": "0.3.8",
+    "author": "JasperJH"
+  },
+  {
+    "name": "AuthMe",
+    "version": "5.6.0",
+    "author": "sgdc3"
+  },
+  {
+    "name": "AuthMeVelocity",
+    "version": "4.0.0",
+    "author": "adrianed04"
+  },
+  {
+    "name": "CraftingStore",
+    "version": "2.11.1",
+    "author": "Tim_kwakman"
+  },
+  {
+    "name": "DecentHolograms",
+    "version": "2.9.9",
+    "author": "D0bby_"
+  },
+  {
+    "name": "DeluxeHub",
+    "version": "3.7.3",
+    "author": "aus7124"
+  },
+  {
+    "name": "EssentialsX",
+    "version": "2.21.2",
+    "author": "md678685"
+  },
+  {
+    "name": "EssentialsXChat",
+    "version": "2.21.2",
+    "author": "md678685"
+  },
+  {
+    "name": "FancyAnalytics",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "FancyNpcs",
+    "version": "2.9.2.337",
+    "author": "Oliver"
+  },
+  {
+    "name": "GSit",
+    "version": "3.2.1",
+    "author": "Gecolay"
+  },
+  {
+    "name": "InteractiveChat",
+    "version": "4.3.5",
+    "author": "LOOHP"
+  },
+  {
+    "name": "LobbyPvP",
+    "version": "1.0.5",
+    "author": "Tamikk"
+  },
+  {
+    "name": "LuckPerms",
+    "version": "5.5.0",
+    "author": "Luck"
+  },
+  {
+    "name": "PlaceholderAPI",
+    "version": "2.12.2",
+    "author": "HelpChat"
+  },
+  {
+    "name": "ProtocolLib",
+    "version": "5.4.0",
+    "author": "dmulloy2"
+  },
+  {
+    "name": "SetSpawn",
+    "version": "5.5.2",
+    "author": "J0hny"
+  },
+  {
+    "name": "SimpleSuggestions",
+    "version": "1.1.0",
+    "author": "Tagtart"
+  },
+  {
+    "name": "SkBee",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "TAB",
+    "version": "5.5.0",
+    "author": "NEZNAMY"
+  },
+  {
+    "name": "TaskTimer",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "UltimateAutoRestart",
+    "version": "2025.12",
+    "author": "Norska"
+  },
+  {
+    "name": "Vault",
+    "version": "1.7.3",
+    "author": "Sleaker"
+  },
+  {
+    "name": "Votifier",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "WorldEdit",
+    "version": "7.4.0-RC1",
+    "author": "EngineHub"
+  },
+  {
+    "name": "WorldGuard",
+    "version": "7.0.16-beta-1",
+    "author": "EngineHub"
+  },
+  {
+    "name": "bStats",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "NuVotifier",
+    "version": "2.7.3",
+    "author": "Tux"
+  },
+  {
+    "name": "spark",
+    "version": "1.10.119",
+    "author": "Luck"
+  }
+]
