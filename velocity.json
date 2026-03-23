@@ -1,0 +1,74 @@
+{
+  "plugins": [
+    {
+      "name": "advancedserverlist",
+      "version": "5.7.2",
+      "author": null
+    },
+    {
+      "name": "alert",
+      "version": "1.8",
+      "author": null
+    },
+    {
+      "name": "authmevelocity",
+      "version": "4.2.0",
+      "author": null
+    },
+    {
+      "name": "craftingstore",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "maintenance",
+      "version": "4.3.0",
+      "author": null
+    },
+    {
+      "name": "viabackwards",
+      "version": "5.7.2",
+      "author": null
+    },
+    {
+      "name": "viarewind",
+      "version": "4.1.0-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "viaversion",
+      "version": "5.7.3-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "votespeed",
+      "version": "1.0.1",
+      "author": null
+    },
+    {
+      "name": "bStats",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "hub",
+      "version": null,
+      "author": null
+    },
+    {
+      "name": "server-links",
+      "version": "1.1.1",
+      "author": null
+    },
+    {
+      "name": "slashserver",
+      "version": "1.0-SNAPSHOT",
+      "author": null
+    },
+    {
+      "name": "vccommad",
+      "version": "1.1",
+      "author": null
+    }
+  ]
+}
