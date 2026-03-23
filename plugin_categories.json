@@ -1,14 +1,14 @@
 [
   {
+    "id": "velocity",
+    "name": "Velocity Proxy"
+  },
+  {
     "id": "lobby",
     "name": "Lobby Plugins"
   },
   {
     "id": "bw",
     "name": "Bedwars Plugins"
-  },
-  {
-    "id": "velocity",
-    "name": "Velocity Proxy"
   }
 ]
