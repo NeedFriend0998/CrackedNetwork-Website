@@ -3282,14 +3282,14 @@ input, textarea {
             if (e.target === modal) closeModal();
         });
 
-        // ========== PLUGIN MANAGER (FIX TOTAL - ANTI LOADING) ==========
+        // ========== PLUGIN MANAGER (FIX RELOAD RACE CONDITION) ==========
         const pluginCategoryTabs = document.getElementById('pluginCategoryTabs');
         const pluginListContainer = document.getElementById('pluginListContainer');
         const fmCurrentPath = document.getElementById('fmCurrentPath');
-        let currentPluginCategory = null;
         let pluginManifest = [];
+        let isPluginLoading = false; // Pengaman supaya tidak load 2x
 
-        // DATA CADANGAN LANGSUNG (Tidak perlu file JSON dulu)
+        // DATA CADANGAN DEFAULT
         const DEFAULT_DATA = {
             categories: [
                 { id: "lobby", name: "Lobby" },
@@ -3307,33 +3307,41 @@ input, textarea {
         };
 
         async function initPluginManager() {
-            // 1. LANGSUNG HAPUS LOADER & TULIS TEKS BIAR AMAN
-            pluginCategoryTabs.innerHTM = 'Memuat...';
+            // PENGAMAN: Kalau lagi loading, jangan lakukan apa-apa
+            if (isPluginLoading) return;
+            isPluginLoading = true;
 
-            // 2. Coba ambil JSON, kalau gagal (misal isinya HTML dari Netlify), pakai DEFAULT_DATA
+            // LANGSUNG HAPUS LOADER MANUAL (PENTING)
+            pluginCategoryTabs.innerHTML = 'Memuat kategori...';
+            pluginListContainer.innerHTML = '<div class="fm-item">Mempersiapkan data...</div>';
+
             try {
                 const response = await fetch('/plugin_categories.json');
-                // Coba parse JSON. Kalau ini HTML, pasti error di sini.
-                const data = await response.json(); 
-                pluginManifest = data;
+                // Cek apakah beneran JSON
+                const contentType = response.headers.get('content-type');
+                if (response.ok && contentType && contentType.includes('application/json')) {
+                    pluginManifest = await response.json();
+                } else {
+                    throw new Error("Bukan file JSON");
+                }
             } catch (err) {
-                console.warn("Gagal load JSON (kemungkinan file belum dibuat), pakai data bawaan.");
+                console.warn("Gagal ambil JSON, pakai data default.", err);
                 pluginManifest = DEFAULT_DATA.categories;
             }
 
-            // 3. Tampilkan Tab
+            // Render Tab (Ini pasti jalan kalau tidak ada error mati)
             renderPluginTabs(pluginManifest);
+            
             if (pluginManifest.length > 0) {
-                loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
+                // Load kategori pertama
+                await loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
             }
+            
+            isPluginLoading = false;
         }
 
         function renderPluginTabs(manifest) {
             pluginCategoryTabs.innerHTML = '';
-            if(manifest.length === 0) {
-                pluginCategoryTabs.innerHTML = '<span style="color:var(--danger);padding:1rem;">Kategori kosong</span>';
-                return;
-            }
             manifest.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'fm-tab';
@@ -3345,29 +3353,32 @@ input, textarea {
         }
 
         async function loadPluginCategory(id, name, btnElement = null) {
+            // Update Active State
             document.querySelectorAll('.fm-tab').forEach(t => t.classList.remove('active'));
-            if (btnElement) { btnElement.classList.add('active'); } else { 
-                const t = document.querySelector(`.fm-tab[data-id="${id}"]`); 
-                if(t) t.classList.add('active'); 
+            if (btnElement) btnElement.classList.add('active');
+            else {
+                const firstTab = document.querySelector(`.fm-tab[data-id="${id}"]`);
+                if (firstTab) firstTab.classList.add('active');
             }
-            
+
             currentPluginCategory = id;
             fmCurrentPath.textContent = `/plugins/${id}/`;
-            pluginListContainer.innerHTML = '<div class="fm-item" style="color:var(--accent);">Loading plugins...</div>';
+            pluginListContainer.innerHTML = '<div class="fm-item">Memuat plugin...</div>';
 
             let plugins = [];
-
             try {
                 const response = await fetch(`/${id}.json`);
-                // Coba parse, kalau error (karena HTML), lempar ke catch
-                plugins = await response.json(); 
+                const contentType = response.headers.get('content-type');
+                if (response.ok && contentType && contentType.includes('application/json')) {
+                    plugins = await response.json();
+                } else {
+                    throw new Error("File error");
+                }
             } catch (err) {
-                console.warn(`File ${id}.json tidak ada/error. Pakai data bawaan.`);
                 plugins = DEFAULT_DATA.plugins[id] || [];
-            }
-
-            if (plugins.length === 0) {
-                plugins = [{ name: "Data Tidak Ditemukan", version: "-", author: "System", description: "Buat file .json atau edit DEFAULT_DATA di script." }];
+                if (plugins.length === 0) {
+                    plugins = [{ name: "Data Tidak Ada", version: "-", author: "System", description: "Buat file .json atau edit DEFAULT_DATA di script." }];
+                }
             }
 
             renderPluginList(plugins);
@@ -3375,8 +3386,10 @@ input, textarea {
 
         function renderPluginList(plugins) {
             pluginListContainer.innerHTML = '';
-            if (!plugins || plugins.length === 0) return;
-            
+            if (!plugins || plugins.length === 0) {
+                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name">Tidak ada plugin.</div></div>';
+                return;
+            }
             plugins.forEach(p => {
                 const item = document.createElement('div');
                 item.className = 'fm-item';
