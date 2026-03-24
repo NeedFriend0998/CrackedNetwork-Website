@@ -1864,7 +1864,8 @@ input, textarea {
                     </div>
                     
                     <!-- Tabs will be injected here by JS -->
-                    <div class="fm-tabs" id="pluginCategoryTabs"></div>
+                    <div class="fm-tabs" id="pluginCategoryTabs"><div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>
+                    </div>
 
                     <div class="fm-list-header">
                         <div>Plugin Name</div>
@@ -3282,13 +3283,14 @@ input, textarea {
             if (e.target === modal) closeModal();
         });
 
-        // ========== PLUGIN MANAGER (FIX - PAKAI DATA DEFAULT, SUPPORT TXT) ==========
+        // ========== PLUGIN MANAGER (FIX TOTAL - ANTI LOADING) ==========
         const pluginCategoryTabs = document.getElementById('pluginCategoryTabs');
         const pluginListContainer = document.getElementById('pluginListContainer');
         const fmCurrentPath = document.getElementById('fmCurrentPath');
         let currentPluginCategory = null;
-        
-        // 1. DATA DEFAULT (HARDCODED) - Ini yang akan muncul pertama kali (100% pasti muncul)
+        let pluginManifest = [];
+
+        // DATA CADANGAN LANGSUNG (Tidak perlu file JSON dulu)
         const DEFAULT_DATA = {
             categories: [
                 { id: "lobby", name: "Lobby" },
@@ -3297,111 +3299,96 @@ input, textarea {
             plugins: {
                 lobby: [
                     { name: "WorldEdit", version: "7.2.15", author: "EngineHub", description: "Map editing tool." },
-                    { name: "EssentialsX", version: "2.20.1", author: "EssentialsX Team", description: "Essential server commands." },
-                    { name: "PlaceholderAPI", version: "2.11.3", author: "PlaceholderAPI", description: "Placeholders support." }
+                    { name: "EssentialsX", version: "2.20.1", author: "Essentials Team", description: "Commands." }
                 ],
                 bw: [
-                    { name: "BedWars1058", version: "22.2", author: "andrei1058", description: "Bedwars mini-game plugin." },
-                    { name: "Vault", version: "1.7.3", author: "Milkbowl", description: "Permission & Economy API." }
+                    { name: "BedWars1058", version: "22.2", author: "andrei1058", description: "Bedwars plugin." }
                 ]
             }
         };
 
-        // Fungsi untuk memulai
-        function initPluginManager() {
-            // Langsung render data default (Tanpa loading, tanpa fetch)
-            renderPluginTabs(DEFAULT_DATA.categories);
-            
-            if (DEFAULT_DATA.categories.length > 0) {
-                loadPluginCategory(DEFAULT_DATA.categories[0].id, DEFAULT_DATA.categories[0].name);
+        async function initPluginManager() {
+            // 1. LANGSUNG HAPUS LOADER & TULIS TEKS BIAR AMAN
+            pluginCategoryTabs.innerHTM = 'Memuat...';
+
+            // 2. Coba ambil JSON, kalau gagal (misal isinya HTML dari Netlify), pakai DEFAULT_DATA
+            try {
+                const response = await fetch('/plugin_categories.json');
+                // Coba parse JSON. Kalau ini HTML, pasti error di sini.
+                const data = await response.json(); 
+                pluginManifest = data;
+            } catch (err) {
+                console.warn("Gagal load JSON (kemungkinan file belum dibuat), pakai data bawaan.");
+                pluginManifest = DEFAULT_DATA.categories;
+            }
+
+            // 3. Tampilkan Tab
+            renderPluginTabs(pluginManifest);
+            if (pluginManifest.length > 0) {
+                loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
             }
         }
 
-        // Fungsi render tombol kategori
         function renderPluginTabs(manifest) {
             pluginCategoryTabs.innerHTML = '';
+            if(manifest.length === 0) {
+                pluginCategoryTabs.innerHTML = '<span style="color:var(--danger);padding:1rem;">Kategori kosong</span>';
+                return;
+            }
             manifest.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = 'fm-tab';
                 btn.dataset.id = cat.id;
                 btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg> ${cat.name}`;
-                
-                // Klik tab -> Ganti kategori
                 btn.onclick = function() { loadPluginCategory(cat.id, cat.name, this); };
                 pluginCategoryTabs.appendChild(btn);
             });
         }
 
-        // Fungsi load konten plugin
         async function loadPluginCategory(id, name, btnElement = null) {
-            // Set Active Tab
             document.querySelectorAll('.fm-tab').forEach(t => t.classList.remove('active'));
-            if (btnElement) { btnElement.classList.add('active'); } else {
-                const firstTab = document.querySelector(`.fm-tab`); 
-                if(firstTab) firstTab.classList.add('active'); 
+            if (btnElement) { btnElement.classList.add('active'); } else { 
+                const t = document.querySelector(`.fm-tab[data-id="${id}"]`); 
+                if(t) t.classList.add('active'); 
             }
             
             currentPluginCategory = id;
             fmCurrentPath.textContent = `/plugins/${id}/`;
-            
-            // Tampilkan data default dulu (biar cepat)
-            let plugins = DEFAULT_DATA.plugins[id] || [];
-            renderPluginList(plugins);
+            pluginListContainer.innerHTML = '<div class="fm-item" style="color:var(--accent);">Loading plugins...</div>';
 
-            // OPSIONAL: Coba load file .txt kalau ada (tidak mengganggu tampilan default)
-            // Jika kamu tidak buat file .txt, yang muncul tetap data DEFAULT_DATA di atas.
+            let plugins = [];
+
             try {
-                const response = await fetch(`/${id}.txt`); // Coba cari file lobby.txt / bw.txt
-                if(response.ok) {
-                    const text = await response.text();
-                    // Proses format TXT (Format: Nama | Versi | Author | Deskripsi)
-                    const parsedPlugins = parseTxtFormat(text);
-                    if (parsedPlugins.length > 0) {
-                        renderPluginList(parsedPlugins); // Update kalau file ketemu
-                    }
-                }
-            } catch(e) {
-                // Abaikan error, biarkan data default tetap nongol
+                const response = await fetch(`/${id}.json`);
+                // Coba parse, kalau error (karena HTML), lempar ke catch
+                plugins = await response.json(); 
+            } catch (err) {
+                console.warn(`File ${id}.json tidak ada/error. Pakai data bawaan.`);
+                plugins = DEFAULT_DATA.plugins[id] || [];
             }
+
+            if (plugins.length === 0) {
+                plugins = [{ name: "Data Tidak Ditemukan", version: "-", author: "System", description: "Buat file .json atau edit DEFAULT_DATA di script." }];
+            }
+
+            renderPluginList(plugins);
         }
 
-        // Fungsi Parsing TXT (Simlem: Nama | Versi | Author | Deskripsi)
-        function parseTxtFormat(text) {
-            const lines = text.split('\n');
-            const data = [];
-            lines.forEach(line => {
-                if(line.trim() === "") return;
-                const parts = line.split('|');
-                if(parts.length >= 1) {
-                    data.push({
-                        name: parts[0] ? parts[0].trim() : "Unknown",
-                        version: parts[1] ? parts[1].trim() : "-",
-                        author: parts[2] ? parts[2].trim() : "-",
-                        description: parts[3] ? parts[3].trim() : "-"
-                    });
-                }
-            });
-            return data;
-        }
-
-        // Fungsi render list plugin
         function renderPluginList(plugins) {
             pluginListContainer.innerHTML = '';
-            if (!plugins || plugins.length === 0) {
-                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name">Tidak ada data.</div></div>';
-                return;
-            }
+            if (!plugins || plugins.length === 0) return;
+            
             plugins.forEach(p => {
                 const item = document.createElement('div');
                 item.className = 'fm-item';
                 item.innerHTML = `
                     <div class="fm-name">
                         <div class="fm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
-                        ${p.name}
+                        ${p.name || 'Unknown'}
                     </div>
-                    <div class="fm-version">${p.version}</div>
-                    <div class="fm-author">${p.author}</div>
-                    <div class="fm-desc">${p.description}</div>
+                    <div class="fm-version">${p.version || '-'}</div>
+                    <div class="fm-author">${p.author || '-'}</div>
+                    <div class="fm-desc">${p.description || '-'}</div>
                 `;
                 pluginListContainer.appendChild(item);
             });
