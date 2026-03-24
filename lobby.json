@@ -1,112 +1,112 @@
 [
-    {
-      "name": "AnimatedScoreboard",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "AuthMe",
-      "version": "5.6.0",
-      "author": null
-    },
-    {
-      "name": "AuthMeVelocity",
-      "version": "4.2.0",
-      "author": null
-    },
-    {
-      "name": "CraftingStore-Lobby",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "DecentHolograms",
-      "version": "2.9.9",
-      "author": null
-    },
-    {
-      "name": "DeluxeHub",
-      "version": "3.7.2",
-      "author": null
-    },
-    {
-      "name": "EssentialsX",
-      "version": "2.21.2",
-      "author": null
-    },
-    {
-      "name": "EssentialsXChat",
-      "version": "2.21.2",
-      "author": null
-    },
-    {
-      "name": "FancyNpcs",
-      "version": "2.9.0.326",
-      "author": null
-    },
-    {
-      "name": "GSit - Modern Sit (Seat and Chair), Lay and Crawl Plugin! - [1.16 - 1.21.11]",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "InteractiveChat",
-      "version": "4.3.5.0",
-      "author": null
-    },
-    {
-      "name": "LuckPerms-Bukkit",
-      "version": "5.5.17",
-      "author": null
-    },
-    {
-      "name": "PlaceholderAPI",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "ProtocolLib",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "SetSpawn - Spawn on Join | Spawn on Respawn | Custom Protect Events",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "SimpleSuggestions [1.17.1 - 1.19.2]",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "TAB [1.7.x - 1.21.10]",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "Vault",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "nuvotifier",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "worldedit-bukkit",
-      "version": "7.3.17",
-      "author": null
-    },
-    {
-      "name": "worldguard-bukkit",
-      "version": "7.0.15-beta-01",
-      "author": null
-    },
-    {
-      "name": "⚔️ LobbyPvP » Allow players to fight in the Lobby ⚔️",
-      "version": null,
-      "author": null
-    }
-  ]
+  {
+    "name": "AnimatedScoreboard",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "AuthMe",
+    "version": "5.6.0",
+    "author": "AuthMe Team (Xephi, sgdc3, DNx5, timvisee, games647, ljacqu, Gnat008)"
+  },
+  {
+    "name": "AuthMeVelocity",
+    "version": "4.2.0",
+    "author": "4drian3d"
+  },
+  {
+    "name": "CraftingStore-Lobby",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "DecentHolograms",
+    "version": "2.9.9",
+    "author": "DecentSoftware-eu"
+  },
+  {
+    "name": "DeluxeHub",
+    "version": "3.7.2",
+    "author": null
+  },
+  {
+    "name": "EssentialsX",
+    "version": "2.21.2",
+    "author": "EssentialsX Team"
+  },
+  {
+    "name": "EssentialsXChat",
+    "version": "2.21.2",
+    "author": "EssentialsX Team"
+  },
+  {
+    "name": "FancyNpcs",
+    "version": "2.9.0.326",
+    "author": "de.oliver"
+  },
+  {
+    "name": "GSit - Modern Sit (Seat and Chair), Lay and Crawl Plugin! - [1.16 - 1.21.11]",
+    "version": null,
+    "author": "Gecolay"
+  },
+  {
+    "name": "InteractiveChat",
+    "version": "4.3.5.0",
+    "author": "LOOHP"
+  },
+  {
+    "name": "LuckPerms-Bukkit",
+    "version": "5.5.17",
+    "author": "lucko & Turbotailz"
+  },
+  {
+    "name": "PlaceholderAPI",
+    "version": null,
+    "author": "extended_clip"
+  },
+  {
+    "name": "ProtocolLib",
+    "version": null,
+    "author": "dmulloy2"
+  },
+  {
+    "name": "SetSpawn - Spawn on Join | Spawn on Respawn | Custom Protect Events",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "SimpleSuggestions [1.17.1 - 1.19.2]",
+    "version": null,
+    "author": "ItziSpyder"
+  },
+  {
+    "name": "TAB [1.7.x - 1.21.10]",
+    "version": null,
+    "author": "NEZNAMY"
+  },
+  {
+    "name": "Vault",
+    "version": null,
+    "author": "Sleaker, Cerea1, Mung3r, Kainzo"
+  },
+  {
+    "name": "nuvotifier",
+    "version": null,
+    "author": "Tux"
+  },
+  {
+    "name": "worldedit-bukkit",
+    "version": "7.3.17",
+    "author": "EngineHub"
+  },
+  {
+    "name": "worldguard-bukkit",
+    "version": "7.0.15-beta-01",
+    "author": "sk89q & WorldGuard Team"
+  },
+  {
+    "name": "⚔️ LobbyPvP » Allow players to fight in the Lobby ⚔️",
+    "version": null,
+    "author": null
+  }
+]
