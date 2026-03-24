@@ -1,62 +1,53 @@
-[
+{
+  "plugins": [
     {
-      "name": "advancedserverlist",
+      "name": "AdvancedServerList",
       "version": "5.7.2",
       "author": null
     },
     {
-      "name": "alert",
+      "name": "Alert",
       "version": "1.8",
       "author": null
     },
     {
-      "name": "authmevelocity",
+      "name": "AuthMeVelocity",
       "version": "4.2.0",
       "author": null
     },
     {
-      "name": "craftingstore",
+      "name": "CraftingStore",
       "version": null,
       "author": null
     },
     {
-      "name": "maintenance",
+      "name": "Maintenance",
       "version": "4.3.0",
       "author": null
     },
     {
-      "name": "viabackwards",
+      "name": "ViaBackwards",
       "version": "5.7.2",
       "author": null
     },
     {
-      "name": "viarewind",
+      "name": "ViaRewind",
       "version": "4.1.0-SNAPSHOT",
       "author": null
     },
     {
-      "name": "viaversion",
+      "name": "ViaVersion",
       "version": "5.7.3-SNAPSHOT",
       "author": null
     },
     {
-      "name": "votespeed",
+      "name": "VoteSpeed",
       "version": "1.0.1",
       "author": null
     },
     {
-      "name": "bStats",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "hub",
-      "version": null,
-      "author": null
-    },
-    {
       "name": "server-links",
-      "version": "1.1.1",
+      "version": "1.1.1-all",
       "author": null
     },
     {
@@ -69,4 +60,5 @@
       "version": "1.1",
       "author": null
     }
-]
+  ]
+}
