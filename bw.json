@@ -1,5 +1,4 @@
-{
-  "plugins": [
+[
     {
       "name": "ADDON - Team Selector for BedWars1058",
       "version": null,
@@ -121,4 +120,3 @@
       "author": null
     }
   ]
-}
