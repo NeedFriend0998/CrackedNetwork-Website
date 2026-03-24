@@ -3297,7 +3297,6 @@ input, textarea {
 
             try {
                 const response = await fetch('/plugin_categories.json');
-                renderPluginTabs(pluginManifest);
                 pluginManifest = await response.json();
                 renderPluginTabs(pluginManifest);
                 
