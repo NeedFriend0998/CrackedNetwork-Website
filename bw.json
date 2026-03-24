@@ -1,122 +1,123 @@
 [
-    {
-      "name": "ADDON - Team Selector for BedWars1058",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "ArWarn",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "BedWars Cosmetics",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "BedWars1058 Pop-up Towers",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "BedWars1058-GroupStats",
-      "version": "9.0-SNAPSHOT",
-      "author": null
-    },
-    {
-      "name": "BedWars1058-MapSelector Addon",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "ChestCommands",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "Citizens",
-      "version": "2.0.33-b3393",
-      "author": null
-    },
-    {
-      "name": "DecentHolograms",
-      "version": "2.9.9",
-      "author": null
-    },
-    {
-      "name": "EssentialsX",
-      "version": "2.21.2",
-      "author": null
-    },
-    {
-      "name": "ItemJoin",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "LuckPerms-Bukkit",
-      "version": "5.5.17",
-      "author": null
-    },
-    {
-      "name": "Parkour",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "PlaceholderAPI",
-      "version": "2.11.7",
-      "author": null
-    },
-    {
-      "name": "ProtocolLib",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "Vault",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "ViaBackwards",
-      "version": "5.7.2",
-      "author": null
-    },
-    {
-      "name": "ViaRewind",
-      "version": "4.1.0-SNAPSHOT",
-      "author": null
-    },
-    {
-      "name": "ViaVersion",
-      "version": "5.7.3-SNAPSHOT",
-      "author": null
-    },
-    {
-      "name": "[Addon] BedWars1058  - AntiDrop (Doesn't allow the players to drop the items into the void)",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "[Addon] BedWars1058 - Compass (Team Tracker, Quick Communications, Multi-language support)",
-      "version": null,
-      "author": null
-    },
-    {
-      "name": "ajLeaderboards",
-      "version": "2.10.1-b318",
-      "author": null
-    },
-    {
-      "name": "bedwars-plugin",
-      "version": "25.5-SNAPSHOT",
-      "author": null
-    },
-    {
-      "name": "worldedit-bukkit",
-      "version": "7.3.9",
-      "author": null
-    }
-  ]
+  {
+    "name": "ADDON - Team Selector for BedWars1058",
+    "version": null,
+    "author": "MherZaqaryan"
+  },
+  {
+    "name": "ArWarn",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "BedWars Cosmetics",
+    "version": null,
+    "author": "IamTheDefender"
+  },
+  {
+    "name": "BedWars1058 Pop-up Towers",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "BedWars1058-GroupStats",
+    "version": "9.0-SNAPSHOT",
+    "author": "Acid"
+  },
+  {
+    "name": "BedWars1058-MapSelector Addon",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "ChestCommands",
+    "version": null,
+    "author": "filoghost"
+  },
+  {
+    "name": "Citizens",
+    "version": "2.0.33-b3393",
+    "author": "CitizensDev Team"
+  },
+  {
+    "name": "DecentHolograms",
+    "version": "2.9.9",
+    "author": "DecentSoftware-eu"
+  },
+  {
+    "name": "EssentialsX",
+    "version": "2.21.2",
+    "author": "EssentialsX Team"
+  },
+  {
+    "name": "ItemJoin",
+    "version": null,
+    "author": "fireboyev"
+  },
+  {
+    "name": "LuckPerms-Bukkit",
+    "version": "5.5.17",
+    "author": "lucko & Turbotailz"
+  },
+  {
+    "name": "Parkour",
+    "version": null,
+    "author": null
+  },
+  {
+    "name": "PlaceholderAPI",
+    "version": "2.11.7",
+    "author": "extended_clip"
+  },
+  {
+    "name": "ProtocolLib",
+    "version": null,
+    "author": "dmulloy2"
+  },
+  {
+    "name": "Vault",
+    "version": null,
+    "author": "Sleaker, Cerea1, Mung3r, Kainzo"
+  },
+  {
+    "name": "ViaBackwards",
+    "version": "5.7.2",
+    "author": "ViaVersion Team"
+  },
+  {
+    "name": "ViaRewind",
+    "version": "4.1.0-SNAPSHOT",
+    "author": "EnZaXD"
+  },
+  {
+    "name": "ViaVersion",
+    "version": "5.7.3-SNAPSHOT",
+    "author": "ViaVersion Team"
+  },
+  {
+    "name": "[Addon] BedWars1058 - AntiDrop (Doesn't allow the players to drop the items into the void)",
+    "version": null,
+    "author": "MherZaqaryan"
+  },
+  {
+    "name": "[Addon] BedWars1058 - Compass (Team Tracker, Quick Communications, Multi-language support)",
+    "version": null,
+    "author": "MherZaqaryan"
+  },
+  {
+    "name": "ajLeaderboards",
+    "version": "2.10.1-b318",
+    "author": "AJ",
+    "author_aliases": ["AJ (ajgeiss0702)", "AJMaster"]
+  },
+  {
+    "name": "bedwars-plugin",
+    "version": "25.5-SNAPSHOT",
+    "author": "Andrei1058"
+  },
+  {
+    "name": "worldedit-bukkit",
+    "version": "7.3.9",
+    "author": "EngineHub Team"
+  }
+]
