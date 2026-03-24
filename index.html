@@ -1864,9 +1864,7 @@ input, textarea {
                     </div>
                     
                     <!-- Tabs will be injected here by JS -->
-                    <div class="fm-tabs" id="pluginCategoryTabs">
-                        <div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>
-                    </div>
+                    <div class="fm-tabs" id="pluginCategoryTabs"></div>
 
                     <div class="fm-list-header">
                         <div>Plugin Name</div>
@@ -3310,7 +3308,7 @@ input, textarea {
 
         async function initPluginManager() {
             // 1. LANGSUNG HAPUS LOADER & TULIS TEKS BIAR AMAN
-            pluginCategoryTabs.innerHTML = 'Memuat...';
+            pluginCategoryTabs.innerHTM = 'Memuat...';
 
             // 2. Coba ambil JSON, kalau gagal (misal isinya HTML dari Netlify), pakai DEFAULT_DATA
             try {
