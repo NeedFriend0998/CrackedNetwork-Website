@@ -2,22 +2,22 @@
     {
       "name": "AdvancedServerList",
       "version": "5.7.2",
-      "author": null
+      "author": "Andre_601"
     },
     {
       "name": "Alert",
       "version": "1.8",
-      "author": null
+      "author": "Blockyward"
     },
     {
       "name": "AuthMeVelocity",
       "version": "4.2.0",
-      "author": null
+      "author": "4drian3d"
     },
     {
       "name": "CraftingStore",
-      "version": null,
-      "author": null
+      "version": "latest",
+      "author": "Tim_Kwakman"
     },
     {
       "name": "Maintenance",
@@ -27,17 +27,17 @@
     {
       "name": "ViaBackwards",
       "version": "5.7.2",
-      "author": null
+      "author": "ViaVersion Team"
     },
     {
       "name": "ViaRewind",
       "version": "4.1.0-SNAPSHOT",
-      "author": null
+      "author": "EnZaXD"
     },
     {
       "name": "ViaVersion",
       "version": "5.7.3-SNAPSHOT",
-      "author": null
+      "author": "ViaVersion Team"
     },
     {
       "name": "VoteSpeed",
