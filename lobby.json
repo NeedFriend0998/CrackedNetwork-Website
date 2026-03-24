@@ -1,5 +1,4 @@
-{
-  "plugins": [
+[
     {
       "name": "AnimatedScoreboard",
       "version": null,
@@ -111,4 +110,3 @@
       "author": null
     }
   ]
-}
