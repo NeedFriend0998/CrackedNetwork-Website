@@ -2338,7 +2338,7 @@ input, textarea {
 
         <script>
         // ========== CONFIGURATION ==========
-        const TIP4SERV_PRODUCTS = {
+        const CRAFTINGSTORE = {
             bedwars: [
                 {
                     id: "1492986", 
@@ -3169,7 +3169,7 @@ input, textarea {
 
         function renderProducts(category) {
             productsGrid.innerHTML = '';
-            const products = TIP4SERV_PRODUCTS[category] || [];
+            const products = CRAFTINGSTORE[category] || [];
             
             if(products.length === 0) {
                 productsGrid.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); grid-column: 1/-1;">Product is not available for this category.</div>`;
