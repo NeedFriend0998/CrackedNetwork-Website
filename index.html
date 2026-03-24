@@ -1206,7 +1206,7 @@
         }
 
         .product-desc {
-            color: var(--muted);
+            color: var(--muted,);
             font-size: 0.9rem;
             margin-bottom: 1rem;
             min-height: 40px;
@@ -1277,6 +1277,10 @@
         .product-card.coins .product-icon svg {
             stroke: var(--premium);
             filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.4));
+        }
+
+        .product-card.coins .product-price {
+            color: var(--premium);
         }
 
         .product-card.cosmetic .product-image {
@@ -1621,7 +1625,7 @@
             outline-offset: 2px;
         }
         
-        /* ===== DISCORD PAGE ===== */
+                /* ===== DISCORD PAGE ===== */
         .discord-page {
             padding: 4rem 2rem;
             max-width: 800px;
@@ -1645,7 +1649,7 @@
             transform: translateY(-5px);
         }
         
-        /* ===== WIKI TREE DIAGRAM STYLE ===== */
+                /* ===== WIKI TREE DIAGRAM STYLE ===== */
         .wiki-tree {
             margin-top: 2rem;
         }
@@ -1720,91 +1724,91 @@
         }
         
         * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
 
-        input, textarea {
-            -webkit-user-select: text;
-            user-select: text;
-        }
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
 
-        /* ===== PLUGIN INFO PAGE (FILE MANAGER STYLE - DYNAMIC) ===== */
-        .file-manager {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            margin-top: 2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-        .fm-header {
-            background: var(--bg-secondary);
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .fm-path {
-            background: var(--bg);
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--accent);
-            border: 1px solid var(--border);
-        }
+/* ===== PLUGIN INFO PAGE (FILE MANAGER STYLE - DYNAMIC) ===== */
+.file-manager {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.fm-header {
+    background: var(--bg-secondary);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.fm-path {
+    background: var(--bg);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    border: 1px solid var(--border);
+}
 
-        /* Plugin Category Tabs */
-        .fm-tabs {
-            padding: 1rem 1.5rem;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            gap: 0.5rem;
-            overflow-x: auto;
-        }
-        .fm-tab {
-            padding: 0.6rem 1rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--muted);
-            font-family: inherit;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .fm-tab:hover { border-color: var(--accent); color: var(--fg); }
-        .fm-tab.active { background: rgba(0, 229, 160, 0.1); border-color: var(--accent); color: var(--accent); }
-        .fm-tab svg { width: 16px; height: 16px; stroke: currentColor; }
+/* Plugin Category Tabs */
+.fm-tabs {
+    padding: 1rem 1.5rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+}
+.fm-tab {
+    padding: 0.6rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.fm-tab:hover { border-color: var(--accent); color: var(--fg); }
+.fm-tab.active { background: rgba(0, 229, 160, 0.1); border-color: var(--accent); color: var(--accent); }
+.fm-tab svg { width: 16px; height: 16px; stroke: currentColor; }
 
-        .fm-list-header { display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; padding: 0.75rem 1.5rem; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-        .fm-item { display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; padding: 1rem 1.5rem; align-items: center; border-bottom: 1px solid var(--border); transition: background 0.2s ease; }
-        .fm-item:last-child { border-bottom: none; }
-        .fm-item:hover { background: rgba(0, 229, 160, 0.03); }
-        .fm-name { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; color: var(--fg); }
-        .fm-icon { width: 32px; height: 32px; background: linear-gradient(135deg, rgba(0, 229, 160, 0.1), rgba(0, 180, 216, 0.1)); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-        .fm-icon svg { width: 18px; height: 18px; stroke: var(--accent); }
-        .fm-version { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
-        .fm-author { color: var(--muted); font-size: 0.9rem; }
-        .fm-desc { color: var(--muted); font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fm-list-header { display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; padding: 0.75rem 1.5rem; background: rgba(0,0,0,0.2); border-bottom: 1px solid var(--border); font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.fm-item { display: grid; grid-template-columns: 2fr 1fr 1fr 3fr; padding: 1rem 1.5rem; align-items: center; border-bottom: 1px solid var(--border); transition: background 0.2s ease; }
+.fm-item:last-child { border-bottom: none; }
+.fm-item:hover { background: rgba(0, 229, 160, 0.03); }
+.fm-name { display: flex; align-items: center; gap: 0.75rem; font-weight: 600; color: var(--fg); }
+.fm-icon { width: 32px; height: 32px; background: linear-gradient(135deg, rgba(0, 229, 160, 0.1), rgba(0, 180, 216, 0.1)); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.fm-icon svg { width: 18px; height: 18px; stroke: var(--accent); }
+.fm-version { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+.fm-author { color: var(--muted); font-size: 0.9rem; }
+.fm-desc { color: var(--muted); font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        @media (max-width: 768px) {
-            .fm-list-header { display: none; }
-            .fm-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-            .fm-name { font-size: 1rem; }
-            .fm-desc { white-space: normal; }
-        }
+@media (max-width: 768px) {
+    .fm-list-header { display: none; }
+    .fm-item { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .fm-name { font-size: 1rem; }
+    .fm-desc { white-space: normal; }
+}
     </style>
 </head>
 <body>
@@ -1843,8 +1847,8 @@
     </nav>
 
     <main class="pages">
-        <!-- PLUGIN INFO PAGE (DYNAMIC) -->
-        <section class="page" id="plugins">
+      <!-- PLUGIN INFO PAGE (DYNAMIC) -->
+      <section class="page" id="plugins">
             <div class="rules-page">
                 <div class="rules-header">
                     <h1 class="section-title">Plugin Information</h1>
@@ -1859,7 +1863,7 @@
                         <div class="fm-path" id="fmCurrentPath">/plugins</div>
                     </div>
                     
-                    <!-- Tabs akan diisi oleh JS -->
+                    <!-- Tabs will be injected here by JS -->
                     <div class="fm-tabs" id="pluginCategoryTabs">
                         <div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>
                     </div>
@@ -1871,14 +1875,14 @@
                         <div>Description</div>
                     </div>
                     <div id="pluginListContainer">
-                        <div class="fm-item"><div class="fm-name">Memuat daftar plugin...</div></div>
+                        <div class="fm-item"><div class="fm-name">Select a category tab above to view plugins.</div></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Forums -->
-        <section class="page" id="forums">
+      <!--Forums-->
+    <section class="page" id="forums">
             <div class="discord-page">
                 <div class="section-header">
                     <script async src="https://talk.hyvor.com/embed/embed.js" type="module"></script>
@@ -2098,12 +2102,12 @@
                     </p>
                 </div>
 
-                <div class="wiki-tabs">
-                    <button class="wiki-tab active" data-tab="getting-started">Getting Started</button>
-                    <button class="wiki-tab" data-tab="how-it-works">How It Works</button>
-                    <button class="wiki-tab" data-tab="staff">Staff Team</button>
-                    <button class="wiki-tab" data-tab="faq">FAQ</button>
-                </div>
+              <div class="wiki-tabs">
+                <button class="wiki-tab active" data-tab="getting-started">Getting Started</button>
+                <button class="wiki-tab" data-tab="how-it-works">How It Works</button>
+                <button class="wiki-tab" data-tab="staff">Staff Team</button>
+                <button class="wiki-tab" data-tab="faq">FAQ</button>
+            </div>
 
                 <div class="wiki-content">
                     <!-- Getting Started -->
@@ -2155,61 +2159,62 @@
                         <div id="faqContainer"></div>
                     </div>
                     
-                    <!-- How It Works Section -->
-                    <div class="wiki-section" id="how-it-works">
-                        <h3 style="margin-bottom: 0.5rem;">How Is Our System Work?</h3>
-                        <p style="color: var(--muted); margin-bottom: 1rem;">
-                            We believe in transparency. Here is how our backend system processes your purchases and data.
-                        </p>
+           <!-- How It Works Section -->
+                <div class="wiki-section" id="how-it-works">
+                    <h3 style="margin-bottom: 0.5rem;">How Is Our System Work?</h3>
+                    <p style="color: var(--muted); margin-bottom: 1rem;">
+                        We believe in transparency. Here is how our backend system processes your purchases and data.
+                    </p>
 
-                        <div class="wiki-tree">
-                            <ul class="tree-root">
-                                <!-- RANKS SYSTEM -->
-                                <li>
-                                    Ranks System
-                                    <ul class="tree-children">
-                                        <li><strong>(1)</strong> You purchase a rank on our Website Store.</li>
-                                        <li><strong>(2)</strong> Payment is processed securely via CraftingStore/PayPal.</li>
-                                        <li><strong>(3)</strong> Our Plugin detects the successful payment instantly.</li>
-                                        <li><strong>(4)</strong> Permissions & Prefix are automatically applied to your account in-game.</li>
-                                        <li><strong>(5)</strong> You receive a confirmation message in-game and on Discord.</li>
-                                    </ul>
-                                </li>
+                    <div class="wiki-tree">
+                        <ul class="tree-root">
+                            <!-- RANKS SYSTEM -->
+                            <li>
+                                Ranks System
+                                <ul class="tree-children">
+                                    <li><strong>(1)</strong> You purchase a rank on our Website Store.</li>
+                                    <li><strong>(2)</strong> Payment is processed securely via CraftingStore/PayPal.</li>
+                                    <li><strong>(3)</strong> Our Plugin detects the successful payment instantly.</li>
+                                    <li><strong>(4)</strong> Permissions & Prefix are automatically applied to your account in-game.</li>
+                                    <li><strong>(5)</strong> You receive a confirmation message in-game and on Discord.</li>
+                                </ul>
+                            </li>
 
-                                <!-- COINS SYSTEM -->
-                                <li>
-                                    Coins System
-                                    <ul class="tree-children">
-                                        <li><strong>(1)</strong> Coins can be purchased on the Store or earned via Voting/Events.</li>
-                                        <li><strong>(2)</strong> Coins are stored in our central database linked to your UUID.</li>
-                                        <li><strong>(3)</strong> Use coins in <strong>/shop</strong> to buy items, keys, or cosmetics.</li>
-                                        <li><strong>(4)</strong> Purchases with coins are instant and non-refundable.</li>
-                                    </ul>
-                                </li>
+                            <!-- COINS SYSTEM -->
+                            <li>
+                                Coins System
+                                <ul class="tree-children">
+                                    <li><strong>(1)</strong> Coins can be purchased on the Store or earned via Voting/Events.</li>
+                                    <li><strong>(2)</strong> Coins are stored in our central database linked to your UUID.</li>
+                                    <li><strong>(3)</strong> Use coins in <strong>/shop</strong> to buy items, keys, or cosmetics.</li>
+                                    <li><strong>(4)</strong> Purchases with coins are instant and non-refundable.</li>
+                                </ul>
+                            </li>
 
-                                <!-- PUNISHMENT SYSTEM -->
-                                <li>
-                                    Punishment System
-                                    <ul class="tree-children">
-                                        <li><strong>(1)</strong> Staff receives a report via Discord or in-game.</li>
-                                        <li><strong>(2)</strong> Evidence is gathered and reviewed by the Staff Team.</li>
-                                        <li><strong>(3)</strong> If rules are broken, a ban/mute is logged into the system.</li>
-                                        <li><strong>(4)</strong> You can appeal bans on our Discord Server.</li>
-                                    </ul>
-                                </li>
-                                
-                                <!-- DATA SECURITY -->
-                                <li>
-                                    Data Security
-                                    <ul class="tree-children">
-                                        <li><strong>(1)</strong> We do not store credit card info (handled by PayPal/Stripe).</li>
-                                        <li><strong>(2)</strong> Passwords are encrypted and hashed.</li>
-                                        <li><strong>(3)</strong> Your data is never sold to third parties.</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
+                            <!-- PUNISHMENT SYSTEM -->
+                            <li>
+                                Punishment System
+                                <ul class="tree-children">
+                                    <li><strong>(1)</strong> Staff receives a report via Discord or in-game.</li>
+                                    <li><strong>(2)</strong> Evidence is gathered and reviewed by the Staff Team.</li>
+                                    <li><strong>(3)</strong> If rules are broken, a ban/mute is logged into the system.</li>
+                                    <li><strong>(4)</strong> You can appeal bans on our Discord Server.</li>
+                                </ul>
+                            </li>
+                            
+                             <!-- DATA SECURITY -->
+                            <li>
+                                Data Security
+                                <ul class="tree-children">
+                                    <li><strong>(1)</strong> We do not store credit card info (handled by PayPal/Stripe).</li>
+                                    <li><strong>(2)</strong> Passwords are encrypted and hashed.</li>
+                                    <li><strong>(3)</strong> Your data is never sold to third parties.</li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
+                </div>
+                
                 </div>
             </div>
         </section>
@@ -2331,7 +2336,7 @@
         </div>
     </footer>
 
-    <script>
+        <script>
         // ========== CONFIGURATION ==========
         const TIP4SERV_PRODUCTS = {
             bedwars: [
@@ -3279,45 +3284,57 @@
             if (e.target === modal) closeModal();
         });
 
-        // ========== PLUGIN MANAGER (FIXED) ==========
+        // ========== PLUGIN MANAGER (FINAL FIX - ANTI LOADING) ==========
         const pluginCategoryTabs = document.getElementById('pluginCategoryTabs');
         const pluginListContainer = document.getElementById('pluginListContainer');
         const fmCurrentPath = document.getElementById('fmCurrentPath');
         let currentPluginCategory = null;
         let pluginManifest = [];
 
+        // DATA CADANGAN: Ini akan dipakai kalau file .json tidak ada.
+        // Kamu bisa edit list ini nanti jika ingin menambah kategori tanpa bikin file json.
+        const FALLBACK_CATEGORIES = [
+            { id: "lobby", name: "Lobby" },
+            { id: "bedwars", name: "Bedwars" }
+        ];
+
+        // DATA PLUGIN CADANGAN: Data ini muncul kalau file json tidak ada.
+        const FALLBACK_PLUGINS = {
+            lobby: [
+                { name: "WorldEdit", version: "7.2.15", author: "EngineHub", description: "World editing tool." },
+                { name: "EssentialsX", version: "2.20.1", author: "EssentialsX Team", description: "Essential server commands." },
+                { name: "PlaceholderAPI", version: "2.11.3", author: "PlaceholderAPI", description: "Placeholders support." }
+            ],
+            bedwars: [
+                { name: "BedWars1058", version: "22.2", author: "andrei1058", description: "Bedwars mini-game plugin." },
+                { name: "Vault", version: "1.7.3", author: "Milkbowl", description: "Permission & Economy API." }
+            ]
+        };
+
         async function initPluginManager() {
-            // Tampilkan loader sementara
+            // Kalau sudah pernah load, jangan load lagi
+            if (pluginManifest.length > 0) return;
+
             pluginCategoryTabs.innerHTML = '<div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>';
-            pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name">Loading plugin categories...</div></div>';
-            
+
             try {
                 const response = await fetch('/plugin_categories.json');
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const data = await response.json();
-                pluginManifest = data;
-                
-                if (pluginManifest.length === 0) {
-                    throw new Error('No categories found in manifest.');
+                // Cek apakah file benar-benar JSON (bukan HTML error dari Netlify)
+                const contentType = response.headers.get('content-type');
+                if (response.ok && contentType && contentType.includes('application/json')) {
+                    pluginManifest = await response.json();
+                } else {
+                    // Kalau gagal, paksa pakai data cadangan
+                    throw new Error("File tidak ditemukan atau bukan JSON");
                 }
-                
-                renderPluginTabs(pluginManifest);
-                // Auto-load kategori pertama
-                loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
             } catch (err) {
-                console.error('Failed to load plugin manifest:', err);
-                // Tampilkan pesan error dan tombol retry
-                pluginCategoryTabs.innerHTML = `
-                    <div style="display:flex; flex-direction:column; gap:1rem; align-items:center; justify-content:center; padding:1rem; width:100%;">
-                        <span style="color:var(--danger);">❌ Gagal memuat daftar kategori plugin.</span>
-                        <button class="btn-secondary" id="retryPluginBtn" style="padding:0.5rem 1rem; font-size:0.8rem;">🔄 Coba Lagi</button>
-                    </div>
-                `;
-                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name" style="color:var(--danger);">Kategori plugin tidak dapat dimuat. Pastikan file plugin_categories.json tersedia di server.</div></div>';
-                
-                document.getElementById('retryPluginBtn')?.addEventListener('click', () => {
-                    initPluginManager();
-                });
+                console.warn("Gagal load JSON, pakai data cadangan:", err);
+                pluginManifest = FALLBACK_CATEGORIES;
+            }
+
+            renderPluginTabs(pluginManifest);
+            if (pluginManifest.length > 0) {
+                loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
             }
         }
 
@@ -3328,6 +3345,7 @@
                 btn.className = 'fm-tab';
                 btn.dataset.id = cat.id;
                 btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg> ${cat.name}`;
+                
                 btn.onclick = function() {
                     loadPluginCategory(cat.id, cat.name, this);
                 };
@@ -3336,33 +3354,48 @@
         }
 
         async function loadPluginCategory(id, name, btnElement = null) {
-            // Update active tab
+            // Hapus class active di semua tombol
             document.querySelectorAll('.fm-tab').forEach(t => t.classList.remove('active'));
-            if (btnElement) btnElement.classList.add('active');
-            else {
+            
+            // Tandai tombol yang diklik sebagai aktif
+            if (btnElement) {
+                btnElement.classList.add('active');
+            } else {
                 const firstTab = document.querySelector(`.fm-tab[data-id="${id}"]`);
                 if (firstTab) firstTab.classList.add('active');
             }
             
             currentPluginCategory = id;
             fmCurrentPath.textContent = `/plugins/${id}/`;
-            pluginListContainer.innerHTML = '<div class="fm-item"><div class="loader" style="width:24px;height:24px;border-width:2px;"></div></div>';
             
+            // Tampilkan loading sementara
+            pluginListContainer.innerHTML = '<div class="fm-item"><div class="loader" style="width:24px;height:24px;border-width:2px;"></div></div>';
+
             try {
                 const response = await fetch(`/${id}.json`);
-                if (!response.ok) throw new Error(`File ${id}.json tidak ditemukan (HTTP ${response.status})`);
-                const plugins = await response.json();
-                renderPluginList(plugins);
+                const contentType = response.headers.get('content-type');
+                if (response.ok && contentType && contentType.includes('application/json')) {
+                    const plugins = await response.json();
+                    renderPluginList(plugins);
+                } else {
+                    throw new Error("File plugin tidak ditemukan");
+                }
             } catch (err) {
-                console.error(`Error loading ${id}.json:`, err);
-                pluginListContainer.innerHTML = `<div class="fm-item"><div class="fm-name" style="color:var(--danger);">❌ Gagal memuat daftar plugin untuk kategori "${name}". Pastikan file ${id}.json tersedia di server.</div></div>`;
+                console.warn(`Gagal load ${id}.json, pakai data cadangan:`, err);
+                // Gunakan data cadangan jika gagal
+                const plugins = FALLBACK_PLUGINS[id] || [];
+                if (plugins.length === 0) {
+                     renderPluginList([{ name: "Belum Ada Data", version: "-", author: "System", description: `Buat file ${id}.json atau edit FALLBACK_PLUGINS di kode.` }]);
+                } else {
+                    renderPluginList(plugins);
+                }
             }
         }
 
         function renderPluginList(plugins) {
             pluginListContainer.innerHTML = '';
             if (plugins.length === 0) {
-                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name">Tidak ada plugin dalam kategori ini.</div></div>';
+                pluginListContainer.innerHTML = '<div class="fm-item"><div class="fm-name">Tidak ada plugin ditemukan.</div></div>';
                 return;
             }
             plugins.forEach(p => {
