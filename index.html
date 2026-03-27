@@ -2880,9 +2880,56 @@ input, textarea {
         const navLinksContainer = document.getElementById('navLinks');
         const nav = document.querySelector('.nav');
 
-        showPage
-        
-        
+                function showPage(pageId) {
+            pageId = pageId.replace(/\/$/, '');
+
+            // === 1. LOGIC UNTUK HALAMAN DINAMIS STAFF (MUST BE FIRST) ===
+            if (pageId.startsWith('staff-')) {
+                const staffId = pageId.replace('staff-', '');
+                
+                // Tampilkan container dinamis
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById('staff-dynamic').classList.add('active');
+                
+                // Update URL & Nav
+                window.history.pushState({ page: pageId }, "", `/staff-${staffId}`);
+                navLinks.forEach(link => link.classList.remove('active'));
+                navLinksContainer.classList.remove('open');
+                mobileToggle.classList.remove('open');
+                
+                // Panggil fungsi untuk load file JS
+                loadStaffScript(staffId);
+                return; // STOP eksekusi, jangan cari elemen HTML lain
+            }
+
+            // === 2. LOGIC NORMAL (HALAMAN STATIS) ===
+            const targetPage = document.getElementById(pageId);
+            if (!targetPage) {
+                console.warn('Page not found:', pageId, 'Redirecting to home');
+                showPage('home');
+                return;
+            }
+
+            pages.forEach(page => page.classList.remove('active'));
+            targetPage.classList.add('active');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            navLinksContainer.classList.remove('open');
+            mobileToggle.classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (pageId === 'plugins') {
+                initPluginManager();
+            }
+            
+            setTimeout(observeElements, 100);
+        }
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
                 // Fallback jika halaman tidak ditemukan
