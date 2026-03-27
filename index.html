@@ -2994,7 +2994,35 @@ input, textarea {
                 pluginListContainer.appendChild(item);
             });
         }
-      
+        
+        // ========== PLUGIN MANAGER (FIX TYPO) ==========
+                async function initPluginManager() {
+            if (isPluginLoading) return;
+            isPluginLoading = true;
+
+            pluginCategoryTabs.innerHTML = 'Memuat kategori...';
+            pluginListContainer.innerHTML = '<div class="fm-item">Mempersiapkan data...</div>';
+
+            try {
+                const response = await fetch('/plugin_categories.json');
+                const contentType = response.headers.get('content-type');
+                if (response.ok && contentType && contentType.includes('application/json')) {
+                    pluginManifest = await response.json();
+                } else {
+                    throw new Error("Bukan file JSON");
+                }
+            } catch (err) {
+                console.warn("Gagal ambil JSON, pakai data default.", err);
+                pluginManifest = DEFAULT_DATA.categories;
+            }
+
+            renderPluginTabs(pluginManifest);
+            if (pluginManifest.length > 0) {
+                await loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
+            }
+            
+            isPluginLoading = false;
+        }
 
 
             const targetPage = document.getElementById(pageId);
