@@ -2882,6 +2882,62 @@ input, textarea {
         function showPage(pageId) {
             // FIX: Hilangkan trailing slash jika ada (misal: 'store/' jadi 'store')
             pageId = pageId.replace(/\/$/, '');
+            
+                    function showPage(pageId) {
+            pageId = pageId.replace(/\/$/, '');
+
+            // === HANDLER UNTUK HALAMAN DINAMIS STAFF ===
+            if (pageId.startsWith('staff-')) {
+                const staffId = pageId.replace('staff-', '');
+                const staff = staffTeam.find(s => s.pageId === staffId);
+                
+                if (staff) {
+                    // Render konten dinamis
+                    const nameEl = document.getElementById('staff-dynamic-name');
+                    const roleEl = document.getElementById('staff-dynamic-role');
+                    const contentEl = document.getElementById('staff-dynamic-content');
+                    
+                    nameEl.textContent = staff.name;
+                    roleEl.textContent = staff.role;
+                    
+                    contentEl.innerHTML = `
+                        <div class="info-grid">
+                            <div class="info-box"><h4>Nickname</h4><p>${staff.nickname}</p></div>
+                            <div class="info-box"><h4>Origin</h4><p>${staff.origin}</p></div>
+                            <div class="info-box"><h4>Age</h4><p>${staff.age}</p></div>
+                            <div class="info-box"><h4>Role</h4><p>${staff.role}</p></div>
+                        </div>
+                        <div style="margin-top:2rem;">
+                            <h3>About</h3>
+                            <p style="color:var(--muted); margin-top:0.5rem;">${staff.bio}</p>
+                            <hr style="border-color:var(--border); margin:2rem 0;">
+                            <h3>Detailed Information</h3>
+                            <p style="color:var(--muted); margin-top:0.5rem;">
+                                NeedFriend adalah owner server CrackedNetwork. Dia memulai server ini sejak tahun 2024...
+                                <br><br>
+                                (Ini adalah contoh teks panjang. Kamu bisa menambahkan properti 'fullInfo' di objek staff di JavaScript jika ingin teks yang berbeda-beda untuk setiap orang).
+                            </p>
+                        </div>
+                    `;
+                    
+                    // Paksa tampilkan halaman dynamic
+                    pages.forEach(page => page.classList.remove('active'));
+                    document.getElementById('staff-dynamic').classList.add('active');
+                    
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                    });
+                    
+                    navLinksContainer.classList.remove('open');
+                    mobileToggle.classList.remove('open');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return; // Hentikan eksekusi biar tidak mencari page ID lain
+                }
+            }
+            // ==========================================
+            
+            const targetPage = document.getElementById(pageId);
+            // ... sisa kode showPage yang lama ...
 
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
