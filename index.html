@@ -2996,11 +2996,11 @@ input, textarea {
         }
         
         // ========== PLUGIN MANAGER (FIX TYPO) ==========
-        async function initPluginManager() {
+                async function initPluginManager() {
             if (isPluginLoading) return;
             isPluginLoading = true;
 
-            pluginCategoryTabs.innerHTML = 'Memuat kategori...'; // FIX: innerHTML (bukan innerHTM)
+            pluginCategoryTabs.innerHTML = 'Memuat kategori...';
             pluginListContainer.innerHTML = '<div class="fm-item">Mempersiapkan data...</div>';
 
             try {
