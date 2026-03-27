@@ -2880,7 +2880,11 @@ input, textarea {
         const navLinksContainer = document.getElementById('navLinks');
         const nav = document.querySelector('.nav');
 
-                function showPage(pageId) {
+        function showPage(pageId) {
+            // FIX: Hilangkan trailing slash jika ada (misal: 'store/' jadi 'store')
+            pageId = pageId.replace(/\/$/, '');
+            
+                    function showPage(pageId) {
             pageId = pageId.replace(/\/$/, '');
 
             // === HANDLER UNTUK HALAMAN DINAMIS STAFF ===
@@ -2933,7 +2937,9 @@ input, textarea {
             }
             // ==========================================
             
-            
+            const targetPage = document.getElementById(pageId);
+            // ... sisa kode showPage yang lama ...
+
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
                 // Fallback jika halaman tidak ditemukan
