@@ -2871,14 +2871,7 @@ input, textarea {
                 createParticles();
             });
         }
-
-        // ========== NAVIGATION (HISTORY API - CLEAN URL) ==========
-        const navLinks = document.querySelectorAll('.nav-link, [data-page]');
-        const pages = document.querySelectorAll('.page');
-        const mobileToggle = document.getElementById('mobileToggle');
-        const navLinksContainer = document.getElementById('navLinks');
-        const nav = document.querySelector('.nav');
-
+        
                 // ========== NAVIGATION (FIXED & CLEAN) ==========
         function showPage(pageId) {
             pageId = pageId.replace(/\/$/, '');
@@ -2918,7 +2911,7 @@ input, textarea {
                         </div>
                     `;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    return; // STOP di sini, jangan lanjut ke kode halaman statis
+                    return; // STOP di sini
                 }
             }
 
@@ -2980,7 +2973,7 @@ input, textarea {
         const initialPage = currentPath.substring(1);
         window.history.replaceState({ page: initialPage }, "", currentPath);
         showPage(initialPage);
-        
+
         // ========== RENDER PLUGIN LIST (FIXED SYNTAX) ==========
         function renderPluginList(plugins) {
             pluginListContainer.innerHTML = '';
@@ -3030,6 +3023,8 @@ input, textarea {
             
             isPluginLoading = false;
         }
+
+
 
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
