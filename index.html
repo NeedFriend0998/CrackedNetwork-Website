@@ -2929,7 +2929,77 @@ input, textarea {
             }
             
             setTimeout(observeElements, 100);
+            
+                    // ========== STAFF DYNAMIC LOADER ==========
+        function loadStaffScript(staffId) {
+            const container = document.getElementById('staff-dynamic-content');
+            container.innerHTML = '<div class="loader" style="width:40px;height:40px;border-width:3px;margin:50px auto;"></div>';
+
+            // Nama variabel yang dicari (misal: staffData_needfriend)
+            const varName = `staffData_${staffId}`;
+            
+            // Cek apakah variabel sudah ada (sudah pernah load)
+            if (window[varName]) {
+                renderStaffDynamicPage(window[varName]);
+                return;
+            }
+
+            // Buat tag script untuk load file JS
+            const script = document.createElement('script');
+            script.src = `/staff/${staffId}.js`; // Arahkan ke folder /staff/
+            script.onload = () => {
+                // Saat file berhasil load, render halaman
+                if (window[varName]) {
+                    renderStaffDynamicPage(window[varName]);
+                } else {
+                    container.innerHTML = `<div class="rules-header"><h1>Error</h1><p>Data untuk variabel <b>${varName}</b> tidak ditemukan di file.</p></div>`;
+                }
+            };
+            script.onerror = () => {
+                container.innerHTML = `
+                    <div class="rules-header">
+                        <h1 style="color:var(--danger);">404 - Not Found</h1>
+                        <p>File informasi staff untuk ID "<b>${staffId}</b>" belum dibuat.</p>
+                        <p style="font-size:0.8rem; color:var(--muted);">Buat file di: <code>/staff/${staffId}.js</code></p>
+                    </div>`;
+            };
+            
+            document.body.appendChild(script);
         }
+
+        function renderStaffDynamicPage(data) {
+            const container = document.getElementById('staff-dynamic-content');
+            // Render HTML menggunakan data dari file JS
+            container.innerHTML = `
+                <div style="text-align:center; margin-bottom:2rem;">
+                    <div class="staff-avatar" style="width:80px; height:80px; font-size:2rem; margin:0 auto 1rem;">${data.avatar || data.fullName.charAt(0)}</div>
+                    <h1 class="section-title">${data.fullName}</h1>
+                    <p class="section-subtitle" style="color:var(--accent);">${data.role}</p>
+                </div>
+                
+                <div class="info-grid" style="margin-bottom:2rem;">
+                    <div class="info-box"><h4>Nickname</h4><p>${data.nickname || '-'}</p></div>
+                    <div class="info-box"><h4>Age</h4><p>${data.age || '-'}</p></div>
+                    <div class="info-box"><h4>Location</h4><p>${data.location || '-'}</p></div>
+                </div>
+
+                <div class="wiki-content" style="background:transparent; padding:0; border:none;">
+                    <h3>About</h3>
+                    <p style="color:var(--muted); margin-bottom:2rem;">${data.bio || 'No biography available.'}</p>
+                    ${data.longBio ? `<div class="wiki-section active">${data.longBio}</div>` : ''}
+                </div>
+
+                ${data.socials ? `
+                <div style="margin-top:2rem;">
+                    <h4 style="margin-bottom:0.5rem;">Social Media</h4>
+                    <div style="display:flex; gap:0.5rem;">
+                        ${data.socials.discord ? `<span class="gm-feature">Discord: ${data.socials.discord}</span>` : ''}
+                        ${data.socials.instagram ? `<span class="gm-feature">IG: ${data.socials.instagram}</span>` : ''}
+                    </div>
+                </div>` : ''}
+            `;
+        }
+        
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
                 // Fallback jika halaman tidak ditemukan
