@@ -2879,65 +2879,157 @@ input, textarea {
         const navLinksContainer = document.getElementById('navLinks');
         const nav = document.querySelector('.nav');
 
+                // ========== NAVIGATION (FIXED & CLEAN) ==========
         function showPage(pageId) {
-            // FIX: Hilangkan trailing slash jika ada (misal: 'store/' jadi 'store')
-            pageId = pageId.replace(/\/$/, '');
-            
-                    function showPage(pageId) {
             pageId = pageId.replace(/\/$/, '');
 
-            // === HANDLER UNTUK HALAMAN DINAMIS STAFF ===
+            // === 1. LOGIC UNTUK HALAMAN DINAMIS STAFF (MUST BE FIRST) ===
             if (pageId.startsWith('staff-')) {
                 const staffId = pageId.replace('staff-', '');
                 const staff = staffTeam.find(s => s.pageId === staffId);
                 
                 if (staff) {
-                    // Render konten dinamis
-                    const nameEl = document.getElementById('staff-dynamic-name');
-                    const roleEl = document.getElementById('staff-dynamic-role');
-                    const contentEl = document.getElementById('staff-dynamic-content');
-                    
-                    nameEl.textContent = staff.name;
-                    roleEl.textContent = staff.role;
-                    
-                    contentEl.innerHTML = `
-                        <div class="info-grid">
-                            <div class="info-box"><h4>Nickname</h4><p>${staff.nickname}</p></div>
-                            <div class="info-box"><h4>Origin</h4><p>${staff.origin}</p></div>
-                            <div class="info-box"><h4>Age</h4><p>${staff.age}</p></div>
-                            <div class="info-box"><h4>Role</h4><p>${staff.role}</p></div>
-                        </div>
-                        <div style="margin-top:2rem;">
-                            <h3>About</h3>
-                            <p style="color:var(--muted); margin-top:0.5rem;">${staff.bio}</p>
-                            <hr style="border-color:var(--border); margin:2rem 0;">
-                            <h3>Detailed Information</h3>
-                            <p style="color:var(--muted); margin-top:0.5rem;">
-                                NeedFriend adalah owner server CrackedNetwork. Dia memulai server ini sejak tahun 2024...
-                                <br><br>
-                                (Ini adalah contoh teks panjang. Kamu bisa menambahkan properti 'fullInfo' di objek staff di JavaScript jika ingin teks yang berbeda-beda untuk setiap orang).
-                            </p>
-                        </div>
-                    `;
-                    
-                    // Paksa tampilkan halaman dynamic
+                    // Tampilkan container dinamis
                     pages.forEach(page => page.classList.remove('active'));
                     document.getElementById('staff-dynamic').classList.add('active');
                     
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                    });
-                    
+                    // Update URL
+                    window.history.pushState({ page: pageId }, "", `/staff-${staffId}`);
+                    navLinks.forEach(link => link.classList.remove('active'));
                     navLinksContainer.classList.remove('open');
                     mobileToggle.classList.remove('open');
+                    
+                    // Render konten
+                    const container = document.getElementById('staff-dynamic-content');
+                    container.innerHTML = `
+                        <div style="text-align:center; margin-bottom:2rem;">
+                            <div class="staff-avatar" style="width:80px; height:80px; font-size:2rem; margin:0 auto 1rem;">${staff.initial}</div>
+                            <h1 class="section-title">${staff.name}</h1>
+                            <p class="section-subtitle" style="color:var(--accent);">${staff.role}</p>
+                        </div>
+                        <div class="info-grid" style="margin-bottom:2rem;">
+                            <div class="info-box"><h4>Nickname</h4><p>${staff.nickname || '-'}</p></div>
+                            <div class="info-box"><h4>Age</h4><p>${staff.age || '-'}</p></div>
+                            <div class="info-box"><h4>Location</h4><p>${staff.origin || '-'}</p></div>
+                        </div>
+                        <div class="wiki-content" style="background:transparent; padding:0; border:none;">
+                            <h3>About</h3>
+                            <p style="color:var(--muted); margin-bottom:2rem;">${staff.bio || 'No biography available.'}</p>
+                        </div>
+                    `;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    return; // Hentikan eksekusi biar tidak mencari page ID lain
+                    return; // STOP di sini, jangan lanjut ke kode halaman statis
                 }
             }
-            // ==========================================
-            
+
+            // === 2. LOGIC NORMAL (HALAMAN STATIS) ===
             const targetPage = document.getElementById(pageId);
-            // ... sisa kode showPage yang lama ...
+            if (!targetPage) {
+                console.warn('Page not found:', pageId, 'Redirecting to home');
+                showPage('home');
+                return;
+            }
+
+            pages.forEach(page => page.classList.remove('active'));
+            targetPage.classList.add('active');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+
+            navLinksContainer.classList.remove('open');
+            mobileToggle.classList.remove('open');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Page Specific Actions
+            if (pageId === 'plugins') initPluginManager();
+            if (pageId === 'wiki') renderStaffList();
+            
+            setTimeout(observeElements, 100);
+        }
+
+        // Handle Click Links
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                const url = link.getAttribute('href');
+                window.history.pushState({ page: pageId }, "", url);
+                showPage(pageId);
+            });
+        });
+
+        // Handle Back/Forward Button
+        window.addEventListener('popstate', (e) => {
+            if (e.state && e.state.page) {
+                showPage(e.state.page);
+            } else {
+                showPage('home');
+            }
+        });
+
+        // Initial Load
+        let currentPath = window.location.pathname;
+        if (currentPath.endsWith('/') && currentPath.length > 1) {
+             currentPath = currentPath.slice(0, -1);
+        }
+        if (currentPath === '/' || currentPath === '') currentPath = '/home';
+        const initialPage = currentPath.substring(1);
+        window.history.replaceState({ page: initialPage }, "", currentPath);
+        showPage(initialPage);
+        
+        // ========== RENDER PLUGIN LIST (FIXED SYNTAX) ==========
+        function renderPluginList(plugins) {
+            pluginListContainer.innerHTML = '';
+            if (!plugins || plugins.length === 0) return;
+            
+            plugins.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'fm-item';
+                item.innerHTML = `
+                    <div class="fm-name">
+                        <div class="fm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
+                        ${p.name || 'Unknown'}
+                    </div>
+                    <div class="fm-version">${p.version || '-'}</div>
+                    <div class="fm-author">${p.author || '-'}</div>
+                    <div class="fm-desc">${p.description || '-'}</div>
+                `;
+                pluginListContainer.appendChild(item);
+            });
+        }
+        
+        // ========== PLUGIN MANAGER (FIX TYPO) ==========
+        async function initPluginManager() {
+            if (isPluginLoading) return;
+            isPluginLoading = true;
+
+            pluginCategoryTabs.innerHTML = 'Memuat kategori...'; // FIX: innerHTML (bukan innerHTM)
+            pluginListContainer.innerHTML = '<div class="fm-item">Mempersiapkan data...</div>';
+
+            try {
+                const response = await fetch('/plugin_categories.json');
+                const contentType = response.headers.get('content-type');
+                if (response.ok && contentType && contentType.includes('application/json')) {
+                    pluginManifest = await response.json();
+                } else {
+                    throw new Error("Bukan file JSON");
+                }
+            } catch (err) {
+                console.warn("Gagal ambil JSON, pakai data default.", err);
+                pluginManifest = DEFAULT_DATA.categories;
+            }
+
+            renderPluginTabs(pluginManifest);
+            if (pluginManifest.length > 0) {
+                await loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
+            }
+            
+            isPluginLoading = false;
+        }
 
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
