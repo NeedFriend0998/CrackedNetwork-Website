@@ -721,19 +721,7 @@
             font-size: 1.1rem;
             font-weight: 600;
         }
-        
-                /* Staff Card Expanded State */
-        .staff-card.expanded {
-            grid-column: span 2; /* Membuat kartu melebar 2 kolom saat dibuka */
-            background: var(--card); /* Pastikan background solid */
-            border-color: var(--accent);
-            z-index: 10;
-        }
-        /* Responsif: kalau layar kecil, biar tetap 1 kolom */
-        @media (max-width: 600px) {
-            .staff-card.expanded { grid-column: span 1; }
-        }
-        
+
         .staff-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -1876,7 +1864,8 @@ input, textarea {
                     </div>
                     
                     <!-- Tabs will be injected here by JS -->
-                    <div class="fm-tabs" id="pluginCategoryTabs"><div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>
+                    <div class="fm-tabs" id="pluginCategoryTabs">
+                        <div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>
                     </div>
 
                     <div class="fm-list-header">
@@ -2159,12 +2148,14 @@ input, textarea {
                     <div class="wiki-section" id="staff">
                         <h3 style="margin-bottom: 1rem;">Staff Team</h3>
                         <p style="color: var(--muted);">The team that manages and maintains the server is always pleasant.</p>
+                        
                         <div class="staff-grid" id="staffGrid"></div>
                     </div>
 
                     <!-- FAQ -->
                     <div class="wiki-section" id="faq">
                         <h3 style="margin-bottom: 1rem;">Frequently Asked Questions</h3>
+                        
                         <div id="faqContainer"></div>
                     </div>
                     
@@ -2224,21 +2215,6 @@ input, textarea {
                     </div>
                 </div>
                 
-                </div>
-            </div>
-        </section>
-        
-        <!-- STAFF DETAIL PAGE (DYNAMIC) - LETAKKAN DI LUAR/SETELAH WIKI -->
-        <section class="page" id="staff-dynamic">
-            <div class="rules-page">
-                <div class="rules-header">
-                    <button onclick="history.back()" class="btn btn-secondary" style="margin-bottom:1rem;">
-                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                        Back
-                    </button>
-                    <div id="staff-dynamic-content">
-                         <div class="loader" style="width:40px;height:40px;border-width:3px;margin:50px auto;"></div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -2357,13 +2333,12 @@ input, textarea {
         <div class="footer-bottom">
             <span>2026 CrackedNetwork. All rights reserved.</span>
             <span>Powered by CraftingStore</span>
-            <span>This site is owned by NeedFriend (verified live)</span>
         </div>
     </footer>
 
         <script>
         // ========== CONFIGURATION ==========
-        const CRAFTINGSTORE = {
+        const TIP4SERV_PRODUCTS = {
             bedwars: [
                 {
                     id: "1492986", 
@@ -2469,7 +2444,7 @@ input, textarea {
             ],
             survival: [
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Citizen",
                     desc: "",
                     price: "Rp 20.000",
@@ -2477,7 +2452,7 @@ input, textarea {
                     features: ["Chat Prefix", "3 Home Locations", "Basic Kit", "10k Starting Money"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Noble",
                     desc: "",
                     price: "Rp 45.000",
@@ -2485,7 +2460,7 @@ input, textarea {
                     features: ["Fancy Prefix", "10 Home Locations", "Daily Rewards", "50k Starting Money"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "King",
                     desc: "",
                     price: "Rp 85.000",
@@ -2495,7 +2470,7 @@ input, textarea {
             ],
             practice: [
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Fighter",
                     desc: "",
                     price: "Rp 30.000",
@@ -2503,7 +2478,7 @@ input, textarea {
                     features: ["Fighter Prefix", "2x Elo Gain", "Exclusive Arena", "Fighter Kit"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Champion",
                     desc: "",
                     price: "Rp 65.000",
@@ -2513,7 +2488,7 @@ input, textarea {
             ],
             hideandseek: [
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Hider",
                     desc: "",
                     price: "Rp 15.000",
@@ -2521,7 +2496,7 @@ input, textarea {
                     features: ["Hider Prefix", "Extra Disguises", "2x Coins", "Monthly Hider Kit"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Seeker",
                     desc: "",
                     price: "Rp 35.000",
@@ -2531,7 +2506,7 @@ input, textarea {
             ],
             coins: [
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "1,000 Coins",
                     desc: "",
                     price: "Rp 10.000",
@@ -2539,7 +2514,7 @@ input, textarea {
                     features: ["1,000 Coins", "All Game Modes", "Instant Delivery"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "5,000 Coins",
                     desc: "",
                     price: "Rp 45.000",
@@ -2547,7 +2522,7 @@ input, textarea {
                     features: ["5,500 Coins Total", "10% Bonus", "All Game Modes"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "15,000 Coins",
                     desc: "",
                     price: "Rp 120.000",
@@ -2557,7 +2532,7 @@ input, textarea {
             ],
             cosmetics: [
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Particle Pack",
                     desc: "",
                     price: "Rp 25.000",
@@ -2565,7 +2540,7 @@ input, textarea {
                     features: ["20+ Particle Effects", "All Game Modes", "Toggle Anytime"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Cape Bundle",
                     desc: "",
                     price: "Rp 40.000",
@@ -2573,7 +2548,7 @@ input, textarea {
                     features: ["10 Exclusive Capes", "Animated Capes", "Custom Designs"]
                 },
                 {
-                    id: "GANTI_DENGAN_ID_CRAFTINGSTORE",
+                    id: "GANTI_DENGAN_ID_TIP4SERV",
                     name: "Ultimate Bundle",
                     desc: "",
                     price: "Rp 150.000",
@@ -2758,24 +2733,14 @@ input, textarea {
             }
         ];
 
-                // NEW DATA: Staff (Dengan detail tambahan)
+        // NEW DATA: Staff
         const staffTeam = [
-            { 
-                name: "NeedFriend", 
-                role: "Owner", 
-                initial: "O",
-                origin: "Indonesia",
-                age: "19",
-                nickname: "Bisma",
-                bio: "Owner & Founder server. Suka ngoding dan main game.",
-                // Ini akan jadi link: /staff-needfriend
-                pageId: "needfriend" 
-            },
-            { name: "Staff1", role: "Staff", initial: "S", origin: "Indonesia", age: "??", nickname: "Staff", bio: "Staff aktif.", pageId: "staff1" },
-            { name: "Staff2", role: "Staff", initial: "S", origin: "Indonesia", age: "??", nickname: "Staff", bio: "Staff aktif.", pageId: "staff2" },
-            { name: "HeadMod", role: "Head Mod", initial: "HM", origin: "Indonesia", age: "??", nickname: "HM", bio: "Kepala Moderator.", pageId: "headmod" },
-            { name: "Moderator", role: "Moderator", initial: "M", origin: "Indonesia", age: "??", nickname: "Mod", bio: "Jaga server.", pageId: "mod" },
-            { name: "Helper", role: "Helper", initial: "H", origin: "Indonesia", age: "??", nickname: "Help", bio: "Membantu pemain.", pageId: "helper" }
+            { name: "NeedFriend", role: "Owner", initial: "O" },
+            { name: "", role: "Staff", initial: "S" },
+            { name: "", role: "Staff", initial: "S" },
+            { name: "", role: "Head Mod", initial: "HM" },
+            { name: "", role: "Moderator", initial: "M" },
+            { name: "", role: "Helper", initial: "H" }
         ];
 
         // NEW DATA: FAQ
@@ -2871,159 +2836,17 @@ input, textarea {
                 createParticles();
             });
         }
-        
-                // ========== NAVIGATION (FIXED & CLEAN) ==========
+
+        // ========== NAVIGATION (HISTORY API - CLEAN URL) ==========
+        const navLinks = document.querySelectorAll('.nav-link, [data-page]');
+        const pages = document.querySelectorAll('.page');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinksContainer = document.getElementById('navLinks');
+        const nav = document.querySelector('.nav');
+
         function showPage(pageId) {
+            // FIX: Hilangkan trailing slash jika ada (misal: 'store/' jadi 'store')
             pageId = pageId.replace(/\/$/, '');
-
-            // === 1. LOGIC UNTUK HALAMAN DINAMIS STAFF (MUST BE FIRST) ===
-            if (pageId.startsWith('staff-')) {
-                const staffId = pageId.replace('staff-', '');
-                const staff = staffTeam.find(s => s.pageId === staffId);
-                
-                if (staff) {
-                    // Tampilkan container dinamis
-                    pages.forEach(page => page.classList.remove('active'));
-                    document.getElementById('staff-dynamic').classList.add('active');
-                    
-                    // Update URL
-                    window.history.pushState({ page: pageId }, "", `/staff-${staffId}`);
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    navLinksContainer.classList.remove('open');
-                    mobileToggle.classList.remove('open');
-                    
-                    // Render konten
-                    const container = document.getElementById('staff-dynamic-content');
-                    container.innerHTML = `
-                        <div style="text-align:center; margin-bottom:2rem;">
-                            <div class="staff-avatar" style="width:80px; height:80px; font-size:2rem; margin:0 auto 1rem;">${staff.initial}</div>
-                            <h1 class="section-title">${staff.name}</h1>
-                            <p class="section-subtitle" style="color:var(--accent);">${staff.role}</p>
-                        </div>
-                        <div class="info-grid" style="margin-bottom:2rem;">
-                            <div class="info-box"><h4>Nickname</h4><p>${staff.nickname || '-'}</p></div>
-                            <div class="info-box"><h4>Age</h4><p>${staff.age || '-'}</p></div>
-                            <div class="info-box"><h4>Location</h4><p>${staff.origin || '-'}</p></div>
-                        </div>
-                        <div class="wiki-content" style="background:transparent; padding:0; border:none;">
-                            <h3>About</h3>
-                            <p style="color:var(--muted); margin-bottom:2rem;">${staff.bio || 'No biography available.'}</p>
-                        </div>
-                    `;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    return; // STOP di sini
-                }
-            }
-
-            // === 2. LOGIC NORMAL (HALAMAN STATIS) ===
-            const targetPage = document.getElementById(pageId);
-            if (!targetPage) {
-                console.warn('Page not found:', pageId, 'Redirecting to home');
-                showPage('home');
-                return;
-            }
-
-            pages.forEach(page => page.classList.remove('active'));
-            targetPage.classList.add('active');
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.add('active');
-                }
-            });
-
-            navLinksContainer.classList.remove('open');
-            mobileToggle.classList.remove('open');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Page Specific Actions
-            if (pageId === 'plugins') initPluginManager();
-            if (pageId === 'wiki') renderStaffList();
-            
-            setTimeout(observeElements, 100);
-        }
-
-        // Handle Click Links
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = link.getAttribute('data-page');
-                const url = link.getAttribute('href');
-                window.history.pushState({ page: pageId }, "", url);
-                showPage(pageId);
-            });
-        });
-
-        // Handle Back/Forward Button
-        window.addEventListener('popstate', (e) => {
-            if (e.state && e.state.page) {
-                showPage(e.state.page);
-            } else {
-                showPage('home');
-            }
-        });
-
-        // Initial Load
-        let currentPath = window.location.pathname;
-        if (currentPath.endsWith('/') && currentPath.length > 1) {
-             currentPath = currentPath.slice(0, -1);
-        }
-        if (currentPath === '/' || currentPath === '') currentPath = '/home';
-        const initialPage = currentPath.substring(1);
-        window.history.replaceState({ page: initialPage }, "", currentPath);
-        showPage(initialPage);
-
-        // ========== RENDER PLUGIN LIST (FIXED SYNTAX) ==========
-        function renderPluginList(plugins) {
-            pluginListContainer.innerHTML = '';
-            if (!plugins || plugins.length === 0) return;
-            
-            plugins.forEach(p => {
-                const item = document.createElement('div');
-                item.className = 'fm-item';
-                item.innerHTML = `
-                    <div class="fm-name">
-                        <div class="fm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>
-                        ${p.name || 'Unknown'}
-                    </div>
-                    <div class="fm-version">${p.version || '-'}</div>
-                    <div class="fm-author">${p.author || '-'}</div>
-                    <div class="fm-desc">${p.description || '-'}</div>
-                `;
-                pluginListContainer.appendChild(item);
-            });
-        }
-        
-        // ========== PLUGIN MANAGER (FIX TYPO) ==========
-                async function initPluginManager() {
-            if (isPluginLoading) return;
-            isPluginLoading = true;
-
-            pluginCategoryTabs.innerHTML = 'Memuat kategori...';
-            pluginListContainer.innerHTML = '<div class="fm-item">Mempersiapkan data...</div>';
-
-            try {
-                const response = await fetch('/plugin_categories.json');
-                const contentType = response.headers.get('content-type');
-                if (response.ok && contentType && contentType.includes('application/json')) {
-                    pluginManifest = await response.json();
-                } else {
-                    throw new Error("Bukan file JSON");
-                }
-            } catch (err) {
-                console.warn("Gagal ambil JSON, pakai data default.", err);
-                pluginManifest = DEFAULT_DATA.categories;
-            }
-
-            renderPluginTabs(pluginManifest);
-            if (pluginManifest.length > 0) {
-                await loadPluginCategory(pluginManifest[0].id, pluginManifest[0].name);
-            }
-            
-            isPluginLoading = false;
-        }
-
 
             const targetPage = document.getElementById(pageId);
             if (!targetPage) {
@@ -3191,95 +3014,18 @@ input, textarea {
             gamemodeGrid.appendChild(card);
         });
 
-        // ========== RENDER STAFF (FLIP CARD SYSTEM) ==========
+        // ========== RENDER STAFF ==========
         const staffGrid = document.getElementById('staffGrid');
-        
-        function renderStaffList() {
-            staffGrid.innerHTML = '';
-            staffTeam.forEach((staff, index) => {
-                const card = document.createElement('div');
-                card.className = 'staff-card';
-                card.id = `staff-${index}`;
-                
-                // Tampilan Depan (Default)
-                card.innerHTML = `
-                    <div class="staff-front">
-                        <div class="staff-avatar">${staff.initial}</div>
-                        <div class="staff-name">${staff.name}</div>
-                        <div class="staff-role">${staff.role}</div>
-                        <div class="staff-click-hint" style="font-size:0.7rem; color:var(--muted); margin-top:0.5rem; opacity:0.5;">Click for info</div>
-                    </div>
-                `;
-                
-                // Event Klik -> Balik Kartu
-                card.onclick = () => toggleStaffCard(index);
-                staffGrid.appendChild(card);
-            });
-        }
-
-        function toggleStaffCard(index) {
-            const card = document.getElementById(`staff-${index}`);
-            const staff = staffTeam[index];
-            
-            // Cek apakah kartu sedang expanded
-            const isExpanded = card.classList.contains('expanded');
-
-            // Reset semua kartu lain ke posisi awal
-            document.querySelectorAll('.staff-card').forEach(c => {
-                c.classList.remove('expanded');
-                // Kembalikan konten semua kartu ke keadaan awal
-                const idx = c.id.split('-')[1];
-                const s = staffTeam[idx];
-                // Cek apakah konten sudah di-render ulang? Agar aman, render ulang depan semua
-                 if (!c.classList.contains('expanded')) {
-                    c.innerHTML = `
-                        <div class="staff-front">
-                            <div class="staff-avatar">${s.initial}</div>
-                            <div class="staff-name">${s.name}</div>
-                            <div class="staff-role">${s.role}</div>
-                            <div class="staff-click-hint" style="font-size:0.7rem; color:var(--muted); margin-top:0.5rem; opacity:0.5;">Click for info</div>
-                        </div>
-                    `;
-                 }
-            });
-
-            if (!isExpanded) {
-                // Kalau belum expanded, tampilkan info belakang
-                card.classList.add('expanded');
-                card.innerHTML = `
-                    <div class="staff-back" style="text-align:left; width:100%;">
-                        <button class="staff-close-btn" onclick="event.stopPropagation(); toggleStaffCard(${index});" style="position:absolute; top:5px; right:5px; background:none; border:none; color:var(--muted); cursor:pointer; font-size:1.2rem;">&times;</button>
-                        <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
-                            <div class="staff-avatar" style="width:40px; height:40px; font-size:1rem;">${staff.initial}</div>
-                            <div>
-                                <div style="font-weight:700; color:var(--accent);">${staff.nickname}</div>
-                                <div style="font-size:0.8rem; color:var(--muted);">${staff.role}</div>
-                            </div>
-                        </div>
-                        <div style="font-size:0.85rem; margin-bottom:0.5rem; color:var(--fg); display:grid; grid-template-columns: 1fr 1fr; gap:0.25rem;">
-                            <span style="color:var(--muted)">Origin:</span><span>${staff.origin}</span>
-                            <span style="color:var(--muted)">Age:</span><span>${staff.age}</span>
-                        </div>
-                        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1rem; line-height:1.4;">${staff.bio}</p>
-                        <a href="/staff-${staff.pageId}" data-page="staff-${staff.pageId}" class="btn btn-primary" style="width:100%; justify-content:center; font-size:0.8rem; padding:0.5rem;">More Info</a>
-                    </div>
-                `;
-                
-                // Pasang event listener baru untuk tombol More Info di dalam kartu
-                // Karena innerHTML baru, kita perlu pasang router lagi
-                const btn = card.querySelector('[data-page]');
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const pageId = btn.getAttribute('data-page');
-                    const url = btn.getAttribute('href');
-                    window.history.pushState({ page: pageId }, "", url);
-                    showPage(pageId); // Fungsi router utama
-                });
-            }
-        }
-
-        // Panggil fungsi render saat halaman wiki dimuat
-        renderStaffList();
+        staffTeam.forEach(staff => {
+            const card = document.createElement('div');
+            card.className = 'staff-card';
+            card.innerHTML = `
+                <div class="staff-avatar">${staff.initial}</div>
+                <div class="staff-name">${staff.name}</div>
+                <div class="staff-role">${staff.role}</div>
+            `;
+            staffGrid.appendChild(card);
+        });
 
         // ========== RENDER FAQ ==========
         const faqContainer = document.getElementById('faqContainer');
@@ -3423,7 +3169,7 @@ input, textarea {
 
         function renderProducts(category) {
             productsGrid.innerHTML = '';
-            const products = CRAFTINGSTORE[category] || [];
+            const products = TIP4SERV_PRODUCTS[category] || [];
             
             if(products.length === 0) {
                 productsGrid.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--muted); grid-column: 1/-1;">Product is not available for this category.</div>`;
@@ -3553,8 +3299,8 @@ input, textarea {
             ],
             plugins: {
                 lobby: [
-                    { name: "WorldEdit", version: "7.2.15", author: "EngineHub" },
-                    { name: "EssentialsX", version: "2.20.1", author: "Essentials Team" }
+                    { name: "WorldEdit", version: "7.2.15", author: "EngineHub", description: "Map editing tool." },
+                    { name: "EssentialsX", version: "2.20.1", author: "Essentials Team", description: "Commands." }
                 ],
                 bw: [
                     { name: "BedWars1058", version: "22.2", author: "andrei1058", description: "Bedwars plugin." }
@@ -3564,7 +3310,7 @@ input, textarea {
 
         async function initPluginManager() {
             // 1. LANGSUNG HAPUS LOADER & TULIS TEKS BIAR AMAN
-            pluginCategoryTabs.innerHTM = 'Memuat...';
+            pluginCategoryTabs.innerHTML = 'Memuat...';
 
             // 2. Coba ambil JSON, kalau gagal (misal isinya HTML dari Netlify), pakai DEFAULT_DATA
             try {
@@ -3642,7 +3388,8 @@ input, textarea {
                         ${p.name || 'Unknown'}
                     </div>
                     <div class="fm-version">${p.version || '-'}</div>
-                    <div class="fm-author">${p.author || '-'}
+                    <div class="fm-author">${p.author || '-'}</div>
+                    <div class="fm-desc">${p.description || '-'}</div>
                 `;
                 pluginListContainer.appendChild(item);
             });
