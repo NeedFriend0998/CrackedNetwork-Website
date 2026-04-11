@@ -3538,11 +3538,11 @@
                 </div>
             `;
             constheader = card.querySelector('.rule-header');
-                        header.addEventListener('click', () => {
-                rulesGrid.querySelectorAll('.rule-card.open').forEach(x => { if(x!==card) x.classList.remove('open'); });
+            header.addEventListener('click', () => {
+                const isOpen = card.classList.contains('open');
                 card.classList.toggle('open');
                 header.setAttribute('aria-expanded', !isOpen);
-            })
+            });
             header.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); header.click(); }
             });
