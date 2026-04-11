@@ -3492,10 +3492,11 @@
                 </div>
                 <div class="faq-answer"><p>${item.a}</p></div>
             `;
-                        faqItem.querySelector('.faq-question').addEventListener('click', () => {
-                faqContainer.querySelectorAll('.faq-item.open').forEach(x => { if(x!==faqItem) x.classList.remove('open'); });
+            faqItem.querySelector('.faq-question').addEventListener('click', () => {
                 faqItem.classList.toggle('open');
             });
+            faqContainer.appendChild(faqItem);
+        });
 
         // ========== WIKI TABS ==========
         const wikiTabs = document.querySelectorAll('.wiki-tab');
@@ -3537,8 +3538,8 @@
                 </div>
             `;
             const header = card.querySelector('.rule-header');
-                        header.addEventListener('click', () => {
-                rulesGrid.querySelectorAll('.rule-card.open').forEach(x => { if(x!==card) x.classList.remove('open'); });
+            header.addEventListener('click', () => {
+                const isOpen = card.classList.contains('open');
                 card.classList.toggle('open');
                 header.setAttribute('aria-expanded', !isOpen);
             });
@@ -3547,6 +3548,7 @@
             });
             rulesGrid.appendChild(card);
         });
+
         // ========== RENDER VOTE SITES ==========
         const voteSitesGrid = document.getElementById('voteSites');
         voteSites.forEach(site => {
