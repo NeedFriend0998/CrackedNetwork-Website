@@ -3199,7 +3199,7 @@
 
         async function fetchServerStatus() {
             try {
-                const response = await fetch('https://api.mcsrvstat.us/2/crackednetwork.mcgg.l');
+                const response = await fetch('https://api.mcsrvstat.us/2/crackednetwork.mcgg.nl');
                 const data = await response.json();
                 if (data.online) {
                     const online = data.players ? data.players.online : 0;
