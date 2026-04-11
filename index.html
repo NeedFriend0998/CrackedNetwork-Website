@@ -3492,7 +3492,7 @@
                 </div>
                 <div class="faq-answer"><p>${item.a}</p></div>
             `;
-                        faqItem.querySelector('.faq-question').addEventListener('click', () => {
+                      faqItem.querySelector('.faq-question').addEventListener('click', () => {
                 faqContainer.querySelectorAll('.faq-item.open').forEach(x => { if(x!==faqItem) x.classList.remove('open'); });
                 faqItem.classList.toggle('open');
             });
@@ -3543,7 +3543,7 @@
                 rulesGrid.querySelectorAll('.rule-card.open').forEach(x => { if(x!==card) x.classList.remove('open'); });
                 card.classList.toggle('open');
                 header.setAttribute('aria-expanded', !isOpen);
-            })
+            });
             header.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); header.click(); }
             });
