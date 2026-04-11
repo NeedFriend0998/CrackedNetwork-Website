@@ -3492,11 +3492,10 @@
                 </div>
                 <div class="faq-answer"><p>${item.a}</p></div>
             `;
-            faqItem.querySelector('.faq-question').addEventListener('click', () => {
+                        faqItem.querySelector('.faq-question').addEventListener('click', () => {
+                faqContainer.querySelectorAll('.faq-item.open').forEach(x => { if(x!==faqItem) x.classList.remove('open'); });
                 faqItem.classList.toggle('open');
             });
-            faqContainer.appendChild(faqItem);
-        });
 
         // ========== WIKI TABS ==========
         const wikiTabs = document.querySelectorAll('.wiki-tab');
