@@ -2410,55 +2410,6 @@
                             </div>
                             </div>
 
-<!-- Server Activity Logs -->
-<div class="logs-section">
-    <div class="logs-container">
-        <div class="logs-header">
-            <div class="logs-title">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M4 4h16v16H4z"/>
-                    <line x1="8" y1="8" x2="16" y2="8"/>
-                    <line x1="8" y1="12" x2="16" y2="12"/>
-                    <line x1="8" y1="16" x2="12" y2="16"/>
-                </svg>
-                Server Activity Logs
-                <span style="font-size: 0.75rem; color: var(--muted); margin-left: 0.5rem;">Real-time</span>
-            </div>
-            <div class="logs-controls">
-                <div class="logs-filter-group" id="logFilterGroup">
-                    <button class="logs-filter-btn active" data-filter="ALL">All</button>
-                    <!-- Filter buttons akan ditambah dinamis -->
-                </div>
-                <label class="logs-refresh-toggle">
-                    <input type="checkbox" id="autoRefreshLogs" checked>
-                    <span>Auto-refresh</span>
-                </label>
-                <button class="btn btn-secondary" id="refreshLogsBtn" style="padding: 0.4rem 1rem;">
-                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
-                    </svg>
-                    Refresh
-                </button>
-            </div>
-        </div>
-        <div class="logs-table-wrapper">
-            <table class="logs-table">
-                <thead>
-                    <tr>
-                        <th>Time</th>
-                        <th>Type</th>
-                        <th>Player</th>
-                        <th>Message</th>
-                    </tr>
-                </thead>
-                <tbody id="logsTableBody">
-                    <tr><td colspan="4"><div class="logs-loader"><div class="loader"></div></div></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
 <section class="features">
 
             <section class="features">
