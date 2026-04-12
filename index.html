@@ -2209,6 +2209,201 @@
             .fm-name { font-size: 1rem; }
             .fm-desc { white-space: normal; }
         }
+        
+        /* ===== LOGS SECTION ===== */
+.logs-section {
+    padding: 2rem 0 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.logs-container {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 2rem;
+}
+
+.logs-header {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.logs-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.logs-title svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--accent);
+}
+
+.logs-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logs-filter-group {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.logs-filter-btn {
+    padding: 0.4rem 0.8rem;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.logs-filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--fg);
+}
+
+.logs-filter-btn.active {
+    background: rgba(0, 229, 160, 0.1);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.logs-refresh-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.logs-refresh-toggle input {
+    accent-color: var(--accent);
+}
+
+.logs-table-wrapper {
+    overflow-x: auto;
+}
+
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.logs-table th {
+    text-align: left;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+}
+
+.logs-table td {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg);
+}
+
+.logs-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.logs-table tbody tr:hover {
+    background: rgba(0, 229, 160, 0.03);
+}
+
+.logs-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.log-type {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.log-type.LOGIN { background: rgba(0, 229, 160, 0.15); color: var(--accent); }
+.log-type.DISCONNECT { background: rgba(255, 71, 87, 0.15); color: var(--danger); }
+.log-type.COMMAND { background: rgba(255, 165, 2, 0.15); color: var(--warning); }
+.log-type.CHAT { background: rgba(0, 180, 216, 0.15); color: #00b4d8; }
+.log-type.PING { background: rgba(107, 107, 123, 0.15); color: var(--muted); }
+
+.log-time {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.log-player {
+    font-weight: 500;
+}
+
+.log-message {
+    color: var(--muted);
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logs-empty {
+    padding: 3rem;
+    text-align: center;
+    color: var(--muted);
+}
+
+.logs-loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+}
+
+@media (max-width: 768px) {
+    .logs-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .logs-controls {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .logs-table th, .logs-table td {
+        padding: 0.6rem 0.75rem;
+    }
+    
+    .log-message {
+        max-width: 150px;
+    }
+}
     </style>
 </head>
 <body>
