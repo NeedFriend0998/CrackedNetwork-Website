@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Logs API - CrackedNetwork</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0a0a0f;
+            color: #e8e8ec;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #00e5a0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #2a2a3a;
+            padding-bottom: 0.5rem;
+        }
+        .status-card {
+            background: #16161f;
+            border: 1px solid #2a2a3a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        input {
+            flex: 1;
+            min-width: 300px;
+            padding: 0.7rem 1rem;
+            background: #0a0a0f;
+            border: 1px solid #2a2a3a;
+            border-radius: 8px;
+            color: #fff;
+            font-family: monospace;
+        }
+        button {
+            padding: 0.7rem 1.5rem;
+            background: #00e5a0;
+            color: #0a0a0f;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #00b4d8;
+            box-shadow: 0 0 15px rgba(0,229,160,0.3);
+        }
+        .info-text {
+            color: #6b6b7b;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .error {
+            color: #ff4757;
+            background: rgba(255,71,87,0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #ff4757;
+        }
+        .success {
+            color: #00e5a0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #16161f;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 1.5rem;
+        }
+        th {
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: #0a0a0f;
+            color: #6b6b7b;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #2a2a3a;
+        }
+        .log-type {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .type-LOGIN { background: #00e5a033; color: #00e5a0; }
+        .type-COMMAND { background: #ffa50233; color: #ffa502; }
+        .type-CHAT { background: #00b4d833; color: #00b4d8; }
+        .type-DISCONNECT { background: #ff475733; color: #ff4757; }
+        .loader {
+            border: 3px solid #2a2a3a;
+            border-top: 3px solid #00e5a0;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .log-message { color: #b0b0c0; max-width: 300px; }
+        .log-time { font-family: monospace; color: #6b6b7b; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔌 API Logs Test</h1>
+    
+    <div class="status-card">
+        <div class="flex-row">
+            <input type="text" id="apiUrl" value="https://api-velocity-log.vercel.app/api/get-logs" placeholder="API Endpoint URL">
+            <button id="fetchBtn">🔄 Fetch Logs</button>
+        </div>
+        <div class="info-text">
+            ⚡ Endpoint harus mengembalikan JSON dengan format: <code>{ "logs": [...] }</code><br>
+            🔒 Pastikan CORS sudah diizinkan di server Vercel.
+        </div>
+        <div id="statusMessage"></div>
+    </div>
+
+    <div id="loadingIndicator" class="loader" style="display: none;"></div>
+    
+    <table id="logsTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>Waktu</th>
+                <th>Tipe</th>
+                <th>Player</th>
+                <th>Pesan</th>
+            </tr>
+        </thead>
+        <tbody id="logsBody"></tbody>
+    </table>
+</div>
+
+<script>
+    const apiInput = document.getElementById('apiUrl');
+    const fetchBtn = document.getElementById('fetchBtn');
+    const statusDiv = document.getElementById('statusMessage');
+    const loadingEl = document.getElementById('loadingIndicator');
+    const tableEl = document.getElementById('logsTable');
+    const tbody = document.getElementById('logsBody');
+
+    function formatTime(timestamp) {
+        const d = new Date(timestamp);
+        return d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    async function fetchLogs() {
+        const url = apiInput.value.trim();
+        if (!url) {
+            statusDiv.innerHTML = '<div class="error">❌ Masukkan URL API</div>';
+            return;
+        }
+
+        loadingEl.style.display = 'block';
+        tableEl.style.display = 'none';
+        statusDiv.innerHTML = '';
+
+        try {
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            
+            if (!data.logs) {
+                throw new Error('Response JSON tidak memiliki property "logs"');
+            }
+
+            if (!Array.isArray(data.logs)) {
+                throw new Error('Property "logs" bukan array');
+            }
+
+            renderLogs(data.logs);
+            statusDiv.innerHTML = `<div class="success">✅ Berhasil! Menampilkan ${data.logs.length} log.</div>`;
+            
+        } catch (err) {
+            console.error(err);
+            statusDiv.innerHTML = `<div class="error">❌ Gagal mengambil data:<br>${err.message}</div>`;
+            tableEl.style.display = 'none';
+        } finally {
+            loadingEl.style.display = 'none';
+        }
+    }
+
+    function renderLogs(logs) {
+        if (logs.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:2rem; color:#6b6b7b;">📭 Tidak ada log (array kosong)</td></tr>`;
+            tableEl.style.display = 'table';
+            return;
+        }
+
+        tbody.innerHTML = logs.map(log => `
+            <tr>
+                <td class="log-time">${formatTime(log.timestamp || Date.now())}</td>
+                <td><span class="log-type type-${log.type || 'UNKNOWN'}">${log.type || '?'}</span></td>
+                <td>${log.player || '-'}</td>
+                <td class="log-message">${log.message || '-'}</td>
+            </tr>
+        `).join('');
+        
+        tableEl.style.display = 'table';
+    }
+
+    fetchBtn.addEventListener('click', fetchLogs);
+    
+    // Fetch otomatis saat halaman dimuat
+    window.addEventListener('load', () => {
+        // Coba fetch otomatis setelah 500ms
+        setTimeout(fetchLogs, 500);
+    });
+</script>
+</body>
+</html>
