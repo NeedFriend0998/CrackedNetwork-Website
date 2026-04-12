@@ -3471,6 +3471,125 @@
         }
         fetchServerStatus();
         setInterval(fetchServerStatus, 60000);
+        
+        // ========== SERVER LOGS (VERCEL API) ==========
+const API_LOGS_URL = 'https://velocity-log-api.vercel.app/api/get-logs'; // GANTI dengan URL API kamu
+let allLogs = [];
+let activeFilter = 'ALL';
+let autoRefreshEnabled = true;
+let refreshInterval = null;
+
+const logsTableBody = document.getElementById('logsTableBody');
+const logFilterGroup = document.getElementById('logFilterGroup');
+const autoRefreshCheckbox = document.getElementById('autoRefreshLogs');
+const refreshBtn = document.getElementById('refreshLogsBtn');
+
+// Format timestamp ke waktu lokal
+function formatLogTime(timestamp) {
+    const date = new Date(timestamp);
+    return date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+// Render tabel logs
+function renderLogs() {
+    const filteredLogs = activeFilter === 'ALL' 
+        ? allLogs 
+        : allLogs.filter(log => log.type === activeFilter);
+
+    if (filteredLogs.length === 0) {
+        logsTableBody.innerHTML = `<tr><td colspan="4"><div class="logs-empty">
+            <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 0.5rem; opacity: 0.5;">
+                <path d="M4 4h16v16H4z"/><line x1="8" y1="8" x2="16" y2="16"/><line x1="16" y1="8" x2="8" y2="16"/>
+            </svg>
+            <p>No logs yet. Waiting for server activity...</p>
+        </div></td></tr>`;
+        return;
+    }
+
+    logsTableBody.innerHTML = filteredLogs.map(log => `
+        <tr>
+            <td class="log-time">${formatLogTime(log.timestamp)}</td>
+            <td><span class="log-type ${log.type}">${log.type}</span></td>
+            <td class="log-player">${log.player || '-'}</td>
+            <td class="log-message" title="${log.message}">${log.message || '-'}</td>
+        </tr>
+    `).join('');
+}
+
+// Update filter buttons
+function updateFilterButtons() {
+    const types = [...new Set(allLogs.map(log => log.type))];
+    const currentActive = logFilterGroup.querySelector('.active')?.dataset.filter || 'ALL';
+    
+    let html = `<button class="logs-filter-btn ${currentActive === 'ALL' ? 'active' : ''}" data-filter="ALL">All</button>`;
+    types.sort().forEach(type => {
+        html += `<button class="logs-filter-btn ${currentActive === type ? 'active' : ''}" data-filter="${type}">${type}</button>`;
+    });
+    logFilterGroup.innerHTML = html;
+
+    // Re-attach event listeners
+    logFilterGroup.querySelectorAll('.logs-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            logFilterGroup.querySelectorAll('.logs-filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeFilter = btn.dataset.filter;
+            renderLogs();
+        });
+    });
+}
+
+// Fetch logs dari API
+async function fetchLogs() {
+    try {
+        const response = await fetch(`${API_LOGS_URL}?limit=50`);
+        if (!response.ok) throw new Error('API error');
+        const data = await response.json();
+        allLogs = data.logs || [];
+        updateFilterButtons();
+        renderLogs();
+    } catch (error) {
+        console.warn('Gagal fetch logs:', error);
+        if (allLogs.length === 0) {
+            logsTableBody.innerHTML = `<tr><td colspan="4"><div class="logs-empty">
+                <p style="color: var(--danger);">⚠️ Unable to load logs. API might be offline.</p>
+            </div></td></tr>`;
+        }
+    }
+}
+
+// Start/stop auto-refresh
+function manageAutoRefresh() {
+    if (refreshInterval) clearInterval(refreshInterval);
+    if (autoRefreshEnabled) {
+        refreshInterval = setInterval(fetchLogs, 5000);
+    }
+}
+
+// Event listeners
+autoRefreshCheckbox.addEventListener('change', (e) => {
+    autoRefreshEnabled = e.target.checked;
+    manageAutoRefresh();
+});
+
+refreshBtn.addEventListener('click', fetchLogs);
+
+// Inisialisasi
+fetchLogs();
+manageAutoRefresh();
+
+// Cleanup saat page berubah (opsional, tapi baik untuk performa)
+const originalShowPage = showPage;
+showPage = function(pageId, extraState) {
+    if (pageId !== 'home' && refreshInterval) {
+        clearInterval(refreshInterval);
+        refreshInterval = null;
+    }
+    originalShowPage(pageId, extraState);
+    if (pageId === 'home') {
+        fetchLogs();
+        manageAutoRefresh();
+    }
+};
 
         // ========== RENDER GAMEMODES ==========
         const gamemodeGrid = document.getElementById('gamemodeGrid');
