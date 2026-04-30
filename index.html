@@ -2282,12 +2282,18 @@
       <section class="page" id="forums">
             <div class="discord-page">
                 <div class="section-header">
-                    <div class="commentbox"></div>
-                    <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
-                    <script>commentBox('5700396886523904-proj')</script>
+                    <div id="cusdis_thread"
+  data-host="https://cusdis.com"
+  data-app-id="309ee73a-2a89-42b9-95a5-4889c2c599b6"
+  data-page-id="{{ PAGE_ID }}"
+  data-page-url="{{ PAGE_URL }}"
+  data-page-title="{{ PAGE_TITLE }}"
+></div>
+<script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+
                 </div>
                 <style>
-                  #forums {
+                  /*#forums {
                     background: transparent;
                   }
 
@@ -2295,7 +2301,7 @@
                     background: #fff;
                     padding: 1rem;
                     border-radius: 12px;
-                }
+                }*/
                 </style>
             </div>
         </section>
