@@ -2281,25 +2281,65 @@
       <!-- Forums -->
       <section class="page" id="forums">
             <div class="discord-page">
-                <div class="section-header">
-                    <div class="commentbox"></div>
-                    <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
-                    <script>commentBox('5700396886523904-proj')</script>
-                </div>
-                <style>
-                  #forums {
-                        background: 
-        radial-gradient(ellipse at 20% 20%, rgba(0, 229, 160, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 80%, rgba(0, 180, 216, 0.06) 0%, transparent 50%),
-        var(--bg);
-                  }
+                <div class="commentbox"></div>
+<script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+<script>
+    commentBox('5700396886523904-proj');
 
-                  /*.commentbox {
-                    background: #fff;
-                    padding: 1rem;
-                    border-radius: 12px;
-                }*/
-                </style>
+    // Tunggu iframe CommentBox muncul, lalu inject CSS
+    const observer = new MutationObserver(() => {
+        const iframe = document.querySelector('.commentbox iframe');
+        if (iframe) {
+            iframe.addEventListener('load', () => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const style = iframeDoc.createElement('style');
+                    style.textContent = `
+                        /* ===== UBAH WARNA DI SINI ===== */
+                        body {
+                            color: #e8e8ec !important;
+                            background: #16161f !important;
+                        }
+                        
+                        /* Warna placeholder */
+                        textarea::placeholder {
+                            color: #6b6b7b !important;
+                        }
+
+                        /* Warna input text */
+                        textarea, input {
+                            color: #e8e8ec !important;
+                            background: #0a0a0f !important;
+                            border-color: #2a2a3a !important;
+                        }
+
+                        /* Judul / header */
+                        .cb-header, h1, h2, h3 {
+                            color: #00e5a0 !important;
+                        }
+
+                        /* Tombol */
+                        button {
+                            background: #00e5a0 !important;
+                            color: #0a0a0f !important;
+                        }
+
+                        /* Link */
+                        a {
+                            color: #00e5a0 !important;
+                        }
+                    `;
+                    iframeDoc.head.appendChild(style);
+                } catch(e) {
+                    console.log('Gagal inject CSS ke CommentBox:', e);
+                }
+            });
+            observer.disconnect();
+        }
+    });
+
+    observer.observe(document.querySelector('.commentbox'), { childList: true, subtree: true });
+</script>
             </div>
         </section>
 
