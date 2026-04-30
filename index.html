@@ -2295,40 +2295,67 @@
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                     const style = iframeDoc.createElement('style');
                     style.textContent = `
-                        /* ===== UBAH WARNA DI SINI ===== */
-                        body {
-                            color: #e8e8ec !important;
-                            background: #16161f !important;
-                        }
-                        
-                        /* Warna placeholder */
-                        textarea::placeholder {
-                            color: #6b6b7b !important;
-                        }
+    /* ===== WARNA TEKS KOMENTAR YANG SUDAH DIKIRIM ===== */
+    
+    /* Nama user */
+    .cb-comment-username,
+    .cb-user-name,
+    [class*="username"],
+    [class*="author"] {
+        color: #00e5a0 !important;
+        font-weight: 700 !important;
+    }
 
-                        /* Warna input text */
-                        textarea, input {
-                            color: #e8e8ec !important;
-                            background: #0a0a0f !important;
-                            border-color: #2a2a3a !important;
-                        }
+    /* Isi komentar */
+    .cb-comment-body,
+    .cb-comment-text,
+    .cb-text,
+    [class*="comment-body"],
+    [class*="comment-content"],
+    p {
+        color: #e8e8ec !important;
+    }
 
-                        /* Judul / header */
-                        .cb-header, h1, h2, h3 {
-                            color: #00e5a0 !important;
-                        }
+    /* Tanggal / waktu */
+    .cb-comment-date,
+    .cb-date,
+    time,
+    [class*="date"],
+    [class*="timestamp"] {
+        color: #6b6b7b !important;
+        font-size: 0.85rem !important;
+    }
 
-                        /* Tombol */
-                        button {
-                            background: #00e5a0 !important;
-                            color: #0a0a0f !important;
-                        }
+    /* Container komentar */
+    .cb-comment,
+    .cb-comment-item,
+    [class*="comment-item"],
+    [class*="comment-wrapper"] {
+        background: #12121a !important;
+        border-bottom: 1px solid #2a2a3a !important;
+        padding: 1rem !important;
+    }
 
-                        /* Link */
-                        a {
-                            color: #00e5a0 !important;
-                        }
-                    `;
+    /* Nama user yang mention/reply */
+    .cb-mention,
+    [class*="mention"] {
+        color: #00b4d8 !important;
+    }
+
+    /* Jumlah like / reply */
+    .cb-actions,
+    .cb-like-count,
+    .cb-reply-count,
+    [class*="action"] {
+        color: #6b6b7b !important;
+    }
+
+    /* Like button aktif */
+    .cb-like-btn.liked,
+    [class*="like"][class*="active"] {
+        color: #ff4757 !important;
+    }
+`;;
                     iframeDoc.head.appendChild(style);
                 } catch(e) {
                     console.log('Gagal inject CSS ke CommentBox:', e);
