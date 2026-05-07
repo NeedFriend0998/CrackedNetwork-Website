@@ -3635,6 +3635,8 @@
                     const badgeText = product.badge === 'legendary' ? 'Legendary' : 
                                      product.badge === 'popular' ? 'Popular' : 
                                      product.badge === 'cheapest' ? 'Cheapest' : 
+                                     
+                    product.badge === 'special' ? 'Special' :
                                      product.badge === 'new' ? 'New' : 'Best Value';
                     badgeHTML = `<span class="product-badge ${product.badge === 'legendary' ? 'legendary' : product.badge === 'new' ? 'new' : ''}">${badgeText}</span>`;
                 }
