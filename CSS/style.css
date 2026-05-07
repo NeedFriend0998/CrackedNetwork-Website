@@ -96,10 +96,10 @@
 
         .logo-icon {
             width: 20px;
-            height: 20px;
+            height: 10px;
             background: linear-gradient(135deg, var(--accent), #00b4d8);
             border-radius: 8px;
-            display: center;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
