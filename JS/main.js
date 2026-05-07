@@ -996,14 +996,14 @@
         const DEFAULT_DATA = {
             categories: [
                 { id: "lobby", name: "Lobby" },
-                { id: "bw", name: "Bedwars" }
+                { id: "bedwars", name: "Bedwars" }
             ],
             plugins: {
                 lobby: [
                     { name: "WorldEdit", version: "7.2.15", author: "EngineHub", description: "Map editing tool." },
                     { name: "EssentialsX", version: "2.20.1", author: "Essentials Team", description: "Commands." }
                 ],
-                bw: [
+                bedwars: [
                     { name: "BedWars1058", version: "22.2", author: "andrei1058", description: "Bedwars plugin." }
                 ]
             }
