@@ -6,7 +6,7 @@
                     id: "1492986", 
                     name: "VIP",
                     desc: "",
-                    price: "Rp 25.000 <br>$1,4828 USD",
+                    price: "Rp 25.000",
                     badge: "cheapest",
                     features: [
                       "[VIP] Green Chat Tag",
