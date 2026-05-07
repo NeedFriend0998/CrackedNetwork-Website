@@ -1049,7 +1049,7 @@
             }
             currentPluginCategory = id;
             fmCurrentPath.textContent = `/${id}/plugins`;
-            
+            pluginListContainer.innerHTML = '<div class="fm-item" style="color:var(--accent);">Loading plugins...</div>';
 
             let plugins = [];
             try {
