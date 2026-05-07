@@ -2742,18 +2742,7 @@
     <script>
         // ========== CONFIGURATION ==========
         const TIP4SERV_PRODUCTS = {
-           special: [
-             {
-               id: ""
-               name: "A"
-               desc: "a"
-               price: ""
-               badge: ""
-               features: [
-                 ""
-                 ]
-            },
-          ];
+           
             bedwars: [
                 {
                     id: "1492986", 
@@ -2860,8 +2849,7 @@
         };
 
         const storeCategories = [
-            { id: 'bedwars', name: 'Bedwars', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' },
-          { id: 'special', name: 'Special', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' }
+            { id: 'bedwars', name: 'Bedwars', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' }
         ];
 
         // ========== DATA ==========
@@ -3590,7 +3578,7 @@
         // ========== RENDER STORE ==========
         const storeCategoriesEl = document.getElementById('storeCategories');
         const productsGrid = document.getElementById('productsGrid');
-        let activeCategory = 'bedwars','special';
+        let activeCategory = 'bedwars';
 
         storeCategories.forEach(cat => {
             const tab = document.createElement('button');
