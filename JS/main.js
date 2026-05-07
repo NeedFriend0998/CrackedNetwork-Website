@@ -109,7 +109,7 @@
               id: "1543314",
               name: "Beta Access",
               desc: "NOTE!, Our Main server like Bedwars is still FREE to play",
-              price: "Rp 86.771,0657",
+              price: "Rp 86.000",
               badge: "special",
               features: [
                 "Have an access to our server with custom plugins",
