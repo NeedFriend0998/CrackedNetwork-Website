@@ -2217,11 +2217,10 @@ a:focus-visible, button:focus-visible {
 input, textarea { -webkit-user-select: text; user-select: text; }
 
 /* ============================================================
-   HALAMAN LEGAL — CrackedNetwork
-   Ditulis manual, tidak di-generate otomatis
+   LEGAL PAGES — CrackedNetwork  
+   Ditulis tangan, bukan template
    ============================================================ */
 
-/* --- WRAPPER UTAMA (hanya untuk halaman legal) --- */
 .legal-page-wrapper,
 .legal-page-wrapper * {
   box-sizing: border-box;
@@ -2229,20 +2228,23 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 
 .legal-page-wrapper {
   width: 100%;
-  padding: 2.2rem 1.8rem;
+  padding: 3.5rem 1.5rem 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
 }
 
-/* --- KONTEN TENGAH --- */
+.legal-page-wrapper .section-header {
+  margin-bottom: 2.6rem;
+}
+
 .legal-inner {
   max-width: 780px;
   width: 100%;
 }
 
-/* --- TOMBOL BACK (pojok kiri atas, di luar kartu) --- */
+/* --- tombol back --- */
 .legal-backlink {
   display: inline-flex;
   align-items: center;
@@ -2254,7 +2256,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   padding: 0.45rem 0.8rem;
   background: var(--card);
   border: 2px solid var(--border-light);
-  margin-bottom: 1.8rem;
+  margin-bottom: 2rem;
   transition: border-color 0.1s steps(2), color 0.1s steps(2);
   width: fit-content;
 }
@@ -2270,26 +2272,25 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   stroke: currentColor;
 }
 
-/* ============================================================
-   HALAMAN PILIHAN ( /legal )
-   ============================================================ */
+/* --- halaman pilihan --- */
 .pick-legal-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.8rem;
-  margin-top: 0.5rem;
+  gap: 1.7rem;
+  margin-top: 0.2rem;
 }
 
 .pick-legal-card {
   background: var(--card);
   border: 3px solid #000;
-  padding: 2.2rem 1.8rem 1.8rem;
+  padding: 2.1rem 1.8rem 1.8rem;
   box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.4);
-  transition: box-shadow 0.12s steps(2), transform 0.12s steps(2);
+  transition: box-shadow 0.1s steps(2), transform 0.1s steps(2);
   text-decoration: none;
   color: inherit;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .pick-legal-card:hover {
@@ -2297,33 +2298,35 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   box-shadow: 7px 7px 0 rgba(0,0,0,0.45);
 }
 
-.pick-legal-card:nth-child(1) .pick-legal-icon-wrap {
-  background: rgba(92, 184, 92, 0.08);
-  border-color: rgba(92, 184, 92, 0.2);
-  color: var(--accent);
-}
-
-.pick-legal-card:nth-child(2) .pick-legal-icon-wrap {
-  background: rgba(77, 166, 255, 0.08);
-  border-color: rgba(77, 166, 255, 0.2);
-  color: #4da6ff;
-}
-
 .pick-legal-icon-wrap {
   width: 52px;
   height: 52px;
-  border: 2px solid;
+  border: 2px solid rgba(92, 184, 92, 0.2);
+  background: rgba(92, 184, 92, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.2rem;
-  font-size: 1.4rem;
+  margin-bottom: 1.3rem;
+}
+
+.pick-legal-card:nth-child(2) .pick-legal-icon-wrap {
+  border-color: rgba(77, 166, 255, 0.2);
+  background: rgba(77, 166, 255, 0.08);
+}
+
+.pick-legal-icon-wrap svg {
+  stroke: var(--accent);
+}
+
+.pick-legal-card:nth-child(2) .pick-legal-icon-wrap svg {
+  stroke: #4da6ff;
 }
 
 .pick-legal-heading {
   font-size: 1.25rem;
   font-weight: 900;
   margin-bottom: 0.5rem;
+  color: var(--fg);
 }
 
 .pick-legal-card:nth-child(2) .pick-legal-heading {
@@ -2332,26 +2335,32 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 
 .pick-legal-sub {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   line-height: 1.55;
-  margin-top: auto;
+  flex-grow: 1;
 }
 
 .pick-legal-arrow {
-  margin-top: 1.4rem;
+  margin-top: 1.5rem;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   display: flex;
   align-items: center;
   gap: 0.3rem;
+  color: var(--accent);
 }
 
-.pick-legal-card:nth-child(1) .pick-legal-arrow { color: var(--accent); }
-.pick-legal-card:nth-child(2) .pick-legal-arrow { color: #4da6ff; }
+.pick-legal-card:nth-child(2) .pick-legal-arrow {
+  color: #4da6ff;
+}
 
-/* ============================================================
-   KARTU KONTEN (Privacy / Terms)
-   ============================================================ */
+.pick-legal-arrow svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+}
+
+/* --- kartu dokumen (terms / privacy) --- */
 .legal-doc-card {
   background: var(--card);
   border: 3px solid #000;
@@ -2361,7 +2370,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   overflow: hidden;
 }
 
-/* strip aksen kiri */
 .legal-doc-card::before {
   content: '';
   position: absolute;
@@ -2377,7 +2385,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   background: #4da6ff;
 }
 
-/* judul */
 .legal-doc-title {
   font-size: 1.75rem;
   font-weight: 900;
@@ -2387,9 +2394,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   padding-left: 1rem;
   margin-bottom: 1.3rem;
   letter-spacing: -0.3px;
-}
-
-.legal-doc-card:not(.privacy-doc) .legal-doc-title {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
@@ -2403,7 +2407,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   font-size: 1.55rem;
 }
 
-/* subjudul */
 .legal-doc-subtitle {
   font-size: 1.2rem;
   font-weight: 700;
@@ -2414,7 +2417,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   padding-left: 0.25rem;
 }
 
-/* paragraf */
 .legal-doc-p {
   margin-bottom: 0.95rem;
   color: var(--muted);
@@ -2423,13 +2425,11 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   padding-left: 0.25rem;
 }
 
-/* highlight teks */
 .legal-doc-strong {
   color: #ffd966;
   font-weight: 600;
 }
 
-/* list */
 .legal-doc-list {
   list-style: none;
   margin: 0.8rem 0 1.2rem;
@@ -2458,7 +2458,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   color: #4da6ff;
 }
 
-/* note box */
 .legal-doc-note {
   background: var(--bg-secondary);
   border-left: 4px solid #f0b34b;
@@ -2474,7 +2473,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   font-size: 0.93rem;
 }
 
-/* badge */
 .legal-doc-badge {
   display: inline-block;
   background: #2a3326;
@@ -2487,7 +2485,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   vertical-align: middle;
 }
 
-/* divider */
 .legal-doc-sep {
   margin: 1.8rem 0;
   height: 2px;
@@ -2500,7 +2497,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   );
 }
 
-/* last updated */
 .legal-doc-updated {
   margin-top: 1.4rem;
   font-size: 0.78rem;
@@ -2510,12 +2506,10 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   padding-left: 0.25rem;
 }
 
-/* ============================================================
-   RESPONSIVE HALAMAN LEGAL
-   ============================================================ */
+/* --- responsive legal --- */
 @media (max-width: 620px) {
   .legal-page-wrapper {
-      padding: 1.2rem 0.8rem;
+      padding: 2rem 0.8rem 1.5rem;
   }
   .pick-legal-grid {
       grid-template-columns: 1fr;
