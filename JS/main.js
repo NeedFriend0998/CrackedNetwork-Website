@@ -1107,3 +1107,59 @@
                 mobileToggle.classList.remove('open');
             }
         });
+
+// ============================================================
+// LEGAL PAGES NAVIGATION — CrackedNetwork
+// ============================================================
+(function() {
+    // Select the legal pick cards
+    const legalCards = document.querySelectorAll('[data-legal]');
+    // Select all back buttons inside legal pages
+    const legalBackButtons = document.querySelectorAll('[data-legal-back]');
+
+    // Function to switch to a specific page (reuse your existing logic if available)
+    function switchToPage(pageId) {
+        // Hide all pages
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        // Show target page
+        const target = document.getElementById(pageId);
+        if (target) {
+            target.classList.add('active');
+        }
+        // Update nav active state
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === pageId || 
+                (pageId === 'terms-of-service' && link.getAttribute('data-page') === 'legal') ||
+                (pageId === 'privacy-policy' && link.getAttribute('data-page') === 'legal')) {
+                link.classList.add('active');
+            }
+        });
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+
+    // Handle clicks on the legal pick cards
+    legalCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetPage = this.getAttribute('data-legal');
+            if (targetPage === 'terms') {
+                switchToPage('terms-of-service');
+            } else if (targetPage === 'privacy') {
+                switchToPage('privacy-policy');
+            }
+        });
+    });
+
+    // Handle back button clicks
+    legalBackButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const backTarget = this.getAttribute('data-legal-back');
+            if (backTarget === 'legal') {
+                switchToPage('legal');
+            }
+        });
+    });
+})();
