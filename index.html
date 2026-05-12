@@ -504,162 +504,367 @@
             </div>
         </section>
         
-        <!-- ToS -->
+        <!-- Legal<!-- ==================== HALAMAN PILIHAN LEGAL ==================== -->
+<div class="legal-page-wrapper" id="legal-pick-page">
+
+    <div class="legal-inner">
+
+        <!-- tombol back (opsional, balik ke home atau page sebelumnya) -->
+        <a href="#" class="legal-backlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Kembali
+        </a>
+
+        <div class="pick-legal-grid">
+            <!-- Terms of Service -->
+            <a href="/legal/terms" class="pick-legal-card">
+                <div class="pick-legal-icon-wrap">⛏</div>
+                <div class="pick-legal-heading">Terms of Service</div>
+                <div class="pick-legal-sub">Aturan main, refund, pembatalan langganan, dan konsekuensi pelanggaran di CrackedNetwork.</div>
+                <div class="pick-legal-arrow">Baca selengkapnya →</div>
+            </a>
+            <!-- Privacy Policy -->
+            <a href="/legal/privacy" class="pick-legal-card">
+                <div class="pick-legal-icon-wrap">🔒</div>
+                <div class="pick-legal-heading">Privacy Policy</div>
+                <div class="pick-legal-sub">Bagaimana data kamu dikelola, disimpan, dan diproses oleh kami serta CraftingStore.</div>
+                <div class="pick-legal-arrow">Baca selengkapnya →</div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ==================== HALAMAN TERMS OF SERVICE ==================== -->
+<div class="legal-page-wrapper" id="legal-terms-page" style="display:none;">
+
+    <div class="legal-inner">
+
+        <a href="/legal" class="legal-backlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Kembali ke pilihan legal
+        </a>
+
+        <div class="legal-doc-card">
+            <h2 class="legal-doc-title">
+                <span class="legal-doc-title-icon">⛏️</span> Terms of Service
+            </h2>
+            <p class="legal-doc-p">
+                Selamat datang di <span class="legal-doc-strong">CrackedNetwork</span>. Dengan mengakses server Minecraft, website, atau toko kami, kamu dianggap sudah membaca dan menyetujui seluruh aturan di bawah. Kalau tidak setuju, silakan berhenti menggunakan layanan kami.
+            </p>
+
+            <h3 class="legal-doc-subtitle">1. Penerimaan Aturan</h3>
+            <p class="legal-doc-p">
+                Begitu kamu memakai layanan CrackedNetwork, artinya kamu menerima semua syarat yang tertulis di sini. Kami bisa mengubah isi halaman ini sewaktu-waktu. Kalau kamu tetap bermain setelah perubahan, itu tandanya kamu setuju dengan versi terbaru.
+            </p>
+
+            <h3 class="legal-doc-subtitle">2. Akun &amp; Perilaku</h3>
+            <ul class="legal-doc-list">
+                <li>Kamu bertanggung jawab penuh atas akunmu, termasuk kalau pakai client cracked. Jangan kasih detail login ke orang lain.</li>
+                <li>Cheat, hack, exploit bug, atau tindakan apa pun yang merusak pengalaman pemain lain akan langsung ditindak.</li>
+                <li>Perlakukan pemain lain dengan hormat. Pelecehan, ujaran kebencian, atau toxic parah berujung banned.</li>
+                <li>Menyamar sebagai staf atau mengaku punya afiliasi palsu akan langsung dihapus dari server.</li>
+            </ul>
+
+            <h3 class="legal-doc-subtitle">3. Pembelian &amp; Refund</h3>
+            <p class="legal-doc-p">
+                <span class="legal-doc-strong">Semua pembelian bersifat final.</span> Kami tidak memberikan refund, chargeback, atau penukaran untuk item virtual, rank, kunci, maupun mata uang dalam game — kecuali satu kondisi:
+            </p>
+
+            <div class="legal-doc-note">
+                <p>
+                    ⚡ <strong>Pengecualian:</strong> Kalau ada bug atau error sistem dari pihak kami yang menyebabkan item tidak terkirim, kamu wajib menghubungi kami dalam 48 jam dengan bukti yang jelas. Kami akan investigasi dan perbaiki. Tapi penyesalan setelah beli, "salah pencet", atau berubah pikiran <u>tidak bisa</u> di-refund sama sekali.
+                </p>
+            </div>
+
+            <h3 class="legal-doc-subtitle">
+                4. Langganan
+                <span class="legal-doc-badge">Bisa dibatalkan</span>
+            </h3>
+            <p class="legal-doc-p">
+                Sebagian rank atau fitur tersedia dalam bentuk langganan. Kamu bisa <strong>membatalkan langganan kapan saja</strong> melalui profil di toko kami (yang didukung oleh CraftingStore) atau lewat bantuan support. Setelah dibatalkan, benefit tetap aktif sampai periode berbayar berakhir. <span class="legal-doc-strong">Tidak ada refund untuk sisa bulan yang belum dipakai.</span>
+            </p>
+
+            <h3 class="legal-doc-subtitle">5. Item Virtual &amp; Ekonomi</h3>
+            <p class="legal-doc-p">
+                Seluruh item, rank, dan mata uang dalam game adalah milik CrackedNetwork. Kami berhak mengubah, menghapus, atau mencabut akses kapan saja kalau kamu melanggar aturan, mengajukan chargeback, atau melakukan penipuan. Isi inventory-mu itu lisensi, bukan hak milik.
+            </p>
+
+            <h3 class="legal-doc-subtitle">6. Pemblokiran</h3>
+            <p class="legal-doc-p">
+                Kami bisa suspend atau banned akun tanpa pemberitahuan duluan kalau kamu melanggar aturan ini. Pemain yang di-banned kehilangan akses ke semua konten yang sudah dibeli — tidak ada kompensasi.
+            </p>
+
+            <h3 class="legal-doc-subtitle">7. Batas Tanggung Jawab</h3>
+            <p class="legal-doc-p">
+                CrackedNetwork disediakan "apa adanya". Kami tidak bertanggung jawab atas kerugian tidak langsung, kehilangan data, atau server mati. Kami berusaha menjaga server tetap stabil, tapi kami tidak bisa jamin sempurna.
+            </p>
+
+            <div class="legal-doc-sep"></div>
+            <p class="legal-doc-updated">Terakhir diperbarui: 12 Mei 2026</p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ==================== HALAMAN PRIVACY POLICY ==================== -->
+<div class="legal-page-wrapper" id="legal-privacy-page" style="display:none;">
+
+    <div class="legal-inner">
+
+        <a href="/legal" class="legal-backlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Kembali ke pilihan legal
+        </a>
+
+        <div class="legal-doc-card privacy-doc">
+            <h2 class="legal-doc-title">
+                <span class="legal-doc-title-icon">🔒</span> Privacy Policy
+            </h2>
+            <p class="legal-doc-p">
+                Privasi kamu penting di <span class="legal-doc-strong">CrackedNetwork</span>. Kami cuma mengumpulkan data yang benar-benar diperlukan supaya server berjalan lancar dan toko berfungsi adil.
+            </p>
+
+            <h3 class="legal-doc-subtitle">1. Data yang Kami Kumpulkan</h3>
+            <ul class="legal-doc-list">
+                <li><strong>Data dalam game:</strong> Username, UUID, IP address (untuk keamanan koneksi), log chat (untuk moderasi), dan statistik permainan.</li>
+                <li><strong>Data toko &amp; pembelian:</strong> Saat kamu membeli di webstore, transaksi diproses oleh <strong>CraftingStore</strong>. Mereka bisa mengumpulkan nomor telepon (kalau metode pembayaran mengharuskan), IP address, email, dan username Minecraft. Kami tidak pernah melihat atau menyimpan detail kartu kredit — itu semua ditangani oleh payment gateway yang aman.</li>
+                <li><strong>Cookies website:</strong> Website kami pakai cookies penting untuk menjaga sesi login dan mencegah penyalahgunaan. Tidak ada tracking berlebihan.</li>
+            </ul>
+
+            <h3 class="legal-doc-subtitle">2. Cara Kami Memakai Data</h3>
+            <ul class="legal-doc-list">
+                <li>Menjalankan server: stabilitas, penegakan aturan, mengingat rank &amp; permission kamu.</li>
+                <li>Memproses pembelian dan mengirim item secara instan lewat CraftingStore.</li>
+                <li>Mengabari pembaruan layanan atau membalas tiket support.</li>
+                <li>Memahami tren pemain secara anonim untuk peningkatan server — kami tidak membaca pesan pribadi tanpa alasan moderasi.</li>
+            </ul>
+
+            <h3 class="legal-doc-subtitle">3. Pemrosesan Data &amp; Pihak Ketiga</h3>
+            <p class="legal-doc-p">
+                <span class="legal-doc-strong">Nomor telepon, IP address, dan metadata pembayaran</span> diproses dengan aman oleh <strong>CraftingStore</strong>, penyedia resmi toko kami. CraftingStore adalah pemroses data dan punya kebijakan privasinya sendiri. Kami hanya berbagi data yang diperlukan untuk menyelesaikan pembelian. Kami tidak pernah menjual, menyewakan, atau menukar data pribadi kamu ke pihak lain.
+            </p>
+
+            <div class="legal-doc-note">
+                <p>
+                    🤝 <strong>Janji kami:</strong> Data paling sensitif seperti nomor telepon dan detail pribadi tetap terenkripsi. Hanya sistem yang butuh untuk pengiriman pesanan yang bisa mengaksesnya. Tidak ada staf kami yang iseng membacanya.
+                </p>
+            </div>
+
+            <h3 class="legal-doc-subtitle">4. Penyimpanan &amp; Keamanan</h3>
+            <p class="legal-doc-p">
+                Kami menyimpan data pemain selama akun aktif atau selama diperlukan untuk layanan. Akun yang tidak aktif bisa dihapus setelah waktu yang lama. Kami menerapkan langkah-langkah keamanan yang masuk akal (enkripsi, firewall, kontrol akses) untuk melindungi data. Tidak ada metode yang 100% aman, tapi kami berjanji akan bertindak cepat kalau terjadi pelanggaran data.
+            </p>
+
+            <h3 class="legal-doc-subtitle">5. Hak Kamu</h3>
+            <p class="legal-doc-p">
+                Kamu bisa minta untuk melihat data pribadi yang kami simpan, minta perbaikan, atau minta penghapusan (hak untuk dilupakan) dengan mengirim email ke support kami. Untuk data yang dipegang oleh CraftingStore, kami akan arahkan kamu ke alat privasi mereka.
+            </p>
+
+            <h3 class="legal-doc-subtitle">6. Privasi Anak</h3>
+            <p class="legal-doc-p">
+                CrackedNetwork tidak ditujukan untuk anak di bawah 13 tahun, tapi kami tahu banyak pemain Minecraft masih muda. Kami tidak dengan sengaja mengumpulkan data pribadi dari anak-anak tanpa izin orang tua. Kalau kamu yakin ada anak yang sudah membagikan data pribadi, hubungi kami agar bisa dihapus.
+            </p>
+
+            <h3 class="legal-doc-subtitle">7. Perubahan Kebijakan</h3>
+            <p class="legal-doc-p">
+                Halaman ini akan kami perbarui kalau praktik kami berubah. Perubahan besar akan diumumkan lewat Discord atau website. Dengan tetap bermain, kamu dianggap menyetujui kebijakan yang diperbarui.
+            </p>
+
+            <div class="legal-doc-sep"></div>
+            <p class="legal-doc-updated">Terakhir diperbarui: 12 Mei 2026</p>
+        </div>
+
+    </div>
+</div> -->
       <section class="page" id="legal">
             <div class="discord-page">
               
-              <div class="legal-docs-wrapper">
-    <div class="legal-docs-container">
+              <!-- ==================== HALAMAN PILIHAN LEGAL ==================== -->
+<div class="legal-page-wrapper" id="legal-pick-page">
 
-        <!-- ==================== TERMS OF SERVICE ==================== -->
-        <div class="legal-card">
-            <h2 class="legal-title">
-                <span class="legal-title-icon">⛏️</span> Terms of Service
-            </h2>
-            <p class="legal-text">
-                Welcome to <span class="legal-highlight">CrackedNetwork</span>. By accessing our Minecraft server,
-                website, or store, you agree to these terms. If you do not agree, please disconnect and refrain from
-                using our services.
-            </p>
+    <div class="legal-inner">
 
-            <h3 class="legal-subtitle">1. Acceptance of Terms</h3>
-            <p class="legal-text">
-                Using any CrackedNetwork service signifies that you have read, understood, and accepted these rules.
-                We may update these terms from time to time. Continued use after changes means you accept the revised
-                terms.
-            </p>
+        <!-- tombol back (opsional, balik ke home atau page sebelumnya) -->
+        <a href="#" class="legal-backlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Kembali
+        </a>
 
-            <h3 class="legal-subtitle">2. Account &amp; Conduct</h3>
-            <ul class="legal-list">
-                <li>You are responsible for your account security, even on a cracked client. Never share your login details.</li>
-                <li>Cheating, hacking, exploiting bugs, or any behavior that ruins the experience for others is strictly forbidden.</li>
-                <li>Treat fellow players with respect. Harassment, hate speech, or excessive toxicity will result in a ban.</li>
-                <li>Impersonating staff members or claiming false affiliations leads to immediate removal.</li>
-            </ul>
-
-            <h3 class="legal-subtitle">3. Purchases &amp; Refunds</h3>
-            <p class="legal-text">
-                <span class="legal-highlight">All sales are final.</span> We do not offer refunds, chargebacks, or
-                exchanges for any virtual items, ranks, keys, or in-game currency — with only one exception:
-            </p>
-
-            <div class="legal-note">
-                <p>
-                    ⚡ <strong>Exception:</strong> If a critical system error or bug on our side completely prevents
-                    delivery of the item you purchased, you must contact us within 48 hours with clear proof. We will
-                    investigate and make it right. Buyer's remorse, "I changed my mind," or accidental purchases are
-                    <u>not eligible</u> for refunds under any circumstances.
-                </p>
-            </div>
-
-            <h3 class="legal-subtitle">
-                4. Subscriptions
-                <span class="legal-badge">Cancel anytime</span>
-            </h3>
-            <p class="legal-text">
-                Certain ranks and perks operate on a subscription basis. You may <strong>cancel your subscription at
-                any time</strong> through your profile on our store (powered by CraftingStore) or by contacting
-                support. After cancellation, your benefits stay active until the current billing period ends.
-                <span class="legal-highlight">No refunds are given for partial months or unused time.</span> Your
-                subscription simply will not renew.
-            </p>
-
-            <h3 class="legal-subtitle">5. Virtual Items &amp; Economy</h3>
-            <p class="legal-text">
-                All in-game items, ranks, and currency are virtual goods owned by CrackedNetwork. We reserve the right
-                to modify, remove, or revoke them if a player violates our rules, initiates a chargeback, or engages in
-                fraudulent activity. Your inventory represents a license, not property.
-            </p>
-
-            <h3 class="legal-subtitle">6. Termination</h3>
-            <p class="legal-text">
-                We may suspend or permanently ban your account without prior notice if you breach these terms. Banned
-                players lose access to all purchased content — no compensation will be provided.
-            </p>
-
-            <h3 class="legal-subtitle">7. Limitation of Liability</h3>
-            <p class="legal-text">
-                CrackedNetwork is provided "as is." We are not liable for indirect damages, data loss, or server
-                downtime. While we strive to keep things stable, Minecraft servers can sometimes crash. We hold no
-                responsibility for losses occurring during downtime.
-            </p>
-
-            <div class="legal-divider"></div>
-            <p class="legal-updated">Last revised: May 12, 2026</p>
+        <div class="pick-legal-grid">
+            <!-- Terms of Service -->
+            <a href="/legal/terms" class="pick-legal-card">
+                <div class="pick-legal-icon-wrap">⛏</div>
+                <div class="pick-legal-heading">Terms of Service</div>
+                <div class="pick-legal-sub">Aturan main, refund, pembatalan langganan, dan konsekuensi pelanggaran di CrackedNetwork.</div>
+                <div class="pick-legal-arrow">Baca selengkapnya →</div>
+            </a>
+            <!-- Privacy Policy -->
+            <a href="/legal/privacy" class="pick-legal-card">
+                <div class="pick-legal-icon-wrap">🔒</div>
+                <div class="pick-legal-heading">Privacy Policy</div>
+                <div class="pick-legal-sub">Bagaimana data kamu dikelola, disimpan, dan diproses oleh kami serta CraftingStore.</div>
+                <div class="pick-legal-arrow">Baca selengkapnya →</div>
+            </a>
         </div>
 
-        <!-- ==================== PRIVACY POLICY ==================== -->
-        <div class="legal-card privacy-card">
-            <h2 class="legal-title">
-                <span class="legal-title-icon">🔒</span> Privacy Policy
+    </div>
+</div>
+
+
+<!-- ==================== HALAMAN TERMS OF SERVICE ==================== -->
+<div class="legal-page-wrapper" id="legal-terms-page" style="display:none;">
+
+    <div class="legal-inner">
+
+        <a href="/legal" class="legal-backlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Kembali ke pilihan legal
+        </a>
+
+        <div class="legal-doc-card">
+            <h2 class="legal-doc-title">
+                <span class="legal-doc-title-icon">⛏️</span> Terms of Service
             </h2>
-            <p class="legal-text">
-                Your privacy is important at <span class="legal-highlight">CrackedNetwork</span>. We promise to handle
-                your data with care and only collect what is needed to provide a smooth Minecraft experience and a
-                fair store.
+            <p class="legal-doc-p">
+                Selamat datang di <span class="legal-doc-strong">CrackedNetwork</span>. Dengan mengakses server Minecraft, website, atau toko kami, kamu dianggap sudah membaca dan menyetujui seluruh aturan di bawah. Kalau tidak setuju, silakan berhenti menggunakan layanan kami.
             </p>
 
-            <h3 class="legal-subtitle">1. Information We Collect</h3>
-            <ul class="legal-list">
-                <li><strong>In-game data:</strong> Username, UUID, IP address (for connection security), chat logs (for moderation), and gameplay statistics.</li>
-                <li><strong>Store &amp; purchase data:</strong> Transactions are processed by <strong>CraftingStore</strong>. They may collect your phone number (if required by the payment method), IP address, email, and Minecraft username. We never see or store your full credit card details — those are handled by secure payment gateways.</li>
-                <li><strong>Website cookies:</strong> Our site uses essential cookies to keep you logged in and prevent abuse. No invasive tracking.</li>
-            </ul>
-
-            <h3 class="legal-subtitle">2. How We Use Your Data</h3>
-            <ul class="legal-list">
-                <li>To operate the server: keep it stable, enforce rules, and remember your rank and permissions.</li>
-                <li>To process purchases and deliver items instantly through CraftingStore.</li>
-                <li>To communicate service updates or respond to support tickets.</li>
-                <li>To improve our server — we analyze anonymized trends, never individual messages without a moderation reason.</li>
-            </ul>
-
-            <h3 class="legal-subtitle">3. Data Processing &amp; Third Parties</h3>
-            <p class="legal-text">
-                Your <span class="legal-highlight">phone number, IP address, and payment metadata</span> are securely
-                processed by <strong>CraftingStore</strong>, our official store provider. CraftingStore acts as a data
-                processor and maintains its own privacy policy. We only share what is necessary to complete your
-                purchase. We never sell, rent, or trade your personal data to other third parties.
+            <h3 class="legal-doc-subtitle">1. Penerimaan Aturan</h3>
+            <p class="legal-doc-p">
+                Begitu kamu memakai layanan CrackedNetwork, artinya kamu menerima semua syarat yang tertulis di sini. Kami bisa mengubah isi halaman ini sewaktu-waktu. Kalau kamu tetap bermain setelah perubahan, itu tandanya kamu setuju dengan versi terbaru.
             </p>
 
-            <div class="legal-note">
+            <h3 class="legal-doc-subtitle">2. Akun &amp; Perilaku</h3>
+            <ul class="legal-doc-list">
+                <li>Kamu bertanggung jawab penuh atas akunmu, termasuk kalau pakai client cracked. Jangan kasih detail login ke orang lain.</li>
+                <li>Cheat, hack, exploit bug, atau tindakan apa pun yang merusak pengalaman pemain lain akan langsung ditindak.</li>
+                <li>Perlakukan pemain lain dengan hormat. Pelecehan, ujaran kebencian, atau toxic parah berujung banned.</li>
+                <li>Menyamar sebagai staf atau mengaku punya afiliasi palsu akan langsung dihapus dari server.</li>
+            </ul>
+
+            <h3 class="legal-doc-subtitle">3. Pembelian &amp; Refund</h3>
+            <p class="legal-doc-p">
+                <span class="legal-doc-strong">Semua pembelian bersifat final.</span> Kami tidak memberikan refund, chargeback, atau penukaran untuk item virtual, rank, kunci, maupun mata uang dalam game — kecuali satu kondisi:
+            </p>
+
+            <div class="legal-doc-note">
                 <p>
-                    🤝 <strong>Our promise:</strong> We guard your most sensitive player data like a fortress. Your
-                    phone number and private details remain encrypted and accessible only to the systems that need them
-                    for order delivery. No human on our team casually reads them.
+                    ⚡ <strong>Pengecualian:</strong> Kalau ada bug atau error sistem dari pihak kami yang menyebabkan item tidak terkirim, kamu wajib menghubungi kami dalam 48 jam dengan bukti yang jelas. Kami akan investigasi dan perbaiki. Tapi penyesalan setelah beli, "salah pencet", atau berubah pikiran <u>tidak bisa</u> di-refund sama sekali.
                 </p>
             </div>
 
-            <h3 class="legal-subtitle">4. Data Retention &amp; Security</h3>
-            <p class="legal-text">
-                We retain player data for as long as your account is active or as required to provide services.
-                Inactive accounts may be purged after an extended period. We apply reasonable technical measures
-                (encryption, firewalls, access controls) to protect your information. While no method is 100% secure,
-                we promise to act swiftly if a breach ever occurs.
+            <h3 class="legal-doc-subtitle">
+                4. Langganan
+                <span class="legal-doc-badge">Bisa dibatalkan</span>
+            </h3>
+            <p class="legal-doc-p">
+                Sebagian rank atau fitur tersedia dalam bentuk langganan. Kamu bisa <strong>membatalkan langganan kapan saja</strong> melalui profil di toko kami (yang didukung oleh CraftingStore) atau lewat bantuan support. Setelah dibatalkan, benefit tetap aktif sampai periode berbayar berakhir. <span class="legal-doc-strong">Tidak ada refund untuk sisa bulan yang belum dipakai.</span>
             </p>
 
-            <h3 class="legal-subtitle">5. Your Rights</h3>
-            <p class="legal-text">
-                You may request to view the personal data we hold, ask for corrections, or request deletion (the
-                "right to be forgotten") by emailing our support team. For data handled by CraftingStore, we will
-                guide you to their privacy tools as well.
+            <h3 class="legal-doc-subtitle">5. Item Virtual &amp; Ekonomi</h3>
+            <p class="legal-doc-p">
+                Seluruh item, rank, dan mata uang dalam game adalah milik CrackedNetwork. Kami berhak mengubah, menghapus, atau mencabut akses kapan saja kalau kamu melanggar aturan, mengajukan chargeback, atau melakukan penipuan. Isi inventory-mu itu lisensi, bukan hak milik.
             </p>
 
-            <h3 class="legal-subtitle">6. Children's Privacy</h3>
-            <p class="legal-text">
-                CrackedNetwork is not directed at children under 13, but we recognize many Minecraft players are
-                young. We never knowingly collect personal information from children without parental consent. If you
-                believe a child has shared private details, contact us to have them removed.
+            <h3 class="legal-doc-subtitle">6. Pemblokiran</h3>
+            <p class="legal-doc-p">
+                Kami bisa suspend atau banned akun tanpa pemberitahuan duluan kalau kamu melanggar aturan ini. Pemain yang di-banned kehilangan akses ke semua konten yang sudah dibeli — tidak ada kompensasi.
             </p>
 
-            <h3 class="legal-subtitle">7. Changes to This Policy</h3>
-            <p class="legal-text">
-                We will update this page when our practices change. Major changes may be announced on our Discord or
-                website. By continuing to play, you accept the updated policy.
+            <h3 class="legal-doc-subtitle">7. Batas Tanggung Jawab</h3>
+            <p class="legal-doc-p">
+                CrackedNetwork disediakan "apa adanya". Kami tidak bertanggung jawab atas kerugian tidak langsung, kehilangan data, atau server mati. Kami berusaha menjaga server tetap stabil, tapi kami tidak bisa jamin sempurna.
             </p>
 
-            <div class="legal-divider"></div>
-            <p class="legal-updated">Last revised: May 12, 2026</p>
+            <div class="legal-doc-sep"></div>
+            <p class="legal-doc-updated">Terakhir diperbarui: 12 Mei 2026</p>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ==================== HALAMAN PRIVACY POLICY ==================== -->
+<div class="legal-page-wrapper" id="legal-privacy-page" style="display:none;">
+
+    <div class="legal-inner">
+
+        <a href="/legal" class="legal-backlink">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Kembali ke pilihan legal
+        </a>
+
+        <div class="legal-doc-card privacy-doc">
+            <h2 class="legal-doc-title">
+                <span class="legal-doc-title-icon">🔒</span> Privacy Policy
+            </h2>
+            <p class="legal-doc-p">
+                Privasi kamu penting di <span class="legal-doc-strong">CrackedNetwork</span>. Kami cuma mengumpulkan data yang benar-benar diperlukan supaya server berjalan lancar dan toko berfungsi adil.
+            </p>
+
+            <h3 class="legal-doc-subtitle">1. Data yang Kami Kumpulkan</h3>
+            <ul class="legal-doc-list">
+                <li><strong>Data dalam game:</strong> Username, UUID, IP address (untuk keamanan koneksi), log chat (untuk moderasi), dan statistik permainan.</li>
+                <li><strong>Data toko &amp; pembelian:</strong> Saat kamu membeli di webstore, transaksi diproses oleh <strong>CraftingStore</strong>. Mereka bisa mengumpulkan nomor telepon (kalau metode pembayaran mengharuskan), IP address, email, dan username Minecraft. Kami tidak pernah melihat atau menyimpan detail kartu kredit — itu semua ditangani oleh payment gateway yang aman.</li>
+                <li><strong>Cookies website:</strong> Website kami pakai cookies penting untuk menjaga sesi login dan mencegah penyalahgunaan. Tidak ada tracking berlebihan.</li>
+            </ul>
+
+            <h3 class="legal-doc-subtitle">2. Cara Kami Memakai Data</h3>
+            <ul class="legal-doc-list">
+                <li>Menjalankan server: stabilitas, penegakan aturan, mengingat rank &amp; permission kamu.</li>
+                <li>Memproses pembelian dan mengirim item secara instan lewat CraftingStore.</li>
+                <li>Mengabari pembaruan layanan atau membalas tiket support.</li>
+                <li>Memahami tren pemain secara anonim untuk peningkatan server — kami tidak membaca pesan pribadi tanpa alasan moderasi.</li>
+            </ul>
+
+            <h3 class="legal-doc-subtitle">3. Pemrosesan Data &amp; Pihak Ketiga</h3>
+            <p class="legal-doc-p">
+                <span class="legal-doc-strong">Nomor telepon, IP address, dan metadata pembayaran</span> diproses dengan aman oleh <strong>CraftingStore</strong>, penyedia resmi toko kami. CraftingStore adalah pemroses data dan punya kebijakan privasinya sendiri. Kami hanya berbagi data yang diperlukan untuk menyelesaikan pembelian. Kami tidak pernah menjual, menyewakan, atau menukar data pribadi kamu ke pihak lain.
+            </p>
+
+            <div class="legal-doc-note">
+                <p>
+                    🤝 <strong>Janji kami:</strong> Data paling sensitif seperti nomor telepon dan detail pribadi tetap terenkripsi. Hanya sistem yang butuh untuk pengiriman pesanan yang bisa mengaksesnya. Tidak ada staf kami yang iseng membacanya.
+                </p>
+            </div>
+
+            <h3 class="legal-doc-subtitle">4. Penyimpanan &amp; Keamanan</h3>
+            <p class="legal-doc-p">
+                Kami menyimpan data pemain selama akun aktif atau selama diperlukan untuk layanan. Akun yang tidak aktif bisa dihapus setelah waktu yang lama. Kami menerapkan langkah-langkah keamanan yang masuk akal (enkripsi, firewall, kontrol akses) untuk melindungi data. Tidak ada metode yang 100% aman, tapi kami berjanji akan bertindak cepat kalau terjadi pelanggaran data.
+            </p>
+
+            <h3 class="legal-doc-subtitle">5. Hak Kamu</h3>
+            <p class="legal-doc-p">
+                Kamu bisa minta untuk melihat data pribadi yang kami simpan, minta perbaikan, atau minta penghapusan (hak untuk dilupakan) dengan mengirim email ke support kami. Untuk data yang dipegang oleh CraftingStore, kami akan arahkan kamu ke alat privasi mereka.
+            </p>
+
+            <h3 class="legal-doc-subtitle">6. Privasi Anak</h3>
+            <p class="legal-doc-p">
+                CrackedNetwork tidak ditujukan untuk anak di bawah 13 tahun, tapi kami tahu banyak pemain Minecraft masih muda. Kami tidak dengan sengaja mengumpulkan data pribadi dari anak-anak tanpa izin orang tua. Kalau kamu yakin ada anak yang sudah membagikan data pribadi, hubungi kami agar bisa dihapus.
+            </p>
+
+            <h3 class="legal-doc-subtitle">7. Perubahan Kebijakan</h3>
+            <p class="legal-doc-p">
+                Halaman ini akan kami perbarui kalau praktik kami berubah. Perubahan besar akan diumumkan lewat Discord atau website. Dengan tetap bermain, kamu dianggap menyetujui kebijakan yang diperbarui.
+            </p>
+
+            <div class="legal-doc-sep"></div>
+            <p class="legal-doc-updated">Terakhir diperbarui: 12 Mei 2026</p>
         </div>
 
     </div>
