@@ -1163,3 +1163,100 @@
         });
     });
 })();
+
+const SEO_DATA = {
+
+  "/home": {
+    title: "CrackedNetwork | Non Pay To Win Minecraft Server",
+    desc: "Join CrackedNetwork, a Minecraft Java server supporting Crack & Premium players. Enjoy BedWars, custom systems, active community, and 24/7 uptime."
+  },
+
+  "/gamemodes": {
+    title: "Gamemodes | CrackedNetwork Minecraft Server",
+    desc: "Explore all available gamemodes on CrackedNetwork including BedWars, Survival, events, and upcoming custom Minecraft experiences."
+  },
+
+  "/wiki": {
+    title: "Wiki | CrackedNetwork Help & Information",
+    desc: "Learn how CrackedNetwork works. Find tutorials, FAQs, staff information, server systems, and Minecraft server guides."
+  },
+
+  "/rules": {
+    title: "Server Rules | CrackedNetwork",
+    desc: "Read the official CrackedNetwork server rules to ensure a fair, friendly, and enjoyable Minecraft multiplayer experience."
+  },
+
+  "/vote": {
+    title: "Vote | CrackedNetwork Minecraft Server",
+    desc: "Vote for CrackedNetwork on Minecraft server lists and support the server. Earn rewards, coins, and exclusive perks."
+  },
+
+  "/store": {
+    title: "Store | CrackedNetwork Official Webstore",
+    desc: "Purchase ranks, coins, cosmetics, and exclusive perks on the official CrackedNetwork Minecraft server store."
+  },
+
+  "/discord": {
+    title: "Discord | CrackedNetwork Community",
+    desc: "Join the official CrackedNetwork Discord server to chat with players, get updates, participate in events, and receive support."
+  },
+
+  "/forums": {
+    title: "Forums | CrackedNetwork Community Discussions",
+    desc: "Join discussions with the CrackedNetwork community. Share suggestions, bug reports, screenshots, and Minecraft experiences."
+  },
+
+  "/plugins": {
+    title: "Plugins | CrackedNetwork Server Information",
+    desc: "View the plugins and systems running on CrackedNetwork. Explore custom Minecraft server features and plugin details."
+  },
+
+  "/donation": {
+    title: "Donation | Support CrackedNetwork",
+    desc: "Support CrackedNetwork with donations to help keep the Minecraft server online, updated, and improving every day."
+  },
+
+  "/legal": {
+    title: "Legal Information | CrackedNetwork",
+    desc: "Read the official CrackedNetwork legal documents including Terms of Service and Privacy Policy."
+  },
+
+  "/terms-of-service": {
+    title: "Terms of Service | CrackedNetwork",
+    desc: "Read the CrackedNetwork Terms of Service including refund policy, subscriptions, rules, and player responsibilities."
+  },
+
+  "/privacy-policy": {
+    title: "Privacy Policy | CrackedNetwork",
+    desc: "Learn how CrackedNetwork collects, stores, and protects your personal data, purchases, and Minecraft account information."
+  }
+
+};
+
+function updateSEO(path) {
+
+  const seo = SEO_DATA[path];
+
+  if (!seo) return;
+
+  document.title = seo.title;
+
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute("content", seo.desc);
+
+  document
+    .querySelector('meta[property="og:title"]')
+    .setAttribute("content", seo.title);
+
+  document
+    .querySelector('meta[property="og:description"]')
+    .setAttribute("content", seo.desc);
+
+  document
+    .querySelector('link[rel="canonical"]')
+    .setAttribute(
+      "href",
+      "https://crackednetwork.netlify.app" + path
+    );
+}
