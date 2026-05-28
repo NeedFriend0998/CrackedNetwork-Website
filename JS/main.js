@@ -9,19 +9,12 @@
                     price: "Rp 25.000",
                     badge: "cheapest",
                     features: [
-                      "[VIP] Green Chat Tag",
-                      "+10% Bedwars XP",
-                      "1 Exclusive Kit",
-                      "Map Voting (Level 1)",
-                      "1 Daily Crate Key",
-                      "1 Kill Effect",
-                      "/nick (Long Cooldown)",
-                      "Access to VIP Cosmetic Shop"
+                      " "
                       ]
                 },
                 {
                     id: "1492989", 
-                    name: "VIP+",
+                    name: "Elite",
                     desc: "",
                     price: "Rp 35.000",
                     badge: "popular",
@@ -31,7 +24,7 @@
                 },
                 {
                     id: "1517985",
-                    name: "MVP",
+                    name: "Premium",
                     desc: "",
                     price: "Rp 50.000",
                     badge: null,
@@ -41,24 +34,15 @@
                 },
                 {
                     id: "1518006",
-                    name: "MVP+",
+                    name: "Ultimate",
                     desc: "",
                     price: "Rp 150.000",
                     badge: null,
                     features: [
                       " "
                       ]
-                },
-                {
-                    id: "1521288",
-                    name: "Legend",
-                    desc: "",
-                    price: "Rp 500.000",
-                    badge: "legendary",
-                    features: [
-                      " "
-                    ]
                 }
+                
             ],
           special: [
             {
