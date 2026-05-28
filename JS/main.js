@@ -48,7 +48,7 @@
             {
               id: "1543314",
               name: "Beta Access",
-              desc: "NOTE!, Our Main server like Bedwars is still FREE to play",
+              desc: "NOTE!, Our Main server like Survival is still FREE to play",
               price: "Rp 86.000",
               badge: "special",
               features: [
