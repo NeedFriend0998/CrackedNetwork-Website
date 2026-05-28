@@ -791,7 +791,7 @@
         // ========== RENDER STORE ==========
         const storeCategoriesEl = document.getElementById('storeCategories');
         const productsGrid = document.getElementById('productsGrid');
-        let activeCategory = 'special';
+        let activeCategory = 'bedwars';
 
         storeCategories.forEach(cat => {
             const tab = document.createElement('button');
