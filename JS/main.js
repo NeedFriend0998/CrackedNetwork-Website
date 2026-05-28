@@ -26,17 +26,7 @@
                     price: "Rp 35.000",
                     badge: "popular",
                     features: [
-                      "Buy Coins and Cosmetics",
-                      "[VIP+] Blue Chat Tag",
-                      "+20% Bedwars XP",
-                      "All VIP Features",
-                      "2 Exclusive Kits",
-                      "Priority Map Voting",
-                      "3 Kill Effects",
-                      "2 Daily Crate Keys",
-                      "Choose Team Before Game Starts",
-                      "/nick (Short Cooldown)",
-                      "Basic Lobby Particle Effect"
+                      " "
                       ]
                 },
                 {
@@ -46,18 +36,7 @@
                     price: "Rp 50.000",
                     badge: null,
                     features: [
-                      "Buy Coins and Cosmetics",
-                      "[MVP] Purple Chat Tag",
-                      "+35% Bedwars XP",
-                      "All VIP+ Features",
-                      "5 Kill Effects",
-                      "Victory Dance",
-                      "Bed Destroy Effect",
-                      "3 Daily Crate Keys",
-                      "Party Size Up To 8 Players",
-                      "Custom Chat Color",
-                      "Server Join Priority",
-                      "Game Mode Voting (Normal / Generator Boost) "
+                      " "
                       ]
                 },
                 {
@@ -67,18 +46,7 @@
                     price: "Rp 150.000",
                     badge: null,
                     features: [
-                      "Buy Coins and Cosmetics",
-                      "[MVP+] Red Chat Tag",
-                      "+50% Bedwars XP",
-                      "All MVP Features",
-                      "All Cosmetic Unlocks",
-                      "Custom Kill Messages",
-                      "Custom Island Cosmetic",
-                      "5 Daily Crate Keys",
-                      "Party Size Up To 12 Players",
-                      "High Server Join Priority",
-                      "Create Private Games",
-                      "Advanced Game Settings (Generator Speed, Health, etc.)"
+                      " "
                       ]
                 },
                 {
@@ -88,19 +56,7 @@
                     price: "Rp 500.000",
                     badge: "legendary",
                     features: [
-                      "Buy Coins and Cosmetics",
-                      "[LEGEND] Gold Gradient Chat Tag",
-                    "+60% Bedwars XP",
-                    "All MVP+ Features",
-                    "Animated Chat Tag",
-                    "Exclusive Lobby Trail",
-                    "Exclusive Victory Animation",
-                    "Custom Death Messages",
-                    "7 Daily Crate Keys",
-                    "Maximum Server Join Priority",
-                    "Create Custom Private Games",
-                    "Name Displayed In Hall Of Fame",
-                    "Exclusive Discord Role"
+                      " "
                     ]
                 }
             ],
