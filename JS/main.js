@@ -1,7 +1,7 @@
 // ========== CONFIGURATION ==========
         const TIP4SERV_PRODUCTS = {
            
-            bedwars: [
+            survival: [
                 {
                     id: "1492986", 
                     name: "VIP",
