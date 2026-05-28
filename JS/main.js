@@ -6,7 +6,7 @@
                     id: "1492986", 
                     name: "VIP",
                     desc: "",
-                    price: "Rp 25.000",
+                    price: "5 USD",
                     badge: "cheapest",
                     features: [
                       " "
@@ -16,7 +16,7 @@
                     id: "1492989", 
                     name: "Elite",
                     desc: "",
-                    price: "Rp 35.000",
+                    price: "12 USD",
                     badge: "popular",
                     features: [
                       " "
@@ -26,7 +26,7 @@
                     id: "1517985",
                     name: "Premium",
                     desc: "",
-                    price: "Rp 50.000",
+                    price: "20 USD",
                     badge: null,
                     features: [
                       " "
@@ -36,7 +36,7 @@
                     id: "1518006",
                     name: "Ultimate",
                     desc: "",
-                    price: "Rp 150.000",
+                    price: "24 USD",
                     badge: null,
                     features: [
                       " "
