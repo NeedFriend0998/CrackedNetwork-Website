@@ -185,43 +185,6 @@ body {
     transform: translateY(0);
 }
 
-/* === DIVIDER === */
-.mc-divider {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 20px);
-    grid-auto-rows: 20px;
-    gap: 0;
-    image-rendering: pixelated;
-    box-shadow: 0 -3px 0 rgba(0,0,0,0.3), 0 3px 0 rgba(0,0,0,0.3);
-    position: relative;
-    z-index: 2;
-}
-
-.mc-divider .sq {
-    width: 100%; height: 100%;
-    position: relative;
-}
-
-.mc-divider .sq::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(rgba(0,0,0,0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.15) 1px, transparent 1px);
-    background-size: 5px 5px;
-    pointer-events: none;
-}
-
-.divider-grass .sq { background: linear-gradient(to bottom, #5cb85c 0%, #4a9a4a 40%, #8B6914 40%, #6b4226 100%); }
-.divider-grass .sq:nth-child(3n+1) { background: linear-gradient(to bottom, #52a852 0%, #42904a 40%, #7a5a10 40%, #5a3218 100%); }
-.divider-grass .sq:nth-child(5n+2) { background: linear-gradient(to bottom, #68c868 0%, #56b056 40%, #9a7820 40%, #7a5028 100%); }
-.divider-stone .sq { background: linear-gradient(135deg, #8a8a8a 0%, #6a6a6a 50%, #555 100%); }
-.divider-stone .sq:nth-child(2n) { background: linear-gradient(135deg, #7a7a7a 0%, #5e5e5e 50%, #4a4a4a 100%); }
-.divider-stone .sq:nth-child(3n+1) { background: linear-gradient(135deg, #999 0%, #757575 50%, #606060 100%); }
-.divider-dirt .sq { background: linear-gradient(160deg, #7a4a2a 0%, #6b4226 60%, #5a3216 100%); }
-.divider-dirt .sq:nth-child(4n+1) { background: linear-gradient(160deg, #885530 0%, #754a28 60%, #603a1a 100%); }
 
 /* === HERO === */
 .hero {
