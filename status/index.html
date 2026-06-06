@@ -12,7 +12,6 @@
 
         <!-- HOME PAGE -->
         <section class="page active" id="home">
-            <div id="status">Memuat...</div>
                         <div class="ip-box">
                             <div>
                                 <div class="ip-label">Status ( Velocity )</div>
@@ -22,29 +21,9 @@
                             <div>
                                 <div class="ip-label">Status ( Lobby )</div>
                                 <div class="ip-address" id="serverIP">
-                                     <script>
-    const server = "play.hypixel.net";
-    fetch(`https://api.mcstatus.io/v2/status/java/${server}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.online) {
-          document.getElementById("status").innerHTML = `
-            <p>✅ <b>${server}</b> - Online</p>
-            <p>👥 Pemain: ${data.players.online}/${data.players.max}</p>
-            <p>📦 Versi: ${data.version.name_clean || data.version.name}</p>
-            <p>📋 MOTD: ${data.motd.clean}</p>
-            ${data.icon ? `<img src="${data.icon}" alt="Icon" width="64">` : ""}
-            ${data.players.list ? `<p>🧑 Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
-          `;
-        } else {
-          document.getElementById("status").innerHTML = `<p>❌ <b>${server}</b> - Offline</p>`;
-        }
-      })
-      .catch(() => {
-        document.getElementById("status").innerHTML = "<p>⚠️ Gagal mengambil data server.</p>";
-      });
-  </script>
-                                </div>
+                                    <div id="status">Memuat...</div>
+                                     
+                </div>
                 </div>
                 <div class="ip-box">
                             <div>
@@ -96,5 +75,27 @@
     </footer>
 
     <script src="JS/main.js"></script>
+    <script>
+    const server = "play.hypixel.net";
+    fetch(`https://api.mcstatus.io/v2/status/java/${server}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.online) {
+          document.getElementById("status").innerHTML = `
+            <p>✅ <b>${server}</b> - Online</p>
+            <p>👥 Pemain: ${data.players.online}/${data.players.max}</p>
+            <p>📦 Versi: ${data.version.name_clean || data.version.name}</p>
+            <p>📋 MOTD: ${data.motd.clean}</p>
+            ${data.icon ? `<img src="${data.icon}" alt="Icon" width="64">` : ""}
+            ${data.players.list ? `<p>🧑 Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
+          `;
+        } else {
+          document.getElementById("status").innerHTML = `<p>❌ <b>${server}</b> - Offline</p>`;
+        }
+      })
+      .catch(() => {
+        document.getElementById("status").innerHTML = "<p>⚠️ Gagal mengambil data server.</p>";
+      });
+  </script>
 </body>
 </html>
