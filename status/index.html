@@ -95,11 +95,11 @@
             ${data.players.list ? `<p>🧑 Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
           `;
         } else {
-          document.getElementById("lobbystats").innerHTML = `<p>❌ <b>${server}</b> - Offline</p>`;
+          document.getElementById("lobbystats").innerHTML = `<p>❌ Offline</p>`;
         }
       })
       .catch(() => {
-        document.getElementById("lobbystats").innerHTML = "<p>⚠️ Gagal mengambil data server.</p>";
+        document.getElementById("lobbystats").innerHTML = "<p>⚠️ Failed to load server data.</p>";
       });
   </script>
 </body>
