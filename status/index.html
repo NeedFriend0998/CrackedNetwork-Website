@@ -43,7 +43,7 @@
                 <div class="ip-box">
                             <div>
                                 <div class="ip-label">Status ( Survival )</div>
-                                <div class="ip-address" id="serverIP">crackednetwork.mcgg.nl</div>
+                                <div id="survivalstats">Memuat...</div>
                 </div>
                 </div>
                 </div>
@@ -91,8 +91,9 @@
 
     <script src="/JS/main.js"></script>
     <script>
-    const server = "nl-01.freezehost.pro:8562";
-    fetch(`https://api.mcstatus.io/v2/status/java/${server}`)
+        // Lobby
+    const lobby = "nl-01.freezehost.pro:8562";
+    fetch(`https://api.mcstatus.io/v2/status/java/${lobby}`)
       .then(res => res.json())
       .then(data => {
         if (data.online) {
@@ -110,6 +111,28 @@
       })
       .catch(() => {
         document.getElementById("lobbystats").innerHTML = "<p>⚠️ Failed to load server data.</p>";
+      });
+
+      // Survival
+      const survival = "nl-01.freezehost.pro:9760";
+    fetch(`https://api.mcstatus.io/v2/status/java/${survival}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.online) {
+          document.getElementById("survivalstats").innerHTML = `
+            
+            <p>Pemain: ${data.players.online}/${data.players.max}</p>
+            <p>Versi: ${data.version.name_clean || data.version.name}</p>
+            <p>MOTD: ${data.motd.clean}</p>
+            ${data.icon ? `<img src="${data.icon}" alt="Icon" width="64">` : ""}
+            ${data.players.list ? `<p>Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
+          `;
+        } else {
+          document.getElementById("survivalstats").innerHTML = `<p>❌ Offline</p>`;
+        }
+      })
+      .catch(() => {
+        document.getElementById("survivalstats").innerHTML = "<p>⚠️ Failed to load server data.</p>";
       });
   </script>
 </body>
