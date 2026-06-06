@@ -21,7 +21,7 @@
                             <div>
                                 <div class="ip-label">Status ( Lobby )</div>
                                 <div class="ip-address" id="serverIP">
-                                    <div id="status">Memuat...</div>
+                                    <div id="lobbystats">Memuat...</div>
                                      
                 </div>
                 </div>
@@ -74,14 +74,14 @@
         </div>
     </footer>
 
-    <script src="JS/main.js"></script>
+    <script src="/JS/main.js"></script>
     <script>
-    const server = "play.hypixel.net";
+    const server = "nl-01.freezehost.pro:8562";
     fetch(`https://api.mcstatus.io/v2/status/java/${server}`)
       .then(res => res.json())
       .then(data => {
         if (data.online) {
-          document.getElementById("status").innerHTML = `
+          document.getElementById("lobbystats").innerHTML = `
             <p>✅ <b>${server}</b> - Online</p>
             <p>👥 Pemain: ${data.players.online}/${data.players.max}</p>
             <p>📦 Versi: ${data.version.name_clean || data.version.name}</p>
@@ -90,11 +90,11 @@
             ${data.players.list ? `<p>🧑 Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
           `;
         } else {
-          document.getElementById("status").innerHTML = `<p>❌ <b>${server}</b> - Offline</p>`;
+          document.getElementById("lobbystats").innerHTML = `<p>❌ <b>${server}</b> - Offline</p>`;
         }
       })
       .catch(() => {
-        document.getElementById("status").innerHTML = "<p>⚠️ Gagal mengambil data server.</p>";
+        document.getElementById("lobbystats").innerHTML = "<p>⚠️ Gagal mengambil data server.</p>";
       });
   </script>
 </body>
