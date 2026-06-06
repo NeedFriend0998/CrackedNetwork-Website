@@ -99,11 +99,11 @@
         if (data.online) {
           document.getElementById("lobbystats").innerHTML = `
             
-            <p>Pemain: ${data.players.online}/${data.players.max}</p>
+            <p>Players: ${data.players.online}/${data.players.max}</p>
             <p>Versi: ${data.version.name_clean || data.version.name}</p>
             <p>MOTD: ${data.motd.clean}</p>
             ${data.icon ? `<img src="${data.icon}" alt="Icon" width="64">` : ""}
-            ${data.players.list ? `<p>Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
+            ${data.players.list ? `<p>Players online: ${data.players.list.map(p => p.name_clean).join(", ") || "0"}</p>` : ""}
           `;
         } else {
           document.getElementById("lobbystats").innerHTML = `<p>❌ Offline</p>`;
@@ -121,11 +121,11 @@
         if (data.online) {
           document.getElementById("survivalstats").innerHTML = `
             
-            <p>Pemain: ${data.players.online}/${data.players.max}</p>
+            <p>Players: ${data.players.online}/${data.players.max}</p>
             <p>Versi: ${data.version.name_clean || data.version.name}</p>
             <p>MOTD: ${data.motd.clean}</p>
             ${data.icon ? `<img src="${data.icon}" alt="Icon" width="64">` : ""}
-            ${data.players.list ? `<p>Pemain online: ${data.players.list.map(p => p.name_clean).join(", ") || "Tidak ada"}</p>` : ""}
+            ${data.players.list ? `<p>Players online: ${data.players.list.map(p => p.name_clean).join(", ") || "0"}</p>` : ""}
           `;
         } else {
           document.getElementById("survivalstats").innerHTML = `<p>❌ Offline</p>`;
