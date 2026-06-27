@@ -61,7 +61,8 @@
         };
 
         const storeCategories = [
-             { id: 'survival', name: 'Survival', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' },
+            /* { id: 'survival', name: 'Survival', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' },*/
+            { id: 'bedwars', name: 'Bedwars', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' }
             { id: 'special', name: 'Special', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8"/></svg>' }
         ];
 
