@@ -1,7 +1,7 @@
 // ========== CONFIGURATION ==========
         const TIP4SERV_PRODUCTS = {
            
-            survival: [
+           /* survival: [
                 {
                     id: "1492986", 
                     name: "VIP",
@@ -43,7 +43,7 @@
                       ]
                 }
                 
-            ],
+            ],*/
           special: [
             {
               id: "1543314",
