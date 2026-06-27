@@ -52,7 +52,7 @@
                     price: "12 USD",
                     badge: "cheapest",
                     features: [
-                      " "
+                      "Have Access to Vip Cosmetics"
                       ]
                 },
                 {
