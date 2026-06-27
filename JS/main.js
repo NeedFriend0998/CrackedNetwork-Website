@@ -81,7 +81,7 @@
             {
               id: "1543314",
               name: "Beta Access",
-              desc: "NOTE!, Our Main server like Survival is still FREE to play",
+              desc: "Get a Beta Access to our Private Server eith a custom plugins",
               price: "Rp 86.000",
               badge: "special",
               features: [
