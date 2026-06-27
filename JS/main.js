@@ -49,7 +49,7 @@
                     id: "1492986", 
                     name: "VIP",
                     desc: "",
-                    price: "5 USD",
+                    price: "12 USD",
                     badge: "cheapest",
                     features: [
                       " "
@@ -59,7 +59,7 @@
                     id: "1517985",
                     name: "Premium",
                     desc: "",
-                    price: "20 USD",
+                    price: "18 USD",
                     badge: null,
                     features: [
                       " "
