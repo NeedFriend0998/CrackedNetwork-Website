@@ -44,6 +44,49 @@
                 }
                 
             ],*/
+            bedwars: [
+                {
+                    id: "1492986", 
+                    name: "VIP",
+                    desc: "",
+                    price: "5 USD",
+                    badge: "cheapest",
+                    features: [
+                      " "
+                      ]
+                },
+                {
+                    id: "1492989", 
+                    name: "Elite",
+                    desc: "",
+                    price: "12 USD",
+                    badge: "popular",
+                    features: [
+                      " "
+                      ]
+                },
+                {
+                    id: "1517985",
+                    name: "Premium",
+                    desc: "",
+                    price: "20 USD",
+                    badge: null,
+                    features: [
+                      " "
+                      ]
+                },
+                {
+                    id: "1518006",
+                    name: "Ultimate",
+                    desc: "",
+                    price: "24 USD",
+                    badge: null,
+                    features: [
+                      " "
+                      ]
+                }
+                
+            ],
           special: [
             {
               id: "1543314",
