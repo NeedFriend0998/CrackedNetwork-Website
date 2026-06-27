@@ -853,7 +853,7 @@
         function getProductIcon(category) {
             const icons = {
                 bedwars: '<svg viewBox="0 0 24 24" fill="none"><path d="M2 4v16h20V4H2zm0 8h20M12 4v8" stroke-width="1.5"/></svg>',
-                survival: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-width="1.5"/></svg>',
+                /*survival: '<svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-width="1.5"/></svg>',*/
                 coins: '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><path d="M12 6v12M8 10h8M8 14h8" stroke-width="1.5"/></svg>'
             };
             return icons[category] || icons.bedwars;
