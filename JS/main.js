@@ -72,7 +72,7 @@
                     price: "24 USD",
                     badge: null,
                     features: [
-                      "Have access to Premium, Vip and Legend Cosmetics"
+                      "Have access to Premium, Vip, and Legend Cosmetics"
                       ]
                 }
                 
