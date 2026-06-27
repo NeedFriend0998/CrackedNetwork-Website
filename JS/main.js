@@ -56,16 +56,6 @@
                       ]
                 },
                 {
-                    id: "1492989", 
-                    name: "Elite",
-                    desc: "",
-                    price: "12 USD",
-                    badge: "popular",
-                    features: [
-                      " "
-                      ]
-                },
-                {
                     id: "1517985",
                     name: "Premium",
                     desc: "",
