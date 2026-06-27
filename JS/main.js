@@ -46,7 +46,7 @@
             ],*/
             bedwars: [
                 {
-                    id: "1492986", 
+                    id: "1561293", 
                     name: "VIP",
                     desc: "",
                     price: "12 USD",
@@ -56,7 +56,7 @@
                       ]
                 },
                 {
-                    id: "1561293",
+                    id: "1561294",
                     name: "Premium",
                     desc: "",
                     price: "18 USD",
@@ -66,7 +66,7 @@
                       ]
                 },
                 {
-                    id: "1518006",
+                    id: "1561297",
                     name: "Legend",
                     desc: "",
                     price: "24 USD",
