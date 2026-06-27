@@ -67,7 +67,7 @@
                 },
                 {
                     id: "1518006",
-                    name: "Ultimate",
+                    name: "Legend",
                     desc: "",
                     price: "24 USD",
                     badge: null,
