@@ -418,7 +418,7 @@
 
         async function fetchServerStatus() {
             try {
-                const response = await fetch('https://api.mcsrvstat.us/2/crackednetwork.mcgg.nl');
+                const response = await fetch('https://api.mcstatus.io/status/java/crackednetwork.mcgg.nl');
                 
               
                 const data = await response.json();
