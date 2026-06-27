@@ -52,7 +52,7 @@
                     price: "12 USD",
                     badge: "cheapest",
                     features: [
-                      "Have Access to Vip Cosmetics"
+                      "Have access to Vip Cosmetics"
                       ]
                 },
                 {
@@ -62,7 +62,7 @@
                     price: "18 USD",
                     badge: null,
                     features: [
-                      " "
+                      "Have access to Premium and Vip Cosmetics"
                       ]
                 },
                 {
@@ -72,7 +72,7 @@
                     price: "24 USD",
                     badge: null,
                     features: [
-                      " "
+                      "Have access to Premium, Vip and Legend Cosmetics"
                       ]
                 }
                 
