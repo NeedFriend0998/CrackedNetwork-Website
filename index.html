@@ -29,24 +29,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link href="CSS/style.css" rel="stylesheet">
-    <script>
-  (function() {
-    // Hanya bekerja di store.crackednetwork.run.place
-    if (window.location.hostname !== 'store.crackednetwork.run.place') return;
     
-    // Hanya jika di halaman / atau /home
-    if (window.location.pathname !== '/' && window.location.pathname !== '/home') return;
-    
-    // Cek apakah redirect sudah dilakukan di sesi ini
-    if (sessionStorage.getItem('store_redirect_done') === 'true') return;
-    
-    // Tandai bahwa redirect sudah dilakukan
-    sessionStorage.setItem('store_redirect_done', 'true');
-    
-    // Pindah ke /store
-    window.location.replace('/store');
-  })();
-</script>
 </head>
 <body>
     <canvas id="particles"></canvas>
