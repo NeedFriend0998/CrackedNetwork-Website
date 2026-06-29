@@ -1,4 +1,10 @@
-/store         https://store.crackednetwork.run.place    301!
+# 1. Semua kunjungan ke /store di domain utama -> pindah permanen ke subdomain store
+/store    https://store.crackednetwork.run.place    301!
+
+# 2. Di subdomain store, sembunyikan halaman utama, tampilkan /store secara internal
+https://store.crackednetwork.run.place/*    https://store.crackednetwork.run.place/store    200!
+
+# 3. Aturan standar SPA dan SEO
 /robots.txt    /robots.txt   200
 /sitemap.xml   /sitemap.xml  200
 /*             /index.html   200
