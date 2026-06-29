@@ -30,24 +30,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <link href="CSS/style.css" rel="stylesheet">
     <script>
-  (function() {
-    // Hanya bekerja di store.crackednetwork.run.place
-    if (window.location.hostname !== 'store.crackednetwork.run.place') return;
-    if (window.location.pathname !== '/home') return;
-    
-    // Cek apakah redirect sudah pernah dilakukan
-    if (localStorage.getItem('store_redirect_done') === 'true') {
-      // Jika sudah, hapus penanda agar siap untuk kunjungan berikutnya
-      localStorage.removeItem('store_redirect_done');
-      return;
+  if (window.location.hostname === 'store.crackednetwork.run.place') {
+    // Jika pengguna baru masuk ke domain store (halaman / atau /home), paksa ke /store
+    if (window.location.pathname === '/' || window.location.pathname === '/home') {
+      window.location.replace('/store');
     }
-    
-    // Tandai bahwa redirect akan dilakukan
-    localStorage.setItem('store_redirect_done', 'true');
-    
-    // Pindah ke /store
-    window.location.replace('/store');
-  })();
+  }
 </script>
 </head>
 <body>
