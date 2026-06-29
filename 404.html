@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta name="google-site-verification" content="rTMpOLUmA-avH0spTEkd8ffDU9Vy0Bu-gYJhO-RldJ0" />
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://crackednetwork.netlify.app/">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <!-- SEO Settings -->
+<title>CrackedNetwork | Non pay to win bedwars server (1.8 - Latest)</title>
+<meta name="description" content="Join CrackedNetwork, a premier Minecraft server supporting Java (Premium/Crack). Experience Survival, and custom plugins with 24/7 uptime. IP: crackednetwork.mcgg.nl">
+
+<!-- Social Media Optimization (Open Graph) -->
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://crackednetwork.netlify.app/img/server-icon.png">
+
+<meta name="theme-color" content="#7c3aed">
+
+<meta name="robots" content="index, follow">
+
+<meta name="keywords" content="Minecraft Server, CrackedNetwork, Minecraft Java Server, BedWars Server, Crack Minecraft Server, Premium Minecraft Server, Minecraft Indonesia">
+
+<meta property="og:site_name" content="CrackedNetwork">
+<meta property="og:title" content="CrackedNetwork | Java Minecraft Server">
+<meta property="og:description" content="The ultimate Minecraft experience. Join our community today!">
+<meta property="og:url" content="https://crackednetwork.netlify.app">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="CSS/style.css" rel="stylesheet">
+    
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div class="bg-canvas"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="/home" class="logo" data-page="home">
+                <div class="logo-icon">
+                    <img src="img/server-icon.png">
+                </div>
+                CrackedNetwork
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="/home" class="nav-link active" data-page="home">Home</a>
+                <a href="/gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
+                <a href="/wiki" class="nav-link" data-page="wiki">Wiki</a>
+                <a href="/rules" class="nav-link" data-page="rules">Rules</a>
+                <a href="/vote" class="nav-link" data-page="vote">Vote</a>
+                <a href="/store" class="nav-link" data-page="store">Store</a>
+                <a href="/discord" class="nav-link" data-page="discord">Discord</a>
+                <a href="/forums" class="nav-link" data-page="forums">Forums</a>
+                <a href="/plugins" class="nav-link" data-page="plugins">Plugin Info</a>
+                <a href="/donation" class="nav-link" data-page="donate">Donation</a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pages">
+      <!--DONATIONS PAGE-->
+      <section class="page" id="donate">
+            <div class="discord-page">
+                <div class="section-header">
+                    <h1 class="section-title">Donation</h1>
+                    <p class="section-subtitle">
+                        You can donate us to keep this server live
+                    </p>
+                </div>
+                <div class="discord-widget-wrapper">
+                    <iframe 
+                        src="donate-option/" 
+                        width="250" 
+                        height="300" 
+                        allowtransparency="true" 
+                        frameborder="0" 
+                        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+      <!-- PLUGIN INFO PAGE -->
+      <section class="page" id="plugins">
+            <div class="rules-page">
+                <div class="rules-header">
+                    <h1 class="section-title">Plugin Information</h1>
+                    <p class="section-subtitle">
+                        List of plugins running on the server. Data is loaded dynamically from separate JSON files.
+                    </p>
+                </div>
+
+                <div class="file-manager">
+                    <div class="fm-header">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+                        <div class="fm-path" id="fmCurrentPath">/plugins</div>
+                    </div>
+                    
+                    <div class="fm-tabs" id="pluginCategoryTabs">
+                        <div class="loader" style="width:24px;height:24px;border-width:2px;margin:10px auto;"></div>
+                    </div>
+
+                    <div class="fm-list-header">
+                        <div>Plugin Name</div>
+                        <div>Version</div>
+                        <div>Author</div>
+                        <div>Description</div>
+                    </div>
+                    <div id="pluginListContainer">
+                        <div class="fm-item"><div class="fm-name">Select a category tab above to view plugins.</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+      <!-- Forums -->
+      <section class="page" id="forums">
+            <div class="discord-page">
+                <div class="section-header">
+                    <div class="commentbox"></div>
+                    <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+                    <script>commentBox('5700396886523904-proj')</script>
+                </div>
+                <style>
+                  #forums {
+                    background: transparent;
+                  }
+
+                .commentbox {
+                    background: #fff;
+                    padding: 1rem;
+                    border-radius: 12px;
+                }
+                </style>
+            </div>
+        </section>
+
+        <!-- DISCORD PAGE -->
+        <section class="page" id="discord">
+            <div class="discord-page">
+                <div class="section-header">
+                    <h1 class="section-title">Join Our Discord</h1>
+                    <p class="section-subtitle">
+                        Join our community for the latest updates, events, and chats!
+                    </p>
+                </div>
+                <div class="discord-widget-wrapper">
+                    <iframe 
+                        src="https://discord.com/widget?id=1315221155539587172&theme=dark" 
+                        width="350" 
+                        height="500" 
+                        allowtransparency="true" 
+                        frameborder="0" 
+                        sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- STAFF DETAIL PAGE (NEW) -->
+        <section class="page" id="staff-detail">
+            <div class="staff-detail-page" id="staffDetailContent">
+                <!-- Will be populated dynamically by JS -->
+            </div>
+        </section>
+        
+        <!-- HOME PAGE -->
+        <section class="page active" id="home">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            Java ( Crack & Premium ) Support
+                        </div>
+                        <h1 class="hero-title">
+                            Welcome to<br><span>CrackedNetwork</span>
+                        </h1>
+                        <p class="hero-desc">
+                            The best Minecraft server with an active and friendly community. 
+                            Survival and other exciting game modes await you!
+                        </p>
+                        <div class="hero-actions">
+                            <a href="/store" class="btn btn-primary" data-page="store">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                                    <line x1="3" y1="6" x2="21" y2="6"/>
+                                    <path d="M16 10a4 4 0 01-8 0"/>
+                                </svg>
+                                Visit Store
+                            </a>
+                            <a href="/vote" class="btn btn-secondary" data-page="vote">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/>
+                                </svg>
+                                Vote Now
+                            </a>
+                        </div>
+                        <div class="ip-box">
+                            <div>
+                                <div class="ip-label">Server IP</div>
+                                <div class="ip-address" id="serverIP">crackednetwork.mcgg.nl</div>
+                            </div>
+                            <button class="copy-btn" id="copyBtn" aria-label="Copy server IP">
+                                Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="stats-grid">
+                            <div class="stat-card featured" id="serverStatusCard">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-value" id="playerCount">Loading...</div>
+                                <div class="stat-label">Players Online</div>
+                                <div class="online-indicator" id="statusIndicator">
+                                    <span class="online-dot" id="statusDot"></span>
+                                    <span id="statusText">Checking...</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                                        <line x1="3" y1="9" x2="21" y2="9"/>
+                                        <line x1="9" y1="21" x2="9" y2="9"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-value">1 </div>
+                                <div class="stat-label">Stable Game Mode</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                    </svg>
+                                </div>
+                                <div class="stat-value">1000+</div>
+                                <div class="stat-label">Total Votes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="features">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Why Choose Us</h2>
+                    <p class="section-subtitle">
+                        A server with complete features and a fun community
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <polyline points="12 6 12 12 16 14"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">24/7 Uptime</h3>
+                        <p class="feature-desc">
+                            The server is online 24 hours a day with 99.9% uptime. 
+                            Play whenever you want!
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Anti-Cheat System</h3>
+                        <p class="feature-desc">
+                            The best anti-cheat system for a fair 
+                            and enjoyable gaming experience.
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Active Community</h3>
+                        <p class="feature-desc">
+                            An active community and staff who are always ready to help 
+                            whenever needed.
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                                <line x1="12" y1="22.08" x2="12" y2="12"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Custom Plugins</h3>
+                        <p class="feature-desc">
+                            An exclusive custom plugin that makes gameplay more 
+                            exciting and unique!
+                        </p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 20V10"/>
+                                <path d="M18 20V4"/>
+                                <path d="M6 20v-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Regular Updates</h3>
+                        <p class="feature-desc">
+                            Regular updates with new content and bug fixes 
+                            for the best experience.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- GAMEMODES PAGE -->
+        <section class="page" id="gamemodes">
+            <div class="gamemodes-page">
+                <div class="section-header">
+                    <h1 class="section-title">Server Gamemodes</h1>
+                    <p class="section-subtitle">
+                        Choose your favorite game mode and start your adventure now!
+                    </p>
+                </div>
+                <div class="gamemode-grid" id="gamemodeGrid"></div>
+            </div>
+        </section>
+
+        <!-- WIKI PAGE -->
+        <section class="page" id="wiki">
+            <div class="wiki-page">
+                <div class="section-header">
+                    <h1 class="section-title">Server Wiki</h1>
+                    <p class="section-subtitle">
+                        Learn everything about CrackedNetwork here
+                    </p>
+                </div>
+
+                <div class="wiki-tabs">
+                    <button class="wiki-tab active" data-tab="getting-started">Getting Started</button>
+                    <button class="wiki-tab" data-tab="how-it-works">How It Works</button>
+                    <button class="wiki-tab" data-tab="staff">Staff Team</button>
+                    <button class="wiki-tab" data-tab="faq">FAQ</button>
+                </div>
+
+                <div class="wiki-content">
+                    <!-- Getting Started -->
+                    <div class="wiki-section active" id="getting-started">
+                        <h3 style="margin-bottom: 1rem;">How to Join the Server</h3>
+                        <p style="color: var(--muted); margin-bottom: 1.5rem;">
+                            Follow these simple steps to start playing on CrackedNetwork.
+                        </p>
+                        <div class="info-grid">
+                            <div class="info-box">
+                                <h4>Server IP</h4>
+                                <p style="color: var(--accent);">crackednetwork.mcgg.nl</p>
+                            </div>
+                            <div class="info-box">
+                                <h4>Port Java</h4>
+                                <p>25565 (Default) <ol style="color: var(--muted);">( Use 8695 if 25565 not working )</ol></p>
+                            </div>
+                            <div class="info-box">
+                                <h4>Versi</h4>
+                                <p>1.8 - Latest Release</p>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <h4 style="margin-bottom: 1rem;">Steps :</h4>
+                            <ol style="color: var(--muted); padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                                <li>Open Minecraft (Java Edition)</li>
+                                <li>Click the "Multiplayer" or "Play" button -> "Servers"</li>
+                                <li>Click "Add Server" or "Add External Server"</li>
+                                <li>Enter IP: <strong style="color: var(--accent);">crackednetwork.mcgg.nl</strong></li>
+                                <li>Click "Done," then select the server and click "Join Server"</li>
+                                <li>Have fun playing!</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- Staff Team -->
+                    <div class="wiki-section" id="staff">
+                        <h3 style="margin-bottom: 1rem;">Staff Team</h3>
+                        <p style="color: var(--muted);">The team that manages and maintains the server is always pleasant.</p>
+                        <div class="staff-grid" id="staffGrid"></div>
+                    </div>
+
+                    <!-- FAQ -->
+                    <div class="wiki-section" id="faq">
+                        <h3 style="margin-bottom: 1rem;">Frequently Asked Questions</h3>
+                        <div id="faqContainer"></div>
+                    </div>
+                    
+                    <!-- How It Works Section -->
+                    <div class="wiki-section" id="how-it-works">
+                        <h3 style="margin-bottom: 0.5rem;">How Is Our System Work?</h3>
+                        <p style="color: var(--muted); margin-bottom: 1rem;">
+                            We believe in transparency. Here is how our backend system processes your purchases and data.
+                        </p>
+                        <div class="wiki-tree">
+                            <ul class="tree-root">
+                                <li>
+                                    Ranks System
+                                    <ul class="tree-children">
+                                        <li><strong>(1)</strong> You purchase a rank on our Website Store.</li>
+                                        <li><strong>(2)</strong> Payment is processed securely via CraftingStore/PayPal.</li>
+                                        <li><strong>(3)</strong> Our Plugin detects the successful payment instantly.</li>
+                                        <li><strong>(4)</strong> Permissions & Prefix are automatically applied to your account in-game.</li>
+                                        <li><strong>(5)</strong> You receive a confirmation message in-game and on Discord.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Coins System
+                                    <ul class="tree-children">
+                                        <li><strong>(1)</strong> Coins can be purchased on the Store or earned via Voting/Events.</li>
+                                        <li><strong>(2)</strong> Coins are stored in our central database linked to your UUID.</li>
+                                        <li><strong>(3)</strong> Use coins in <strong>/shop</strong> to buy items, keys, or cosmetics.</li>
+                                        <li><strong>(4)</strong> Purchases with coins are instant and non-refundable.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Punishment System
+                                    <ul class="tree-children">
+                                        <li><strong>(1)</strong> Staff receives a report via Discord or in-game.</li>
+                                        <li><strong>(2)</strong> Evidence is gathered and reviewed by the Staff Team.</li>
+                                        <li><strong>(3)</strong> If rules are broken, a ban/mute is logged into the system.</li>
+                                        <li><strong>(4)</strong> You can appeal bans on our Discord Server.</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    Data Security
+                                    <ul class="tree-children">
+                                        <li><strong>(1)</strong> We do not store credit card info (handled by PayPal/Stripe).</li>
+                                        <li><strong>(2)</strong> Passwords are encrypted and hashed.</li>
+                                        <li><strong>(3)</strong> Your data is never sold to third parties.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RULES PAGE -->
+        <section class="page" id="rules">
+            <div class="rules-page">
+                <div class="rules-header">
+                    <h1 class="section-title">Server Rules</h1>
+                    <p class="section-subtitle">
+                        Please read and follow all the rules for an enjoyable gaming experience.
+                    </p>
+                </div>
+                <div class="rules-grid" id="rulesGrid"></div>
+            </div>
+        </section>
+
+        <!-- VOTE PAGE -->
+        <section class="page" id="vote">
+            <div class="vote-page">
+                <div class="vote-header">
+                    <h1 class="section-title">Vote for Us</h1>
+                    <p class="section-subtitle">
+                        Support the server with your vote and get exciting rewards!
+                    </p>
+                </div>
+                <div class="vote-intro">
+                    <h3>Vote Rewards | Coming Soon</h3>
+                    <p>Every vote will get in-game rewards such as coins, exclusive items, and more! | Vote Rewards isn't available right now</p>
+                </div>
+                <div class="vote-sites" id="voteSites"></div>
+            </div>
+        </section>
+
+        <!-- STORE PAGE -->
+        <section class="page" id="store">
+            <div class="store-page">
+                <div class="store-header">
+                    <h1 class="section-title">Official Store</h1>
+                    <p class="section-subtitle">
+                        Support the server by purchasing ranks and items. Payments are securely processed by CraftingStore.
+                    </p>
+                    <div class="store-actions">
+                        <button class="btn-view-basket" id="btnViewBasket">
+                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/>
+                            </svg>
+                            View Cart / Checkout
+                        </button>
+                    </div>
+                </div>
+
+                <div class="store-categories" id="storeCategories"></div>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+        </section>
+        
+            <!-- ==================== LEGAL PAGE (Pilihan) ==================== -->
+<section class="page" id="legal">
+    <div class="legal-page-wrapper">
+        <div class="legal-inner">
+
+            <div class="section-header">
+                <h1 class="section-title">Legal Information</h1>
+                <p class="section-subtitle">
+                    Read our Terms of Service and Privacy Policy carefully before using our services.
+                </p>
+            </div>
+
+            <div class="pick-legal-grid">
+                <!-- Terms of Service Card -->
+                <a href="#" class="pick-legal-card" data-legal="terms">
+                    <div class="pick-legal-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                    </div>
+                    <h2 class="pick-legal-heading">Terms of Service</h2>
+                    <p class="pick-legal-sub">
+                        Rules for using CrackedNetwork, including refund policies, subscription cancellations, and consequences for breaking the rules.
+                    </p>
+                    <div class="pick-legal-arrow">
+                        Read document 
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+
+                <!-- Privacy Policy Card -->
+                <a href="#" class="pick-legal-card" data-legal="privacy">
+                    <div class="pick-legal-icon-wrap">
+                        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <h2 class="pick-legal-heading">Privacy Policy</h2>
+                    <p class="pick-legal-sub">
+                        How CrackedNetwork collects, stores, and processes your data through CraftingStore and our systems.
+                    </p>
+                    <div class="pick-legal-arrow">
+                        Read document 
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== TERMS OF SERVICE PAGE ==================== -->
+<section class="page" id="terms-of-service">
+    <div class="legal-page-wrapper">
+        <div class="legal-inner">
+
+            <a href="#" class="legal-backlink" data-legal-back="legal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Back to Legal
+            </a>
+
+            <div class="legal-doc-card">
+                <h2 class="legal-doc-title">
+                    <span class="legal-doc-title-icon">⛏️</span> Terms of Service
+                </h2>
+                <p class="legal-doc-p">
+                    Welcome to <span class="legal-doc-strong">CrackedNetwork</span>, a Minecraft server built for adventurers and builders. By accessing our server, website, or store, you agree to these terms. If you don't agree, please disconnect and do not use our services.
+                </p>
+
+                <h3 class="legal-doc-subtitle">1. Acceptance of Terms</h3>
+                <p class="legal-doc-p">
+                    Using any CrackedNetwork service means you've read, understood, and accepted these rules. We update them occasionally — keep an eye on this page. Continued play means you accept the changes.
+                </p>
+
+                <h3 class="legal-doc-subtitle">2. Account &amp; Conduct</h3>
+                <ul class="legal-doc-list">
+                    <li>You are responsible for your account security, even on a cracked client. Never share your login details.</li>
+                    <li>Cheating, hacking, exploiting bugs, or any behavior that ruins others' fun is strictly forbidden.</li>
+                    <li>Respect other players. Harassment, hate speech, or excessive toxicity will lead to a ban.</li>
+                    <li>Impersonating staff or claiming false affiliations will result in immediate removal.</li>
+                </ul>
+
+                <h3 class="legal-doc-subtitle">3. Purchases &amp; Refunds</h3>
+                <p class="legal-doc-p">
+                    <span class="legal-doc-strong">All sales are final.</span> We do not offer refunds, chargebacks, or exchanges for any virtual items, ranks, keys, or in-game currency — with only one exception:
+                </p>
+
+                <div class="legal-doc-note">
+                    <p>
+                        ⚡ <strong>Exception:</strong> If a critical system error or bug on our side completely prevents delivery of the item you purchased, you must contact us within 48 hours with clear proof. We will investigate and make it right. Buyer's remorse, "I changed my mind," or accidental purchases are <u>not eligible</u> for refunds under any circumstances.
+                    </p>
+                </div>
+
+                <h3 class="legal-doc-subtitle">
+                    4. Subscriptions
+                    <span class="legal-doc-badge">Cancel Anytime</span>
+                </h3>
+                <p class="legal-doc-p">
+                    Certain ranks and perks operate on a subscription basis. You may <strong>cancel your subscription at any time</strong> through your profile on our store (powered by CraftingStore) or by contacting support. After cancellation, your benefits stay active until the current billing period ends. <span class="legal-doc-strong">No refunds are given for partial months or unused time.</span> Your subscription simply will not renew.
+                </p>
+
+                <h3 class="legal-doc-subtitle">5. Virtual Items &amp; Economy</h3>
+                <p class="legal-doc-p">
+                    All in-game items, ranks, and currency are virtual goods owned by CrackedNetwork. We reserve the right to modify, remove, or revoke them if a player violates our rules, initiates a chargeback, or engages in fraudulent activity. Your inventory represents a license, not property.
+                </p>
+
+                <h3 class="legal-doc-subtitle">6. Termination</h3>
+                <p class="legal-doc-p">
+                    We may suspend or permanently ban your account without prior notice if you breach these terms. Banned players lose access to all purchased content — no compensation will be provided.
+                </p>
+
+                <h3 class="legal-doc-subtitle">7. Limitation of Liability</h3>
+                <p class="legal-doc-p">
+                    CrackedNetwork is provided "as is." We are not liable for indirect damages, data loss, or server downtime. While we try to keep things stable, Minecraft servers can sometimes crash. We hold no responsibility for losses that occur during downtime.
+                </p>
+
+                <div class="legal-doc-sep"></div>
+                <p class="legal-doc-updated">Last revised: May 12, 2026</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PRIVACY POLICY PAGE ==================== -->
+<section class="page" id="privacy-policy">
+    <div class="legal-page-wrapper">
+        <div class="legal-inner">
+
+            <a href="#" class="legal-backlink" data-legal-back="legal">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+                Back to Legal
+            </a>
+
+            <div class="legal-doc-card privacy-doc">
+                <h2 class="legal-doc-title">
+                    <span class="legal-doc-title-icon">🔒</span> Privacy Policy
+                </h2>
+                <p class="legal-doc-p">
+                    Your privacy matters at <span class="legal-doc-strong">CrackedNetwork</span>. We promise to handle your data with care and only collect what's needed to run a smooth Minecraft experience and a fair store.
+                </p>
+
+                <h3 class="legal-doc-subtitle">1. Information We Collect</h3>
+                <ul class="legal-doc-list">
+                    <li><strong>In-game data:</strong> Username, UUID, IP address (for connection and security), chat logs (for moderation), and gameplay statistics.</li>
+                    <li><strong>Store &amp; purchase data:</strong> When you buy through our webstore, the transaction is processed by <strong>CraftingStore</strong>. They may collect your phone number (if required by the payment method), IP address, email, and Minecraft username. We do not see or store your full credit card details — those are handled by secure payment gateways.</li>
+                    <li><strong>Website cookies:</strong> Our site may use essential cookies to keep you logged in and to prevent abuse. No creepy tracking.</li>
+                </ul>
+
+                <h3 class="legal-doc-subtitle">2. How We Use Your Data</h3>
+                <ul class="legal-doc-list">
+                    <li>To operate the server: keep it stable, enforce rules, and remember your rank and permissions.</li>
+                    <li>To process purchases and deliver items instantly via CraftingStore.</li>
+                    <li>To communicate service updates or respond to support tickets.</li>
+                    <li>To improve our server — we look at anonymized trends, never individual messages without a moderation reason.</li>
+                </ul>
+
+                <h3 class="legal-doc-subtitle">3. Data Processing &amp; Third Parties</h3>
+                <p class="legal-doc-p">
+                    Your <span class="legal-doc-strong">phone number, IP address, and payment metadata</span> are securely processed by <strong>CraftingStore</strong>, our official store provider. CraftingStore acts as a data processor and has its own privacy policy. We only share what's necessary to complete your purchase. We never sell, rent, or trade your personal data to other third parties.
+                </p>
+
+                <div class="legal-doc-note">
+                    <p>
+                        🤝 <strong>Our promise:</strong> We guard your most sensitive player data like a fortress. Your phone number and private details stay encrypted and accessible only to the systems that need them for order delivery. No human on our team casually reads them.
+                    </p>
+                </div>
+
+                <h3 class="legal-doc-subtitle">4. Data Retention &amp; Security</h3>
+                <p class="legal-doc-p">
+                    We retain player data for as long as your account is active or as needed to provide services. Inactive accounts may be purged after a long period. We apply reasonable technical measures (encryption, firewalls, access controls) to protect your data. However, no method is 100% secure — but we promise to act swiftly if a breach ever occurs.
+                </p>
+
+                <h3 class="legal-doc-subtitle">5. Your Rights</h3>
+                <p class="legal-doc-p">
+                    You can request to see what personal data we hold, ask for corrections, or request deletion (the "right to be forgotten") by emailing our support. For data handled by CraftingStore, we'll guide you to their privacy tools as well.
+                </p>
+
+                <h3 class="legal-doc-subtitle">6. Children's Privacy</h3>
+                <p class="legal-doc-p">
+                    CrackedNetwork is not directed at children under 13, but we know many Minecraft players are young. We never knowingly collect personal information from kids without parental consent. If you believe a child has shared private details, contact us to have it removed.
+                </p>
+
+                <h3 class="legal-doc-subtitle">7. Changes to This Policy</h3>
+                <p class="legal-doc-p">
+                    We'll update this page when our practices change. Major changes may be announced on our Discord or website. By continuing to play, you accept the updated policy.
+                </p>
+
+                <div class="legal-doc-sep"></div>
+                <p class="legal-doc-updated">Last revised: May 12, 2026</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+    </main>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-checkout">
+            <div class="modal-header">
+                <h3 id="modalTitle">Complete Your Purchase</h3>
+                <button class="modal-close" id="closeModal">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="iframe-container">
+                <div class="loader-container" id="iframeLoader">
+                    <div class="loader"></div>
+                    <span>Loading Payment...</span>
+                </div>
+                <iframe id="checkoutFrame" class="checkout-iframe" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="/home" class="logo" data-page="home">
+                    <div class="logo-icon">           <img src="img/server-icon.png">
+                    </div>
+                    CrackedNetwork
+                </a>
+                <p>The best Minecraft server with an active and friendly community. Join now and experience exciting gameplay!</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/home" data-page="home">Home</a></li>
+                    <li><a href="/gamemodes" data-page="gamemodes">Gamemodes</a></li>
+                    <li><a href="/wiki" data-page="wiki">Wiki</a></li>
+                    <li><a href="/rules" data-page="rules">Rules</a></li>
+                    <li><a href="/vote" data-page="vote">Vote</a></li>
+                    <li><a href="/store" data-page="store">Store</a></li>
+                    <li><a href="/legal" data-page="legal">Legal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="/discord" data-page="discord">Discord</a></li>
+                    <li><a href="https://www.instagram.com/bismasyafif/?utm_source=qr&r=nametag">Instagram</a></li>
+                    <li><a href="https://youtube.com/@needfriend2?si=fLuu8Z8mRetJhIrU">YouTube</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>2026 CrackedNetwork. All rights reserved.</span>
+            <span>Powered by CraftingStore</span>
+        </div>
+    </footer>
+
+    <script src="JS/main.js"></script>
+</body>
+</html>
