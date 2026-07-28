@@ -1213,7 +1213,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
 * { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent; }
 input, textarea { -webkit-user-select: text; user-select: text; }
 
-    .donate {
+  .donate {
     display: block;
     margin: 0 auto;
     padding: 12px 32px;
