@@ -30,12 +30,17 @@ body {
     background: var(--bg);
     color: var(--fg);
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: auto;
     line-height: 1.6;
     background-image:
         linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
     background-size: 24px 24px;
+}
+
+/* Untuk container yang menggunakan transform/translate */
+[data-lenis-prevent] {
+    overscroll-behavior: contain;
 }
 
 .bg-canvas { display: none; }
