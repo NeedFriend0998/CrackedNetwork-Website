@@ -1,3 +1,38 @@
+// ============================================
+// SMOOTH SCROLL DENGAN EFEK MOMENTUM (LENIS)
+// ============================================
+const lenis = new Lenis({
+    duration: 1.2,              // Durasi animasi scroll
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Easing eksponensial
+    smoothWheel: true,          // Smooth scroll untuk mouse wheel
+    smoothTouch: false,         // Biarkan false agar mobile tetap native
+    touchMultiplier: 2,         // Kecepatan scroll di touch device
+});
+
+// Animation loop untuk Lenis
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+}
+
+requestAnimationFrame(raf);
+
+// Optional: Update otomatis saat ada perubahan halaman (navigasi SPA)
+window.addEventListener('pageChanged', () => {
+    lenis.resize(); // Recalculate ukuran halaman
+});
+
+// Optional: Scroll ke anchor link dengan smooth
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target);
+        }
+    });
+});
+
 // ========== CONFIGURATION ==========
         const TIP4SERV_PRODUCTS = {
            
