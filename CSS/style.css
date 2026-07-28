@@ -1249,4 +1249,5 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     gap: 0.75rem;
     max-width: 520px;
     margin: 1rem auto 0;
+    background-color: black;
 }
