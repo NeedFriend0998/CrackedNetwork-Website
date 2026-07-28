@@ -6,10 +6,33 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Donation Page</title>
   <style>
-    .button {
-      width: 30%;
-      height: 100%;
-    }
+    button {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 32px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 2px 2px 0 #1a4a1a;
+    background: linear-gradient(180deg, #6cc86c 0%, #5cb85c 40%, #3a8a3a 60%, #2a6a2a 100%);
+    border: 3px solid #000;
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.18), inset 0 -2px 0 rgba(0,0,0,0.25), 4px 4px 0 rgba(0,0,0,0.5);
+    cursor: pointer;
+    transition: all 0.08s steps(2);
+    image-rendering: pixelated;
+}
+
+button:hover {
+    background: linear-gradient(180deg, #7dd87d 0%, #6cc86c 40%, #4a9a4a 60%, #3a7a3a 100%);
+    transform: translate(-2px, -2px);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.22), inset 0 -2px 0 rgba(0,0,0,0.25), 6px 6px 0 rgba(0,0,0,0.5);
+}
+
+button:active {
+    transform: translate(2px, 2px);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.05), inset 0 -2px 0 rgba(0,0,0,0.25), 0 0 0 rgba(0,0,0,0.5);
+}
   </style>
 </head>
 <body>
