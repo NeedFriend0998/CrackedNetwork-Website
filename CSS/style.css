@@ -1243,7 +1243,9 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 }
 
 .donate-box {
-    display: flex;
-    justify-content: center;
-    margin-top: 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    max-width: 520px;
+    margin: 1rem auto 0;
 }
