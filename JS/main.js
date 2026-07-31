@@ -1270,20 +1270,6 @@ function updateSEO(path) {
     );
 }
 
-// ============================================
-// SWIPE NAVIGATION SYSTEM (ULTIMATE FIX)
-// ============================================
-const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'discord', 'forums'];
-
-let isSwiping = false;
-let currentTranslateX = 0;
-const container = document.querySelector('.pages');
-
-function getCurrentPageIndex() {
-    const active = document.querySelector('.page.active');
-    return active ? pageOrder.indexOf(active.id) : -1;
-}
-
 function swipeToPage(targetId, direction) {
     if (isSwiping) return;
     const currentPage = document.querySelector('.page.active');
@@ -1292,152 +1278,97 @@ function swipeToPage(targetId, direction) {
     if (pageOrder.indexOf(targetId) === -1) return;
 
     isSwiping = true;
+    const container = document.querySelector('.pages');
+
+    // 🔒 Kunci tinggi container
+    const containerHeight = container.offsetHeight;
+    container.style.height = containerHeight + 'px';
+    container.style.overflow = 'hidden';
+
+    // Bersihkan kelas swiping sebelumnya (jika ada)
+    document.querySelectorAll('.page.swiping').forEach(p => p.classList.remove('swiping'));
+
+    // Tambahkan kelas swiping untuk menonaktifkan transisi & translateY bawaan
+    currentPage.classList.add('swiping');
+    targetPage.classList.add('swiping');
 
     // Tampilkan target page
     targetPage.style.display = 'block';
-    targetPage.style.position = 'absolute';
-    targetPage.style.top = '0';
-    targetPage.style.left = direction === 'next' ? '100%' : '-100%';
-    targetPage.style.width = '100%';
-    targetPage.style.minHeight = '100vh';
+
+    // Posisi awal: absolute, top 0, left 0, width 100%
+    const styleBoth = {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        minHeight: '100vh'
+    };
+    Object.assign(currentPage.style, styleBoth);
+    Object.assign(targetPage.style, styleBoth);
+
+    // Set posisi horizontal awal
+    currentPage.style.transform = 'translateX(0)';
+    targetPage.style.transform = direction === 'next' ? 'translateX(100%)' : 'translateX(-100%)';
 
     // Paksa reflow
     void targetPage.offsetWidth;
 
-    // Geser container
-    const moveX = direction === 'next' ? -100 : 100;
-    currentTranslateX += moveX;
-    container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-    container.style.transform = `translateX(${currentTranslateX}%)`;
+    // Aktifkan transisi khusus swipe
+    const transitionStyle = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    currentPage.style.transition = transitionStyle;
+    targetPage.style.transition = transitionStyle;
 
-    // Setelah animasi selesai
-    const onTransitionEnd = () => {
-        container.removeEventListener('transitionend', onTransitionEnd);
-        container.style.transition = 'none';
-        container.style.transform = 'translateX(0)';
-        currentTranslateX = 0;
+    // Animasi
+    if (direction === 'next') {
+        currentPage.style.transform = 'translateX(-100%)';
+        targetPage.style.transform = 'translateX(0)';
+    } else {
+        currentPage.style.transform = 'translateX(100%)';
+        targetPage.style.transform = 'translateX(0)';
+    }
 
-        // Reset semua halaman
-        document.querySelectorAll('.page').forEach(p => {
-            p.style.position = '';
-            p.style.top = '';
-            p.style.left = '';
-            p.style.width = '';
-            p.style.minHeight = '';
-            p.style.display = '';
-            p.classList.remove('active');
+    // Cleanup
+    const cleanup = () => {
+        // Kembalikan style inline
+        ['position','top','left','width','minHeight','transform','transition'].forEach(prop => {
+            currentPage.style[prop] = '';
+            targetPage.style[prop] = '';
         });
-
-        // Aktifkan target
+        targetPage.style.display = '';
+        currentPage.classList.remove('swiping', 'active');
+        targetPage.classList.remove('swiping');
         targetPage.classList.add('active');
 
-        // Update navigasi
+        container.style.height = '';
+        container.style.overflow = '';
+
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
         const newPath = '/' + targetId;
         if (window.location.pathname !== newPath) {
             history.pushState({ page: targetId }, '', newPath);
         }
         updateNavActive(targetId);
-        window.scrollTo({ top: 0, behavior: 'instant' });
+        window.dispatchEvent(new CustomEvent('pageChanged', { detail: { page: targetId } }));
         if (lenis) {
             lenis.resize();
             lenis.scrollTo(0, { immediate: true });
         }
 
         isSwiping = false;
+        clearTimeout(swipeTimeout);
     };
 
-    container.addEventListener('transitionend', onTransitionEnd);
-
-    // Fallback
-    setTimeout(() => {
-        if (isSwiping) {
-            container.removeEventListener('transitionend', onTransitionEnd);
-            onTransitionEnd();
+    const onTransitionEnd = (e) => {
+        if (e.target === targetPage && e.propertyName === 'transform') {
+            targetPage.removeEventListener('transitionend', onTransitionEnd);
+            cleanup();
         }
+    };
+    targetPage.addEventListener('transitionend', onTransitionEnd);
+
+    swipeTimeout = setTimeout(() => {
+        targetPage.removeEventListener('transitionend', onTransitionEnd);
+        cleanup();
     }, 500);
 }
-
-function updateNavActive(pageId) {
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.toggle('active', link.getAttribute('data-page') === pageId);
-    });
-}
-
-// Swipe detection
-let startX = 0, startY = 0, startTime = 0;
-let dragging = false;
-
-function handleStart(e) {
-    if (e.target.closest('button, a, input, textarea, select, .wiki-tab, .nav-link, iframe, [data-no-swipe]')) return;
-    const p = e.touches ? e.touches[0] : e;
-    startX = p.clientX;
-    startY = p.clientY;
-    startTime = Date.now();
-    dragging = true;
-}
-
-function handleMove(e) {
-    if (!dragging) return;
-    const p = e.touches ? e.touches[0] : e;
-    if (Math.abs(p.clientY - startY) > Math.abs(p.clientX - startX)) {
-        dragging = false;
-    }
-}
-
-function handleEnd(e) {
-    if (!dragging) return;
-    dragging = false;
-    const p = e.changedTouches ? e.changedTouches[0] : e;
-    const dx = p.clientX - startX;
-    const dy = p.clientY - startY;
-    const dt = Date.now() - startTime;
-    
-    if (Math.abs(dx) < 60 || dt > 400 || Math.abs(dy) > Math.abs(dx)) return;
-
-    const idx = getCurrentPageIndex();
-    if (idx === -1) return;
-
-    if (dx < 0 && idx + 1 < pageOrder.length) {
-        swipeToPage(pageOrder[idx + 1], 'next');
-    } else if (dx > 0 && idx - 1 >= 0) {
-        swipeToPage(pageOrder[idx - 1], 'prev');
-    }
-}
-
-// Event listeners
-if (container) {
-    container.addEventListener('touchstart', handleStart, { passive: true });
-    container.addEventListener('touchmove', handleMove, { passive: true });
-    container.addEventListener('touchend', handleEnd, { passive: true });
-    container.addEventListener('mousedown', handleStart);
-    document.addEventListener('mousemove', e => { if (e.buttons === 1) handleMove(e); });
-    document.addEventListener('mouseup', e => { if (dragging) handleEnd(e); });
-    container.addEventListener('dragstart', e => e.preventDefault());
-}
-
-// Keyboard
-document.addEventListener('keydown', e => {
-    if (e.target.closest('input, textarea, [contenteditable]')) return;
-    const idx = getCurrentPageIndex();
-    if (idx === -1) return;
-    if (e.key === 'ArrowRight' && idx + 1 < pageOrder.length) { e.preventDefault(); swipeToPage(pageOrder[idx + 1], 'next'); }
-    if (e.key === 'ArrowLeft' && idx - 1 >= 0) { e.preventDefault(); swipeToPage(pageOrder[idx - 1], 'prev'); }
-});
-
-// Integrasi klik navbar
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-page]').forEach(link => {
-        if (link.dataset.swipeBound) return;
-        link.dataset.swipeBound = 'true';
-        link.addEventListener('click', function(e) {
-            const pageId = this.getAttribute('data-page');
-            if (!pageId) return;
-            const ci = getCurrentPageIndex();
-            const ti = pageOrder.indexOf(pageId);
-            if (ci !== -1 && ti !== -1 && ci !== ti) {
-                e.preventDefault();
-                swipeToPage(pageId, ti > ci ? 'next' : 'prev');
-            }
-        });
-    });
-});
