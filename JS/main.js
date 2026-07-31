@@ -1605,60 +1605,6 @@ document.addEventListener('keydown', (e) => {
 // INTEGRASI DENGAN NAVIGASI KLIK YANG SUDAH ADA
 // ============================================
 
-function swipeToPage(targetId, direction) {
-    if (isSwiping) return;
-    
-    const currentPage = document.querySelector('.page.active');
-    const targetPage = document.getElementById(targetId);
-    
-    if (!currentPage || !targetPage || currentPage === targetPage) return;
-    
-    const targetIndex = pageOrder.indexOf(targetId);
-    if (targetIndex === -1) return;
-    
-    isSwiping = true;
-    
-    // ===== FIX: Force hardware acceleration =====
-    // Terapkan ke semua halaman
-    document.querySelectorAll('.page').forEach(page => {
-        page.style.transform = 'translateZ(0)';
-        page.style.backfaceVisibility = 'hidden';
-        page.style.webkitBackfaceVisibility = 'hidden';
-    });
-    
-    // Setup halaman saat ini
-    currentPage.classList.add('swipe-active', 'swipe-transition');
-    
-    // Setup halaman target
-    targetPage.classList.add('swipe-transition');
-    targetPage.style.display = 'block';
-    
-    if (direction === 'next') {
-        targetPage.classList.add('swipe-enter-right');
-    } else {
-        targetPage.classList.add('swipe-enter-left');
-    }
-    
-    // Force reflow - pastikan browser render posisi awal
-    void targetPage.offsetHeight;
-    void targetPage.offsetWidth;
-    
-    // Gunakan requestAnimationFrame untuk timing yang presisi
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            if (direction === 'next') {
-                currentPage.classList.add('swipe-exit-left');
-                targetPage.classList.add('swipe-to-center');
-                targetPage.classList.remove('swipe-enter-right');
-            } else {
-                currentPage.classList.add('swipe-exit-right');
-                targetPage.classList.add('swipe-to-center');
-                targetPage.classList.remove('swipe-enter-left');
-            }
-        });
-    });
-    
-
 // Override fungsi navigateTo jika ada, atau tambahkan event listener baru
 document.addEventListener('DOMContentLoaded', () => {
     // Tambahkan event listener ke semua link dengan data-page
