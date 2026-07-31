@@ -1275,6 +1275,8 @@ function updateSEO(path) {
 const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'discord', 'forums'];
 
 let isSwiping = false;
+let lastSwipeTime = 0;          // timestamp terakhir animasi SELESAI
+const SWIPE_COOLDOWN = 600;     // cooldown 600ms setelah animasi selesai
 let currentTranslateX = 0;
 const container = document.querySelector('.pages');
 
@@ -1284,15 +1286,17 @@ function getCurrentPageIndex() {
 }
 
 function swipeToPage(targetId, direction) {
-    // Cegah spam: kalau lagi animasi, abaikan
-    if (isSwiping) return;
-    
+    const now = Date.now();
+
+    // Cegah spam: jika sedang animasi atau masih dalam masa cooldown
+    if (isSwiping || (now - lastSwipeTime) < SWIPE_COOLDOWN) return;
+
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(targetId);
     if (!currentPage || !targetPage || currentPage === targetPage) return;
     if (pageOrder.indexOf(targetId) === -1) return;
 
-    // Kunci langsung
+    // Kunci langsung untuk mencegah race condition
     isSwiping = true;
 
     // Tampilkan target page
@@ -1312,7 +1316,7 @@ function swipeToPage(targetId, direction) {
     container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
     container.style.transform = `translateX(${currentTranslateX}%)`;
 
-    // Setelah animasi selesai
+    // Bersihkan setelah animasi selesai
     const onTransitionEnd = () => {
         container.removeEventListener('transitionend', onTransitionEnd);
         container.style.transition = 'none';
@@ -1345,13 +1349,14 @@ function swipeToPage(targetId, direction) {
             lenis.scrollTo(0, { immediate: true });
         }
 
-        // Buka kunci setelah animasi selesai
+        // Catat waktu selesai & lepas kunci
+        lastSwipeTime = Date.now();
         isSwiping = false;
     };
 
     container.addEventListener('transitionend', onTransitionEnd);
 
-    // Fallback: buka kunci setelah 500ms (antisipasi transitionend gagal)
+    // Fallback (lebih lama dari durasi animasi + cooldown untuk aman)
     setTimeout(() => {
         if (isSwiping) {
             container.removeEventListener('transitionend', onTransitionEnd);
