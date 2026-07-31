@@ -1267,17 +1267,17 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     transition: opacity 0.2s steps(4), transform 0.2s steps(4);
 }*/
 
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Tambahkan ini setelah .page.active atau di akhir CSS */
 .page.swiping {
     transition: none !important;
     opacity: 1 !important;
     transform: translateY(0) !important;
-}
-
-.page.active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
 }
 
 /* ===== TAMBAHKAN INI SEMUA ===== */
