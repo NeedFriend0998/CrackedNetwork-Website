@@ -1252,50 +1252,70 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 }
 
 /* ============================================
-   SWIPE NAVIGATION - FIX CONTAINER HEIGHT
+   SWIPE NAVIGATION STYLES
    ============================================ */
 .pages {
     position: relative;
     overflow: hidden;
     min-height: 100vh;
-    /* Hindari margin collapse */
-    border-top: 1px solid transparent;
 }
 
-/* Semua halaman saat animasi */
-.page.swipe-active,
-.page.swipe-enter-right,
+/* Container untuk halaman yang sedang di-animasikan */
+.page.swipe-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    will-change: transform;
+}
+
+/* Halaman yang sedang aktif saat swipe */
+.page.swipe-active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateX(0);
+    z-index: 2;
+}
+
+/* Halaman target yang akan masuk dari kanan */
+.page.swipe-enter-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateX(100%);
+    z-index: 1;
+}
+
+/* Halaman target yang akan masuk dari kiri */
 .page.swipe-enter-left {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100vh;
     display: block !important;
     opacity: 1 !important;
+    transform: translateX(-100%);
+    z-index: 1;
 }
 
+/* Animasi transisi */
 .page.swipe-transition {
     transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-/* Posisi awal target */
-.page.swipe-enter-right {
-    transform: translateX(100%);
-}
-.page.swipe-enter-left {
-    transform: translateX(-100%);
-}
-
-/* Target masuk ke tengah */
-.page.swipe-to-center {
-    transform: translateX(0) !important;
-}
-
-/* Halaman aktif keluar */
+/* Halaman aktif keluar ke kiri (next page) */
 .page.swipe-exit-left {
     transform: translateX(-100%) !important;
 }
+
+/* Halaman aktif keluar ke kanan (previous page) */
 .page.swipe-exit-right {
     transform: translateX(100%) !important;
 }
