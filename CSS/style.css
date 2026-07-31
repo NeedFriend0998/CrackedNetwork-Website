@@ -1257,23 +1257,52 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 .pages {
     position: relative;
     overflow: hidden;
-    min-height: 100vh;   /* sudah ada, pastikan ini */
-    /* Tambahan: jangan biarkan tinggi collapse */
-    height: auto;
-    contain: layout style; /* bantu optimasi */
-}
-
-.page {
-    /* Saat tidak aktif, jangan mempengaruhi layout */
-    display: none;
-}
-
-.page.active,
-.page.swipe-active,
-.page.swipe-enter-right,
-.page.swipe-enter-left {
-    /* Pastikan halaman yang dianimasikan tidak collapse */
     min-height: 100vh;
+}
+
+/* Container untuk halaman yang sedang di-animasikan */
+.page.swipe-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    will-change: transform;
+}
+
+/* Halaman yang sedang aktif saat swipe */
+.page.swipe-active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateX(0);
+    z-index: 2;
+}
+
+/* Halaman target yang akan masuk dari kanan */
+.page.swipe-enter-right {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateX(100%);
+    z-index: 1;
+}
+
+/* Halaman target yang akan masuk dari kiri */
+.page.swipe-enter-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateX(-100%);
+    z-index: 1;
 }
 
 /* Animasi transisi */
