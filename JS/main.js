@@ -1635,3 +1635,37 @@ console.log('✅ Swipe navigation initialized');
 console.log('📱 Swipe left/right to navigate between pages');
 console.log('⌨️  Use Arrow keys Left/Right for keyboard navigation');
 
+// ============================================
+// PERFORMANCE DETECTION
+// ============================================
+const isLowEndDevice = () => {
+    // Cek RAM (Chrome only)
+    if ('deviceMemory' in navigator) {
+        if (navigator.deviceMemory < 4) return true; // RAM < 4GB
+    }
+    
+    // Cek koneksi (anggap low-end kalo pake 3G atau lebih lambat)
+    if ('connection' in navigator) {
+        const conn = navigator.connection;
+        if (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g') {
+            return true;
+        }
+    }
+    
+    // Cek resolusi layar (HP kecil biasanya low-end)
+    if (window.innerWidth < 768) return true;
+    
+    // Cek hardware concurrency (CPU cores)
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) return true;
+    
+    return false;
+};
+
+// Simpan status
+window.isLowEnd = isLowEndDevice();
+
+// Apply optimasi kalo low-end
+if (window.isLowEnd) {
+    console.log('📱 Low-end device detected - Applying optimizations');
+    document.documentElement.classList.add('low-end-device');
+}
