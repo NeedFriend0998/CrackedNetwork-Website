@@ -1430,19 +1430,17 @@ if (container) {
 // Keyboard
 document.addEventListener('keydown', e => {
     if (e.target.closest('input, textarea, [contenteditable]')) return;
-    
-    // Cegah spam keyboard
-    if (isSwiping) return;
-    
+    // Hindari key repeat spam (hanya terima saat tombol benar-benar ditekan, bukan hold)
+    if (e.repeat) return;
     const idx = getCurrentPageIndex();
     if (idx === -1) return;
-    if (e.key === 'ArrowRight' && idx + 1 < pageOrder.length) { 
-        e.preventDefault(); 
-        swipeToPage(pageOrder[idx + 1], 'next'); 
+    if (e.key === 'ArrowRight' && idx + 1 < pageOrder.length) {
+        e.preventDefault();
+        swipeToPage(pageOrder[idx + 1], 'next');
     }
-    if (e.key === 'ArrowLeft' && idx - 1 >= 0) { 
-        e.preventDefault(); 
-        swipeToPage(pageOrder[idx - 1], 'prev'); 
+    if (e.key === 'ArrowLeft' && idx - 1 >= 0) {
+        e.preventDefault();
+        swipeToPage(pageOrder[idx - 1], 'prev');
     }
 });
 
