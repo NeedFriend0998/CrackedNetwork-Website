@@ -1305,118 +1305,122 @@ function getCurrentPageIndex() {
  * @param {string} direction - 'next' (ke kanan) atau 'prev' (ke kiri)
  */
 function swipeToPage(targetId, direction) {
-    // Cegah double swipe
     if (isSwiping) return;
-    
+
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(targetId);
-    
     if (!currentPage || !targetPage || currentPage === targetPage) return;
-    
-    // Cek apakah halaman target ada di pageOrder
-    const targetIndex = pageOrder.indexOf(targetId);
-    if (targetIndex === -1) return; // Hanya izinkan swipe untuk halaman di pageOrder
-    
+    if (pageOrder.indexOf(targetId) === -1) return;
+
     isSwiping = true;
-    
-    // Simpan display original
-    const targetOriginalDisplay = targetPage.style.display || '';
-    
-    // Setup halaman saat ini
-    currentPage.classList.add('swipe-active', 'swipe-transition');
-    
-    // Setup halaman target
-    targetPage.classList.add('swipe-transition');
+    const container = document.querySelector('.pages');
+
+    // 🔒 KUNCI container: simpan & set fixed height
+    const currentScrollY = window.scrollY;
+    const containerHeight = container.getBoundingClientRect().height;
+    container.style.height = containerHeight + 'px';
+    container.style.overflow = 'hidden';
+
+    const origDisplay = targetPage.style.display || '';
+
+    // Setup animasi
+    currentPage.style.position = 'absolute';
+    currentPage.style.top = currentScrollY + 'px';
+    currentPage.style.left = '0';
+    currentPage.style.width = '100%';
+    currentPage.style.zIndex = '2';
+    currentPage.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+
+    targetPage.style.position = 'absolute';
+    targetPage.style.top = currentScrollY + 'px';
+    targetPage.style.left = '0';
+    targetPage.style.width = '100%';
     targetPage.style.display = 'block';
-    
+    targetPage.style.zIndex = '1';
+    targetPage.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+
     if (direction === 'next') {
-        // Target masuk dari kanan
-        targetPage.classList.add('swipe-enter-right');
+        targetPage.style.transform = 'translateX(100%)';
     } else {
-        // Target masuk dari kiri
-        targetPage.classList.add('swipe-enter-left');
+        targetPage.style.transform = 'translateX(-100%)';
     }
-    
+
     // Force reflow
     void targetPage.offsetWidth;
-    
-    // Jalankan animasi
+
+    // Animasi
     if (direction === 'next') {
-        currentPage.classList.add('swipe-exit-left');
-        targetPage.classList.add('swipe-to-center');
-        targetPage.classList.remove('swipe-enter-right');
+        currentPage.style.transform = 'translateX(-100%)';
+        targetPage.style.transform = 'translateX(0)';
     } else {
-        currentPage.classList.add('swipe-exit-right');
-        targetPage.classList.add('swipe-to-center');
-        targetPage.classList.remove('swipe-enter-left');
+        currentPage.style.transform = 'translateX(100%)';
+        targetPage.style.transform = 'translateX(0)';
     }
-    
-    // Cleanup setelah animasi selesai
+
+    // Cleanup
     const cleanup = () => {
-        // Reset halaman saat ini
-        currentPage.classList.remove(
-            'swipe-active', 
-            'swipe-transition', 
-            'swipe-exit-left', 
-            'swipe-exit-right'
-        );
-        currentPage.style.display = '';
+        // Reset current page
+        currentPage.style.position = '';
+        currentPage.style.top = '';
+        currentPage.style.left = '';
+        currentPage.style.width = '';
+        currentPage.style.zIndex = '';
         currentPage.style.transform = '';
+        currentPage.style.transition = '';
+        currentPage.style.display = '';
         currentPage.classList.remove('active');
-        
-        // Reset halaman target
-        targetPage.classList.remove(
-            'swipe-transition',
-            'swipe-enter-right',
-            'swipe-enter-left',
-            'swipe-to-center'
-        );
-        targetPage.style.display = targetOriginalDisplay;
+
+        // Reset target page
+        targetPage.style.position = '';
+        targetPage.style.top = '';
+        targetPage.style.left = '';
+        targetPage.style.width = '';
+        targetPage.style.zIndex = '';
         targetPage.style.transform = '';
-        
-        // Aktifkan halaman baru
+        targetPage.style.transition = '';
+        targetPage.style.display = origDisplay;
         targetPage.classList.add('active');
-        
-        // Update URL dan history
+
+        // 🔓 Buka kunci container
+        container.style.height = '';
+        container.style.overflow = '';
+
+        // Scroll to top untuk halaman baru
+        window.scrollTo({ top: 0, behavior: 'instant' });
+
+        // Update URL
         const newPath = '/' + targetId;
         if (window.location.pathname !== newPath) {
             history.pushState({ page: targetId }, '', newPath);
         }
-        
-        // Update document title
-        updatePageTitle(targetId);
-        
-        // Update active nav link
+
         updateNavActive(targetId);
-        
-        // Trigger event untuk komponen lain
-        window.dispatchEvent(new CustomEvent('pageChanged', { 
-            detail: { page: targetId } 
-        }));
-        
-        // Update Lenis jika ada
-        if (typeof lenis !== 'undefined') {
+
+        // Trigger event
+        window.dispatchEvent(new CustomEvent('pageChanged', { detail: { page: targetId } }));
+
+        // Update Lenis
+        if (lenis) {
             lenis.resize();
+            lenis.scrollTo(0, { immediate: true });
         }
-        
-        // Reset state
+
         isSwiping = false;
-        if (swipeTimeout) clearTimeout(swipeTimeout);
+        clearTimeout(swipeTimeout);
     };
-    
-    // Gunakan transitionend event
-    const handleTransitionEnd = (e) => {
+
+    // Transition end
+    const onTransitionEnd = (e) => {
         if (e.target === targetPage && e.propertyName === 'transform') {
-            targetPage.removeEventListener('transitionend', handleTransitionEnd);
+            targetPage.removeEventListener('transitionend', onTransitionEnd);
             cleanup();
         }
     };
-    
-    targetPage.addEventListener('transitionend', handleTransitionEnd);
-    
-    // Fallback: cleanup setelah 500ms jika transitionend tidak terpanggil
+    targetPage.addEventListener('transitionend', onTransitionEnd);
+
+    // Fallback
     swipeTimeout = setTimeout(() => {
-        targetPage.removeEventListener('transitionend', handleTransitionEnd);
+        targetPage.removeEventListener('transitionend', onTransitionEnd);
         cleanup();
     }, 500);
 }
