@@ -1271,405 +1271,173 @@ function updateSEO(path) {
 }
 
 // ============================================
-// SWIPE NAVIGATION SYSTEM
+// SWIPE NAVIGATION SYSTEM (ULTIMATE FIX)
 // ============================================
+const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'discord', 'forums'];
 
-// Urutan halaman sesuai navbar (hanya halaman utama)
-const pageOrder = [
-    'home',
-    'gamemodes', 
-    'wiki', 
-    'rules', 
-    'vote', 
-    'store', 
-    'discord', 
-    'forums'
-];
-
-// State untuk mencegah double swipe
 let isSwiping = false;
-let swipeTimeout = null;
+let currentTranslateX = 0;
+const container = document.querySelector('.pages');
 
-/**
- * Mendapatkan index halaman yang sedang aktif
- */
 function getCurrentPageIndex() {
-    const activePage = document.querySelector('.page.active');
-    if (!activePage) return -1;
-    return pageOrder.indexOf(activePage.id);
+    const active = document.querySelector('.page.active');
+    return active ? pageOrder.indexOf(active.id) : -1;
 }
 
-/**
- * Navigasi dengan animasi swipe
- * @param {string} targetId - ID halaman tujuan
- * @param {string} direction - 'next' (ke kanan) atau 'prev' (ke kiri)
- */
 function swipeToPage(targetId, direction) {
     if (isSwiping) return;
-
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(targetId);
     if (!currentPage || !targetPage || currentPage === targetPage) return;
     if (pageOrder.indexOf(targetId) === -1) return;
 
     isSwiping = true;
-    const container = document.querySelector('.pages');
 
-    // 🔒 KUNCI container: simpan & set fixed height
-    const currentScrollY = window.scrollY;
-    const containerHeight = container.getBoundingClientRect().height;
-    container.style.height = containerHeight + 'px';
-    container.style.overflow = 'hidden';
-
-    const origDisplay = targetPage.style.display || '';
-
-    // Setup animasi
-    currentPage.style.position = 'absolute';
-    currentPage.style.top = currentScrollY + 'px';
-    currentPage.style.left = '0';
-    currentPage.style.width = '100%';
-    currentPage.style.zIndex = '2';
-    currentPage.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-
-    targetPage.style.position = 'absolute';
-    targetPage.style.top = currentScrollY + 'px';
-    targetPage.style.left = '0';
-    targetPage.style.width = '100%';
+    // Tampilkan target page
     targetPage.style.display = 'block';
-    targetPage.style.zIndex = '1';
-    targetPage.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    targetPage.style.position = 'absolute';
+    targetPage.style.top = '0';
+    targetPage.style.left = direction === 'next' ? '100%' : '-100%';
+    targetPage.style.width = '100%';
+    targetPage.style.minHeight = '100vh';
 
-    if (direction === 'next') {
-        targetPage.style.transform = 'translateX(100%)';
-    } else {
-        targetPage.style.transform = 'translateX(-100%)';
-    }
-
-    // Force reflow
+    // Paksa reflow
     void targetPage.offsetWidth;
 
-    // Animasi
-    if (direction === 'next') {
-        currentPage.style.transform = 'translateX(-100%)';
-        targetPage.style.transform = 'translateX(0)';
-    } else {
-        currentPage.style.transform = 'translateX(100%)';
-        targetPage.style.transform = 'translateX(0)';
-    }
+    // Geser container
+    const moveX = direction === 'next' ? -100 : 100;
+    currentTranslateX += moveX;
+    container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    container.style.transform = `translateX(${currentTranslateX}%)`;
 
-    // Cleanup
-    const cleanup = () => {
-        // Reset current page
-        currentPage.style.position = '';
-        currentPage.style.top = '';
-        currentPage.style.left = '';
-        currentPage.style.width = '';
-        currentPage.style.zIndex = '';
-        currentPage.style.transform = '';
-        currentPage.style.transition = '';
-        currentPage.style.display = '';
-        currentPage.classList.remove('active');
+    // Setelah animasi selesai
+    const onTransitionEnd = () => {
+        container.removeEventListener('transitionend', onTransitionEnd);
+        container.style.transition = 'none';
+        container.style.transform = 'translateX(0)';
+        currentTranslateX = 0;
 
-        // Reset target page
-        targetPage.style.position = '';
-        targetPage.style.top = '';
-        targetPage.style.left = '';
-        targetPage.style.width = '';
-        targetPage.style.zIndex = '';
-        targetPage.style.transform = '';
-        targetPage.style.transition = '';
-        targetPage.style.display = origDisplay;
+        // Reset semua halaman
+        document.querySelectorAll('.page').forEach(p => {
+            p.style.position = '';
+            p.style.top = '';
+            p.style.left = '';
+            p.style.width = '';
+            p.style.minHeight = '';
+            p.style.display = '';
+            p.classList.remove('active');
+        });
+
+        // Aktifkan target
         targetPage.classList.add('active');
 
-        // 🔓 Buka kunci container
-        container.style.height = '';
-        container.style.overflow = '';
-
-        // Scroll to top untuk halaman baru
-        window.scrollTo({ top: 0, behavior: 'instant' });
-
-        // Update URL
+        // Update navigasi
         const newPath = '/' + targetId;
         if (window.location.pathname !== newPath) {
             history.pushState({ page: targetId }, '', newPath);
         }
-
         updateNavActive(targetId);
-
-        // Trigger event
-        window.dispatchEvent(new CustomEvent('pageChanged', { detail: { page: targetId } }));
-
-        // Update Lenis
+        window.scrollTo({ top: 0, behavior: 'instant' });
         if (lenis) {
             lenis.resize();
             lenis.scrollTo(0, { immediate: true });
         }
 
         isSwiping = false;
-        clearTimeout(swipeTimeout);
     };
 
-    // Transition end
-    const onTransitionEnd = (e) => {
-        if (e.target === targetPage && e.propertyName === 'transform') {
-            targetPage.removeEventListener('transitionend', onTransitionEnd);
-            cleanup();
-        }
-    };
-    targetPage.addEventListener('transitionend', onTransitionEnd);
+    container.addEventListener('transitionend', onTransitionEnd);
 
     // Fallback
-    swipeTimeout = setTimeout(() => {
-        targetPage.removeEventListener('transitionend', onTransitionEnd);
-        cleanup();
+    setTimeout(() => {
+        if (isSwiping) {
+            container.removeEventListener('transitionend', onTransitionEnd);
+            onTransitionEnd();
+        }
     }, 500);
 }
 
-/**
- * Update title halaman
- */
-function updatePageTitle(pageId) {
-    const titles = {
-        'home': 'CrackedNetwork | Non Pay to Win Minecraft Server',
-        'gamemodes': 'Gamemodes | CrackedNetwork',
-        'wiki': 'Wiki | CrackedNetwork',
-        'rules': 'Rules | CrackedNetwork',
-        'vote': 'Vote | CrackedNetwork',
-        'store': 'Store | CrackedNetwork',
-        'discord': 'Discord | CrackedNetwork',
-        'forums': 'Forums | CrackedNetwork',
-        'plugins': 'Plugin Info | CrackedNetwork',
-        'donate': 'Donation | CrackedNetwork',
-        'legal': 'Legal | CrackedNetwork',
-        'staff-detail': 'Staff Detail | CrackedNetwork'
-    };
-    document.title = titles[pageId] || 'CrackedNetwork';
-}
-
-/**
- * Update active state di navbar
- */
 function updateNavActive(pageId) {
     document.querySelectorAll('.nav-link').forEach(link => {
-        const linkPage = link.getAttribute('data-page');
-        if (linkPage === pageId) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
+        link.classList.toggle('active', link.getAttribute('data-page') === pageId);
     });
 }
 
-// ============================================
-// SWIPE DETECTION
-// ============================================
+// Swipe detection
+let startX = 0, startY = 0, startTime = 0;
+let dragging = false;
 
-let touchStartX = 0;
-let touchStartY = 0;
-let touchStartTime = 0;
-let isDragging = false;
-
-const minSwipeDistance = 60; // px - jarak minimum untuk trigger swipe
-const maxSwipeTime = 400;    // ms - waktu maksimum swipe
-const maxVerticalMovement = 50; // px - toleransi gerakan vertikal
-
-/**
- * Handle touch/mouse start
- */
-function handleSwipeStart(e) {
-    // Jangan proses jika user sedang interact dengan elemen tertentu
-    const target = e.target;
-    if (target.closest('button, a, input, textarea, select, .wiki-tab, .nav-link, iframe, [data-no-swipe]')) {
-        return;
-    }
-    
-    const point = e.touches ? e.touches[0] : e;
-    touchStartX = point.clientX;
-    touchStartY = point.clientY;
-    touchStartTime = Date.now();
-    isDragging = true;
+function handleStart(e) {
+    if (e.target.closest('button, a, input, textarea, select, .wiki-tab, .nav-link, iframe, [data-no-swipe]')) return;
+    const p = e.touches ? e.touches[0] : e;
+    startX = p.clientX;
+    startY = p.clientY;
+    startTime = Date.now();
+    dragging = true;
 }
 
-/**
- * Handle touch/mouse move (opsional - untuk visual feedback)
- */
-function handleSwipeMove(e) {
-    if (!isDragging) return;
-    
-    // Bisa ditambahkan visual feedback di sini jika diinginkan
-    const point = e.touches ? e.touches[0] : e;
-    const deltaX = point.clientX - touchStartX;
-    const deltaY = point.clientY - touchStartY;
-    
-    // Jika gerakan terlalu vertikal, batalkan swipe
-    if (Math.abs(deltaY) > maxVerticalMovement && Math.abs(deltaY) > Math.abs(deltaX)) {
-        isDragging = false;
+function handleMove(e) {
+    if (!dragging) return;
+    const p = e.touches ? e.touches[0] : e;
+    if (Math.abs(p.clientY - startY) > Math.abs(p.clientX - startX)) {
+        dragging = false;
     }
 }
 
-/**
- * Handle touch/mouse end
- */
-function handleSwipeEnd(e) {
-    if (!isDragging) return;
-    isDragging = false;
+function handleEnd(e) {
+    if (!dragging) return;
+    dragging = false;
+    const p = e.changedTouches ? e.changedTouches[0] : e;
+    const dx = p.clientX - startX;
+    const dy = p.clientY - startY;
+    const dt = Date.now() - startTime;
     
-    const point = e.changedTouches ? e.changedTouches[0] : e;
-    const deltaX = point.clientX - touchStartX;
-    const deltaY = point.clientY - touchStartY;
-    const elapsed = Date.now() - touchStartTime;
-    
-    // Validasi swipe
-    if (Math.abs(deltaX) < minSwipeDistance) return; // Terlalu pendek
-    if (elapsed > maxSwipeTime) return; // Terlalu lama
-    if (Math.abs(deltaY) > maxVerticalMovement) return; // Terlalu vertikal
-    
-    // Harus dominan horizontal
-    if (Math.abs(deltaY) > Math.abs(deltaX)) return;
-    
-    const currentIndex = getCurrentPageIndex();
-    if (currentIndex === -1) return;
-    
-    if (deltaX < 0) {
-        // Swipe ke kiri → halaman berikutnya
-        const nextIndex = currentIndex + 1;
-        if (nextIndex < pageOrder.length) {
-            swipeToPage(pageOrder[nextIndex], 'next');
-        }
-    } else if (deltaX > 0) {
-        // Swipe ke kanan → halaman sebelumnya
-        const prevIndex = currentIndex - 1;
-        if (prevIndex >= 0) {
-            swipeToPage(pageOrder[prevIndex], 'prev');
-        }
+    if (Math.abs(dx) < 60 || dt > 400 || Math.abs(dy) > Math.abs(dx)) return;
+
+    const idx = getCurrentPageIndex();
+    if (idx === -1) return;
+
+    if (dx < 0 && idx + 1 < pageOrder.length) {
+        swipeToPage(pageOrder[idx + 1], 'next');
+    } else if (dx > 0 && idx - 1 >= 0) {
+        swipeToPage(pageOrder[idx - 1], 'prev');
     }
 }
 
-// ============================================
-// EVENT LISTENERS
-// ============================================
-
-// Gunakan pages container untuk area swipe
-const swipeArea = document.querySelector('.pages');
-
-if (swipeArea) {
-    // Touch events (mobile)
-    swipeArea.addEventListener('touchstart', handleSwipeStart, { passive: true });
-    swipeArea.addEventListener('touchmove', handleSwipeMove, { passive: true });
-    swipeArea.addEventListener('touchend', handleSwipeEnd, { passive: true });
-    
-    // Mouse events (desktop)
-    swipeArea.addEventListener('mousedown', handleSwipeStart);
-    
-    document.addEventListener('mousemove', (e) => {
-        if (e.buttons === 1) { // Left button pressed
-            handleSwipeMove(e);
-        }
-    });
-    
-    document.addEventListener('mouseup', (e) => {
-        if (isDragging) {
-            handleSwipeEnd(e);
-        }
-    });
-    
-    // Cegah default drag behavior
-    swipeArea.addEventListener('dragstart', (e) => {
-        e.preventDefault();
-    });
+// Event listeners
+if (container) {
+    container.addEventListener('touchstart', handleStart, { passive: true });
+    container.addEventListener('touchmove', handleMove, { passive: true });
+    container.addEventListener('touchend', handleEnd, { passive: true });
+    container.addEventListener('mousedown', handleStart);
+    document.addEventListener('mousemove', e => { if (e.buttons === 1) handleMove(e); });
+    document.addEventListener('mouseup', e => { if (dragging) handleEnd(e); });
+    container.addEventListener('dragstart', e => e.preventDefault());
 }
 
-// ============================================
-// KEYBOARD NAVIGATION (Arrow Keys)
-// ============================================
-
-document.addEventListener('keydown', (e) => {
-    // Jangan proses jika user sedang mengetik di input
+// Keyboard
+document.addEventListener('keydown', e => {
     if (e.target.closest('input, textarea, [contenteditable]')) return;
-    
-    const currentIndex = getCurrentPageIndex();
-    if (currentIndex === -1) return;
-    
-    if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        const nextIndex = currentIndex + 1;
-        if (nextIndex < pageOrder.length) {
-            swipeToPage(pageOrder[nextIndex], 'next');
-        }
-    } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const prevIndex = currentIndex - 1;
-        if (prevIndex >= 0) {
-            swipeToPage(pageOrder[prevIndex], 'prev');
-        }
-    }
+    const idx = getCurrentPageIndex();
+    if (idx === -1) return;
+    if (e.key === 'ArrowRight' && idx + 1 < pageOrder.length) { e.preventDefault(); swipeToPage(pageOrder[idx + 1], 'next'); }
+    if (e.key === 'ArrowLeft' && idx - 1 >= 0) { e.preventDefault(); swipeToPage(pageOrder[idx - 1], 'prev'); }
 });
 
-// ============================================
-// INTEGRASI DENGAN NAVIGASI KLIK YANG SUDAH ADA
-// ============================================
-
-// Override fungsi navigateTo jika ada, atau tambahkan event listener baru
+// Integrasi klik navbar
 document.addEventListener('DOMContentLoaded', () => {
-    // Tambahkan event listener ke semua link dengan data-page
     document.querySelectorAll('[data-page]').forEach(link => {
-        // Hindari double binding
-        if (link.hasAttribute('data-swipe-bound')) return;
-        link.setAttribute('data-swipe-bound', 'true');
-        
+        if (link.dataset.swipeBound) return;
+        link.dataset.swipeBound = 'true';
         link.addEventListener('click', function(e) {
             const pageId = this.getAttribute('data-page');
             if (!pageId) return;
-            
-            // Cek apakah halaman ada di pageOrder untuk animasi swipe
-            const currentIndex = getCurrentPageIndex();
-            const targetIndex = pageOrder.indexOf(pageId);
-            
-            if (currentIndex !== -1 && targetIndex !== -1 && currentIndex !== targetIndex) {
+            const ci = getCurrentPageIndex();
+            const ti = pageOrder.indexOf(pageId);
+            if (ci !== -1 && ti !== -1 && ci !== ti) {
                 e.preventDefault();
-                const direction = targetIndex > currentIndex ? 'next' : 'prev';
-                swipeToPage(pageId, direction);
+                swipeToPage(pageId, ti > ci ? 'next' : 'prev');
             }
-            // Jika tidak di pageOrder, navigasi normal (tanpa animasi swipe)
         });
     });
 });
-
-console.log('✅ Swipe navigation initialized');
-console.log('📱 Swipe left/right to navigate between pages');
-console.log('⌨️  Use Arrow keys Left/Right for keyboard navigation');
-
-// ============================================
-// PERFORMANCE DETECTION
-// ============================================
-const isLowEndDevice = () => {
-    // Cek RAM (Chrome only)
-    if ('deviceMemory' in navigator) {
-        if (navigator.deviceMemory < 4) return true; // RAM < 4GB
-    }
-    
-    // Cek koneksi (anggap low-end kalo pake 3G atau lebih lambat)
-    if ('connection' in navigator) {
-        const conn = navigator.connection;
-        if (conn.saveData || conn.effectiveType === 'slow-2g' || conn.effectiveType === '2g' || conn.effectiveType === '3g') {
-            return true;
-        }
-    }
-    
-    // Cek resolusi layar (HP kecil biasanya low-end)
-    if (window.innerWidth < 768) return true;
-    
-    // Cek hardware concurrency (CPU cores)
-    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) return true;
-    
-    return false;
-};
-
-// Simpan status
-window.isLowEnd = isLowEndDevice();
-
-// Apply optimasi kalo low-end
-if (window.isLowEnd) {
-    console.log('📱 Low-end device detected - Applying optimizations');
-    document.documentElement.classList.add('low-end-device');
-}
