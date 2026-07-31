@@ -1251,74 +1251,77 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     margin: 1rem auto 0;
 }
 
-/* ============================================
-   SWIPE NAVIGATION STYLES
-   ============================================ */
-.pages {
+/* === GANTI BAGIAN INI === */
+
+/* === HALAMAN === */
+.pages { 
+    padding-top: 72px;
     position: relative;
     overflow: hidden;
     min-height: 100vh;
+    border-top: 1px solid transparent; /* Cegah margin collapse */
 }
 
-/* Container untuk halaman yang sedang di-animasikan */
-.page.swipe-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    will-change: transform;
+.page {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s steps(4), transform 0.2s steps(4);
 }
 
-/* Halaman yang sedang aktif saat swipe */
-.page.swipe-active {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateX(0);
-    z-index: 2;
+.page.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
-/* Halaman target yang akan masuk dari kanan */
-.page.swipe-enter-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateX(100%);
-    z-index: 1;
-}
+/* ===== TAMBAHKAN INI SEMUA ===== */
 
-/* Halaman target yang akan masuk dari kiri */
+/* SWIPE NAVIGATION STYLES */
+.page.swipe-active,
+.page.swipe-enter-right,
 .page.swipe-enter-left {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
+    min-height: 100vh;
     display: block !important;
     opacity: 1 !important;
-    transform: translateX(-100%);
-    z-index: 1;
 }
 
-/* Animasi transisi */
 .page.swipe-transition {
     transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-/* Halaman aktif keluar ke kiri (next page) */
+.page.swipe-active {
+    transform: translateX(0);
+    z-index: 2;
+}
+
+.page.swipe-enter-right {
+    transform: translateX(100%);
+    z-index: 1;
+}
+
+.page.swipe-enter-left {
+    transform: translateX(-100%);
+    z-index: 1;
+}
+
+.page.swipe-to-center {
+    transform: translateX(0) !important;
+}
+
 .page.swipe-exit-left {
     transform: translateX(-100%) !important;
 }
 
-/* Halaman aktif keluar ke kanan (previous page) */
 .page.swipe-exit-right {
     transform: translateX(100%) !important;
 }
+
+/* ===== SAMPAI SINI TAMBAHANNYA ===== */
 
 /* Halaman target masuk dari kanan ke posisi normal */
 .page.swipe-enter-right.swipe-to-center {
