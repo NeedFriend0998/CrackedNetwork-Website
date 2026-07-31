@@ -1254,12 +1254,10 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 /* === GANTI BAGIAN INI === */
 
 /* === HALAMAN === */
-.pages { 
+.pages {
     padding-top: 72px;
     position: relative;
-    overflow: hidden;
     min-height: 100vh;
-    border-top: 1px solid transparent; /* Cegah margin collapse */
 }
 
 .page {
