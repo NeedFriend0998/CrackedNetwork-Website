@@ -1658,8 +1658,6 @@ function swipeToPage(targetId, direction) {
         });
     });
     
-    // ... sisa kode cleanup ...
-}
 
 // Override fungsi navigateTo jika ada, atau tambahkan event listener baru
 document.addEventListener('DOMContentLoaded', () => {
