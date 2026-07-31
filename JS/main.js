@@ -1284,12 +1284,15 @@ function getCurrentPageIndex() {
 }
 
 function swipeToPage(targetId, direction) {
+    // Cegah spam: kalau lagi animasi, abaikan
     if (isSwiping) return;
+    
     const currentPage = document.querySelector('.page.active');
     const targetPage = document.getElementById(targetId);
     if (!currentPage || !targetPage || currentPage === targetPage) return;
     if (pageOrder.indexOf(targetId) === -1) return;
 
+    // Kunci langsung
     isSwiping = true;
 
     // Tampilkan target page
@@ -1342,12 +1345,13 @@ function swipeToPage(targetId, direction) {
             lenis.scrollTo(0, { immediate: true });
         }
 
+        // Buka kunci setelah animasi selesai
         isSwiping = false;
     };
 
     container.addEventListener('transitionend', onTransitionEnd);
 
-    // Fallback
+    // Fallback: buka kunci setelah 500ms (antisipasi transitionend gagal)
     setTimeout(() => {
         if (isSwiping) {
             container.removeEventListener('transitionend', onTransitionEnd);
@@ -1386,6 +1390,10 @@ function handleMove(e) {
 function handleEnd(e) {
     if (!dragging) return;
     dragging = false;
+    
+    // Cegah spam: kalau lagi animasi, jangan proses swipe baru
+    if (isSwiping) return;
+    
     const p = e.changedTouches ? e.changedTouches[0] : e;
     const dx = p.clientX - startX;
     const dy = p.clientY - startY;
@@ -1417,10 +1425,20 @@ if (container) {
 // Keyboard
 document.addEventListener('keydown', e => {
     if (e.target.closest('input, textarea, [contenteditable]')) return;
+    
+    // Cegah spam keyboard
+    if (isSwiping) return;
+    
     const idx = getCurrentPageIndex();
     if (idx === -1) return;
-    if (e.key === 'ArrowRight' && idx + 1 < pageOrder.length) { e.preventDefault(); swipeToPage(pageOrder[idx + 1], 'next'); }
-    if (e.key === 'ArrowLeft' && idx - 1 >= 0) { e.preventDefault(); swipeToPage(pageOrder[idx - 1], 'prev'); }
+    if (e.key === 'ArrowRight' && idx + 1 < pageOrder.length) { 
+        e.preventDefault(); 
+        swipeToPage(pageOrder[idx + 1], 'next'); 
+    }
+    if (e.key === 'ArrowLeft' && idx - 1 >= 0) { 
+        e.preventDefault(); 
+        swipeToPage(pageOrder[idx - 1], 'prev'); 
+    }
 });
 
 // Integrasi klik navbar
