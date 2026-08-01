@@ -1278,6 +1278,7 @@ const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'disco
 let isSwiping = false;
 let lastSwipeTime = 0;          // timestamp terakhir animasi SELESAI
 const SWIPE_COOLDOWN = 600;     // cooldown 600ms setelah animasi selesai
+let currentTranslateX = 0;
 const container = document.querySelector('.pages');
 
 function getCurrentPageIndex() {
@@ -1287,6 +1288,8 @@ function getCurrentPageIndex() {
 
 function swipeToPage(targetId, direction) {
     const now = Date.now();
+
+    // Cegah spam: jika sedang animasi atau masih dalam masa cooldown
     if (isSwiping || (now - lastSwipeTime) < SWIPE_COOLDOWN) return;
 
     const currentPage = document.querySelector('.page.active');
@@ -1294,107 +1297,71 @@ function swipeToPage(targetId, direction) {
     if (!currentPage || !targetPage || currentPage === targetPage) return;
     if (pageOrder.indexOf(targetId) === -1) return;
 
+    // Kunci langsung untuk mencegah race condition
     isSwiping = true;
 
-    // 🔒 KUNCI posisi scroll & tinggi container
-    const scrollY = window.scrollY;
-    const containerHeight = container.offsetHeight;
-    container.style.height = containerHeight + 'px';
-    container.style.overflow = 'hidden';
-    window.scrollTo({ top: scrollY, behavior: 'instant' });
-
-    // Setup target page di posisi awal (absolute di dalam container)
+    // Tampilkan target page
     targetPage.style.display = 'block';
     targetPage.style.position = 'absolute';
     targetPage.style.top = '0';
     targetPage.style.left = direction === 'next' ? '100%' : '-100%';
     targetPage.style.width = '100%';
-    targetPage.style.minHeight = containerHeight + 'px';
-    targetPage.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    targetPage.style.minHeight = '100vh';
 
-    // Setup current page
-    currentPage.style.position = 'absolute';
-    currentPage.style.top = '0';
-    currentPage.style.left = '0';
-    currentPage.style.width = '100%';
-    currentPage.style.minHeight = containerHeight + 'px';
-    currentPage.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-    currentPage.style.transform = 'translateX(0)';
-
-    // Force reflow
+    // Paksa reflow
     void targetPage.offsetWidth;
 
-    // Animasi: geser MASING-MASING halaman, BUKAN container
-    if (direction === 'next') {
-        currentPage.style.transform = 'translateX(-100%)';
-        targetPage.style.transform = 'translateX(0)';
-    } else {
-        currentPage.style.transform = 'translateX(100%)';
-        targetPage.style.transform = 'translateX(0)';
-    }
+    // Geser container
+    const moveX = direction === 'next' ? -100 : 100;
+    currentTranslateX += moveX;
+    container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    container.style.transform = `translateX(${currentTranslateX}%)`;
 
-    // Cleanup
-    const cleanup = () => {
-        // Reset current page
-        currentPage.style.position = '';
-        currentPage.style.top = '';
-        currentPage.style.left = '';
-        currentPage.style.width = '';
-        currentPage.style.minHeight = '';
-        currentPage.style.transform = '';
-        currentPage.style.transition = '';
-        currentPage.style.display = '';
-        currentPage.classList.remove('active');
+    // Bersihkan setelah animasi selesai
+    const onTransitionEnd = () => {
+        container.removeEventListener('transitionend', onTransitionEnd);
+        container.style.transition = 'none';
+        container.style.transform = 'translateX(0)';
+        currentTranslateX = 0;
 
-        // Reset target page
-        targetPage.style.position = '';
-        targetPage.style.top = '';
-        targetPage.style.left = '';
-        targetPage.style.width = '';
-        targetPage.style.minHeight = '';
-        targetPage.style.transform = '';
-        targetPage.style.transition = '';
+        // Reset semua halaman
+        document.querySelectorAll('.page').forEach(p => {
+            p.style.position = '';
+            p.style.top = '';
+            p.style.left = '';
+            p.style.width = '';
+            p.style.minHeight = '';
+            p.style.display = '';
+            p.classList.remove('active');
+        });
+
+        // Aktifkan target
         targetPage.classList.add('active');
 
-        // 🔓 Buka kunci container
-        container.style.height = '';
-        container.style.overflow = '';
-
-        // Scroll ke atas halaman baru
-        window.scrollTo({ top: 0, behavior: 'instant' });
-
-        // Update URL & navigasi
+        // Update navigasi
         const newPath = '/' + targetId;
         if (window.location.pathname !== newPath) {
             history.pushState({ page: targetId }, '', newPath);
         }
         updateNavActive(targetId);
-
-        // Trigger event & update Lenis
-        window.dispatchEvent(new CustomEvent('pageChanged', { detail: { page: targetId } }));
+        window.scrollTo({ top: 0, behavior: 'instant' });
         if (lenis) {
             lenis.resize();
             lenis.scrollTo(0, { immediate: true });
         }
 
+        // Catat waktu selesai & lepas kunci
         lastSwipeTime = Date.now();
         isSwiping = false;
     };
 
-    // Pakai transitionend pada target page
-    const onTransitionEnd = (e) => {
-        if (e.target === targetPage && e.propertyName === 'transform') {
-            targetPage.removeEventListener('transitionend', onTransitionEnd);
-            cleanup();
-        }
-    };
-    targetPage.addEventListener('transitionend', onTransitionEnd);
+    container.addEventListener('transitionend', onTransitionEnd);
 
-    // Fallback
+    // Fallback (lebih lama dari durasi animasi + cooldown untuk aman)
     setTimeout(() => {
         if (isSwiping) {
-            targetPage.removeEventListener('transitionend', onTransitionEnd);
-            cleanup();
+            container.removeEventListener('transitionend', onTransitionEnd);
+            onTransitionEnd();
         }
     }, 500);
 }
