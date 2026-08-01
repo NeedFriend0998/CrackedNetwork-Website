@@ -1311,11 +1311,6 @@ function swipeToPage(targetId, direction) {
     // Paksa reflow
     void targetPage.offsetWidth;
 
-    // Geser container
-    const moveX = direction === 'next' ? -100 : 100;
-    currentTranslateX += moveX;
-    container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-    container.style.transform = `translateX(${currentTranslateX}%)`;
 
     // Bersihkan setelah animasi selesai
     const onTransitionEnd = () => {
