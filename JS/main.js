@@ -1278,7 +1278,7 @@ const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'disco
 let isSwiping = false;
 let lastSwipeTime = 0;          // timestamp terakhir animasi SELESAI
 const SWIPE_COOLDOWN = 600;     // cooldown 600ms setelah animasi selesai
-
+let currentTranslateX = 0;
 const container = document.querySelector('.pages');
 
 function getCurrentPageIndex() {
@@ -1311,6 +1311,11 @@ function swipeToPage(targetId, direction) {
     // Paksa reflow
     void targetPage.offsetWidth;
 
+    // Geser container
+    const moveX = direction === 'next' ? -100 : 100;
+    currentTranslateX += moveX;
+    container.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
+    container.style.transform = `translateX(${currentTranslateX}%)`;
 
     // Bersihkan setelah animasi selesai
     const onTransitionEnd = () => {
