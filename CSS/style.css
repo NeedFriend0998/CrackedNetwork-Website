@@ -1254,11 +1254,11 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 /* === GANTI BAGIAN INI === */
 
 /* === HALAMAN === */
-/*.pages {
+.pages {
     padding-top: 72px;
     position: relative;
     min-height: 100vh;
-}*/
+}
 
 /*.page {
     display: none;
