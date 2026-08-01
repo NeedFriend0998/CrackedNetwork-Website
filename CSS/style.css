@@ -1256,7 +1256,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 /* === HALAMAN === */
 .pages {
     padding-top: 72px;
-    position: relative;
+    position: fixed;
     min-height: 100vh;
 }
 
