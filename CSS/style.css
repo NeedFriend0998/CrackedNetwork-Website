@@ -1254,18 +1254,18 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 /* === GANTI BAGIAN INI === */
 
 /* === HALAMAN === */
-.pages {
+/*.pages {
     padding-top: 72px;
     position: relative;
     min-height: 100vh;
-}
+}*/
 
-.page {
+/*.page {
     display: none;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.2s steps(4), transform 0.2s steps(4);
-}
+}*/
 
 .page.active {
     display: block;
