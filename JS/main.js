@@ -1278,7 +1278,7 @@ const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'disco
 let isSwiping = false;
 let lastSwipeTime = 0;          // timestamp terakhir animasi SELESAI
 const SWIPE_COOLDOWN = 600;     // cooldown 600ms setelah animasi selesai
-let currentTranslateX = 0;
+
 const container = document.querySelector('.pages');
 
 function getCurrentPageIndex() {
