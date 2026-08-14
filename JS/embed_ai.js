@@ -1,6 +1,6 @@
 // CrackedNetwork AI Embed - HTTP Compatible
 (function() {
-    const AI_BASE_URL = 'http://37.114.46.114:2306';
+    const AI_BASE_URL = 'https://crackednetwork.netlify.app/.netlify/functions/ai';
     const AI_EMBED_ID = 'cn-ai-embed';
 
     function createAIEmbed() {
