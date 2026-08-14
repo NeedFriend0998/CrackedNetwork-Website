@@ -1,5 +1,5 @@
 (function() {
-    const AI_URL = 'http://dash.crackednetwork.run.place:2306/chat';
+    const AI_EMBED_URL = '/ai-embed.html';
     const EMBED_ID = 'cn-ai-embed';
 
     function createEmbed() {
@@ -8,9 +8,8 @@
 
         const height = container.dataset.height || '600px';
 
-        // 🔥 Buat tombol + coba iframe
         const iframe = document.createElement('iframe');
-        iframe.src = AI_URL;
+        iframe.src = AI_EMBED_URL;
         iframe.style.cssText = `
             width: 100%;
             height: ${height};
@@ -20,7 +19,6 @@
             display: block;
         `;
         iframe.setAttribute('title', 'CrackedNetwork AI');
-        
         container.appendChild(iframe);
     }
 
