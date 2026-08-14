@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI - CrackedNetwork</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f0f1a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 { color: #00ff88; margin-bottom: 20px; }
+        .chat-box {
+            width: 100%;
+            max-width: 700px;
+            background: #16213e;
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+        }
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 400px;
+        }
+        .msg {
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .msg.user {
+            background: #00ff88;
+            color: #1a1a2e;
+            align-self: flex-end;
+        }
+        .msg.ai {
+            background: #0f3460;
+            color: white;
+            align-self: flex-start;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+        #question {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            background: #1a1a2e;
+            color: white;
+            font-size: 1em;
+        }
+        button {
+            padding: 12px 24px;
+            background: #00ff88;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #00cc6a; }
+    </style>
+</head>
+<body>
+    <h1>🤖 CrackedNetwork AI</h1>
+    <div class="chat-box">
+        <div id="messages">
+            <div class="msg ai">Halo! Ada yang bisa kubantu tentang server?</div>
+        </div>
+        <div class="input-row">
+            <input type="text" id="question" placeholder="Ketik pertanyaan..." onkeypress="if(event.key==='Enter')sendMessage()">
+            <button onclick="sendMessage()">Kirim</button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = '/.netlify/functions/ai';
+        let userId = localStorage.getItem('cn_user_id');
+        if (!userId) {
+            userId = 'web_' + Date.now();
+            localStorage.setItem('cn_user_id', userId);
+        }
+
+        function addMessage(text, isUser) {
+            const messages = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = 'msg ' + (isUser ? 'user' : 'ai');
+            div.textContent = text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('question');
+            const question = input.value.trim();
+            if (!question) return;
+
+            addMessage(question, true);
+            input.value = '';
+
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: question, user_id: userId })
+                });
+                const data = await res.json();
+                addMessage(data.answer || '(No answer)', false);
+            } catch (e) {
+                addMessage('Error: Gagal terhubung ke AI.', false);
+            }
+        }
+    </script>
+</body>
+</html>
