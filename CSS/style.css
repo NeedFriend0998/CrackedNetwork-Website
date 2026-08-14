@@ -21,9 +21,6 @@
     box-sizing: border-box;
 }
 
-html {
-    
-}
 
 body {
     font-family: 'Outfit', sans-serif;
@@ -1338,3 +1335,8 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     transform: translateX(0) !important;
 }
 
+.ai-container {
+            width: 100%;
+            max-width: 900px;
+            flex: 1;
+        }
