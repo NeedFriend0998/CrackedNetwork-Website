@@ -30,6 +30,7 @@
   --radius-sm: 10px;
   --radius-bubble: 18px;
   --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --think-bg: #2a2d35;
 }
 
 html, body { 
@@ -48,7 +49,6 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
-  /* DISABLE TEXT SELECTION GLOBALLY */
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -56,7 +56,6 @@ body {
   -webkit-touch-callout: none;
 }
 
-/* ALLOW SELECTION ONLY IN INPUT BOX */
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; user-select: none; }
 input, textarea { 
   font-family: inherit; 
@@ -89,6 +88,7 @@ input, textarea {
   z-index: 10;
   flex-shrink: 0;
 }
+.header-left { display: flex; align-items: center; gap: 10px; }
 .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
 .logo-mark {
   width: 32px; height: 32px;
@@ -143,6 +143,83 @@ input, textarea {
 }
 .icon-btn:hover { background: var(--card-hover); color: var(--text); }
 .icon-btn i { font-size: 16px; }
+
+/* ===== HISTORY DRAWER ===== */
+.overlay-drawer {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  opacity: 0; visibility: hidden;
+  transition: opacity .2s;
+  z-index: 40;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.overlay-drawer.active { opacity: 1; visibility: visible; }
+
+.history-drawer {
+  position: fixed;
+  top: 0; left: -300px;
+  width: 280px; height: 100%;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  transition: left 0.3s cubic-bezier(.4,0,.2,1);
+}
+.history-drawer.open { left: 0; }
+.drawer-header {
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border-soft);
+}
+.drawer-header h3 { font-size: 16px; font-weight: 700; }
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+.history-item {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+  border: 1px solid transparent;
+}
+.history-item:hover { background: var(--card-hover); }
+.history-item.active { border-color: var(--accent); background: var(--card-hover); }
+.history-item .h-title {
+  font-size: 13px; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-bottom: 4px;
+}
+.history-item .h-time {
+  font-size: 11px; color: var(--text-soft);
+}
+.drawer-footer {
+  padding: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+.btn-new-chat {
+  width: 100%;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: black;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s;
+}
+.btn-new-chat:hover { background: var(--accent-2); }
+.empty-history {
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 13px;
+  padding: 40px 20px;
+}
 
 /* ===== MAIN ===== */
 .main {
@@ -343,7 +420,105 @@ input, textarea {
 .msg-action-btn:hover { background: var(--card-hover); color: var(--text); }
 .msg-action-btn i { font-size: 13px; }
 
-/* Thinking animation */
+.edited-tag {
+  font-size: 10px;
+  color: var(--text-soft);
+  margin-left: 4px;
+  font-style: italic;
+}
+
+/* Edit Textarea */
+.edit-textarea {
+  width: 100%;
+  background: rgba(0,0,0,0.2);
+  color: white;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  padding: 8px;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 60px;
+}
+.edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  justify-content: flex-end;
+}
+.edit-btn {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.edit-btn.cancel { background: var(--card-hover); color: var(--text-muted); }
+.edit-btn.save { background: var(--accent); color: black; }
+
+/* ===== THINKING BOX ===== */
+.thinking-box {
+  background: var(--think-bg);
+  border-radius: var(--radius);
+  max-width: 80%;
+  width: fit-content;
+  min-width: 200px;
+  margin: 0 0 12px 40px;
+  padding: 12px 16px;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+.thinking-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: grab;
+}
+.thinking-header:active { cursor: grabbing; }
+.thinking-box.dragging {
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  opacity: 0.9;
+  z-index: 10;
+}
+.thinking-header .brain-icon { font-size: 15px; }
+.thinking-header .label { flex: 1; }
+.thinking-header .toggle-btn {
+  color: var(--text-soft);
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.thinking-header .toggle-btn i { font-size: 14px; transition: transform 0.2s; }
+.thinking-box.collapsed .toggle-btn i { transform: rotate(-90deg); }
+
+.thinking-body {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  opacity: 0.75;
+  filter: blur(0.3px);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 300px;
+  overflow-y: auto;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease, filter 0.3s ease;
+}
+.thinking-box.collapsed .thinking-body {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  filter: blur(5px);
+  overflow: hidden;
+}
+
+/* Thinking animation (loading dots) */
 .thinking .msg-bubble {
   display: flex; align-items: center; gap: 10px;
   padding: 12px 16px;
@@ -377,7 +552,7 @@ input, textarea {
   padding: 10px 16px 16px;
   background: linear-gradient(to top, var(--bg) 60%, transparent);
   flex-shrink: 0;
-  overflow: hidden; /* Prevents layout jump on animation */
+  overflow: hidden;
 }
 .input-wrap {
   max-width: 820px;
@@ -411,7 +586,7 @@ input, textarea {
   transition: min-height 0.25s ease;
 }
 .input-wrap:focus-within .input-textarea {
-  min-height: 32px; /* Slightly enlarges the text area itself */
+  min-height: 32px;
 }
 .input-textarea::placeholder { 
   color: var(--text-soft); 
@@ -473,6 +648,9 @@ input, textarea {
   .input-area { padding: 8px 12px 12px; }
   .msg-content-wrap { max-width: 85%; }
   .msg-bubble { font-size: 13.5px; padding: 10px 12px; }
+  
+  .thinking-box { max-width: 85%; margin-left: 30px; }
+  .history-drawer { width: 260px; left: -280px; }
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -554,13 +732,35 @@ input, textarea {
 </head>
 <body>
 
+<!-- HISTORY DRAWER -->
+<div class="overlay-drawer" id="drawerOverlay"></div>
+<aside class="history-drawer" id="historyDrawer">
+  <div class="drawer-header">
+    <h3>Chat History</h3>
+    <button class="icon-btn" id="closeDrawerBtn" title="Close"><i class="icon-x"></i></button>
+  </div>
+  <div class="drawer-body" id="historyList">
+    <div class="empty-history">No history yet</div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn-new-chat" id="newChatDrawerBtn">
+      <i class="icon-plus"></i> New Chat
+    </button>
+  </div>
+</aside>
+
 <div class="app">
   <header class="main-header">
-    <div class="logo">
-      <div class="logo-mark">C</div>
-      <div class="logo-text">
-        <span>CrackedNetwork AI</span>
-        <span>Server Assistant</span>
+    <div class="header-left">
+      <button class="icon-btn" id="historyToggleBtn" title="Chat History">
+        <i class="icon-clock-3"></i>
+      </button>
+      <div class="logo">
+        <div class="logo-mark">C</div>
+        <div class="logo-text">
+          <span>CrackedNetwork AI</span>
+          <span>Server Assistant</span>
+        </div>
       </div>
     </div>
     <div class="header-right">
@@ -568,7 +768,7 @@ input, textarea {
         <span class="dot"></span>
         <span>AI Online</span>
       </div>
-      <button class="icon-btn" id="resetMemoryBtn" title="Reset Memory">
+      <button class="icon-btn" id="resetMemoryBtn" title="Reset All Memory">
         <i class="icon-trash-2"></i>
       </button>
     </div>
@@ -609,8 +809,8 @@ input, textarea {
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-icon"><i class="icon-trash-2"></i></div>
-    <h3>Reset AI Memory?</h3>
-    <p>All chat history remembered by the AI will be permanently deleted. This action cannot be undone.</p>
+    <h3>Reset All Memory?</h3>
+    <p>All local chat history and backend memory will be permanently deleted. This action cannot be undone.</p>
     <div class="modal-actions">
       <button class="btn btn-ghost" id="modalCancel">Cancel</button>
       <button class="btn btn-danger" id="modalConfirm">Yes, Reset</button>
@@ -622,20 +822,27 @@ input, textarea {
   // ===== CONFIG API =====
   const API_BASE = '/.netlify/functions/ai';
 
-  // ===== STATE =====
+  // ===== STATE MANAGEMENT =====
+  // Sessions structure: { "sess-123": { id, title, timestamp, messages: [{role, text, thinking, edited}] } }
   const state = {
-    userId: localStorage.getItem('cn_user_id') || generateUserId(),
+    baseUserId: localStorage.getItem('cn_user_id') || generateUserId(),
     isWaiting: false,
-    messages: JSON.parse(localStorage.getItem('cn_chat_history') || '[]')
+    currentSessionId: null,
+    sessions: JSON.parse(localStorage.getItem('cn_sessions') || '{}')
   };
-  localStorage.setItem('cn_user_id', state.userId);
+  localStorage.setItem('cn_user_id', state.baseUserId);
 
   function generateUserId() {
     return 'guest-' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
   }
 
-  function saveHistory() {
-    localStorage.setItem('cn_chat_history', JSON.stringify(state.messages));
+  function saveSessions() {
+    localStorage.setItem('cn_sessions', JSON.stringify(state.sessions));
+  }
+
+  function getApiUserId() {
+    // Use session ID as API user_id to isolate memory per session
+    return state.currentSessionId || state.baseUserId;
   }
 
   // ===== ELEMENTS =====
@@ -646,6 +853,82 @@ input, textarea {
   const chatArea = $('chatArea');
   const toast = $('toast');
   const toastText = $('toastText');
+
+  // ===== HISTORY DRAWER LOGIC =====
+  const drawer = $('historyDrawer');
+  const drawerOverlay = $('drawerOverlay');
+
+  $('historyToggleBtn').addEventListener('click', () => {
+    drawer.classList.add('open');
+    drawerOverlay.classList.add('active');
+    renderHistoryList();
+  });
+
+  $('closeDrawerBtn').addEventListener('click', closeDrawer);
+  drawerOverlay.addEventListener('click', closeDrawer);
+  $('newChatDrawerBtn').addEventListener('click', () => {
+    startNewChat();
+    closeDrawer();
+  });
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    drawerOverlay.classList.remove('active');
+  }
+
+  function renderHistoryList() {
+    const list = $('historyList');
+    list.innerHTML = '';
+    const sessions = Object.values(state.sessions).sort((a, b) => b.timestamp - a.timestamp);
+    
+    if (sessions.length === 0) {
+      list.innerHTML = '<div class="empty-history">No history yet</div>';
+      return;
+    }
+    
+    sessions.forEach(session => {
+      const item = document.createElement('div');
+      item.className = 'history-item';
+      if (session.id === state.currentSessionId) item.classList.add('active');
+      
+      const date = new Date(session.timestamp);
+      const timeStr = date.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' });
+      
+      item.innerHTML = `
+        <div class="h-title">${escapeHtml(session.title)}</div>
+        <div class="h-time">${timeStr}</div>
+      `;
+      
+      item.addEventListener('click', () => {
+        loadSession(session.id);
+        closeDrawer();
+      });
+      list.appendChild(item);
+    });
+  }
+
+  function startNewChat() {
+    state.currentSessionId = null;
+    chatContainer.innerHTML = '';
+    renderWelcome();
+    input.focus();
+  }
+
+  function loadSession(sessionId) {
+    state.currentSessionId = sessionId;
+    const session = state.sessions[sessionId];
+    if (!session) return;
+
+    chatContainer.innerHTML = '';
+    session.messages.forEach((msg, index) => {
+      if (msg.thinking) {
+        const thinkBox = createThinkingBox(msg.thinking, true);
+        chatContainer.appendChild(thinkBox);
+      }
+      addMessage(msg.role, msg.text, false, msg.edited || false, index);
+    });
+    scrollToBottom();
+  }
 
   // ===== RENDER WELCOME SCREEN =====
   function renderWelcome() {
@@ -685,17 +968,19 @@ input, textarea {
     bindSuggestions();
   }
 
-  // ===== RENDER HISTORY ON LOAD =====
-  function renderHistory() {
-    if (state.messages.length === 0) {
-      renderWelcome();
+  // ===== INIT APP =====
+  function initApp() {
+    const sessions = Object.values(state.sessions).sort((a, b) => b.timestamp - a.timestamp);
+    if (sessions.length > 0) {
+      loadSession(sessions[0].id);
     } else {
-      chatContainer.innerHTML = '';
-      state.messages.forEach(msg => {
-        addMessage(msg.role, msg.text, false); 
-      });
-      scrollToBottom();
+      renderWelcome();
     }
+  }
+
+  // ===== CLEAR THINKING BOXES (BUG FIX) =====
+  function clearThinkingBoxes() {
+    document.querySelectorAll('.thinking-box').forEach(el => el.remove());
   }
 
   // ===== INPUT AUTO-RESIZE =====
@@ -712,7 +997,7 @@ input, textarea {
     }
   });
 
-  sendBtn.addEventListener('click', sendMessage);
+  sendBtn.addEventListener('click', () => sendMessage());
 
   // ===== SUGGESTIONS =====
   function bindSuggestions() {
@@ -731,23 +1016,41 @@ input, textarea {
   $('modalCancel').addEventListener('click', () => modal.classList.remove('show'));
   $('modalConfirm').addEventListener('click', async () => {
     modal.classList.remove('show');
-    await resetMemory();
+    await resetAllMemory();
   });
   modal.addEventListener('click', (e) => {
     if (e.target === modal) modal.classList.remove('show');
   });
 
   // ===== SEND MESSAGE =====
-  async function sendMessage() {
-    const text = input.value.trim();
+  async function sendMessage(overrideText = null) {
+    const text = overrideText !== null ? overrideText : input.value.trim();
     if (!text || state.isWaiting) return;
+
+    clearThinkingBoxes(); // Clear any existing thinking boxes
 
     const welcome = $('welcome');
     if (welcome) welcome.remove();
 
-    addMessage('user', text, true);
-    input.value = '';
-    input.style.height = 'auto';
+    // Create new session if doesn't exist
+    if (!state.currentSessionId) {
+      state.currentSessionId = 'sess-' + Date.now();
+      state.sessions[state.currentSessionId] = {
+        id: state.currentSessionId,
+        title: text.length > 50 ? text.substring(0, 50) + '...' : text,
+        timestamp: Date.now(),
+        messages: []
+      };
+      saveSessions();
+    }
+
+    // Add user message (if it's not an override from edit/retry)
+    if (overrideText === null) {
+      addMessage('user', text, true, false);
+      input.value = '';
+      input.style.height = 'auto';
+    }
+    
     sendBtn.disabled = true;
     state.isWaiting = true;
 
@@ -760,7 +1063,7 @@ input, textarea {
       const res = await fetch(`${API_BASE}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: text, user_id: state.userId }),
+        body: JSON.stringify({ question: text, user_id: getApiUserId() }),
         signal: controller.signal
       });
       clearTimeout(timeout);
@@ -769,13 +1072,36 @@ input, textarea {
 
       const data = await res.json();
       thinkingEl.remove();
-      addMessage('ai', data.answer || '(No answer)', true);
+      
+      let rawAnswer = data.answer || '(No answer)';
+      let thinkingText = data.thinking || '';
+      
+      // Parse  tags if inside answer
+      const thinkMatch = rawAnswer.match(/([\s\S]*?)<\/think>/);
+      if (thinkMatch) {
+        thinkingText = thinkMatch[1].trim();
+        rawAnswer = rawAnswer.replace(/[\s\S]*?<\/think>/, '').trim();
+      }
+      
+      if (thinkingText) {
+        const thinkBox = createThinkingBox(thinkingText, false);
+        chatContainer.appendChild(thinkBox);
+        
+        // Auto-collapse after 3s
+        setTimeout(() => {
+          thinkBox.classList.add('collapsed');
+          scrollToBottom();
+        }, 3000);
+      }
+
+      addMessage('ai', rawAnswer, true, false);
+
     } catch (err) {
       thinkingEl.remove();
       const errMsg = err.name === 'AbortError'
         ? '⏱️ Request timed out. Please try again.'
         : '⚠️ Sorry, an error occurred: ' + err.message;
-      addMessage('ai', errMsg, true);
+      addMessage('ai', errMsg, true, false);
       showToast('Failed to send message', 'error');
     } finally {
       state.isWaiting = false;
@@ -784,67 +1110,160 @@ input, textarea {
     }
   }
 
-  function addMessage(role, text, save = true) {
+  function addMessage(role, text, save = true, isEdited = false, customIndex = null) {
     const msg = document.createElement('div');
     msg.className = 'msg';
     const isUser = role === 'user';
     const avatarClass = isUser ? 'user' : 'ai';
     const avatarText = isUser ? 'G' : 'C';
 
+    let msgIndex = customIndex;
+    if (save) {
+      const session = state.sessions[state.currentSessionId];
+      session.messages.push({ role, text, edited: isEdited });
+      msgIndex = session.messages.length - 1;
+      saveSessions();
+      if (isUser) renderHistoryList(); // Update title in history
+    }
+
     msg.innerHTML = `
       <div class="msg-row ${role}">
         <div class="msg-avatar ${avatarClass}">${avatarText}</div>
         <div class="msg-content-wrap">
           <div class="msg-bubble">
-            <div class="msg-text">${formatMessage(text)}</div>
+            <div class="msg-text">${formatMessage(text)} ${isEdited ? '<span class="edited-tag">(edited)</span>' : ''}</div>
           </div>
           <div class="msg-meta">
-            <button class="msg-action-btn" data-action="copy">
-              <i class="icon-copy"></i>Copy
-            </button>
-            ${!isUser ? `
+            ${isUser ? `
+              <button class="msg-action-btn" data-action="edit">
+                <i class="icon-edit-3"></i>Edit
+              </button>
+            ` : `
               <button class="msg-action-btn" data-action="retry">
                 <i class="icon-refresh-cw"></i>Retry
               </button>
-            ` : ''}
+            `}
+            <button class="msg-action-btn" data-action="copy">
+              <i class="icon-copy"></i>Copy
+            </button>
           </div>
         </div>
       </div>
     `;
 
     chatContainer.appendChild(msg);
-    
-    if (save) {
-      state.messages.push({ role, text });
-      saveHistory();
-    }
 
+    // Copy action
     msg.querySelector('[data-action="copy"]').addEventListener('click', () => {
       navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard', 'success'));
     });
 
+    // Edit action
+    const editBtn = msg.querySelector('[data-action="edit"]');
+    if (editBtn) {
+      editBtn.addEventListener('click', () => {
+        startEditMessage(msg, msgIndex);
+      });
+    }
+
+    // Retry action
     const retryBtn = msg.querySelector('[data-action="retry"]');
     if (retryBtn) {
       retryBtn.addEventListener('click', () => {
-        const prevUser = [...state.messages].reverse().find(m => m.role === 'user');
-        if (prevUser) {
-          msg.remove();
-          state.messages.pop();
-          const uIdx = state.messages.lastIndexOf(prevUser);
-          if (uIdx > -1) state.messages.splice(uIdx, 1);
-          
-          const userMsgEls = document.querySelectorAll('.msg-row.user');
-          if (userMsgEls.length) userMsgEls[userMsgEls.length - 1].closest('.msg').remove();
-          
-          input.value = prevUser.text;
-          input.dispatchEvent(new Event('input'));
-          sendMessage();
+        clearThinkingBoxes(); // CLEAR THINKING BOXES ON RETRY
+        msg.remove();
+        const session = state.sessions[state.currentSessionId];
+        if (session.messages[msgIndex].role === 'ai') {
+          session.messages.pop(); // Remove this AI message from state
+          saveSessions();
+        }
+        // Find the user message that triggered this
+        const prevUserMsg = [...session.messages].reverse().find(m => m.role === 'user');
+        if (prevUserMsg) {
+          sendMessage(prevUserMsg.text);
         }
       });
     }
 
     scrollToBottom();
     return msg;
+  }
+
+  // ===== EDIT MESSAGE LOGIC =====
+  function startEditMessage(msgEl, msgIndex) {
+    const session = state.sessions[state.currentSessionId];
+    const msgData = session.messages[msgIndex];
+    const bubble = msgEl.querySelector('.msg-bubble');
+    const originalText = msgData.text;
+
+    bubble.innerHTML = `
+      <textarea class="edit-textarea">${escapeHtml(originalText)}</textarea>
+      <div class="edit-actions">
+        <button class="edit-btn cancel">Cancel (Esc)</button>
+        <button class="edit-btn save">Save & Send (Enter)</button>
+      </div>
+    `;
+
+    const textarea = bubble.querySelector('.edit-textarea');
+    textarea.focus();
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+
+    textarea.addEventListener('input', () => {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
+    });
+
+    textarea.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        saveEdit(textarea.value, msgIndex, msgEl);
+      } else if (e.key === 'Escape') {
+        cancelEdit(msgIndex, msgEl);
+      }
+    });
+
+    bubble.querySelector('.edit-btn.save').addEventListener('click', () => saveEdit(textarea.value, msgIndex, msgEl));
+    bubble.querySelector('.edit-btn.cancel').addEventListener('click', () => cancelEdit(msgIndex, msgEl));
+  }
+
+  function cancelEdit(msgIndex, msgEl) {
+    const session = state.sessions[state.currentSessionId];
+    const msgData = session.messages[msgIndex];
+    msgEl.querySelector('.msg-bubble').innerHTML = `
+      <div class="msg-text">${formatMessage(msgData.text)} ${msgData.edited ? '<span class="edited-tag">(edited)</span>' : ''}</div>
+    `;
+  }
+
+  function saveEdit(newText, msgIndex, msgEl) {
+    newText = newText.trim();
+    if (!newText) return cancelEdit(msgIndex, msgEl);
+
+    const session = state.sessions[state.currentSessionId];
+    
+    // 1. Update state
+    session.messages[msgIndex].text = newText;
+    session.messages[msgIndex].edited = true;
+    
+    // 2. Truncate messages after this one
+    session.messages = session.messages.slice(0, msgIndex + 1);
+    saveSessions();
+    
+    // 3. Remove DOM elements after this one
+    let currentEl = msgEl.nextElementSibling;
+    while(currentEl) {
+      let next = currentEl.nextElementSibling;
+      currentEl.remove();
+      currentEl = next;
+    }
+    msgEl.remove();
+    
+    // 4. Re-render this specific user message
+    addMessage('user', newText, false, true, msgIndex);
+    
+    // 5. Trigger API call
+    clearThinkingBoxes();
+    sendMessage(newText);
   }
 
   function addThinking() {
@@ -866,6 +1285,81 @@ input, textarea {
     chatContainer.appendChild(msg);
     scrollToBottom();
     return msg;
+  }
+
+  // ===== CREATE THINKING BOX =====
+  function createThinkingBox(text, skipAnimation = false) {
+    const box = document.createElement('div');
+    box.className = 'thinking-box';
+    if (skipAnimation) box.classList.add('collapsed');
+    
+    box.innerHTML = `
+      <div class="thinking-header">
+        <span class="brain-icon">🧠</span>
+        <span class="label">AI is thinking...</span>
+        <button class="toggle-btn">
+          <i class="icon-chevron-down"></i>
+        </button>
+      </div>
+      <div class="thinking-body">${formatMessage(text)}</div>
+    `;
+
+    const header = box.querySelector('.thinking-header');
+    const chevron = box.querySelector('.toggle-btn i');
+
+    header.addEventListener('click', (e) => {
+      if (box.dataset.dragged === 'true') {
+        box.dataset.dragged = 'false';
+        return;
+      }
+      box.classList.toggle('collapsed');
+      chevron.className = 'icon-chevron-down';
+      scrollToBottom();
+    });
+
+    // Drag Logic
+    let isDragging = false;
+    let startY = 0;
+    let currentY = 0;
+
+    const startDrag = (e) => {
+      if (e.target.closest('.toggle-btn')) return;
+      isDragging = true;
+      box.classList.add('dragging');
+      box.style.transition = 'none';
+      startY = (e.touches ? e.touches[0].clientY : e.clientY) - currentY;
+      
+      document.addEventListener('mousemove', moveDrag);
+      document.addEventListener('touchmove', moveDrag, { passive: false });
+      document.addEventListener('mouseup', endDrag);
+      document.addEventListener('touchend', endDrag);
+      e.preventDefault();
+    };
+
+    const moveDrag = (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const y = e.touches ? e.touches[0].clientY : e.clientY;
+      currentY = y - startY;
+      box.style.transform = `translateY(${currentY}px)`;
+      if (Math.abs(currentY) > 5) box.dataset.dragged = 'true';
+    };
+
+    const endDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      box.classList.remove('dragging');
+      box.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
+      document.removeEventListener('mousemove', moveDrag);
+      document.removeEventListener('touchmove', moveDrag);
+      document.removeEventListener('mouseup', endDrag);
+      document.removeEventListener('touchend', endDrag);
+    };
+
+    header.addEventListener('mousedown', startDrag);
+    header.addEventListener('touchstart', startDrag, { passive: false });
+
+    return box;
   }
 
   function scrollToBottom() {
@@ -892,25 +1386,30 @@ input, textarea {
     return html;
   }
 
-  // ===== RESET MEMORY =====
-  async function resetMemory() {
-    showToast('Resetting memory...', 'info');
+  // ===== RESET ALL MEMORY =====
+  async function resetAllMemory() {
+    showToast('Resetting all memory...', 'info');
     try {
-      const res = await fetch(`${API_BASE}/reset`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: state.userId })
-      });
+      // Call reset for current session if exists
+      if (state.currentSessionId) {
+        await fetch(`${API_BASE}/reset`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: getApiUserId() })
+        });
+      }
 
-      if (!res.ok) throw new Error('Failed');
-      const data = await res.json();
-
-      localStorage.removeItem('cn_chat_history');
-      state.messages = [];
+      // Clear local storage
+      localStorage.removeItem('cn_sessions');
+      state.sessions = {};
+      state.currentSessionId = null;
       
+      // Render welcome
+      chatContainer.innerHTML = '';
       renderWelcome();
+      renderHistoryList();
 
-      showToast(data.message || '✅ Memory successfully reset', 'success');
+      showToast('✅ All history and memory reset', 'success');
     } catch (err) {
       showToast('Failed to reset memory', 'error');
     }
@@ -933,9 +1432,16 @@ input, textarea {
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
   }
 
-  // ===== INIT =====
-  renderHistory();
+  // ===== UTILS =====
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // ===== START =====
+  initApp();
   input.focus();
-    </script>
+</script>
 </body>
 </html>
