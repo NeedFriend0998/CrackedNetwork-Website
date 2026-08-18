@@ -1077,7 +1077,7 @@ input, textarea {
       let thinkingText = data.thinking || '';
       
       // Parse  tags if inside answer
-      const thinkMatch = rawAnswer.match(/([\s\S]*?)```/);
+      const thinkMatch = rawAnswer.match(/([\s\S]*?)<\/think>/);
       if (thinkMatch) {
         thinkingText = thinkMatch[1].trim();
         rawAnswer = rawAnswer.replace(/[\s\S]*?```/, '').trim();
