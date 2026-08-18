@@ -1073,14 +1073,19 @@ input, textarea {
       const data = await res.json();
       thinkingEl.remove();
       
-            let rawAnswer = data.answer || '(No answer)';
+                  let rawAnswer = data.answer || '(No answer)';
       let thinkingText = data.thinking || '';
       
-      // Parse ```thinking``` block if inside answer
-      const thinkMatch = rawAnswer.match(/```thinking\n?([\s\S]*?)```/);
+      // 1. Coba cari blok ```thinking ... ``` di dalam jawaban utama
+      const thinkMatch = rawAnswer.match(/```thinking\s*([\s\S]*?)```/i);
       if (thinkMatch) {
         thinkingText = thinkMatch[1].trim();
-        rawAnswer = rawAnswer.replace(/```thinking\n?[\s\S]*?```/, '').trim();
+        rawAnswer = rawAnswer.replace(/```thinking\s*[\s\S]*?```/i, '').trim();
+      }
+      
+      // 2. Bersihkan tag ``` jika kebetulan masih tersangkut di variabel thinking
+      if (thinkingText) {
+        thinkingText = thinkingText.replace(/```thinking\s*/i, '').replace(/```/g, '').trim();
   }
       
       if (thinkingText) {
