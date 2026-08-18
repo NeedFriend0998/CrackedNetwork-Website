@@ -1077,10 +1077,10 @@ input, textarea {
       let thinkingText = data.thinking || '';
       
       // Parse  tags if inside answer
-      const thinkMatch = rawAnswer.match(/([\s\S]*?)<\/think>/);
+      const thinkMatch = rawAnswer.match(/([\s\S]*?)```/);
       if (thinkMatch) {
         thinkingText = thinkMatch[1].trim();
-        rawAnswer = rawAnswer.replace(/[\s\S]*?<\/think>/, '').trim();
+        rawAnswer = rawAnswer.replace(/[\s\S]*?```/, '').trim();
       }
       
       if (thinkingText) {
