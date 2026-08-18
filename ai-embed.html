@@ -361,7 +361,7 @@ input, textarea {
   font-size: 14px;
   line-height: 1.6;
   word-wrap: break-word;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere; /* FIX: Mencegah teks panjang tanpa spasi keluar border */
 }
 .msg-row.user .msg-bubble {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
@@ -506,6 +506,7 @@ input, textarea {
   filter: blur(0.3px);
   white-space: pre-wrap;
   word-wrap: break-word;
+  overflow-wrap: anywhere;
   max-height: 300px;
   overflow-y: auto;
   transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease, filter 0.3s ease;
@@ -823,7 +824,6 @@ input, textarea {
   const API_BASE = '/.netlify/functions/ai';
 
   // ===== STATE MANAGEMENT =====
-  // Sessions structure: { "sess-123": { id, title, timestamp, messages: [{role, text, thinking, edited}] } }
   const state = {
     baseUserId: localStorage.getItem('cn_user_id') || generateUserId(),
     isWaiting: false,
@@ -841,7 +841,6 @@ input, textarea {
   }
 
   function getApiUserId() {
-    // Use session ID as API user_id to isolate memory per session
     return state.currentSessionId || state.baseUserId;
   }
 
@@ -978,7 +977,7 @@ input, textarea {
     }
   }
 
-  // ===== CLEAR THINKING BOXES (BUG FIX) =====
+  // ===== CLEAR THINKING BOXES =====
   function clearThinkingBoxes() {
     document.querySelectorAll('.thinking-box').forEach(el => el.remove());
   }
@@ -1027,12 +1026,11 @@ input, textarea {
     const text = overrideText !== null ? overrideText : input.value.trim();
     if (!text || state.isWaiting) return;
 
-    clearThinkingBoxes(); // Clear any existing thinking boxes
+    clearThinkingBoxes();
 
     const welcome = $('welcome');
     if (welcome) welcome.remove();
 
-    // Create new session if doesn't exist
     if (!state.currentSessionId) {
       state.currentSessionId = 'sess-' + Date.now();
       state.sessions[state.currentSessionId] = {
@@ -1044,7 +1042,6 @@ input, textarea {
       saveSessions();
     }
 
-    // Add user message (if it's not an override from edit/retry)
     if (overrideText === null) {
       addMessage('user', text, true, false);
       input.value = '';
@@ -1073,26 +1070,25 @@ input, textarea {
       const data = await res.json();
       thinkingEl.remove();
       
-                  let rawAnswer = data.answer || '(No answer)';
+      let rawAnswer = data.answer || '(No answer)';
       let thinkingText = data.thinking || '';
       
-      // 1. Coba cari blok ```thinking ... ``` di dalam jawaban utama
-      const thinkMatch = rawAnswer.match(/```thinking\s*([\s\S]*?)```/i);
+      // PARSING TAG <think>...</think>
+      const thinkMatch = rawAnswer.match(/<think>([\s\S]*?)<\/think>/i);
       if (thinkMatch) {
         thinkingText = thinkMatch[1].trim();
-        rawAnswer = rawAnswer.replace(/```thinking\s*[\s\S]*?```/i, '').trim();
+        rawAnswer = rawAnswer.replace(/<think>[\s\S]*?<\/think>/i, '').trim();
       }
       
-      // 2. Bersihkan tag ``` jika kebetulan masih tersangkut di variabel thinking
+      // Bersihkan tag jika kebetulan tersangkut
       if (thinkingText) {
-        thinkingText = thinkingText.replace(/```thinking\s*/i, '').replace(/```/g, '').trim();
-  }
+        thinkingText = thinkingText.replace(/<\/?think>/gi, '').trim();
+      }
       
       if (thinkingText) {
         const thinkBox = createThinkingBox(thinkingText, false);
         chatContainer.appendChild(thinkBox);
         
-        // Auto-collapse after 3s
         setTimeout(() => {
           thinkBox.classList.add('collapsed');
           scrollToBottom();
@@ -1128,7 +1124,7 @@ input, textarea {
       session.messages.push({ role, text, edited: isEdited });
       msgIndex = session.messages.length - 1;
       saveSessions();
-      if (isUser) renderHistoryList(); // Update title in history
+      if (isUser) renderHistoryList();
     }
 
     msg.innerHTML = `
@@ -1158,12 +1154,10 @@ input, textarea {
 
     chatContainer.appendChild(msg);
 
-    // Copy action
     msg.querySelector('[data-action="copy"]').addEventListener('click', () => {
       navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard', 'success'));
     });
 
-    // Edit action
     const editBtn = msg.querySelector('[data-action="edit"]');
     if (editBtn) {
       editBtn.addEventListener('click', () => {
@@ -1171,18 +1165,16 @@ input, textarea {
       });
     }
 
-    // Retry action
     const retryBtn = msg.querySelector('[data-action="retry"]');
     if (retryBtn) {
       retryBtn.addEventListener('click', () => {
-        clearThinkingBoxes(); // CLEAR THINKING BOXES ON RETRY
+        clearThinkingBoxes();
         msg.remove();
         const session = state.sessions[state.currentSessionId];
         if (session.messages[msgIndex].role === 'ai') {
-          session.messages.pop(); // Remove this AI message from state
+          session.messages.pop();
           saveSessions();
         }
-        // Find the user message that triggered this
         const prevUserMsg = [...session.messages].reverse().find(m => m.role === 'user');
         if (prevUserMsg) {
           sendMessage(prevUserMsg.text);
@@ -1246,15 +1238,12 @@ input, textarea {
 
     const session = state.sessions[state.currentSessionId];
     
-    // 1. Update state
     session.messages[msgIndex].text = newText;
     session.messages[msgIndex].edited = true;
     
-    // 2. Truncate messages after this one
     session.messages = session.messages.slice(0, msgIndex + 1);
     saveSessions();
     
-    // 3. Remove DOM elements after this one
     let currentEl = msgEl.nextElementSibling;
     while(currentEl) {
       let next = currentEl.nextElementSibling;
@@ -1263,10 +1252,8 @@ input, textarea {
     }
     msgEl.remove();
     
-    // 4. Re-render this specific user message
     addMessage('user', newText, false, true, msgIndex);
     
-    // 5. Trigger API call
     clearThinkingBoxes();
     sendMessage(newText);
   }
@@ -1395,7 +1382,6 @@ input, textarea {
   async function resetAllMemory() {
     showToast('Resetting all memory...', 'info');
     try {
-      // Call reset for current session if exists
       if (state.currentSessionId) {
         await fetch(`${API_BASE}/reset`, {
           method: 'POST',
@@ -1404,12 +1390,10 @@ input, textarea {
         });
       }
 
-      // Clear local storage
       localStorage.removeItem('cn_sessions');
       state.sessions = {};
       state.currentSessionId = null;
       
-      // Render welcome
       chatContainer.innerHTML = '';
       renderWelcome();
       renderHistoryList();
