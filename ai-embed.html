@@ -1073,15 +1073,15 @@ input, textarea {
       const data = await res.json();
       thinkingEl.remove();
       
-      let rawAnswer = data.answer || '(No answer)';
+            let rawAnswer = data.answer || '(No answer)';
       let thinkingText = data.thinking || '';
       
-      // Parse  tags if inside answer
-      const thinkMatch = rawAnswer.match(/([\s\S]*?)<\/think>/);
+      // Parse ```thinking``` block if inside answer
+      const thinkMatch = rawAnswer.match(/```thinking\n?([\s\S]*?)```/);
       if (thinkMatch) {
         thinkingText = thinkMatch[1].trim();
-        rawAnswer = rawAnswer.replace(/[\s\S]*?<\/think>/, '').trim();
-    }
+        rawAnswer = rawAnswer.replace(/```thinking\n?[\s\S]*?```/, '').trim();
+  }
       
       if (thinkingText) {
         const thinkBox = createThinkingBox(thinkingText, false);
