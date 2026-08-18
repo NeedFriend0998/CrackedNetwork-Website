@@ -401,6 +401,20 @@ input, textarea {
 .msg-text li { margin-bottom: 4px; }
 .msg-text strong { font-weight: 700; }
 .msg-text em { font-style: italic; }
+.msg-text a {
+  color: var(--accent);
+  text-decoration: underline;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  transition: opacity 0.2s;
+}
+.msg-text a:hover {
+  opacity: 0.8;
+}
+.msg-row.user .msg-text a {
+  color: white;
+  text-decoration: underline;
+}
 
 .msg-meta {
   display: flex; gap: 4px;
@@ -1360,21 +1374,55 @@ input, textarea {
     });
   }
 
-  // ===== MARKDOWN-LITE FORMATTER =====
+    // ===== MARKDOWN-LITE FORMATTER =====
   function formatMessage(text) {
     if (!text) return '';
+    
+    // 1. Escape HTML tags agar aman
     let html = text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
 
+    // 2. Simpan Code Block sementara agar link di dalamnya tidak ikut diubah
+    const codeBlocks = [];
     html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (m, lang, code) => {
-      return `<pre><code>${code.trim()}</code></pre>`;
+      const placeholder = `__CODEBLOCK_${codeBlocks.length}__`;
+      codeBlocks.push(`<pre><code>${code.trim()}</code></pre>`);
+      return placeholder;
     });
-    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // 3. Simpan Inline Code sementara
+    const inlineCodes = [];
+    html = html.replace(/`([^`]+)`/g, (m, code) => {
+      const placeholder = `__INLINECODE_${inlineCodes.length}__`;
+      inlineCodes.push(`<code>${code}</code>`);
+      return placeholder;
+    });
+
+    // 4. Format Bold dan Italic
     html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+    // 5. Ubah teks URL menjadi link yang bisa diklik
+    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+    html = html.replace(urlRegex, (url) => {
+      let href = url;
+      if (url.startsWith('www.')) {
+        href = 'https://' + url;
+      }
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+
+    // 6. Kembalikan Inline Code
+    html = html.replace(/__INLINECODE_(\d+)__/g, (m, idx) => inlineCodes[parseInt(idx)]);
+
+    // 7. Kembalikan Code Block
+    html = html.replace(/__CODEBLOCK_(\d+)__/g, (m, idx) => codeBlocks[parseInt(idx)]);
+
+    // 8. Ganti newline jadi <br>
     html = html.replace(/\n/g, '<br>');
+    
     return html;
   }
 
