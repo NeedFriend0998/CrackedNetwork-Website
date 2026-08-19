@@ -488,7 +488,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
         async function fetchServerStatus() {
             try {
-                const response = await fetch('https://api.mcstatus.io/status/java/crackednetwork.run.place');
+                const response = await fetch('https://api.mcsrvstat.us/3/crackednetwork.run.place');
                 
               
                 const data = await response.json();
