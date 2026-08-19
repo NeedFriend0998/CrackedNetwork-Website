@@ -1294,6 +1294,7 @@ input, textarea {
   }
 
   // ===== CREATE THINKING BOX =====
+    // ===== CREATE THINKING BOX =====
   function createThinkingBox(text, skipAnimation = false) {
     const box = document.createElement('div');
     box.className = 'thinking-box';
@@ -1311,59 +1312,16 @@ input, textarea {
     `;
 
     const header = box.querySelector('.thinking-header');
-    const chevron = box.querySelector('.toggle-btn i');
+    const toggleBtn = box.querySelector('.toggle-btn');
+    const chevron = toggleBtn.querySelector('i');
 
-    header.addEventListener('click', (e) => {
-      if (box.dataset.dragged === 'true') {
-        box.dataset.dragged = 'false';
-        return;
-      }
+    // Minimize / Expand Logic (Drag dihapus)
+    header.addEventListener('click', () => {
       box.classList.toggle('collapsed');
-      chevron.className = 'icon-chevron-down';
+      // Reset rotasi icon
+      chevron.style.transform = box.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
       scrollToBottom();
     });
-
-    // Drag Logic
-    let isDragging = false;
-    let startY = 0;
-    let currentY = 0;
-
-    const startDrag = (e) => {
-      if (e.target.closest('.toggle-btn')) return;
-      isDragging = true;
-      box.classList.add('dragging');
-      box.style.transition = 'none';
-      startY = (e.touches ? e.touches[0].clientY : e.clientY) - currentY;
-      
-      document.addEventListener('mousemove', moveDrag);
-      document.addEventListener('touchmove', moveDrag, { passive: false });
-      document.addEventListener('mouseup', endDrag);
-      document.addEventListener('touchend', endDrag);
-      e.preventDefault();
-    };
-
-    const moveDrag = (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const y = e.touches ? e.touches[0].clientY : e.clientY;
-      currentY = y - startY;
-      box.style.transform = `translateY(${currentY}px)`;
-      if (Math.abs(currentY) > 5) box.dataset.dragged = 'true';
-    };
-
-    const endDrag = () => {
-      if (!isDragging) return;
-      isDragging = false;
-      box.classList.remove('dragging');
-      box.style.transition = 'transform 0.2s ease, box-shadow 0.2s ease';
-      document.removeEventListener('mousemove', moveDrag);
-      document.removeEventListener('touchmove', moveDrag);
-      document.removeEventListener('mouseup', endDrag);
-      document.removeEventListener('touchend', endDrag);
-    };
-
-    header.addEventListener('mousedown', startDrag);
-    header.addEventListener('touchstart', startDrag, { passive: false });
 
     return box;
   }
