@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9/">
-  <!-- GANTI 'https://namawebsitekamu.com' dengan domain asli mu -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://crackednetwork.netlify.app/</loc>
-    <lastmod>2024-05-20</lastmod>
+    <loc>https://www.crackednetwork.run.place/</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/home</loc>
+    <loc>https://www.crackednetwork.run.place/home</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/tore</loc>
+    <loc>https://www.crackednetwork.run.place/tore</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/vote</loc>
+    <loc>https://www.crackednetwork.run.place/vote</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/gamemodes</loc>
+    <loc>https://www.crackednetwork.run.place/gamemodes</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/rules</loc>
+    <loc>https://www.crackednetwork.run.place/rules</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/wiki</loc>
+    <loc>https://www.crackednetwork.run.place/wiki</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://crackednetwork.netlify.app/discord</loc>
+    <loc>https://www.crackednetwork.run.place/discord</loc>
+    <lastmod>2026-09-09</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>
