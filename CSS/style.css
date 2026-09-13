@@ -1437,7 +1437,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     align-items: center;           /* ← ke tengah horizontal */
     width: 100%;
     height: 100%;
-    padding: 1rem;
+    /*padding: 1rem;*/
     /*gap: 0.5rem;*/                   /* ← jarak antara server list & buttons */
 }
 
