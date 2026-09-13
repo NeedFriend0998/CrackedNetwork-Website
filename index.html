@@ -127,6 +127,30 @@
     <span>Join Server</span>
 </a>
 
+                        <!-- Server Modal Popup -->
+<div class="server-modal-overlay" id="serverModal">
+    <div class="server-modal">
+        <!-- View 1: Server List + Buttons -->
+        <div class="server-modal-view" id="serverModalView1">
+            <div class="server-list-item" id="serverListItem">
+                <img src="img/gambar1.png" class="img-normal" alt="Server List">
+                <img src="img/gambar2.png" class="img-hover" alt="Server List Hover">
+            </div>
+            <div class="server-buttons" id="serverButtons">
+                <img src="img/gambar4.png" class="img-normal" alt="Buttons">
+                <img src="img/gambar3.png" class="img-hover" alt="Buttons Hover">
+            </div>
+        </div>
+
+        <!-- View 2: Edit Server Info -->
+        <div class="server-modal-view" id="serverModalView2" style="display:none;">
+            <img src="img/gambar5.png" class="img-edit" alt="Edit Server Info">
+            <button class="btn-copy-ip" id="btnCopyIp">Copy Server IP</button>
+            <img src="img/gambar6.png" class="img-disconnect" id="btnDisconnect" alt="Disconnect">
+        </div>
+    </div>
+</div>
+
                         <div class="ip-box">
                             <div>
                                 <div class="ip-label">Server IP</div>
