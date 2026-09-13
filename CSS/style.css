@@ -1464,8 +1464,8 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 .edit-btn-wrapper {
     position: absolute;
     /* Posisi */
-    bottom: 10%;        /* jarak dari bawah */
-    left: 10%;           /* jarak dari kiri */
+    bottom: 14%;        /* jarak dari bawah */
+    left: 12%;           /* jarak dari kiri */
     /* Ukuran */
     width: 22%;         /* lebar */
     height: auto;       /* tinggi otomatis ngikut aspect ratio gambar */
