@@ -1443,6 +1443,8 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     width: 100%;
     max-width: 450px;
     image-rendering: pixelated;
+    cursor: default;        /* ← bukan pointer lagi */
+
 }
 
 .server-buttons img {
