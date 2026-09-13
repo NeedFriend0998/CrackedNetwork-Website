@@ -1533,22 +1533,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Klik bottom (Gambar3/Gambar4) → buka View 2
+    // Klik area bottom — CUMA tombol Edit yang berfungsi
+    // Tombol lain (Join Server, Direct Connection, Add Server, Delete, Refresh, Back) = dekorasi
     if (serverButtons) {
         serverButtons.addEventListener('click', (e) => {
             e.stopPropagation();
             
-            // Cek syarat: top harus activated dulu
-            if (!serverListItem || !serverListItem.classList.contains('activated')) {
-                shakeElement(serverListItem);
-                return;
-            }
-            
-            // Jangan trigger kalo yang diklik tombol Edit
+            // Kalo yang diklik Edit → diurus handler editBtnWrapper
             if (e.target.closest('.edit-btn-wrapper')) return;
             
-            if (view1) view1.style.display = 'none';
-            if (view2) view2.style.display = 'block';
+            // Kalo top belum activated → shake kasih feedback "belum bisa"
+            if (!serverListItem || !serverListItem.classList.contains('activated')) {
+                shakeElement(serverListItem);
+            }
+            // Kalo top udah activated, klik tombol lain → diem aja (gak ngapa-ngapain)
         });
     }
 
