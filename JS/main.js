@@ -1513,7 +1513,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Klik top gambar1 → toggle active (top + bottom jadi hover state)
     if (serverListItem) {
         serverListItem.addEventListener('click', (e) => {
-            e.stopPropagation(); // Biar gak langsung trigger close
             serverListItem.classList.toggle('activated');
             if (serverButtons) {
                 serverButtons.classList.toggle('activated');
