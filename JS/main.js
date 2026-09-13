@@ -1480,29 +1480,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const serverModal = document.getElementById('serverModal');
     const view1 = document.getElementById('serverModalView1');
     const view2 = document.getElementById('serverModalView2');
+    const serverListItem = document.getElementById('serverListItem');
     const serverButtons = document.getElementById('serverButtons');
     const btnCopyIp = document.getElementById('btnCopyIp');
     const btnDisconnect = document.getElementById('btnDisconnect');
 
-    // Guard: kalau HTML modal gak ada, skip total
     if (!serverModal) return;
 
-    // Fungsi buka modal (dipanggil dari onclick HTML)
+    // Buka modal
     window.openServerModal = function() {
         serverModal.classList.add('active');
+        document.body.classList.add('modal-open'); // Lock scroll
+        
         // Reset ke View 1
         if (view1) view1.style.display = 'block';
         if (view2) view2.style.display = 'none';
+        
+        // Reset state toggle
+        if (serverListItem) serverListItem.classList.remove('activated');
+        if (serverButtons) serverButtons.classList.remove('activated');
+        
         // Reset tombol copy
         if (btnCopyIp) btnCopyIp.textContent = 'Copy Server IP';
     };
 
-    // Fungsi tutup modal
+    // Tutup modal
     window.closeServerModal = function() {
         serverModal.classList.remove('active');
+        document.body.classList.remove('modal-open'); // Unlock scroll
     };
 
-    // Klik area tombol bawah → transisi ke View 2 (Edit Server Info)
+    // Klik top gambar1 → toggle active (top + bottom jadi hover state)
+    if (serverListItem) {
+        serverListItem.addEventListener('click', (e) => {
+            e.stopPropagation(); // Biar gak langsung trigger close
+            serverListItem.classList.toggle('activated');
+            if (serverButtons) {
+                serverButtons.classList.toggle('activated');
+            }
+        });
+    }
+
+    // Klik bottom buttons → transisi ke View 2 (Edit Server Info)
     if (serverButtons) {
         serverButtons.addEventListener('click', () => {
             if (view1) view1.style.display = 'none';
@@ -1544,17 +1563,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Disconnect (Gambar 6) → tutup modal
+    // Disconnect → tutup modal
     if (btnDisconnect) {
         btnDisconnect.addEventListener('click', () => {
             serverModal.classList.remove('active');
+            document.body.classList.remove('modal-open');
         });
     }
 
-    // Klik di luar modal → tutup
+    // Klik di luar modal → tutup (opsional)
     serverModal.addEventListener('click', (e) => {
         if (e.target === serverModal) {
             serverModal.classList.remove('active');
+            document.body.classList.remove('modal-open');
         }
     });
 })();
