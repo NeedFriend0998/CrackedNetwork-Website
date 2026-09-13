@@ -1427,7 +1427,14 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     gap: 0.75rem;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 100%;    
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.server-modal-view::-webkit-scrollbar {
+    display: none;
 }
 
 .server-list-item {
