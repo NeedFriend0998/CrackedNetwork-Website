@@ -1115,13 +1115,8 @@ if (copyBtn && serverIP) {
         // ========== KEYBOARD NAVIGATION ==========
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        // Checkout modal (existing)
-        if (typeof closeModal === 'function') closeModal();
-        
-        // Server modal (new)
+        closeModal();
         if (window.closeServerModal) window.closeServerModal();
-        
-        // Nav mobile
         if (navLinksContainer) navLinksContainer.classList.remove('open');
         if (mobileToggle) mobileToggle.classList.remove('open');
     }
@@ -1487,10 +1482,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!serverModal) return;
 
+    // ---- SCROLL LOCK HELPERS ----
+    function lockScroll() {
+        document.body.classList.add('modal-open');
+        document.body.style.overflow = 'hidden';
+        // Stop Lenis (smooth scroll library)
+        if (typeof lenis !== 'undefined' && lenis && typeof lenis.stop === 'function') {
+            lenis.stop();
+        }
+    }
+
+    function unlockScroll() {
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = '';
+        // Restart Lenis
+        if (typeof lenis !== 'undefined' && lenis && typeof lenis.start === 'function') {
+            lenis.start();
+        }
+    }
+
     // Buka modal
     window.openServerModal = function() {
         serverModal.classList.add('active');
-        document.body.classList.add('modal-open'); // Lock scroll
+        lockScroll();
         
         // Reset ke View 1
         if (view1) view1.style.display = 'block';
@@ -1507,12 +1521,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Tutup modal
     window.closeServerModal = function() {
         serverModal.classList.remove('active');
-        document.body.classList.remove('modal-open'); // Unlock scroll
+        unlockScroll();
     };
 
     // Klik top gambar1 → toggle active (top + bottom jadi hover state)
     if (serverListItem) {
         serverListItem.addEventListener('click', (e) => {
+            e.stopPropagation();
             serverListItem.classList.toggle('activated');
             if (serverButtons) {
                 serverButtons.classList.toggle('activated');
@@ -1520,12 +1535,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Klik bottom buttons → transisi ke View 2 (Edit Server Info)
+    // ---- Klik bottom: hanya bisa lanjut ke View 2 jika top sudah activated ----
     if (serverButtons) {
-        serverButtons.addEventListener('click', () => {
+        serverButtons.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            // Cek syarat: top harus activated dulu
+            if (!serverListItem || !serverListItem.classList.contains('activated')) {
+                // Belum hover top → tolak
+                shakeElement(serverListItem);
+                return;
+            }
+            
+            // Syarat terpenuhi → lanjut ke View 2
             if (view1) view1.style.display = 'none';
             if (view2) view2.style.display = 'block';
         });
+    }
+
+    // Animasi shake biar user tau kenapa gak bisa klik
+    function shakeElement(el) {
+        if (!el) return;
+        el.style.animation = 'none';
+        void el.offsetWidth; // trigger reflow
+        el.style.animation = 'shake 0.3s steps(4)';
+        setTimeout(() => { el.style.animation = ''; }, 300);
     }
 
     // Copy IP di dalam modal
@@ -1566,15 +1600,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btnDisconnect) {
         btnDisconnect.addEventListener('click', () => {
             serverModal.classList.remove('active');
-            document.body.classList.remove('modal-open');
+            unlockScroll();
         });
     }
 
-    // Klik di luar modal → tutup (opsional)
+    // Klik di luar modal → tutup
     serverModal.addEventListener('click', (e) => {
         if (e.target === serverModal) {
             serverModal.classList.remove('active');
-            document.body.classList.remove('modal-open');
+            unlockScroll();
         }
     });
 })();
