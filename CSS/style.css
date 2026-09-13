@@ -1391,7 +1391,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
    ================================ */
 .server-modal {
     position: relative;
-    max-width: 520px;
+    max-width: 100%;
     width: 100%;
     border: 3px solid #000;
     box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
