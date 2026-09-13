@@ -1445,7 +1445,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     display: block;
     position: relative;
     width: 100%;
-    max-width: 700px;              /* ← INI KUNCINYA, sesuaikan ukuran */
+    max-width: 690px;              /* ← INI KUNCINYA, sesuaikan ukuran */
     cursor: pointer;
     image-rendering: pixelated;
     margin: 0 auto;
