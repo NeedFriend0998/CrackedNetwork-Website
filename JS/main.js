@@ -1115,10 +1115,15 @@ if (copyBtn && serverIP) {
         // ========== KEYBOARD NAVIGATION ==========
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        closeModal(); // Checkout modal (existing)
-        if (window.closeServerModal) window.closeServerModal(); // Server modal (new)
-        navLinksContainer.classList.remove('open');
-        mobileToggle.classList.remove('open');
+        // Checkout modal (existing)
+        if (typeof closeModal === 'function') closeModal();
+        
+        // Server modal (new)
+        if (window.closeServerModal) window.closeServerModal();
+        
+        // Nav mobile
+        if (navLinksContainer) navLinksContainer.classList.remove('open');
+        if (mobileToggle) mobileToggle.classList.remove('open');
     }
 });
 
