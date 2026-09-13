@@ -1431,24 +1431,28 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 }
 
 .server-modal-view {
+    position: relative;      /* ← WAJIB, biar absolute-nya ngikut modal */
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;   /* item pertama ke atas, item kedua ke bawah */
+    justify-content: space-between;
     align-items: center;
+    padding: 0;
 }
 
-/* Server list — full lebar, mentok atas */
 .server-list-item {
-    position: relative;
+    position: absolute;      /* ← absolute biar bisa nempel ke atas */
+    top: 0;                  /* ← mentok atas */
+    left: 0;                 /* ← mulai dari kiri */
+    right: 0;                /* ← sampe kanan */
+    width: 100%;             /* ← full lebar */
+    max-width: 100%;         /* ← hapus batasan */
     cursor: pointer;
     image-rendering: pixelated;
-    width: 100%;                      /* ← full lebar modal */
-    max-width: 100%;                  /* ← HAPUS batasan 550px */
-    margin: 0;                        /* ← mentok atas */
+    border: none;
+    margin: 0;
     padding: 0;
-    border: none;                     /* ← hapus border biar nyatu sama video */
 }
 
 .server-list-item img {
