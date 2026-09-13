@@ -1336,52 +1336,116 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 }
 
 /* ================================
-   JOIN SERVER BUTTON
+   SERVER MODAL POPUP
    ================================ */
-.hero-join-wrapper {
-    margin-top: 1.25rem;
-    display: flex;
-    justify-content: flex-start; /* sejajar kiri sama tombol di atasnya */
+.server-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 1rem;
 }
 
-.join-server-btn {
-    display: inline-block;
-    width: 180px;
-    height: 40px;
-    background-image: url('../img/btn-join-normal.png'); /* gambar state NORMAL */
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    text-decoration: none;
+.server-modal-overlay.active {
+    display: flex;
+}
+
+.server-modal {
+    max-width: 520px;
+    width: 100%;
+    background: #2a241e;
+    border: 3px solid #000;
+    padding: 1.25rem;
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+/* View 1: Server List Item */
+.server-list-item {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0.6rem;
+    border: 2px solid #000;
+    image-rendering: pixelated;
+}
+
+.server-list-item img {
+    width: 100%;
+    display: block;
+    image-rendering: pixelated;
+}
+
+.server-list-item .img-hover { display: none; }
+.server-list-item:hover .img-normal { display: none; }
+.server-list-item:hover .img-hover { display: block; }
+
+/* View 1: Buttons */
+.server-buttons {
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #000;
+    image-rendering: pixelated;
+}
+
+.server-buttons img {
+    width: 100%;
+    display: block;
+    image-rendering: pixelated;
+}
+
+.server-buttons .img-hover { display: none; }
+.server-buttons:hover .img-normal { display: none; }
+.server-buttons:hover .img-hover { display: block; }
+
+/* View 2: Edit Server Info */
+.img-edit {
+    width: 100%;
+    display: block;
+    image-rendering: pixelated;
+    margin-bottom: 1rem;
+    border: 2px solid #000;
+}
+
+.btn-copy-ip {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(180deg, #5cb85c 0%, #3a8a3a 100%);
+    border: 3px solid #000;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+    transition: all 0.1s steps(2);
+    text-shadow: 1px 1px 0 #000;
+}
+
+.btn-copy-ip:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #6cc86c 0%, #4a9a4a 100%);
+}
+
+.btn-copy-ip:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.img-disconnect {
+    width: 100%;
+    display: block;
     cursor: pointer;
     image-rendering: pixelated;
-    transition: background-image 0.05s ease;
-    position: relative;
-    border: none;
-    padding: 0;
+    border: 2px solid #000;
+    transition: transform 0.05s steps(2);
 }
 
-.join-server-btn:hover {
-    background-image: url('../img/btn-join-hover.png'); /* gambar state HOVER */
-}
-
-.join-server-btn span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    color: #ffffff;
-    font-family: 'Minecraft', 'Minecraftia', monospace;
-    font-size: 14px;
-    text-shadow: 1px 1px 0 #3a3a3a;
-    pointer-events: none;
-}
-
-@media (max-width: 768px) {
-    .hero-join-wrapper {
-        justify-content: center;
-    }
-    .join-server-btn {
-        width: 100%;
-        max-width: 200px;
-    }
+.img-disconnect:hover {
+    transform: scale(0.98);
 }
