@@ -1392,13 +1392,15 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 .server-modal {
     position: relative;
     width: 95vw;
-    height: 95vh;
-    max-width: none;
-    max-height: none;
+    max-width: 600px;
+    max-height: 90vh;
+    background: #1a1a1a;
     border: 3px solid #000;
     box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
     overflow: hidden;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Buat layar kecil, biar gak terlalu gede */
@@ -1409,46 +1411,32 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     }
 }
 
-/* Video — full cover biar gak ada ruang kosong */
-.modal-bg-video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;      /* ← Video nge-cover seluruh modal */
-    z-index: 0;
-    pointer-events: none;
-}
-
 .modal-content {
     position: relative;
     z-index: 1;
-    height: 100%;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;   /* atas & bawah */
-    align-items: center;
+    overflow-y: auto;
+    max-height: 90vh;
 }
 
 .server-modal-view {
     display: flex;
     flex-direction: column;
-    justify-content: center;       /* ← konten ke tengah vertikal */
-    align-items: center;           /* ← ke tengah horizontal */
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 100%;
-    /*padding: 1rem;*/
-    /*gap: 0.5rem;*/                   /* ← jarak antara server list & buttons */
 }
 
 .server-list-item {
     display: block;
     position: relative;
     width: 100%;
-    max-width: 634px;              /* ← INI KUNCINYA, sesuaikan ukuran */
+    max-width: 450px;
     cursor: pointer;
     image-rendering: pixelated;
-    margin: 0 auto;
 }
 
 .server-list-item img {
@@ -1458,13 +1446,11 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     image-rendering: pixelated;
 }
 
-/* Buttons — full lebar juga biar konsisten */
 .server-buttons {
     position: relative;
     width: 100%;
-    max-width: 450px;              /* ← samain sama server list */
+    max-width: 450px;
     image-rendering: pixelated;
-    margin: 0 auto;
 }
 
 .server-buttons img {
@@ -1475,11 +1461,10 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 }
 
 
-.server-buttons .img-hover { display: none; }
 .server-buttons .img-normal { display: block; }
-
+.server-buttons .img-hover  { display: none; }
 .server-buttons.activated .img-normal { display: none; }
-.server-buttons.activated .img-hover { display: block; }
+.server-buttons.activated .img-hover  { display: block; }
 
 /* Tombol Edit yang di-replace */
 .edit-btn-wrapper {
