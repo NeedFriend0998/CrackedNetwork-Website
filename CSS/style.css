@@ -1513,3 +1513,18 @@ body.modal-open {
 .img-disconnect:hover {
     transform: scale(0.98);
 }
+
+/* Shake animation biar user tau tombolnya kekunci */
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-6px); }
+    50%  { transform: translateX(6px); }
+    75%  { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
+
+/* Pastikan body yang modal-open gak bisa scroll */
+body.modal-open {
+    overflow: hidden !important;
+    height: 100vh;
+}
