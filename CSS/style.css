@@ -1403,14 +1403,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     flex-direction: column;
 }
 
-/* Buat layar kecil, biar gak terlalu gede */
-@media (max-width: 768px) {
-    .server-modal {
-        max-width: 95%;
-        aspect-ratio: auto;  /* Biar konten nentuin tinggi */
-    }
-}
-
 .modal-content {
     position: relative;
     z-index: 1;
@@ -1594,4 +1586,18 @@ body.modal-open {
     50%  { transform: translateX(6px); }
     75%  { transform: translateX(-4px); }
     100% { transform: translateX(0); }
+}
+
+@media (max-width: 768px) {
+    .server-modal {
+        width: 95vw;
+        max-height: 85vh;
+    }
+    .modal-content {
+        padding: 0.75rem;
+    }
+    .server-list-item,
+    .server-buttons {
+        max-width: 100%;
+    }
 }
