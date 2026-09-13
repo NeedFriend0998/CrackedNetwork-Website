@@ -1463,10 +1463,12 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 /* Tombol Edit yang di-replace */
 .edit-btn-wrapper {
     position: absolute;
-    /* ATUR POSISI INI SESUAI POSISI TOMBOL EDIT DI GAMBAR4 */
-    bottom: 10%;    /* jarak dari bawah */
-    left: 2%;       /* jarak dari kiri */
-    width: 22%;     /* lebar tombol Edit */
+    /* Posisi */
+    bottom: 10%;        /* jarak dari bawah */
+    left: 2%;           /* jarak dari kiri */
+    /* Ukuran */
+    width: 22%;         /* lebar */
+    height: auto;       /* tinggi otomatis ngikut aspect ratio gambar */
     cursor: pointer;
     image-rendering: pixelated;
 }
