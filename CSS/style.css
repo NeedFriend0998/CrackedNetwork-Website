@@ -1464,10 +1464,10 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 .edit-btn-wrapper {
     position: absolute;
     /* Posisi */
-    bottom: 12%;        /* jarak dari bawah */
+    bottom: 13%;        /* jarak dari bawah */
     left: 2%;           /* jarak dari kiri */
     /* Ukuran */
-    width: 22%;         /* lebar */
+    width: 25%;         /* lebar */
     height: auto;       /* tinggi otomatis ngikut aspect ratio gambar */
     cursor: pointer;
     image-rendering: pixelated;
