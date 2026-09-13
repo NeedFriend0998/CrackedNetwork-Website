@@ -1468,7 +1468,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     left: 0;           /* jarak dari kiri */
     /* Ukuran */
     width: 24%;         /* lebar */
-    height: auto 5px;       /* tinggi otomatis ngikut aspect ratio gambar */
+    height: auto 7px;       /* tinggi otomatis ngikut aspect ratio gambar */
     cursor: pointer;
     image-rendering: pixelated;
 }
