@@ -1477,16 +1477,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const view2 = document.getElementById('serverModalView2');
     const serverListItem = document.getElementById('serverListItem');
     const serverButtons = document.getElementById('serverButtons');
+    const editBtnWrapper = document.getElementById('editBtnWrapper');
     const btnCopyIp = document.getElementById('btnCopyIp');
     const btnDisconnect = document.getElementById('btnDisconnect');
 
     if (!serverModal) return;
 
-    // ---- SCROLL LOCK HELPERS ----
     function lockScroll() {
         document.body.classList.add('modal-open');
         document.body.style.overflow = 'hidden';
-        // Stop Lenis (smooth scroll library)
         if (typeof lenis !== 'undefined' && lenis && typeof lenis.stop === 'function') {
             lenis.stop();
         }
@@ -1495,84 +1494,89 @@ document.addEventListener('DOMContentLoaded', () => {
     function unlockScroll() {
         document.body.classList.remove('modal-open');
         document.body.style.overflow = '';
-        // Restart Lenis
         if (typeof lenis !== 'undefined' && lenis && typeof lenis.start === 'function') {
             lenis.start();
         }
     }
 
-    // Buka modal
     window.openServerModal = function() {
         serverModal.classList.add('active');
         lockScroll();
-        
-        // Reset ke View 1
         if (view1) view1.style.display = 'block';
         if (view2) view2.style.display = 'none';
-        
-        // Reset state toggle
         if (serverListItem) serverListItem.classList.remove('activated');
         if (serverButtons) serverButtons.classList.remove('activated');
-        
-        // Reset tombol copy
+        if (editBtnWrapper) editBtnWrapper.style.display = 'none'; // Sembunyiin Edit
         if (btnCopyIp) btnCopyIp.textContent = 'Copy Server IP';
     };
 
-    // Tutup modal
     window.closeServerModal = function() {
         serverModal.classList.remove('active');
         unlockScroll();
     };
 
-    // Klik top gambar1 → toggle active (top + bottom jadi hover state)
+    // Klik top → toggle + munculin tombol Edit
     if (serverListItem) {
         serverListItem.addEventListener('click', (e) => {
             e.stopPropagation();
             serverListItem.classList.toggle('activated');
-            if (serverButtons) {
-                serverButtons.classList.toggle('activated');
+            if (serverButtons) serverButtons.classList.toggle('activated');
+            
+            // Munculin tombol Edit saat top activated
+            if (editBtnWrapper) {
+                if (serverListItem.classList.contains('activated')) {
+                    editBtnWrapper.style.display = 'block';
+                } else {
+                    editBtnWrapper.style.display = 'none';
+                }
             }
         });
     }
 
-    // ---- Klik bottom: hanya bisa lanjut ke View 2 jika top sudah activated ----
+    // Klik bottom (Gambar3/Gambar4) → buka View 2
     if (serverButtons) {
         serverButtons.addEventListener('click', (e) => {
             e.stopPropagation();
             
             // Cek syarat: top harus activated dulu
             if (!serverListItem || !serverListItem.classList.contains('activated')) {
-                // Belum hover top → tolak
                 shakeElement(serverListItem);
                 return;
             }
             
-            // Syarat terpenuhi → lanjut ke View 2
+            // Jangan trigger kalo yang diklik tombol Edit
+            if (e.target.closest('.edit-btn-wrapper')) return;
+            
             if (view1) view1.style.display = 'none';
             if (view2) view2.style.display = 'block';
         });
     }
 
-    // Animasi shake biar user tau kenapa gak bisa klik
+    // Klik tombol Edit → buka View 2
+    if (editBtnWrapper) {
+        editBtnWrapper.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (view1) view1.style.display = 'none';
+            if (view2) view2.style.display = 'block';
+        });
+    }
+
     function shakeElement(el) {
         if (!el) return;
         el.style.animation = 'none';
-        void el.offsetWidth; // trigger reflow
+        void el.offsetWidth;
         el.style.animation = 'shake 0.3s steps(4)';
         setTimeout(() => { el.style.animation = ''; }, 300);
     }
 
-    // Copy IP di dalam modal
     if (btnCopyIp) {
         btnCopyIp.addEventListener('click', function() {
             const ip = 'crackednetwork.run.place';
             const self = this;
-
             const showCopied = () => {
                 self.textContent = '✓ Copied!';
                 setTimeout(() => { self.textContent = 'Copy Server IP'; }, 1500);
             };
-
             const fallbackCopy = (text) => {
                 const ta = document.createElement('textarea');
                 ta.value = text;
@@ -1583,7 +1587,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 try { document.execCommand('copy'); } catch (err) {}
                 document.body.removeChild(ta);
             };
-
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 navigator.clipboard.writeText(ip).then(showCopied).catch(() => {
                     fallbackCopy(ip);
@@ -1596,7 +1599,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Disconnect → tutup modal
     if (btnDisconnect) {
         btnDisconnect.addEventListener('click', () => {
             serverModal.classList.remove('active');
@@ -1604,7 +1606,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Klik di luar modal → tutup
     serverModal.addEventListener('click', (e) => {
         if (e.target === serverModal) {
             serverModal.classList.remove('active');
