@@ -1415,7 +1415,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     overflow-y: auto;
 }
 
-/* View 1: Server List Item */
+/* Top: Server List Item */
 .server-list-item {
     position: relative;
     cursor: pointer;
@@ -1430,11 +1430,15 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     image-rendering: pixelated;
 }
 
+/* Default state: tampil gambar1 (normal) */
 .server-list-item .img-hover { display: none; }
-.server-list-item:hover .img-normal { display: none; }
-.server-list-item:hover .img-hover { display: block; }
+.server-list-item .img-normal { display: block; }
 
-/* View 1: Buttons */
+/* Active state (setelah diklik): tampil gambar2 (hover) */
+.server-list-item.activated .img-normal { display: none; }
+.server-list-item.activated .img-hover { display: block; }
+
+/* Bottom: Buttons */
 .server-buttons {
     position: relative;
     cursor: pointer;
@@ -1448,9 +1452,18 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     image-rendering: pixelated;
 }
 
+/* Default state: tampil gambar4 (normal) */
 .server-buttons .img-hover { display: none; }
-.server-buttons:hover .img-normal { display: none; }
-.server-buttons:hover .img-hover { display: block; }
+.server-buttons .img-normal { display: block; }
+
+/* Active state (otomatis ikut top): tampil gambar3 (hover) */
+.server-buttons.activated .img-normal { display: none; }
+.server-buttons.activated .img-hover { display: block; }
+
+/* Body lock saat modal kebuka */
+body.modal-open {
+    overflow: hidden;
+}
 
 /* View 2: Edit Server Info */
 .img-edit {
