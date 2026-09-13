@@ -1461,3 +1461,112 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 
 .edit-btn-wrapper:hover .edit-normal { display: none; }
 .edit-btn-wrapper:hover .edit-hover { display: block; }
+
+/* ================================
+   SERVER MODAL OVERLAY
+   ================================ */
+.server-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    padding: 1rem;
+}
+
+.server-modal-overlay.active {
+    display: flex;
+}
+
+/* Body lock saat modal kebuka */
+body.modal-open {
+    overflow: hidden !important;
+    height: 100vh;
+}
+
+/* ================================
+   SERVER LIST ITEM (TOP)
+   ================================ */
+.server-list-item {
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 0.6rem;
+    border: 2px solid #000;
+    image-rendering: pixelated;
+}
+
+.server-list-item img {
+    width: 100%;
+    display: block;
+    image-rendering: pixelated;
+}
+
+.server-list-item .img-hover { display: none; }
+.server-list-item .img-normal { display: block; }
+
+.server-list-item.activated .img-normal { display: none; }
+.server-list-item.activated .img-hover { display: block; }
+
+/* ================================
+   VIEW 2 — EDIT SERVER INFO
+   ================================ */
+.img-edit {
+    width: 100%;
+    display: block;
+    image-rendering: pixelated;
+    margin-bottom: 1rem;
+    border: 2px solid #000;
+}
+
+.btn-copy-ip {
+    width: 100%;
+    padding: 0.85rem;
+    background: linear-gradient(180deg, #5cb85c 0%, #3a8a3a 100%);
+    border: 3px solid #000;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 0.75rem;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.4);
+    transition: all 0.1s steps(2);
+    text-shadow: 1px 1px 0 #000;
+}
+
+.btn-copy-ip:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #6cc86c 0%, #4a9a4a 100%);
+}
+
+.btn-copy-ip:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.img-disconnect {
+    width: 100%;
+    display: block;
+    cursor: pointer;
+    image-rendering: pixelated;
+    border: 2px solid #000;
+    transition: transform 0.05s steps(2);
+}
+
+.img-disconnect:hover {
+    transform: scale(0.98);
+}
+
+/* ================================
+   SHAKE ANIMATION
+   ================================ */
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-6px); }
+    50%  { transform: translateX(6px); }
+    75%  { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
+}
