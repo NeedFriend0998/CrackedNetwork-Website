@@ -1336,6 +1336,57 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 }
 
 /* ================================
+   JOIN SERVER BUTTON
+   ================================ */
+.hero-join-wrapper {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: flex-start; /* sejajar kiri sama tombol di atasnya */
+}
+
+.join-server-btn {
+    display: inline-block;
+    width: 180px;
+    height: 40px;
+    background-image: url('../img/btn-join-normal.png'); /* gambar state NORMAL */
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    text-decoration: none;
+    cursor: pointer;
+    image-rendering: pixelated;
+    transition: background-image 0.05s ease;
+    position: relative;
+    border: none;
+    padding: 0;
+}
+
+.join-server-btn:hover {
+    background-image: url('../img/btn-join-hover.png'); /* gambar state HOVER */
+}
+
+.join-server-btn span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #ffffff;
+    font-family: 'Minecraft', 'Minecraftia', monospace;
+    font-size: 14px;
+    text-shadow: 1px 1px 0 #3a3a3a;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .hero-join-wrapper {
+        justify-content: center;
+    }
+    .join-server-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* ================================
    SERVER MODAL POPUP
    ================================ */
 .server-modal-overlay {
