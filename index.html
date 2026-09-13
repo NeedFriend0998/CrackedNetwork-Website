@@ -879,26 +879,42 @@
             <span><a href="http://dnsexit.com"><img src="http://dnsexit.com/images/dns.gif" border=0></a></span>
         </div>
     </footer>
- <!-- Server Modal Popup -->
-<div class="server-modal-overlay" id="serverModal">
+ <div class="server-modal-overlay" id="serverModal">
     <div class="server-modal">
-        <!-- View 1: Server List + Buttons -->
-        <div class="server-modal-view" id="serverModalView1">
-            <div class="server-list-item" id="serverListItem">
-                <img src="img/gambar1.png" class="img-normal" alt="Server List">
-                <img src="img/gambar2.png" class="img-hover" alt="Server List Hover">
-            </div>
-            <div class="server-buttons" id="serverButtons">
-                <img src="img/gambar4.png" class="img-normal" alt="Buttons">
-                <img src="img/gambar3.png" class="img-hover" alt="Buttons Hover">
-            </div>
-        </div>
+        <!-- Background Video -->
+        <video class="modal-bg-video" autoplay muted loop playsinline>
+            <source src="video/bg.mp4" type="video/mp4">
+        </video>
 
-        <!-- View 2: Edit Server Info -->
-        <div class="server-modal-view" id="serverModalView2" style="display:none;">
-            <img src="img/gambar5.png" class="img-edit" alt="Edit Server Info">
-            <button class="btn-copy-ip" id="btnCopyIp">Copy Server IP</button>
-            <img src="img/gambar6.png" class="img-disconnect" id="btnDisconnect" alt="Disconnect">
+        <!-- Konten di depan video -->
+        <div class="modal-content">
+            <!-- View 1 -->
+            <div class="server-modal-view" id="serverModalView1">
+                <!-- Top: Server List -->
+                <div class="server-list-item" id="serverListItem">
+                    <img src="img/gambar1.png" class="img-normal" alt="Server List">
+                    <img src="img/gambar2.png" class="img-hover" alt="Server List Hover">
+                </div>
+
+                <!-- Bottom: Buttons -->
+                <div class="server-buttons" id="serverButtons">
+                    <img src="img/gambar4.png" class="img-normal" alt="Buttons">
+                    <img src="img/gambar3.png" class="img-hover" alt="Buttons Hover">
+
+                    <!-- Tombol Edit (di-replace) -->
+                    <div class="edit-btn-wrapper" id="editBtnWrapper" style="display:none;">
+                        <img src="img/edit-normal.png" class="edit-normal" alt="Edit">
+                        <img src="img/edit-hover.png" class="edit-hover" alt="Edit Hover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- View 2 -->
+            <div class="server-modal-view" id="serverModalView2" style="display:none;">
+                <img src="img/gambar5.png" class="img-edit" alt="Edit Server Info">
+                <button class="btn-copy-ip" id="btnCopyIp">Copy Server IP</button>
+                <img src="img/gambar6.png" class="img-disconnect" id="btnDisconnect" alt="Disconnect">
+            </div>
         </div>
     </div>
 </div>
