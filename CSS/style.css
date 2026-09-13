@@ -1451,7 +1451,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     align-self: flex-end;      /* ← geser ke kanan */
     margin-right: 3rem;        /* ← jarak dari kanan (atur sesuai selera) */
     margin-top: 0;             /* ← mentok atas */
-    margin-left: 12%;
+    margin-left: 30%;
 }
 
 .server-list-item img {
