@@ -1438,7 +1438,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     width: 100%;
     height: 100%;
     padding: 1rem;
-    gap: 0.5rem;                   /* ← jarak antara server list & buttons */
+    /*gap: 0.5rem;*/                   /* ← jarak antara server list & buttons */
 }
 
 .server-list-item {
