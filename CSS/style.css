@@ -1394,9 +1394,9 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     width: 95vw;
     max-width: 600px;
     max-height: 90vh;
-    background: #1a1a1a;
-    border: 3px solid #000;
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+    background: transparent;      /* ← UBAH dari #1a1a1a */
+    border: none;                 /* ← HAPUS border */
+    box-shadow: none;             /* ← HAPUS shadow */
     overflow: hidden;
     padding: 0;
     display: flex;
@@ -1411,6 +1411,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     flex-direction: column;
     overflow-y: auto;
     max-height: 90vh;
+    background: transparent;      /* ← tambahin biar transparan juga */
 }
 
 .server-modal-view {
