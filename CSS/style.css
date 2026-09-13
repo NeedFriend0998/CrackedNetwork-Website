@@ -1450,7 +1450,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     max-width: 550px;
     align-self: flex-end;      /* ← geser ke kanan */
     margin-right: 3rem;        /* ← jarak dari kanan (atur sesuai selera) */
-    margin-top: 0;             /* ← mentok atas */
+    margin-bottom: 10;             /* ← mentok atas */
     margin-left: 30%;
 }
 
