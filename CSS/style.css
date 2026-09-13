@@ -1423,7 +1423,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 .modal-content {
     position: relative;
     z-index: 1;
-    padding: 1.5rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -1440,18 +1439,16 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     align-items: center;
 }
 
-/* Gambar server list — geser kanan, mentok atas */
+/* Server list — full lebar, mentok atas */
 .server-list-item {
     position: relative;
     cursor: pointer;
-    border: 2px solid #000;
     image-rendering: pixelated;
-    width: 100%;
-    max-width: 550px;
-    align-self: flex-end;      /* ← geser ke kanan */
-    margin-right: 3rem;        /* ← jarak dari kanan (atur sesuai selera) */
-    margin-bottom: 100%;             /* ← mentok atas */
-    margin-left: 30%;
+    width: 100%;                      /* ← full lebar modal */
+    max-width: 100%;                  /* ← HAPUS batasan 550px */
+    margin: 0;                        /* ← mentok atas */
+    padding: 0;
+    border: none;                     /* ← hapus border biar nyatu sama video */
 }
 
 .server-list-item img {
@@ -1461,15 +1458,15 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     image-rendering: pixelated;
 }
 
-/* Gambar buttons — mentok bawah */
+/* Buttons — full lebar juga biar konsisten */
 .server-buttons {
     position: relative;
-    border: 2px solid #000;
     image-rendering: pixelated;
     width: 100%;
-    max-width: 550px;
-    align-self: center;
-    margin-bottom: 0;          /* ← mentok bawah */
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
 }
 
 .server-buttons img {
