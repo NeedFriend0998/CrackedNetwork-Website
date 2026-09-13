@@ -1398,7 +1398,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     max-height: 90vh;
     overflow: hidden;
     padding: 0;
-    aspect-ratio: 16 / 10;  /* ← Proporsi mirip layar Minecraft */
 }
 
 /* Buat layar kecil, biar gak terlalu gede */
@@ -1420,23 +1419,22 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     pointer-events: none;
 }
 
-/* Konten — full height, biar gambar bisa nempel atas-bawah */
 .modal-content {
     position: relative;
     z-index: 1;
     padding: 1.25rem;
-    height: 100%;           /* ← Penting biar konten ngisi modal */
-    max-height: 90vh;
-    overflow-y: auto;
-    display: flex;          /* ← Flexbox biar item bisa diatur */
+    /* height: 100% dihapus */
+    /* max-height: 90vh dihapus */
+    display: flex;
     flex-direction: column;
+    gap: 0.6rem;
 }
 
-/* Bottom buttons — relative biar tombol Edit bisa absolute */
 .server-buttons {
     position: relative;
     border: 2px solid #000;
     image-rendering: pixelated;
+    /* sama, biar gap dari parent */
 }
 
 .server-buttons img {
@@ -1504,9 +1502,9 @@ body.modal-open {
 .server-list-item {
     position: relative;
     cursor: pointer;
-    margin-bottom: 0.6rem;
     border: 2px solid #000;
     image-rendering: pixelated;
+    /* margin-bottom dihapus, pakai gap dari parent */
 }
 
 .server-list-item img {
