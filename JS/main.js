@@ -457,27 +457,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         });
 
         // ========== COPY IP ==========
-        const copyBtn = document.getElementById('copyBtn');
-        const serverIP = document.getElementById('serverIP');
+const copyBtn = document.getElementById('copyBtn');
+const serverIP = document.getElementById('serverIP');
 
-        copyBtn.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(serverIP.textContent);
-                copyBtn.textContent = 'Copied!';
-                copyBtn.classList.add('copied');
-                setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
-            } catch (err) {
-                const textarea = document.createElement('textarea');
-                textarea.value = serverIP.textContent;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                copyBtn.textContent = 'Copied!';
-                copyBtn.classList.add('copied');
-                setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
-            }
-        });
+// Guard: hanya jalanin kalau element-nya ada (ip-box udah dihapus)
+if (copyBtn && serverIP) {
+    copyBtn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(serverIP.textContent);
+            copyBtn.textContent = 'Copied!';
+            copyBtn.classList.add('copied');
+            setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
+        } catch (err) {
+            const textarea = document.createElement('textarea');
+            textarea.value = serverIP.textContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            copyBtn.textContent = 'Copied!';
+            copyBtn.classList.add('copied');
+            setTimeout(() => { copyBtn.textContent = 'Copy'; copyBtn.classList.remove('copied'); }, 2000);
+        }
+    });
+}
 
         // ========== SERVER STATUS ==========
         const playerCountEl = document.getElementById('playerCount');
@@ -1110,13 +1113,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         observeElements();
 
         // ========== KEYBOARD NAVIGATION ==========
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
-                navLinksContainer.classList.remove('open');
-                mobileToggle.classList.remove('open');
-            }
-        });
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeModal(); // Checkout modal (existing)
+        if (window.closeServerModal) window.closeServerModal(); // Server modal (new)
+        navLinksContainer.classList.remove('open');
+        mobileToggle.classList.remove('open');
+    }
+});
 
 // ============================================================
 // LEGAL PAGES NAVIGATION — CrackedNetwork
@@ -1462,3 +1466,90 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+
+// ============================================
+// SERVER MODAL POPUP (Join Server Button)
+// ============================================
+(function() {
+    const serverModal = document.getElementById('serverModal');
+    const view1 = document.getElementById('serverModalView1');
+    const view2 = document.getElementById('serverModalView2');
+    const serverButtons = document.getElementById('serverButtons');
+    const btnCopyIp = document.getElementById('btnCopyIp');
+    const btnDisconnect = document.getElementById('btnDisconnect');
+
+    // Guard: kalau HTML modal gak ada, skip total
+    if (!serverModal) return;
+
+    // Fungsi buka modal (dipanggil dari onclick HTML)
+    window.openServerModal = function() {
+        serverModal.classList.add('active');
+        // Reset ke View 1
+        if (view1) view1.style.display = 'block';
+        if (view2) view2.style.display = 'none';
+        // Reset tombol copy
+        if (btnCopyIp) btnCopyIp.textContent = 'Copy Server IP';
+    };
+
+    // Fungsi tutup modal
+    window.closeServerModal = function() {
+        serverModal.classList.remove('active');
+    };
+
+    // Klik area tombol bawah → transisi ke View 2 (Edit Server Info)
+    if (serverButtons) {
+        serverButtons.addEventListener('click', () => {
+            if (view1) view1.style.display = 'none';
+            if (view2) view2.style.display = 'block';
+        });
+    }
+
+    // Copy IP di dalam modal
+    if (btnCopyIp) {
+        btnCopyIp.addEventListener('click', function() {
+            const ip = 'crackednetwork.run.place';
+            const self = this;
+
+            const showCopied = () => {
+                self.textContent = '✓ Copied!';
+                setTimeout(() => { self.textContent = 'Copy Server IP'; }, 1500);
+            };
+
+            const fallbackCopy = (text) => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } catch (err) {}
+                document.body.removeChild(ta);
+            };
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(ip).then(showCopied).catch(() => {
+                    fallbackCopy(ip);
+                    showCopied();
+                });
+            } else {
+                fallbackCopy(ip);
+                showCopied();
+            }
+        });
+    }
+
+    // Disconnect (Gambar 6) → tutup modal
+    if (btnDisconnect) {
+        btnDisconnect.addEventListener('click', () => {
+            serverModal.classList.remove('active');
+        });
+    }
+
+    // Klik di luar modal → tutup
+    serverModal.addEventListener('click', (e) => {
+        if (e.target === serverModal) {
+            serverModal.classList.remove('active');
+        }
+    });
+})();
