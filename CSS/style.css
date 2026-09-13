@@ -1412,6 +1412,13 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     overflow-y: auto;
     max-height: 90vh;
     background: transparent;      /* ← tambahin biar transparan juga */
+    overflow-y: auto;
+    scrollbar-width: none;           /* Firefox */
+    -ms-overflow-style: none; 
+}
+
+.modal-content::-webkit-scrollbar {
+    display: none;                   /* Chrome, Safari, Edge baru */
 }
 
 .server-modal-view {
