@@ -1427,8 +1427,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
+    justify-content: space-between;   /* atas & bawah */
     align-items: center;
 }
 
@@ -1437,19 +1436,21 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
+    justify-content: space-between;   /* item pertama ke atas, item kedua ke bawah */
     align-items: center;
 }
 
-/* GAMBAR SERVER LIST (TOP) — biar gak melar */
+/* Gambar server list — geser kanan, mentok atas */
 .server-list-item {
     position: relative;
     cursor: pointer;
     border: 2px solid #000;
     image-rendering: pixelated;
     width: 100%;
-    max-width: 550px;    /* ← kunci ukuran normal */
+    max-width: 550px;
+    align-self: flex-end;      /* ← geser ke kanan */
+    margin-right: 3rem;        /* ← jarak dari kanan (atur sesuai selera) */
+    margin-top: 0;             /* ← mentok atas */
 }
 
 .server-list-item img {
@@ -1459,13 +1460,15 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     image-rendering: pixelated;
 }
 
-/* GAMBAR BUTTONS (BOTTOM) — biar gak melar */
+/* Gambar buttons — mentok bawah */
 .server-buttons {
     position: relative;
     border: 2px solid #000;
     image-rendering: pixelated;
     width: 100%;
-    max-width: 550px;    /* ← kunci ukuran normal */
+    max-width: 550px;
+    align-self: center;
+    margin-bottom: 0;          /* ← mentok bawah */
 }
 
 .server-buttons img {
@@ -1592,6 +1595,14 @@ body.modal-open {
 
 .img-disconnect:hover {
     transform: scale(0.98);
+}
+
+/* View 2 juga biar rapi */
+.server-modal-view .img-edit,
+.server-modal-view .btn-copy-ip,
+.server-modal-view .img-disconnect {
+    max-width: 550px;
+    width: 100%;
 }
 
 /* ================================
