@@ -15,8 +15,8 @@ async function loadSound(name, url) {
 // Load semua sound pas halaman ready
 window.addEventListener('load', async () => {
     try {
-        await loadSound('click', 'sound/click.ogg');
-        await loadSound('clickStrong', 'sound/click_strong.ogg');
+        await loadSound('click', 'sound/click.mp3');
+        await loadSound('clickStrong', 'sound/click.mp3');
     } catch (e) {
         console.warn('Sound loading failed:', e);
     }
