@@ -1,46 +1,45 @@
 // ============================================
-// SOUND EFFECT SYSTEM (Anti-Delay)
+// SOUND EFFECT — WEB AUDIO API (Ultra Low Latency)
 // ============================================
-const SFX = {
-    click: {
-        audio: new Audio('sound/click.mp3'),
-        startAt: 0.60,           // ← mulai dari detik 0.05 (skip silence)
-        volume: 1
-    },
-    clickStrong: {
-        audio: new Audio('sound/click.mp3'),
-        startAt: 0.60,           // ← sesuaikan per file
-        volume: 1
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+const soundBuffers = {};
+
+async function loadSound(name, url) {
+    const response = await fetch(url);
+    const arrayBuffer = await response.arrayBuffer();
+    soundBuffers[name] = await audioCtx.decodeAudioData(arrayBuffer);
+}
+
+// Load semua sound pas halaman ready
+window.addEventListener('load', async () => {
+    try {
+        await loadSound('click', 'sound/click.ogg');
+        await loadSound('clickStrong', 'sound/click_strong.ogg');
+    } catch (e) {
+        console.warn('Sound loading failed:', e);
     }
-};
-
-// Preload + setup
-Object.values(SFX).forEach(sfx => {
-    sfx.audio.preload = 'auto';
-    sfx.audio.volume = sfx.volume;
-    sfx.audio.load();            // paksa browser load file
-});
-
-// Warm-up: play sekali dengan volume 0 biar browser cache
-window.addEventListener('load', () => {
-    Object.values(SFX).forEach(sfx => {
-        const originalVol = sfx.audio.volume;
-        sfx.audio.volume = 0;
-        sfx.audio.play().then(() => {
-            sfx.audio.pause();
-            sfx.audio.currentTime = 0;
-            sfx.audio.volume = originalVol;
-        }).catch(() => {});
-    });
 });
 
 function playClick(strong = false) {
-    const sfx = strong ? SFX.clickStrong : SFX.click;
-    try {
-        sfx.audio.pause();                    // stop kalo lagi play
-        sfx.audio.currentTime = sfx.startAt;  // ← loncat ke detik tertentu
-        sfx.audio.play().catch(() => {});
-    } catch (e) {}
+    const buffer = soundBuffers[strong ? 'clickStrong' : 'click'];
+    if (!buffer) return;
+    
+    // Resume context kalo lagi suspended (browser autoplay policy)
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    
+    const source = audioCtx.createBufferSource();
+    const gainNode = audioCtx.createGain();
+    
+    source.buffer = buffer;
+    gainNode.gain.value = strong ? 0.6 : 0.5;
+    
+    source.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    source.start(0);               // ← langsung main, gak ada delay
 }
 
 // ============================================
