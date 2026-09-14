@@ -1,4 +1,25 @@
 // ============================================
+// SOUND EFFECT SYSTEM
+// ============================================
+const SFX = {
+    click: new Audio('sound/click.mp3'),
+    clickStrong: new Audio('sound/click.mp3')
+};
+
+SFX.click.preload = 'auto';
+SFX.clickStrong.preload = 'auto';
+SFX.click.volume = 0.5;
+SFX.clickStrong.volume = 0.6;
+
+function playClick(strong = false) {
+    const sound = strong ? SFX.clickStrong : SFX.click;
+    try {
+        sound.currentTime = 0;
+        sound.play().catch(() => {});
+    } catch (e) {}
+}
+
+// ============================================
 // SMOOTH SCROLL DENGAN EFEK MOMENTUM (LENIS)
 // ============================================
 const lenis = new Lenis({
@@ -1500,6 +1521,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.openServerModal = function() {
+        playClick();
         serverModal.classList.add('active');
         lockScroll();
         if (view1) view1.style.display = 'block';
@@ -1519,6 +1541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (serverListItem) {
         serverListItem.addEventListener('click', (e) => {
             e.stopPropagation();
+            playClick();
             serverListItem.classList.toggle('activated');
             if (serverButtons) serverButtons.classList.toggle('activated');
             
@@ -1538,7 +1561,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (serverButtons) {
         serverButtons.addEventListener('click', (e) => {
             e.stopPropagation();
-            
+            playClick(true);
+
             // Kalo yang diklik Edit → diurus handler editBtnWrapper
             if (e.target.closest('.edit-btn-wrapper')) return;
             
@@ -1554,6 +1578,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (editBtnWrapper) {
         editBtnWrapper.addEventListener('click', (e) => {
             e.stopPropagation();
+            playClick(true);
             if (view1) view1.style.display = 'none';
             if (view2) view2.style.display = 'block';
         });
@@ -1569,6 +1594,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnCopyIp) {
         btnCopyIp.addEventListener('click', function() {
+            playClick();
             const ip = 'crackednetwork.run.place';
             const self = this;
             const showCopied = () => {
@@ -1599,6 +1625,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnDisconnect) {
         btnDisconnect.addEventListener('click', () => {
+            playClick(true);
             serverModal.classList.remove('active');
             unlockScroll();
         });
