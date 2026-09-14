@@ -1,21 +1,45 @@
 // ============================================
-// SOUND EFFECT SYSTEM
+// SOUND EFFECT SYSTEM (Anti-Delay)
 // ============================================
 const SFX = {
-    click: new Audio('sound/click.mp3'),
-    clickStrong: new Audio('sound/click.mp3')
+    click: {
+        audio: new Audio('sound/click.mp3'),
+        startAt: 0.05,           // ← mulai dari detik 0.05 (skip silence)
+        volume: 0.5
+    },
+    clickStrong: {
+        audio: new Audio('sound/click.mp3'),
+        startAt: 0.05,           // ← sesuaikan per file
+        volume: 0.6
+    }
 };
 
-SFX.click.preload = 'auto';
-SFX.clickStrong.preload = 'auto';
-SFX.click.volume = 0.5;
-SFX.clickStrong.volume = 0.6;
+// Preload + setup
+Object.values(SFX).forEach(sfx => {
+    sfx.audio.preload = 'auto';
+    sfx.audio.volume = sfx.volume;
+    sfx.audio.load();            // paksa browser load file
+});
+
+// Warm-up: play sekali dengan volume 0 biar browser cache
+window.addEventListener('load', () => {
+    Object.values(SFX).forEach(sfx => {
+        const originalVol = sfx.audio.volume;
+        sfx.audio.volume = 0;
+        sfx.audio.play().then(() => {
+            sfx.audio.pause();
+            sfx.audio.currentTime = 0;
+            sfx.audio.volume = originalVol;
+        }).catch(() => {});
+    });
+});
 
 function playClick(strong = false) {
-    const sound = strong ? SFX.clickStrong : SFX.click;
+    const sfx = strong ? SFX.clickStrong : SFX.click;
     try {
-        sound.currentTime = 0;
-        sound.play().catch(() => {});
+        sfx.audio.pause();                    // stop kalo lagi play
+        sfx.audio.currentTime = sfx.startAt;  // ← loncat ke detik tertentu
+        sfx.audio.play().catch(() => {});
     } catch (e) {}
 }
 
