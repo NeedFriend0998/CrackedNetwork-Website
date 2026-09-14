@@ -5,12 +5,12 @@ const SFX = {
     click: {
         audio: new Audio('sound/click.mp3'),
         startAt: 0.60,           // ← mulai dari detik 0.05 (skip silence)
-        volume: 10
+        volume: 1
     },
     clickStrong: {
         audio: new Audio('sound/click.mp3'),
         startAt: 0.60,           // ← sesuaikan per file
-        volume: 10
+        volume: 1
     }
 };
 
