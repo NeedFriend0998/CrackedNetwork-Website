@@ -915,6 +915,15 @@
     </div>
 </div>
     <!-- Scripts -->
+    <script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var redirectPath = params.get('p');
+    if (redirectPath && redirectPath.charAt(0) === '/' && redirectPath.charAt(1) !== '/') {
+      history.replaceState(null, '', redirectPath);
+    }
+  })();
+</script>
     <script src="JS/main.js"></script>
 </body>
 </html>
