@@ -121,6 +121,19 @@
             Back
         </a>
     </div>
-
+  <script>
+    (function() {
+      var path = window.location.pathname;
+      var search = window.location.search;
+      // Validasi path sederhana
+      if (path && path.charAt(0) === '/' && path.charAt(1) !== '/') {
+        window.location.replace(
+          window.location.origin + '/?p=' + encodeURIComponent(path + search)
+        );
+      } else {
+        window.location.replace(window.location.origin);
+      }
+    })();
+  </script>
 </body>
 </html>
