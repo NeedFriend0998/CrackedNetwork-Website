@@ -1321,7 +1321,7 @@ function updateSEO(path) {
 // ============================================
 // SWIPE NAVIGATION SYSTEM (ULTIMATE FIX)
 // ============================================
-const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'discord', 'forums'];
+const pageOrder = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'ai', 'discord', 'forums'];
 
 let isSwiping = false;
 let lastSwipeTime = 0;          // timestamp terakhir animasi SELESAI
