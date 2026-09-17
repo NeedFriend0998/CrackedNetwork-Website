@@ -1315,7 +1315,7 @@ function updateSEO(path) {
     .querySelector('link[rel="canonical"]')
     .setAttribute(
       "href",
-      "https://crackednetwork.netlify.app" + path
+      "https://www.crackednetwork.run.place" + path
     );
 }
 // ============================================
