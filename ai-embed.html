@@ -419,12 +419,29 @@ input, textarea {
 .c
 
 .msg-meta {
-  display: flex; gap: 4px;
+  display: flex;
+  gap: 4px;
   margin-top: 6px;
   opacity: 0;
-  transition: opacity .15s;
+  visibility: hidden;
+  transition: opacity .15s, visibility .15s;
 }
-.msg:hover .msg-meta { opacity: 1; }
+
+/* Desktop (mouse punya hover) — muncul pas hover */
+@media (hover: hover) and (pointer: fine) {
+  .msg:hover .msg-meta {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+/* Touch device (HP/tablet) — selalu muncul biar bisa ditap */
+@media (hover: none) {
+  .msg-meta {
+    opacity: 1;
+    visibility: visible;
+  }
+}
 .msg-action-btn {
   padding: 4px 8px;
   border-radius: 6px;
