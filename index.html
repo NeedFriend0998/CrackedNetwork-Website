@@ -123,7 +123,56 @@
                             </a>
                         </div>
 
-                        <a href="#" onclick="openServerModal(); return false;" class="join-server-btn"></a>
+                            <!-- Struktur Modal Popup -->
+    <div id="installModal" class="modal-overlay">
+        <div class="modal-box">
+            <h3>️ Launcher Isn't installed on your devicel</h3>
+            <p>Would you like to download it?</p>
+            <button id="btnYes" class="btn-modal btn-yes">Yes, Redirect me to download site</button>
+            <button id="btnNo" class="btn-modal btn-no">No, Not today thank you</button>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('playBtn').addEventListener('click', function() {
+        const modal = document.getElementById('installModal');
+        let appOpened = false;
+
+        // 1. Panggil protokol custom (menggunakan metode dynamic anchor agar tidak diblokir browser)
+        const tempLink = document.createElement('a');
+        tempLink.href = 'crackedlauncher://play';
+        tempLink.style.display = 'none';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+
+        // 2. Tunggu 2 detik
+        const timeout = setTimeout(() => {
+            if (!appOpened) {
+                // Jika tidak terbuka, tampilkan popup
+                modal.style.display = 'flex';
+            }
+        }, 6000); 
+
+        // 3. Jika browser kehilangan fokus (launcher terbuka), batalkan timer
+        window.addEventListener('blur', () => {
+            appOpened = true;
+            clearTimeout(timeout);
+        }, { once: true });
+    });
+
+    // Logika Tombol YES (Download)
+    document.getElementById('btnYes').addEventListener('click', function() {
+        // GANTI LINK DI BAWAH INI DENGAN LINK REPOSITORY KAMU
+        window.location.href = "https://github.com/username-kamu/crackedlauncher/releases"; 
+        document.getElementById('installModal').style.display = 'none';
+    });
+
+    // Logika Tombol NO (Tutup Popup)
+    document.getElementById('btnNo').addEventListener('click', function() {
+        document.getElementById('installModal').style.display = 'none';
+    });
+    </script>
                     </div>
 
                     <div class="hero-visual">
