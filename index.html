@@ -878,21 +878,101 @@
     </footer>
 
                                         <!-- Struktur Modal Popup -->
-    <div id="installModal" class="modal-Playoverlay" data-lenis-prevent>
-        <div class="modal-box">
-            <h3>️ Launcher Isn't installed on your devicel</h3>
-            <p>Would you like to download it?</p>
-            <button id="btnYes" class="btn-modal btn-yes">Yes, Redirect me to download site</button>
-            <button id="btnNo" class="btn-modal btn-no">No, Not today thank you</button>
+<!-- Modal Pertanyaan HDD -->
+    <div id="hddModal" class="modal-Playoverlay" data-lenis-prevent>
+        <div class="modal-Playbox">
+            <h3> Storage Type</h3>
+            <p>Are you still using HDD?</p>
+            <button id="btnHDDYes" class="btn-Playmodal btn-yes">Yes</button>
+            <button id="btnHDDNo" class="btn-Playmodal btn-no">No (SSD)</button>
         </div>
     </div>
+
+    <!-- Modal Status Loading / Gagal -->
+    <div id="statusModal" class="modal-Playoverlay" data-lenis-prevent>
+        <div class="modal-Playbox">
+            <div id="loadingState">
+                <div class="spinner"></div>
+                <h3>Membuka Launcher...</h3>
+                <p>Harap tunggu sebentar.<br>Jangan tutup tab ini saat proses berjalan.</p>
+            </div>
+
+            <div id="failedState" style="display: none;">
+                <h3>⚠️ Launcher Isn't installed on your device</h3>
+                <p>Would you like to download it?</p>
+                <button id="btnDownloadYes" class="btn-modal btn-yes">Yes, Download</button>
+                <button id="btnDownloadNo" class="btn-modal btn-no">No, Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Penolakan Mobile -->
+    <div id="mobileModal" class="modal-Playoverlay" data-lenis-prevent>
+        <div class="modal-Playbox">
+            <h3> Device Not Supported</h3>
+            <p>We've been detect you're in mobile, our launcher isn't support mobile right now</p>
+            <button id="btnMobileClose" class="btn-modal btn-no">OK</button>
+        </div>
+    </div>
+
+    <!-- Elemen Timer Pojok Kanan Atas -->
+    <div id="loadingTimer">Estimate 20s</div>
+
     <!-- Scripts -->
     <script>    
-        document.getElementById('playBtn').addEventListener('click', function() {
-        const modal = document.getElementById('installModal');
-        let appOpened = false;
+ const DOWNLOAD_URL = "https://github.com/NeedFriend0998/HMCL-modify-to-CrackedLauncher/releases";
+    
+    let appOpened = false;
+    let checkInterval = null;
+    let timerInterval = null;
+    let maxTimeout = null;
 
-        // 1. Panggil protokol custom (menggunakan metode dynamic anchor agar tidak diblokir browser)
+    // Fungsi Deteksi Mobile
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    }
+
+    // Fungsi utama saat tombol Play diklik
+    document.getElementById('playBtn').addEventListener('click', function() {
+        // Cek Mobile Dulu
+        if (isMobileDevice()) {
+            document.getElementById('mobileModal').style.display = 'flex';
+            return;
+        }
+
+        appOpened = false;
+        document.getElementById('hddModal').style.display = 'flex';
+    });
+
+    // Tombol Tutup Popup Mobile
+    document.getElementById('btnMobileClose').addEventListener('click', function() {
+        document.getElementById('mobileModal').style.display = 'none';
+    });
+
+    // Logika Tombol Yes (HDD - Estimasi 20 Detik)
+    document.getElementById('btnHDDYes').addEventListener('click', function() {
+        startLaunchProcess(20);
+    });
+
+    // Logika Tombol No (SSD - Estimasi 10 Detik)
+    document.getElementById('btnHDDNo').addEventListener('click', function() {
+        startLaunchProcess(10);
+    });
+
+    // Fungsi Memulai Proses Launching & Timer
+    function startLaunchProcess(seconds) {
+        document.getElementById('hddModal').style.display = 'none';
+        
+        const timerEl = document.getElementById('loadingTimer');
+        const statusModal = document.getElementById('statusModal');
+        const loadingState = document.getElementById('loadingState');
+        const failedState = document.getElementById('failedState');
+
+        // Reset tampilan modal status
+        loadingState.style.display = 'block';
+        failedState.style.display = 'none';
+        
+        // Panggil protokol via dynamic anchor agar tidak diblokir browser
         const tempLink = document.createElement('a');
         tempLink.href = 'crackedlauncher://play';
         tempLink.style.display = 'none';
@@ -900,19 +980,70 @@
         tempLink.click();
         document.body.removeChild(tempLink);
 
-        // 2. Tunggu 2 detik
-        const timeout = setTimeout(() => {
-            if (!appOpened) {
-                // Jika tidak terbuka, tampilkan popup
-                modal.style.display = 'flex';
-            }
-        }, 20000); 
+        // Tampilkan timer di pojok kanan atas
+        timerEl.innerText = `Estimate ${seconds}s`;
+        timerEl.style.display = 'block';
 
-        // 3. Jika browser kehilangan fokus (launcher terbuka), batalkan timer
-        window.addEventListener('blur', () => {
+        // Hitung mundur timer visual
+        let remaining = seconds;
+        timerInterval = setInterval(() => {
+            remaining--;
+            if (remaining > 0) {
+                timerEl.innerText = `Estimate ${remaining}s`;
+            } else {
+                timerEl.innerText = `Checking...`;
+            }
+        }, 1000);
+
+        // Listener blur (deteksi instan jika launcher terbuka)
+        window.addEventListener('blur', onAppOpen, { once: true });
+
+        // Polling aktif setiap 500ms (backup untuk laptop lemot/event blur telat)
+        checkInterval = setInterval(() => {
+            if (!document.hasFocus()) {
+                onAppOpen();
+            }
+        }, 500);
+
+        // Batas maksimal sesuai estimasi user
+        maxTimeout = setTimeout(() => {
+            if (!appOpened) {
+                clearInterval(checkInterval);
+                clearInterval(timerInterval);
+                timerEl.style.display = 'none'; // Sembunyikan timer
+                
+                // Tampilkan popup gagal/download
+                loadingState.style.display = 'none';
+                failedState.style.display = 'block';
+                statusModal.style.display = 'flex';
+            }
+        }, seconds * 1000); 
+    }
+
+    // Fungsi ketika launcher berhasil terdeteksi terbuka
+    function onAppOpen() {
+        if (!appOpened) {
             appOpened = true;
-            clearTimeout(timeout);
-        }, { once: true });
+            clearInterval(checkInterval);
+            clearTimeout(maxTimeout);
+            clearInterval(timerInterval);
+            
+            // Sembunyikan semua elemen UI
+            document.getElementById('loadingTimer').style.display = 'none';
+            document.getElementById('statusModal').style.display = 'none';
+            document.getElementById('hddModal').style.display = 'none';
+        }
+    }
+
+    // Tombol Download Yes
+    document.getElementById('btnDownloadYes').addEventListener('click', function() {
+        window.open(DOWNLOAD_URL, '_blank');
+        document.getElementById('statusModal').style.display = 'none';
+    });
+
+    // Tombol Download No
+    document.getElementById('btnDownloadNo').addEventListener('click', function() {
+        document.getElementById('statusModal').style.display = 'none';
     });
 
     // Logika Tombol YES (Download)
