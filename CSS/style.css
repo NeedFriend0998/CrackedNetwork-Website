@@ -1450,7 +1450,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
             padding: 15px 40px; font-size: 20px; color: white; 
             border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s;
         }
-        .btn-play:hover { background: #45a049; transform: scale(1.05); }
+        .btn-play:hover { transform: scale(1.05); }
 
         /* Modal Styles - Tetap Berantakan Sesuai Request */
         .modal-Playoverlay {
