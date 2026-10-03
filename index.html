@@ -255,10 +255,24 @@
              CHANGELOGS PAGE
              ================================ -->
         <style>
-            #changelogs {
-                width: 100%;
-                height: 100%;
-            }
+/* Section changelogs harus full height */
+#changelogs {
+    width: 100%;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    display: flex;
+}
+
+/* Iframe isi penuh section */
+#changelogs .changelog-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: #2c1b0e; /* fallback sebelum iframe ke-load */
+}
         </style>
         <section class="page" id="changelogs">
             <iframe src="changelogs/index.html">
