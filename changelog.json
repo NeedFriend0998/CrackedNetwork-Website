@@ -1,0 +1,5 @@
+{
+  "3:10:2026": "🚀 VERSI 1.3.0\nMenambahkan fitur Auto-Reconnect ke Lobby setelah hibernasi\nMemperbaiki bug player terjebak di Limbo\nOptimasi performa plugin CrackedBan\nMenambahkan command /changelog",
+  "1:10:2026": "🐞 VERSI 1.2.1\nFix error Connection Refused pada WebSocket API\nMenyesuaikan pesan ban agar lebih jelas\nMenambahkan dukungan Minecraft 1.21.11",
+  "28:9:2026": "🎉 VERSI 1.0.0\nRilis pertama CrackedNetwork!\nServer BedWars dan Lobby resmi dibuka\nSistem LimboFallback diperkenalkan"
+}
