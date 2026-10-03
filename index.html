@@ -58,6 +58,7 @@
                 <!-- Main Pages -->
                 <a href="/home" class="nav-link active" data-page="home">Home</a>
                 <a href="/gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
+                <a href="/changelogs" class="nav-link active" data-page="changelogs">Changelogs</a>
                 <a href="/wiki" class="nav-link" data-page="wiki">Wiki</a>
                 <a href="/rules" class="nav-link" data-page="rules">Rules</a>
                 <a href="/vote" class="nav-link" data-page="vote">Vote</a>
@@ -248,6 +249,144 @@
                 </div>
                 <div class="gamemode-grid" id="gamemodeGrid"></div>
             </div>
+        </section>
+
+        <!-- ================================
+             CHANGELOGS PAGE
+             ================================ -->
+
+        <section class="page" id="changelogs">
+            <div class="dirt-background" id="dirtBg"></div>
+
+    <button class="toggle-btn" id="toggleBtn" onclick="toggleScroll()">⏸ PAUSE SCROLL</button>
+
+    <div class="fade-top"></div>
+    <div class="fade-bottom"></div>
+
+    <div class="scroll-container" id="scrollContainer">
+        <div class="scrolling-text auto-scroll" id="scrollingText">
+            <h1> CRACKEDNETWORK CHANGELOG </h1>
+            <div id="changelogContainer">
+                <p>Loading changelog...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================= BACKGROUND =================
+        const DIRT_IMAGE_PATH = 'dirt.png';
+        document.getElementById('dirtBg').style.backgroundImage = `url('${DIRT_IMAGE_PATH}')`;
+
+        // ================= NAMA BULAN =================
+        const BULAN = {
+            1: 'Januari', 2: 'Februari', 3: 'Maret', 4: 'April',
+            5: 'Mei', 6: 'Juni', 7: 'Juli', 8: 'Agustus',
+            9: 'September', 10: 'Oktober', 11: 'November', 12: 'Desember'
+        };
+
+        // ================= LOAD CHANGELOG.JSON =================
+        async function loadChangelog() {
+            const container = document.getElementById('changelogContainer');
+
+            try {
+                const response = await fetch('changelog.json');
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const data = await response.json();
+
+                // Konversi ke array biar bisa di-sort
+                const entries = Object.keys(data).map(key => {
+                    const [tgl, bln, thn] = key.split(':').map(Number);
+                    return {
+                        date: new Date(thn, bln - 1, tgl),
+                        tanggal: tgl,
+                        bulan: bln,
+                        tahun: thn,
+                        items: data[key].split('\n')
+                    };
+                });
+
+                // Sort dari yang terbaru
+                entries.sort((a, b) => b.date - a.date);
+
+                // Render
+                container.innerHTML = '';
+                entries.forEach(entry => {
+                    const title = entry.items[0];
+                    const listItems = entry.items.slice(1);
+
+                    const div = document.createElement('div');
+                    div.className = 'entry';
+
+                    const h2 = document.createElement('h2');
+                    h2.textContent = title;
+                    div.appendChild(h2);
+
+                    const dateEl = document.createElement('p');
+                    dateEl.className = 'date';
+                    dateEl.textContent = `${entry.tanggal} ${BULAN[entry.bulan]} ${entry.tahun}`;
+                    div.appendChild(dateEl);
+
+                    if (listItems.length > 0) {
+                        const ul = document.createElement('ul');
+                        listItems.forEach(item => {
+                            if (item.trim()) {
+                                const li = document.createElement('li');
+                                li.textContent = item.trim();
+                                ul.appendChild(li);
+                            }
+                        });
+                        div.appendChild(ul);
+                    }
+
+                    container.appendChild(div);
+                });
+
+                console.log('✅ Changelog berhasil dimuat:', entries.length, 'entri');
+
+            } catch (err) {
+                console.error('❌ Gagal load changelog.json:', err);
+                container.innerHTML = `
+                    <div class="error-msg">
+                        ❌ GAGAL LOAD changelog.json<br><br>
+                        Error: ${err.message}<br><br>
+                        KEMUNGKINAN PENYEBAB:<br>
+                        1. File changelog.json tidak ada di folder yang sama<br>
+                        2. HTML dibuka lewat file:// (browser blokir fetch)<br><br>
+                        SOLUSI:<br>
+                        Jalankan local server:<br>
+                        <code>python3 -m http.server 8000</code><br>
+                        Lalu buka http://localhost:8000
+                    </div>
+                `;
+            }
+        }
+
+        loadChangelog();
+
+        // ================= TOGGLE AUTO-SCROLL =================
+        const scrollContainer = document.getElementById('scrollContainer');
+        const scrollingText = document.getElementById('scrollingText');
+        const toggleBtn = document.getElementById('toggleBtn');
+        let isAutoScroll = true;
+
+        function toggleScroll() {
+            isAutoScroll = !isAutoScroll;
+            if (isAutoScroll) {
+                scrollContainer.classList.remove('manual');
+                scrollingText.classList.remove('manual-mode');
+                scrollingText.classList.add('auto-scroll');
+                toggleBtn.classList.remove('paused');
+                toggleBtn.innerHTML = '⏸ PAUSE SCROLL';
+                scrollContainer.scrollTop = 0;
+            } else {
+                scrollContainer.classList.add('manual');
+                scrollingText.classList.remove('auto-scroll');
+                scrollingText.classList.add('manual-mode');
+                toggleBtn.classList.add('paused');
+                toggleBtn.innerHTML = '▶ RESUME SCROLL';
+            }
+        }
+    </script>
         </section>
 
         <!-- ================================
