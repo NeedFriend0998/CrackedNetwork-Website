@@ -289,7 +289,7 @@
             const container = document.getElementById('changelogContainer');
 
             try {
-                const response = await fetch('changelogs/changelogs.json');
+                const response = await fetch('changelog.json');
                 if (!response.ok) throw new Error('HTTP ' + response.status);
                 const data = await response.json();
 
