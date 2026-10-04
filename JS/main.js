@@ -69,7 +69,10 @@ window.addEventListener('pageChanged', () => {
 // Optional: Scroll ke anchor link dengan smooth
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        const target = document.querySelector(this.getAttribute('href'));
+        const href = this.getAttribute('href');
+        if (href === '#' || href.length < 2) return;
+        
+        const target = document.querySelector(href);
         if (target) {
             e.preventDefault();
             lenis.scrollTo(target);
