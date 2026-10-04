@@ -1,3 +1,19 @@
-/robots.txt  /robots.txt  200
-/sitemap.xml  /sitemap.xml  200
-/ai /ai/index.html 200
+/robots.txt    /robots.txt    200
+/sitemap.xml   /sitemap.xml   200
+
+# Folder-based routing
+/home              /home/index.html              200
+/gamemodes         /gamemodes/index.html         200
+/wiki              /wiki/index.html              200
+/rules             /rules/index.html             200
+/vote              /vote/index.html              200
+/store             /store/index.html             200
+/ai                /ai/index.html                200
+/discord           /discord/index.html           200
+/forums            /forums/index.html            200
+/plugins           /plugins/index.html           200
+/donate            /donate/index.html            200
+/legal             /legal/index.html             200
+/terms-of-service  /terms-of-service/index.html  200
+/privacy-policy    /privacy-policy/index.html    200
+/staff-detail      /staff-detail/index.html      200
