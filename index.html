@@ -35,31 +35,6 @@
 
     <!-- Smooth Scroll -->
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-<script>
-(function(){
-  var h = window.location.hash;
-  if (h && h.length > 1) {
-    var page = h.slice(1);
-    history.replaceState({page: page}, '', '/' + page);
-    document.addEventListener('DOMContentLoaded', function(){
-      if (typeof showPage === 'function') {
-        showPage(page);
-      } else {
-        // Fallback jika showPage belum ready
-        var el = document.getElementById(page);
-        if (el) {
-          document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
-          el.classList.add('active');
-          document.querySelectorAll('.nav-link').forEach(function(l){
-            l.classList.toggle('active', l.getAttribute('data-page') === page);
-          });
-        }
-      }
-    });
-  }
-})();
-</script>
 </head>
 <body>
 
@@ -83,7 +58,6 @@
                 <!-- Main Pages -->
                 <a href="/home" class="nav-link active" data-page="home">Home</a>
                 <a href="/gamemodes" class="nav-link" data-page="gamemodes">Gamemodes</a>
-                <a href="/changelog" class="nav-link active" data-page="changelog">Changelogs</a>
                 <a href="/wiki" class="nav-link" data-page="wiki">Wiki</a>
                 <a href="/rules" class="nav-link" data-page="rules">Rules</a>
                 <a href="/vote" class="nav-link" data-page="vote">Vote</a>
@@ -275,38 +249,6 @@
                 <div class="gamemode-grid" id="gamemodeGrid"></div>
             </div>
         </section>
-
-        <!-- ================================
-             CHANGELOGS PAGE
-             ================================ -->
-        <style>
-/* Section changelogs harus full height */
-#changelogs {
-    width: 100%;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    display: flex;
-}
-
-/* Iframe isi penuh section */
-#changelogs .changelog-frame {
-    width: 100%;
-    height: 100%;
-    border: none;
-    display: block;
-    background: #2c1b0e; /* fallback sebelum iframe ke-load */
-}
-        </style>
-<section class="page" id="changelog">
-    <iframe 
-        src="changelogs/index.html" 
-        class="changelog-frame"
-        frameborder="0"
-        loading="lazy"
-    </iframe>
-</section>
 
         <!-- ================================
              WIKI PAGE
@@ -640,7 +582,7 @@
             </div>
         </section>
 
-<!-- ================================
+        <!-- ================================
      AI PAGE
      ================================ -->
 <section class="page" id="ai">
@@ -1116,6 +1058,13 @@
         document.getElementById('installModal').style.display = 'none';
     });
         
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var redirectPath = params.get('p');
+    if (redirectPath && redirectPath.charAt(0) === '/' && redirectPath.charAt(1) !== '/') {
+      history.replaceState(null, '', redirectPath);
+    }
+  })();
 </script>
 <!-- Cloudflare Web Analytics -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c5900131a49546749e0084ca9af49eeb"}'></script><!-- End Cloudflare Web Analytics -->
