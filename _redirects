@@ -1,4 +1,3 @@
 /robots.txt  /robots.txt  200
 /sitemap.xml  /sitemap.xml  200
-# SPA Fallback - Semua request yang nggak ketemu file, arahkan ke index.html
-/*    /index.html    200
+
