@@ -37,24 +37,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 </head>
 <body>
-<script>
-(function(){
-  var path = window.location.pathname;
-  if (path && path !== '/' && path !== '/index.html') {
-    var pageId = path.substring(1).replace(/\/$/, '');
-    var attempts = 0;
-    var check = setInterval(function(){
-      attempts++;
-      if (typeof showPage === 'function') {
-        clearInterval(check);
-        history.replaceState({page: pageId}, '', path);
-        showPage(pageId);
-      }
-      if (attempts > 200) clearInterval(check);
-    }, 50);
-  }
-})();
-</script>
+
     <!-- Background Particles -->
     <canvas id="particles"></canvas>
     <div class="bg-canvas"></div>
@@ -1075,6 +1058,13 @@
         document.getElementById('installModal').style.display = 'none';
     });
         
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var redirectPath = params.get('p');
+    if (redirectPath && redirectPath.charAt(0) === '/' && redirectPath.charAt(1) !== '/') {
+      history.replaceState(null, '', redirectPath);
+    }
+  })();
 </script>
 <!-- Cloudflare Web Analytics -->
     <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "c5900131a49546749e0084ca9af49eeb"}'></script><!-- End Cloudflare Web Analytics -->
