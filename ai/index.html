@@ -114,6 +114,33 @@
     
     <script src="/JS/router.js"></script>
     <script src="/JS/main.js"></script>
-    <script src="/JS/embed_ai.js"></script>
+    <script>
+        function initAIPage() {
+    const container = document.getElementById('cn-ai-embed');
+    if (!container) return;
+
+    // Kalau script embed_ai.js udah pernah ke-load, tinggal panggil init-nya
+    if (window.__aiEmbedLoaded) {
+        if (typeof window.initCnAiEmbed === 'function') {
+            window.initCnAiEmbed();
+        }
+        return;
+    }
+
+    // Load script sekali aja
+    const script = document.createElement('script');
+    script.src = '/JS/embed_ai.js';
+    script.onload = () => {
+        window.__aiEmbedLoaded = true;
+        if (typeof window.initCnAiEmbed === 'function') {
+            window.initCnAiEmbed();
+        }
+    };
+    script.onerror = () => {
+        console.error('[AI] Gagal load embed_ai.js');
+    };
+    document.body.appendChild(script);
+}
+    </script>
 </body>
 </html>
