@@ -12,13 +12,11 @@
             return;
         }
 
-        const height = container.dataset.height || '600px';
-
         const iframe = document.createElement('iframe');
         iframe.src = AI_EMBED_URL;
         iframe.style.cssText = `
             width: 100%;
-            height: ${height};
+            height: calc(100vh - 64px);
             border: none;
             border-radius: 12px;
             background: #1a1a2e;
@@ -26,6 +24,16 @@
         `;
         iframe.setAttribute('title', 'CrackedNetwork AI');
         container.appendChild(iframe);
+
+        // Update tinggi saat viewport di-resize (misal rotasi HP)
+        const resizeHandler = () => {
+            const h = window.innerHeight - 64;
+            iframe.style.height = h + 'px';
+        };
+        window.addEventListener('resize', resizeHandler);
+
+        // Simpan handler biar bisa di-cleanup kalau perlu
+        iframe._resizeHandler = resizeHandler;
 
         console.log('[AI] Embed loaded.');
     };
