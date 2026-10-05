@@ -2,9 +2,15 @@
     const AI_EMBED_URL = '/ai-embed.html';
     const EMBED_ID = 'cn-ai-embed';
 
-    function createEmbed() {
+    window.initCnAiEmbed = function() {
         const container = document.getElementById(EMBED_ID);
         if (!container) return;
+
+        // GUARD: kalau iframe udah ada, jangan bikin lagi
+        if (container.querySelector('iframe')) {
+            console.log('[AI] Embed udah ada, skip.');
+            return;
+        }
 
         const height = container.dataset.height || '600px';
 
@@ -20,11 +26,7 @@
         `;
         iframe.setAttribute('title', 'CrackedNetwork AI');
         container.appendChild(iframe);
-    }
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', createEmbed);
-    } else {
-        createEmbed();
-    }
+        console.log('[AI] Embed loaded.');
+    };
 })();
