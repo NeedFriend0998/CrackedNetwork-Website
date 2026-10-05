@@ -665,7 +665,32 @@ function initStaffDetailPage() {
 
 // --- AI page ---
 function initAIPage() {
-    // embed_ai.js udah di-load di ai.html
+    const container = document.getElementById('cn-ai-embed');
+    if (!container) return;
+
+    // Kalau function udah ada (script udah ke-load), langsung panggil
+    if (typeof window.initCnAiEmbed === 'function') {
+        window.initCnAiEmbed();
+        return;
+    }
+
+    // Kalau belum, load script dinamis
+    if (window.__aiEmbedLoading) return; // cegah double load
+    window.__aiEmbedLoading = true;
+
+    const script = document.createElement('script');
+    script.src = '/JS/embed_ai.js';
+    script.onload = () => {
+        window.__aiEmbedLoading = false;
+        if (typeof window.initCnAiEmbed === 'function') {
+            window.initCnAiEmbed();
+        }
+    };
+    script.onerror = () => {
+        window.__aiEmbedLoading = false;
+        console.error('[AI] Gagal load embed_ai.js');
+    };
+    document.body.appendChild(script);
 }
 
 // ============================================
