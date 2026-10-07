@@ -522,70 +522,65 @@ function initPluginsPage() {
     const fmCurrentPath = document.getElementById('fmCurrentPath');
     if (!pluginCategoryTabs || !pluginListContainer) return;
 
-    const DEFAULT_DATA = {
-        categories: [{ id: "lobby", name: "Lobby" }, { id: "bedwars", name: "Bedwars" }],
-        plugins: {
-            lobby: [{ name: "WorldEdit", version: "7.2.15", author: "EngineHub", description: "Map editing tool." }, { name: "EssentialsX", version: "2.20.1", author: "Essentials Team", description: "Commands." }],
-            bedwars: [{ name: "BedWars1058", version: "22.2", author: "andrei1058", description: "Bedwars plugin." }]
-        }
-    };
+    function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+    }
 
     function renderPluginList(plugins) {
         pluginListContainer.innerHTML = '';
-        if (!plugins || plugins.length === 0) return;
+        if (!plugins || plugins.length === 0) {
+            pluginListContainer.innerHTML = '<div class="fm-item" style="color:#666;">Tidak ada plugin.</div>';
+            return;
+        }
         plugins.forEach(p => {
             const item = document.createElement('div');
             item.className = 'fm-item';
+            const iconHTML = p.icon 
+                ? `<img src="${p.icon}" alt="" style="width:24px;height:24px;border-radius:4px;" onerror="this.style.display='none'">`
+                : `<div class="fm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>`;
+            
             item.innerHTML = `
-                <div class="fm-name"><div class="fm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>${p.name || 'Unknown'}</div>
-                <div class="fm-version">${p.version || '-'}</div>
-                <div class="fm-author">${p.author || '-'}</div>
-                <div class="fm-desc">${p.description || '-'}</div>
+                <div class="fm-name">
+                    ${iconHTML}
+                    ${p.name}
+                    ${!p.tracked ? '<span style="color:#666;font-size:0.7rem;margin-left:6px;">(manual)</span>' : ''}
+                </div>
+                <div class="fm-version">${p.version}</div>
+                <div class="fm-author">${p.author}</div>
+                <div class="fm-desc">${p.provider} · ${formatSize(p.size)}</div>
             `;
             pluginListContainer.appendChild(item);
         });
     }
 
-    async function loadPluginCategory(id, name, btnElement = null) {
-        document.querySelectorAll('.fm-tab').forEach(t => t.classList.remove('active'));
-        if (btnElement) btnElement.classList.add('active');
-        fmCurrentPath.textContent = `/${id}/plugins`;
+    async function loadPlugins() {
+        pluginCategoryTabs.innerHTML = '<span style="color:#666;font-size:0.85rem;padding:10px;">Memuat...</span>';
+        fmCurrentPath.textContent = '/plugins';
         pluginListContainer.innerHTML = '<div class="fm-item" style="color:var(--accent);">Loading plugins...</div>';
-        let plugins = [];
+
         try {
-            const response = await fetch(`/${id}.json`);
-            plugins = await response.json();
+            const res = await fetch('/api/plugins');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+
+            // Update tab info
+            pluginCategoryTabs.innerHTML = `
+                <button class="fm-tab active">
+                    📦 Semua Plugin (${data.total})
+                </button>
+            `;
+            fmCurrentPath.textContent = `/plugins (${data.total} file)`;
+
+            renderPluginList(data.plugins);
         } catch (err) {
-            plugins = DEFAULT_DATA.plugins[id] || [];
+            console.error('[Plugins]', err);
+            pluginListContainer.innerHTML = `<div class="fm-item" style="color:#ff5050;">Gagal memuat plugin: ${err.message}</div>`;
         }
-        if (plugins.length === 0) plugins = [{ name: "Data Tidak Ditemukan", version: "-", author: "System", description: "-" }];
-        renderPluginList(plugins);
     }
 
-    function renderPluginTabs(manifest) {
-        pluginCategoryTabs.innerHTML = '';
-        manifest.forEach(cat => {
-            const btn = document.createElement('button');
-            btn.className = 'fm-tab';
-            btn.dataset.id = cat.id;
-            btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg> ${cat.name}`;
-            btn.onclick = function() { loadPluginCategory(cat.id, cat.name, this); };
-            pluginCategoryTabs.appendChild(btn);
-        });
-    }
-
-    (async () => {
-        pluginCategoryTabs.innerHTML = 'Memuat...';
-        let manifest = [];
-        try {
-            const response = await fetch('/plugin_categories.json');
-            manifest = await response.json();
-        } catch (err) {
-            manifest = DEFAULT_DATA.categories;
-        }
-        renderPluginTabs(manifest);
-        if (manifest.length > 0) loadPluginCategory(manifest[0].id, manifest[0].name);
-    })();
+    loadPlugins();
 }
 
 // --- Staff Detail ---
