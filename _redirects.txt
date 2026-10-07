@@ -17,3 +17,4 @@
 /terms-of-service  /terms-of-service/index.html  200
 /privacy-policy    /privacy-policy/index.html    200
 /staff-detail      /staff-detail/index.html      200
+/launcher    /launcher/index.html    200
