@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launcher | CrackedNetwork</title>
+    <meta name="description" content="Download CrackedNetwork Launcher untuk Windows, Linux, dan macOS. Launcher resmi dengan fitur auto-update dan custom modpack.">
+    <link rel="canonical" href="https://www.crackednetwork.run.place/launcher">
+    
+    <meta property="og:title" content="CrackedNetwork Launcher">
+    <meta property="og:description" content="Download launcher resmi CrackedNetwork">
+    <meta property="og:image" content="https://www.crackednetwork.run.place/img/server-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <link href="/CSS/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <style>
+        .launcher-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 24px 80px;
+        }
+
+        .launcher-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .launcher-hero h1 {
+            font-size: 2.5rem;
+            color: #00e5a0;
+            margin-bottom: 12px;
+        }
+
+        .launcher-hero p {
+            color: #888;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.6;
+        }
+
+        .launcher-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #1a1a2e, #00e5a0 200%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 40px rgba(0, 229, 160, 0.25);
+            border: 2px solid #00e5a0;
+        }
+
+        .launcher-icon svg {
+            width: 60px;
+            height: 60px;
+            stroke: #00e5a0;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(0, 229, 160, 0.15);
+            color: #00e5a0;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(0, 229, 160, 0.3);
+        }
+
+        /* DOWNLOAD BUTTONS */
+        .download-section {
+            margin-bottom: 48px;
+        }
+
+        .download-section h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .download-card {
+            background: linear-gradient(135deg, #1a1a2e, #16162a);
+            border: 1px solid #2a2a44;
+            border-radius: 16px;
+            padding: 24px;
+            text-decoration: none;
+            color: #e0e0e0;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .download-card:hover {
+            transform: translateY(-4px);
+            border-color: #00e5a0;
+            box-shadow: 0 12px 32px rgba(0, 229, 160, 0.15);
+        }
+
+        .download-card .os-icon {
+            width: 40px;
+            height: 40px;
+            color: #00e5a0;
+        }
+
+        .download-card .os-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .download-card .os-size {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .download-card .os-cta {
+            margin-top: auto;
+            font-size: 0.85rem;
+            color: #00e5a0;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* RELEASE NOTES */
+        .release-info {
+            background: #13131e;
+            border: 1px solid #2a2a44;
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 48px;
+        }
+
+        .release-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #2a2a44;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .release-header h3 {
+            color: #00e5a0;
+            font-size: 1.1rem;
+        }
+
+        .release-date {
+            font-size: 0.85rem;
+            color: #666;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .release-body {
+            color: #aaa;
+            line-height: 1.7;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .loading-text {
+            color: #666;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        /* INFO BOX */
+        .info-box {
+            background: linear-gradient(135deg, #1a1a2e, #16162a);
+            border-left: 4px solid #00e5a0;
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            color: #bbb;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #00e5a0;
+        }
+
+        /* SCREENSHOT PREVIEW */
+        .screenshots {
+            margin-top: 48px;
+        }
+
+        .screenshots h2 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .screenshot-item {
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2a2a44;
+            transition: transform 0.25s ease;
+        }
+
+        .screenshot-item:hover {
+            transform: scale(1.02);
+        }
+
+        .screenshot-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .launcher-hero h1 { font-size: 1.8rem; }
+            .download-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="particles"></canvas>
+    <div class="bg-canvas"></div>
+
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/home" class="logo">
+                <div class="logo-icon"><img src="/img/server-icon.png" alt="CrackedNetwork"></div>
+                CrackedNetwork
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="/home" class="nav-link">Home</a>
+                <a href="/gamemodes" class="nav-link">Gamemodes</a>
+                <a href="/launcher" class="nav-link">Launcher</a>
+                <a href="/wiki" class="nav-link">Wiki</a>
+                <a href="/rules" class="nav-link">Rules</a>
+                <a href="/vote" class="nav-link">Vote</a>
+                <a href="/store" class="nav-link">Store</a>
+                <a href="/ai" class="nav-link">AI (Beta)</a>
+                <span class="nav-divider"></span>
+                <a href="/discord" class="nav-link">Discord</a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <main class="pages">
+        <section class="page active" id="launcher">
+            <div class="launcher-page">
+                
+                <div class="launcher-hero">
+                    <div class="launcher-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <h1>CrackedNetwork Launcher</h1>
+                    <p>Launcher resmi dengan fitur auto-update, custom modpack, dan optimasi untuk server CrackedNetwork. Main lebih cepat, lebih stabil, dan tanpa ribet.</p>
+                    <span class="version-badge" id="versionBadge">Memuat versi...</span>
+                </div>
+
+                <!-- DOWNLOAD -->
+                <div class="download-section">
+                    <h2>📥 Download</h2>
+                    <div class="download-grid" id="downloadGrid">
+                        <div class="loading-text">Memuat link download...</div>
+                    </div>
+                </div>
+
+                <!-- RELEASE NOTES -->
+                <div class="release-info">
+                    <div class="release-header">
+                        <h3>📝 Release Notes</h3>
+                        <span class="release-date" id="releaseDate">—</span>
+                    </div>
+                    <div class="release-body" id="releaseBody">
+                        <span class="loading-text">Memuat changelog...</span>
+                    </div>
+                </div>
+
+                <!-- INFO -->
+                <div class="info-box">
+                    <strong>💡 Info:</strong> Launcher ini open-source dan tersedia gratis. 
+                    Kalau kamu menemukan bug atau punya saran, laporkan di 
+                    <a href="/discord" style="color:#00e5a0;">Discord</a> atau buat issue di 
+                    <a href="https://github.com/NeedFriend0998/CrackedLauncher/issues" target="_blank" style="color:#00e5a0;">GitHub</a>.
+                </div>
+
+                <!-- SCREENSHOTS (opsional) -->
+                <div class="screenshots">
+                    <h2>📸 Preview</h2>
+                    <div class="screenshot-grid">
+                        <div class="screenshot-item">
+                            <img src="/img/launcher-preview-1.png" alt="Launcher Preview 1" loading="lazy" onerror="this.parentElement.style.display='none'">
+                        </div>
+                        <div class="screenshot-item">
+                            <img src="/img/launcher-preview-2.png" alt="Launcher Preview 2" loading="lazy" onerror="this.parentElement.style.display='none'">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="/home" class="logo">
+                    <div class="logo-icon"><img src="/img/server-icon.png" alt="CrackedNetwork"></div>
+                    CrackedNetwork
+                </a>
+                <p>The best Minecraft server with an active and friendly community.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/launcher">Launcher</a></li>
+                    <li><a href="/wiki">Wiki</a></li>
+                    <li><a href="/rules">Rules</a></li>
+                    <li><a href="/vote">Vote</a></li>
+                    <li><a href="/store">Store</a></li>
+                    <li><a href="/legal">Legal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="/discord">Discord</a></li>
+                    <li><a href="https://www.instagram.com/bismasyafif/" target="_blank" rel="noopener">Instagram</a></li>
+                    <li><a href="https://youtube.com/@needfriend2" target="_blank" rel="noopener">YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 CrackedNetwork. All rights reserved.</span>
+            <span>Powered by CraftingStore</span>
+        </div>
+    </footer>
+
+    <script src="/JS/router.js"></script>
+    <script src="/JS/main.js"></script>
+</body>
+</html>
