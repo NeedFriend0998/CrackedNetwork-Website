@@ -522,6 +522,9 @@ function initPluginsPage() {
     const fmCurrentPath = document.getElementById('fmCurrentPath');
     if (!pluginCategoryTabs || !pluginListContainer) return;
 
+    let currentServer = null;
+    let availableServers = [];
+
     function formatSize(bytes) {
         if (bytes < 1024) return bytes + ' B';
         if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -537,15 +540,14 @@ function initPluginsPage() {
         plugins.forEach(p => {
             const item = document.createElement('div');
             item.className = 'fm-item';
-            const iconHTML = p.icon 
-                ? `<img src="${p.icon}" alt="" style="width:24px;height:24px;border-radius:4px;" onerror="this.style.display='none'">`
+            const iconHTML = p.icon
+                ? `<img src="${p.icon}" alt="" style="width:24px;height:24px;border-radius:4px;margin-right:8px;" onerror="this.style.display='none'">`
                 : `<div class="fm-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg></div>`;
-            
+
             item.innerHTML = `
-                <div class="fm-name">
+                <div class="fm-name" style="display:flex;align-items:center;">
                     ${iconHTML}
-                    ${p.name}
-                    ${!p.tracked ? '<span style="color:#666;font-size:0.7rem;margin-left:6px;">(manual)</span>' : ''}
+                    <span>${p.name}${!p.tracked ? ' <span style="color:#666;font-size:0.7rem;">(manual)</span>' : ''}</span>
                 </div>
                 <div class="fm-version">${p.version}</div>
                 <div class="fm-author">${p.author}</div>
@@ -555,32 +557,46 @@ function initPluginsPage() {
         });
     }
 
-    async function loadPlugins() {
-        pluginCategoryTabs.innerHTML = '<span style="color:#666;font-size:0.85rem;padding:10px;">Memuat...</span>';
-        fmCurrentPath.textContent = '/plugins';
+    function renderServerTabs(servers, active) {
+        pluginCategoryTabs.innerHTML = '';
+        servers.forEach(srv => {
+            const btn = document.createElement('button');
+            btn.className = 'fm-tab' + (srv === active ? ' active' : '');
+            btn.dataset.server = srv;
+            btn.textContent = srv;
+            btn.onclick = () => {
+                if (srv === currentServer) return;
+                loadPlugins(srv);
+            };
+            pluginCategoryTabs.appendChild(btn);
+        });
+    }
+
+    async function loadPlugins(serverName) {
         pluginListContainer.innerHTML = '<div class="fm-item" style="color:var(--accent);">Loading plugins...</div>';
 
         try {
-            const res = await fetch('/api/plugins');
+            const url = serverName
+                ? `/api/plugins?server=${encodeURIComponent(serverName)}`
+                : '/api/plugins';
+
+            const res = await fetch(url);
             if (!res.ok) throw new Error('HTTP ' + res.status);
             const data = await res.json();
 
-            // Update tab info
-            pluginCategoryTabs.innerHTML = `
-                <button class="fm-tab active">
-                    📦 Semua Plugin (${data.total})
-                </button>
-            `;
-            fmCurrentPath.textContent = `/plugins (${data.total} file)`;
+            currentServer = data.server;
+            availableServers = data.servers;
 
+            renderServerTabs(availableServers, currentServer);
+            fmCurrentPath.textContent = `/${data.server.toLowerCase()}/plugins · ${data.total} file`;
             renderPluginList(data.plugins);
         } catch (err) {
             console.error('[Plugins]', err);
-            pluginListContainer.innerHTML = `<div class="fm-item" style="color:#ff5050;">Gagal memuat plugin: ${err.message}</div>`;
+            pluginListContainer.innerHTML = `<div class="fm-item" style="color:#ff5050;">Gagal memuat: ${err.message}</div>`;
         }
     }
 
-    loadPlugins();
+    loadPlugins(null);
 }
 
 // --- Staff Detail ---
