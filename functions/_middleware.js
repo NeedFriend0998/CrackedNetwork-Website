@@ -6,7 +6,7 @@ export async function onRequest(context) {
     const path = url.pathname;
 
     // Daftar halaman yang punya folder sendiri
-    const pages = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'ai', 'discord', 'forums', 'plugins', 'donate', 'legal', 'terms-of-service', 'privacy-policy', 'staff-detail'];
+    const pages = ['home', 'gamemodes', 'wiki', 'rules', 'vote', 'store', 'ai', 'discord', 'forums', 'plugins', 'donate', 'legal', 'terms-of-service', 'privacy-policy', 'staff-detail', 'launcher'];
 
     // Ambil segmen pertama dari path (misal /ai dari /ai/atau /ai)
     const segments = path.split('/').filter(Boolean);
