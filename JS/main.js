@@ -693,6 +693,166 @@ function initAIPage() {
     document.body.appendChild(script);
 }
 
+// --- Launcher ---
+function initLauncherPage() {
+    const versionBadge = document.getElementById('versionBadge');
+    const downloadGrid = document.getElementById('downloadGrid');
+    const releaseDate = document.getElementById('releaseDate');
+    const releaseBody = document.getElementById('releaseBody');
+
+    if (!downloadGrid) return;
+
+    const GITHUB_REPO = 'NeedFriend0998/CrackedLauncher';
+    const API_URL = `https://api.github.com/repos/${GITHUB_REPO}/releases/latest`;
+
+    // Deteksi OS dari user agent
+    function detectOS() {
+        const ua = navigator.userAgent.toLowerCase();
+        if (ua.includes('win')) return 'windows';
+        if (ua.includes('mac')) return 'mac';
+        if (ua.includes('linux') || ua.includes('android')) return 'linux';
+        return 'unknown';
+    }
+
+    // Tentukan OS dari nama file
+    function getOSFromFilename(name) {
+        const n = name.toLowerCase();
+        if (n.includes('win') || n.endsWith('.exe') || n.endsWith('.msi')) return 'windows';
+        if (n.includes('mac') || n.includes('osx') || n.endsWith('.dmg')) return 'mac';
+        if (n.includes('linux') || n.endsWith('.appimage') || n.endsWith('.deb') || n.endsWith('.rpm')) return 'linux';
+        return 'other';
+    }
+
+    // Format ukuran file
+    function formatSize(bytes) {
+        if (bytes < 1024) return bytes + ' B';
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+        if (bytes < 1024 * 1024 * 1024) return (bytes / 1024 / 1024).toFixed(1) + ' MB';
+        return (bytes / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+    }
+
+    // Icon OS
+    const osIcons = {
+        windows: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5.5L10.5 4.5V11.5H3V5.5M10.5 12.5V19.5L3 18.5V12.5H10.5M12 4.2L21 3V11.5H12V4.2M12 12.5H21V21L12 19.8V12.5Z"/></svg>`,
+        linux: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C9.5 2 7.5 4 7.5 7c0 2-1.5 3-2 5s0 4 2 5c1 .5 2 .5 2.5.5.5 1 1.5 1.5 2 1.5s1.5-.5 2-1.5c.5 0 1.5 0 2.5-.5 2-1 2.5-3 2-5s-2-3-2-5c0-3-2-5-4.5-5z"/><circle cx="10" cy="8" r="0.5" fill="currentColor"/><circle cx="14" cy="8" r="0.5" fill="currentColor"/><path d="M10.5 12.5 Q12 14 13.5 12.5" /></svg>`,
+        mac: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.5 12.5c0-2.5 2-3.7 2-3.7-1.1-1.6-2.8-1.8-3.4-1.8-1.5-.1-2.8.8-3.5.8-.7 0-1.9-.8-3.1-.8-1.6 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.2.8 1.1 1.7 2.3 2.9 2.3 1.1 0 1.5-.7 2.9-.7 1.4 0 1.7.7 2.9.7 1.2 0 2-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.4z"/><path d="M14.5 4.5c.6-.8 1.1-1.9 1-3-.9.1-2 .7-2.6 1.4-.6.7-1.1 1.8-1 2.9 1 0 2.1-.5 2.6-1.3z"/></svg>`,
+        other: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`
+    };
+
+    const osNames = {
+        windows: 'Windows',
+        linux: 'Linux',
+        mac: 'macOS',
+        other: 'Other'
+    };
+
+    // Fetch release dari GitHub API
+    async function fetchRelease() {
+        try {
+            const res = await fetch(API_URL);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+
+            // Update badge versi
+            if (versionBadge) {
+                versionBadge.textContent = `Versi ${data.tag_name} · ${data.name || 'Latest Release'}`;
+            }
+
+            // Update tanggal
+            if (releaseDate) {
+                const date = new Date(data.published_at);
+                const BULAN = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+                releaseDate.textContent = `${date.getDate()} ${BULAN[date.getMonth()]} ${date.getFullYear()}`;
+            }
+
+            // Update release notes
+            if (releaseBody && data.body) {
+                // Bersihin format markdown sederhana
+                let body = data.body
+                    .replace(/^## /gm, '')
+                    .replace(/\r\n/g, '\n')
+                    .trim();
+                releaseBody.textContent = body || 'Tidak ada changelog untuk versi ini.';
+            }
+
+            // Filter assets yang bisa di-download (exclude source code zip/tar.gz)
+            const assets = (data.assets || []).filter(a => 
+                !a.name.includes('source code') && 
+                !a.name.endsWith('.zip') && 
+                !a.name.endsWith('.tar.gz') &&
+                !a.name.endsWith('.txt') &&
+                !a.name.endsWith('.md')
+            );
+
+            if (assets.length === 0) {
+                downloadGrid.innerHTML = '<div class="loading-text">Belum ada file download di release ini.</div>';
+                return;
+            }
+
+            // Group per OS
+            const osGroups = {};
+            assets.forEach(asset => {
+                const os = getOSFromFilename(asset.name);
+                if (!osGroups[os]) osGroups[os] = [];
+                osGroups[os].push(asset);
+            });
+
+            // Render cards
+            const detectedOS = detectOS();
+            downloadGrid.innerHTML = '';
+
+            // Urutkan: OS user duluan
+            const order = [detectedOS, 'windows', 'linux', 'mac', 'other'].filter((v, i, a) => a.indexOf(v) === i);
+
+            order.forEach(os => {
+                if (!osGroups[os]) return;
+
+                osGroups[os].forEach(asset => {
+                    const card = document.createElement('a');
+                    card.className = 'download-card';
+                    card.href = asset.browser_download_url;
+                    card.target = '_blank';
+                    card.rel = 'noopener';
+
+                    const isRecommended = os === detectedOS;
+                    if (isRecommended) {
+                        card.style.borderColor = '#00e5a0';
+                        card.style.boxShadow = '0 8px 24px rgba(0, 229, 160, 0.15)';
+                    }
+
+                    card.innerHTML = `
+                        <div class="os-icon">${osIcons[os]}</div>
+                        <div class="os-name">${osNames[os]} ${isRecommended ? '· Recommended' : ''}</div>
+                        <div class="os-size">${asset.name}</div>
+                        <div class="os-size">${formatSize(asset.size)} · ${asset.download_count} downloads</div>
+                        <div class="os-cta">
+                            Download
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                        </div>
+                    `;
+
+                    downloadGrid.appendChild(card);
+                });
+            });
+
+        } catch (err) {
+            console.error('[Launcher] Gagal load release:', err);
+            downloadGrid.innerHTML = `
+                <div class="loading-text" style="color: #ff5050;">
+                    Gagal memuat. Cek release di 
+                    <a href="https://github.com/${GITHUB_REPO}/releases" target="_blank" style="color: #00e5a0;">GitHub</a>.
+                </div>
+            `;
+            if (versionBadge) versionBadge.textContent = 'Gagal memuat versi';
+        }
+    }
+
+    fetchRelease();
+}
 // ============================================
 // REINIT DISPATCHER (dipanggil router.js)
 // ============================================
