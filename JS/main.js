@@ -708,6 +708,7 @@ window.reinitPage = function() {
     else if (path === '/ai') initAIPage();
     else if (path === '/plugins') initPluginsPage();
     else if (path === '/staff-detail') initStaffDetailPage();
+    else if (path === '/launcher') initLauncherPage();
 
     // Selalu jalanin scroll reveal di halaman baru
     observeElements();
