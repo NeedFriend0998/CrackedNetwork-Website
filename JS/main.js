@@ -268,6 +268,178 @@ function observeElements() {
 })();
 
 // ============================================
+// PLAY MODAL HANDLER
+// ============================================
+const DOWNLOAD_URL = "https://github.com/NeedFriend0998/CrackedLauncher/releases";
+
+let _appOpened = false;
+let _countdownInterval = null;
+let _autoTimeout = null;
+let _modalHandlerBound = false;
+
+function initPlayModal() {
+    if (_modalHandlerBound) return;
+
+    const playBtn = document.getElementById('playBtn');
+    const hddModal = document.getElementById('hddModal');
+    const statusModal = document.getElementById('statusModal');
+    const mobileModal = document.getElementById('mobileModal');
+    const loadingTimer = document.getElementById('loadingTimer');
+    const loadingState = document.getElementById('loadingState');
+    const failedState = document.getElementById('failedState');
+    const countdownText = document.getElementById('countdownText');
+    const btnSuccessManual = document.getElementById('btnSuccessManual');
+
+    if (!playBtn || !hddModal) {
+        console.warn('[Modal] Element gak lengkap, skip.');
+        return;
+    }
+
+    _modalHandlerBound = true;
+
+    // --- Helpers ---
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    }
+
+    function openModal(modal) {
+        if (!modal) return;
+        modal.classList.add('show');
+    }
+
+    function closeModal(modal) {
+        if (!modal) return;
+        modal.classList.remove('show');
+    }
+
+    function closeAllModals() {
+        document.querySelectorAll('.cn-modal.show').forEach(m => m.classList.remove('show'));
+    }
+
+    function cleanupLaunchProcess() {
+        if (_countdownInterval) { clearInterval(_countdownInterval); _countdownInterval = null; }
+        if (_autoTimeout) { clearTimeout(_autoTimeout); _autoTimeout = null; }
+        if (loadingTimer) loadingTimer.style.display = 'none';
+    }
+
+    function onAppOpen() {
+        if (_appOpened) return;
+        _appOpened = true;
+        cleanupLaunchProcess();
+        closeAllModals();
+    }
+
+    function onLaunchFailed() {
+        if (_appOpened) return;
+        cleanupLaunchProcess();
+        if (loadingState) loadingState.style.display = 'none';
+        if (failedState) failedState.style.display = 'block';
+        openModal(statusModal);
+    }
+
+    function startLaunchProcess(seconds) {
+        closeModal(hddModal);
+
+        _appOpened = false;
+        cleanupLaunchProcess();
+
+        if (loadingState) loadingState.style.display = 'block';
+        if (failedState) failedState.style.display = 'none';
+        if (btnSuccessManual) btnSuccessManual.style.display = 'none';
+        if (countdownText) countdownText.textContent = '';
+
+        openModal(statusModal);
+
+        if (loadingTimer) {
+            loadingTimer.innerText = `Estimate ${seconds}s`;
+            loadingTimer.style.display = 'block';
+        }
+
+        let remaining = seconds;
+        _countdownInterval = setInterval(() => {
+            remaining--;
+            if (remaining > 0) {
+                if (loadingTimer) loadingTimer.innerText = `Estimate ${remaining}s`;
+                if (countdownText) countdownText.textContent = `Sisa waktu: ${remaining}s`;
+            } else {
+                clearInterval(_countdownInterval);
+                _countdownInterval = null;
+                if (loadingTimer) loadingTimer.innerText = 'Checking...';
+                if (countdownText) countdownText.textContent = '';
+                if (btnSuccessManual) btnSuccessManual.style.display = 'inline-block';
+            }
+        }, 1000);
+
+        // Trigger protocol
+        try {
+            const tempLink = document.createElement('a');
+            tempLink.href = 'crackedlauncher://play';
+            tempLink.style.display = 'none';
+            tempLink.setAttribute('data-no-pjax', 'true');
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+        } catch (e) {
+            console.warn('Protocol trigger failed:', e);
+        }
+
+        window.addEventListener('blur', onAppOpen, { once: true });
+
+        _autoTimeout = setTimeout(() => {
+            if (!_appOpened) onLaunchFailed();
+        }, seconds * 1000 + 3000);
+    }
+
+    // --- Bind Events (sekali aja) ---
+    playBtn.addEventListener('click', function() {
+        if (isMobileDevice()) {
+            openModal(mobileModal);
+            return;
+        }
+        _appOpened = false;
+        openModal(hddModal);
+    });
+
+    const btnMobileClose = document.getElementById('btnMobileClose');
+    if (btnMobileClose) btnMobileClose.addEventListener('click', () => closeModal(mobileModal));
+
+    const btnHDDYes = document.getElementById('btnHDDYes');
+    const btnHDDNo = document.getElementById('btnHDDNo');
+    if (btnHDDYes) btnHDDYes.addEventListener('click', () => startLaunchProcess(20));
+    if (btnHDDNo) btnHDDNo.addEventListener('click', () => startLaunchProcess(10));
+
+    const btnDownloadYes = document.getElementById('btnDownloadYes');
+    const btnDownloadNo = document.getElementById('btnDownloadNo');
+    if (btnDownloadYes) btnDownloadYes.addEventListener('click', () => {
+        window.open(DOWNLOAD_URL, '_blank');
+        cleanupLaunchProcess();
+        closeAllModals();
+    });
+    if (btnDownloadNo) btnDownloadNo.addEventListener('click', () => {
+        cleanupLaunchProcess();
+        closeAllModals();
+    });
+
+    if (btnSuccessManual) btnSuccessManual.addEventListener('click', () => {
+        _appOpened = true;
+        cleanupLaunchProcess();
+        closeAllModals();
+    });
+
+    // ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (hddModal?.classList.contains('show')) closeModal(hddModal);
+            else if (mobileModal?.classList.contains('show')) closeModal(mobileModal);
+            else if (statusModal?.classList.contains('show')) {
+                cleanupLaunchProcess();
+                closeModal(statusModal);
+            }
+        }
+    });
+}
+
+// ============================================
 // PAGE-SPECIFIC INITIALIZERS
 // ============================================
 
