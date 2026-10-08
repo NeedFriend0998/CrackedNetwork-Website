@@ -1662,77 +1662,76 @@ body.modal-open {
     }
 }
 
-/* ============================================
-   ABANDONED STATE v2 — Box sebagai Sumber Cahaya
-   ============================================ */
+/* ================================
+   MODAL DIALOG (HTML Native)
+   ================================ */
+dialog.modal-dialog {
+    border: none;
+    padding: 0;
+    background: transparent;
+    max-width: 90vw;
+    max-height: 90vh;
+    /* Dialog otomatis di top-layer, gak butuh position: fixed */
+}
 
-/* Overlay — sumber kegelapan */
-.abandoned-overlay {
+dialog.modal-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+}
+
+.modal-Playbox {
+    background: #2d2d2d;
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    border: 1px solid #4CAF50;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.modal-Playbox h3 { margin-top: 0; color: #ff9800; }
+.modal-Playbox p { margin-bottom: 25px; color: #ddd; line-height: 1.5; }
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 4px solid #444;
+    border-top: 4px solid #4CAF50;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px auto;
+}
+
+.btn-Playmodal,
+.btn-modal {
+    padding: 10px 25px;
+    margin: 0 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-yes { background: #4CAF50; color: white; }
+.btn-yes:hover { background: #45a049; }
+.btn-no { background: #555; color: white; }
+.btn-no:hover { background: #777; }
+
+/* Timer di Pojok Kanan Atas */
+#loadingTimer {
+    display: none;
     position: fixed;
-    inset: 0;
-    background: #0a0805;      /* hitam kecoklatan */
-    opacity: 0;               /* default: terang */
-    pointer-events: none;
-    z-index: 1010;            /* di atas navbar (1000), di bawah modal (2000+) */
-}
-
-body.abandoned .abandoned-overlay {
-    animation: abandonedFlicker 6s infinite;
-}
-
-/* Matikan animation di hero-visual biar stat-card bisa keluar dari stacking context */
-body.abandoned .hero-visual {
-    animation: none !important;
-    transform: none !important;
-    opacity: 1 !important;
-}
-
-/* Box player count — "lampu" yang menyala-mati */
-body.abandoned .stat-card.featured {
-    position: relative;
-    z-index: 1020;             /* di atas overlay */
-    animation: boxGlow 6s infinite;
-    will-change: opacity, box-shadow;
-}
-
-/* ============================================
-   KEYFRAMES
-   ============================================ */
-
-/* Overlay: 0 = terang (box nyala), 1 = gelap (box mati) */
-@keyframes abandonedFlicker {
-    0%, 18%   { opacity: 0; }         /* box nyala */
-    19%       { opacity: 0.75; }      /* box mati */
-    20%, 36%  { opacity: 0; }         /* box nyala */
-    37%       { opacity: 0.75; }      /* box mati */
-    38%       { opacity: 0; }         /* box nyala */
-    39.5%     { opacity: 0.75; }      /* box mati */
-    41%, 55%  { opacity: 0; }         /* box nyala lama */
-    56%       { opacity: 0.75; }      /* box mati */
-    57%, 69%  { opacity: 0; }         /* box nyala lama */
-    70%       { opacity: 0.75; }      /* box mati */
-    71%       { opacity: 0; }         /* box nyala */
-    72.5%     { opacity: 0.75; }      /* box mati */
-    74%       { opacity: 0; }         /* box nyala */
-    75.5%     { opacity: 0.75; }      /* box mati */
-    77%, 100% { opacity: 0; }         /* box nyala */
-}
-
-/* Box: opacity 1 = nyala (dengan glow), 0.45 = redup */
-@keyframes boxGlow {
-    0%, 18%   { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    19%       { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    20%, 36%  { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    37%       { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    38%       { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    39.5%     { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    41%, 55%  { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    56%       { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    57%, 69%  { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    70%       { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    71%       { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    72.5%     { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    74%       { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
-    75.5%     { opacity: 0.45; box-shadow: 0 0 0 0 rgba(92, 184, 92, 0); }
-    77%, 100% { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    top: 20px;
+    right: 20px;
+    background: rgba(45, 45, 45, 0.95);
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 1px solid #4CAF50;
+    font-weight: bold;
+    font-size: 16px;
+    z-index: 10000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    color: #fff;
 }
