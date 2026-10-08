@@ -1682,9 +1682,9 @@ body.modal-open {
     box-sizing: border-box;
 }
 
-.cn-modal.show {
+/*.cn-modal.show {
     display: flex;
-}
+}*/
 
 .cn-modal-box {
     background: #2d2d2d;
