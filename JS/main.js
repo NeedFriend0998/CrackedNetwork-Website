@@ -271,43 +271,7 @@ function observeElements() {
 // PAGE-SPECIFIC INITIALIZERS
 // ============================================
 
-// --- Home ---
-function initHomePage() {
-    const playerCountEl = document.getElementById('playerCount');
-    const statusIndicator = document.getElementById('statusIndicator');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const statusCard = document.getElementById('serverStatusCard');
 
-    async function fetchServerStatus() {
-        if (!playerCountEl) return;
-        try {
-            const response = await fetch('https://api.mcsrvstat.us/3/crackednetwork.run.place');
-            const data = await response.json();
-            if (data.online) {
-                playerCountEl.textContent = data.players ? data.players.online : 0;
-                statusCard.classList.remove('offline');
-                statusIndicator.classList.remove('offline');
-                statusDot.classList.remove('offline');
-                statusText.textContent = 'Server Online';
-            } else {
-                playerCountEl.textContent = "0";
-                statusCard.classList.add('offline');
-                statusIndicator.classList.add('offline');
-                statusDot.classList.add('offline');
-                statusText.textContent = 'Server Offline';
-            }
-        } catch (error) {
-            playerCountEl.textContent = "Error";
-            statusIndicator.classList.add('offline');
-            statusDot.classList.add('offline');
-            statusText.textContent = 'API Error';
-        }
-    }
-    fetchServerStatus();
-    if (window._statusInterval) clearInterval(window._statusInterval);
-    window._statusInterval = setInterval(fetchServerStatus, 60000);
-}
 
 // --- Gamemodes ---
 function initGamemodesPage() {
