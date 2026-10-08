@@ -239,7 +239,146 @@
     </div>
 
     <div id="loadingTimer">Estimate 20s</div>
+    
+    <script>
+      const DOWNLOAD_URL = "https://github.com/NeedFriend0998/CrackedLauncher/releases";
+    
+    let appOpened = false;
+    let checkInterval = null;
+    let timerInterval = null;
+    let maxTimeout = null;
 
+    // Fungsi Deteksi Mobile
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+    }
+
+    // Fungsi utama saat tombol Play diklik
+    document.getElementById('playBtn').addEventListener('click', function() {
+        // Cek Mobile Dulu
+        if (isMobileDevice()) {
+            document.getElementById('mobileModal').style.display = 'flex';
+            return;
+        }
+
+        appOpened = false;
+        document.getElementById('hddModal').style.display = 'flex';
+    });
+
+    // Tombol Tutup Popup Mobile
+    document.getElementById('btnMobileClose').addEventListener('click', function() {
+        document.getElementById('mobileModal').style.display = 'none';
+    });
+
+    // Logika Tombol Yes (HDD - Estimasi 20 Detik)
+    document.getElementById('btnHDDYes').addEventListener('click', function() {
+        startLaunchProcess(20);
+    });
+
+    // Logika Tombol No (SSD - Estimasi 10 Detik)
+    document.getElementById('btnHDDNo').addEventListener('click', function() {
+        startLaunchProcess(10);
+    });
+
+    // Fungsi Memulai Proses Launching & Timer
+    function startLaunchProcess(seconds) {
+        document.getElementById('hddModal').style.display = 'none';
+        
+        const timerEl = document.getElementById('loadingTimer');
+        const statusModal = document.getElementById('statusModal');
+        const loadingState = document.getElementById('loadingState');
+        const failedState = document.getElementById('failedState');
+
+        // Reset tampilan modal status
+        loadingState.style.display = 'block';
+        failedState.style.display = 'none';
+        
+        // Panggil protokol via dynamic anchor agar tidak diblokir browser
+        const tempLink = document.createElement('a');
+        tempLink.href = 'crackedlauncher://play';
+        tempLink.style.display = 'none';
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+
+        // Tampilkan timer di pojok kanan atas
+        timerEl.innerText = `Estimate ${seconds}s`;
+        timerEl.style.display = 'block';
+
+        // Hitung mundur timer visual
+        let remaining = seconds;
+        timerInterval = setInterval(() => {
+            remaining--;
+            if (remaining > 0) {
+                timerEl.innerText = `Estimate ${remaining}s`;
+            } else {
+                timerEl.innerText = `Checking...`;
+            }
+        }, 1000);
+
+        // Listener blur (deteksi instan jika launcher terbuka)
+        window.addEventListener('blur', onAppOpen, { once: true });
+
+        // Polling aktif setiap 500ms (backup untuk laptop lemot/event blur telat)
+        checkInterval = setInterval(() => {
+            if (!document.hasFocus()) {
+                onAppOpen();
+            }
+        }, 500);
+
+        // Batas maksimal sesuai estimasi user
+        maxTimeout = setTimeout(() => {
+            if (!appOpened) {
+                clearInterval(checkInterval);
+                clearInterval(timerInterval);
+                timerEl.style.display = 'none'; // Sembunyikan timer
+                
+                // Tampilkan popup gagal/download
+                loadingState.style.display = 'none';
+                failedState.style.display = 'block';
+                statusModal.style.display = 'flex';
+            }
+        }, seconds * 1000); 
+    }
+
+    // Fungsi ketika launcher berhasil terdeteksi terbuka
+    function onAppOpen() {
+        if (!appOpened) {
+            appOpened = true;
+            clearInterval(checkInterval);
+            clearTimeout(maxTimeout);
+            clearInterval(timerInterval);
+            
+            // Sembunyikan semua elemen UI
+            document.getElementById('loadingTimer').style.display = 'none';
+            document.getElementById('statusModal').style.display = 'none';
+            document.getElementById('hddModal').style.display = 'none';
+        }
+    }
+
+    // Tombol Download Yes
+    document.getElementById('btnDownloadYes').addEventListener('click', function() {
+        window.open(DOWNLOAD_URL, '_blank');
+        document.getElementById('statusModal').style.display = 'none';
+    });
+
+    // Tombol Download No
+    document.getElementById('btnDownloadNo').addEventListener('click', function() {
+        document.getElementById('statusModal').style.display = 'none';
+    });
+
+    // Logika Tombol YES (Download)
+    document.getElementById('btnYes').addEventListener('click', function() {
+        // GANTI LINK DI BAWAH INI DENGAN LINK REPOSITORY KAMU
+        window.location.href = "https://github.com/NeedFriend0998/HMCL-modify-to-CrackedLauncher/releases"; 
+        document.getElementById('installModal').style.display = 'none';
+    });
+
+    // Logika Tombol NO (Tutup Popup)
+    document.getElementById('btnNo').addEventListener('click', function() {
+        document.getElementById('installModal').style.display = 'none';
+    });
+    </script>
     <script src="/JS/router.js"></script>
     <script src="/JS/main.js"></script>
 </body>
