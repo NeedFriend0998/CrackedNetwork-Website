@@ -1559,11 +1559,11 @@ input, textarea { -webkit-user-select: text; user-select: text; }
     display: flex;
 }
 
-/* Body lock saat modal kebuka 
+/* Body lock saat modal kebuka */
 body.modal-open {
     overflow: hidden !important;
     height: 100vh;
-}*/
+}
 
 /* ================================
    SERVER LIST ITEM (TOP)
