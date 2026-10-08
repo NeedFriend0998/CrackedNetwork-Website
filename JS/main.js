@@ -452,19 +452,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function initHomePage() {
   initPlayModal();
-    const playerCountEl = document.getElementById('playerCount');
-    const statusIndicator = document.getElementById('statusIndicator');
-    const statusDot = document.getElementById('statusDot');
-    const statusText = document.getElementById('statusText');
-    const statusCard = document.getElementById('serverStatusCard');
-
-    async function fetchServerStatus() {
-        if (!playerCountEl) return;
-        try {
-            const response = await fetch('https://api.mcsrvstat.us/3/crackednetwork.run.place');
-            const data = await response.json();
-            const playerCount = (data.online && data.players) ? data.players.online : 0;
-
     // Inject abandoned overlay (sekali aja)
     if (!document.querySelector('.abandoned-overlay')) {
         const ov = document.createElement('div');
