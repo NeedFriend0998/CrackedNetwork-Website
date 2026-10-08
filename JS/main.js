@@ -841,7 +841,7 @@ window.reinitPage = function() {
     const path = window.location.pathname.replace(/\/$/, '') || '/home';
 
     if (path === '/home' || path === '/' || path === '/index.html') initHomePage();
-//    else if (path === '/launcher') initLauncherPage();
+    else if (path === '/launcher') initLauncherPage();
     else if (path === '/gamemodes') initGamemodesPage();
     else if (path === '/wiki') initWikiPage();
     else if (path === '/rules') initRulesPage();
