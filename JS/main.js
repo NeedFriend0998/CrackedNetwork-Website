@@ -451,6 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initHomePage() {
+  initPlayModal();
     const playerCountEl = document.getElementById('playerCount');
     const statusIndicator = document.getElementById('statusIndicator');
     const statusDot = document.getElementById('statusDot');
