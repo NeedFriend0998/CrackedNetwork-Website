@@ -465,34 +465,38 @@ function initHomePage() {
             const data = await response.json();
             const playerCount = (data.online && data.players) ? data.players.online : 0;
 
-            // Toggle abandoned state
-            if (data.online && playerCount === 0) {
+    // Inject abandoned overlay (sekali aja)
+    if (!document.querySelector('.abandoned-overlay')) {
+        const ov = document.createElement('div');
+        ov.className = 'abandoned-overlay';
+        document.body.appendChild(ov);
+    }
+
+    const playerCountEl = document.getElementById('playerCount');
+    const statusText = document.getElementById('statusText');
+    const statusCard = document.getElementById('serverStatusCard');
+
+    async function fetchServerStatus() {
+        if (!playerCountEl) return;
+        try {
+            const res = await fetch('https://api.mcsrvstat.us/3/crackednetwork.run.place');
+            const data = await res.json();
+            const count = (data.online && data.players) ? data.players.online : 0;
+
+            if (data.online && count === 0) {
                 document.body.classList.add('abandoned');
                 statusText.textContent = 'Server Sepi';
             } else {
                 document.body.classList.remove('abandoned');
-                statusText.textContent = 'Server Online';
+                statusText.textContent = data.online ? 'Server Online' : 'Server Offline';
             }
 
-            if (data.online) {
-                playerCountEl.textContent = playerCount;
-                statusCard.classList.remove('offline');
-                statusIndicator.classList.remove('offline');
-                statusDot.classList.remove('offline');
-            } else {
-                playerCountEl.textContent = "0";
-                statusCard.classList.add('offline');
-                statusIndicator.classList.add('offline');
-                statusDot.classList.add('offline');
-                statusText.textContent = 'Server Offline';
-            }
-        } catch (error) {
-            playerCountEl.textContent = "Error";
-            statusIndicator.classList.add('offline');
-            statusDot.classList.add('offline');
-            statusText.textContent = 'API Error';
+            playerCountEl.textContent = data.online ? count : '0';
+        } catch (e) {
+            playerCountEl.textContent = 'Error';
         }
     }
+
     fetchServerStatus();
     if (window._statusInterval) clearInterval(window._statusInterval);
     window._statusInterval = setInterval(fetchServerStatus, 60000);
