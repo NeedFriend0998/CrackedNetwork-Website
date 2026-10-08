@@ -1666,16 +1666,13 @@ body.modal-open {
    ABANDONED STATE — Server Sepi
    ============================================ */
 
-body.abandoned {
+body.abandoned .nav,
+body.abandoned .pages,
+body.abandoned .footer,
+body.abandoned #particles,
+body.abandoned .bg-canvas {
     filter: grayscale(0.75) brightness(0.6) contrast(0.9);
-}
-
-/* Reset filter di modal & popup */
-body.abandoned #hddModal,
-body.abandoned #statusModal,
-body.abandoned #mobileModal,
-body.abandoned #checkoutModal {
-    filter: grayscale(0) brightness(1) contrast(1);
+    transition: filter 0.8s ease;
 }
 
 /* Player Box kelap-kelip */
