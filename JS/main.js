@@ -446,9 +446,9 @@ function initPlayModal() {
 // ============================================
 // INIT SAAT PERTAMA KALI LOAD
 // ============================================
-//document.addEventListener('DOMContentLoaded', () => {
-//    window.reinitPage();
-//});
+document.addEventListener('DOMContentLoaded', () => {
+    window.reinitPage();
+});
 
 function initHomePage() {
   initPlayModal();
