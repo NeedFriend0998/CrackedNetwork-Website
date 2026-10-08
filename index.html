@@ -252,17 +252,13 @@
     
     <script>
     const DOWNLOAD_URL = "https://github.com/NeedFriend0998/CrackedLauncher/releases";
-    const HOME = "/home";
 
-    // Reference elements
+    // Element refs
     const hddModal = document.getElementById('hddModal');
     const statusModal = document.getElementById('statusModal');
     const mobileModal = document.getElementById('mobileModal');
     const loadingTimer = document.getElementById('loadingTimer');
-    const loadingState = document.getElementById('loadingState');
     const failedState = document.getElementById('failedState');
-    const countdownText = document.getElementById('countdownText');
-    const btnSuccessManual = document.getElementById('btnSuccessManual');
 
     let appOpened = false;
     let countdownInterval = null;
@@ -272,12 +268,11 @@
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
     }
 
-    // === MODAL CONTROLS (ROBUST) ===
+    // === MODAL CONTROLS ===
     function openModal(modal) {
         if (!modal) return;
         modal.classList.add('show');
         document.body.classList.add('cn-body-locked');
-        // Stop Lenis kalau ada
         if (window.lenis && typeof window.lenis.stop === 'function') {
             try { window.lenis.stop(); } catch (e) {}
         }
@@ -286,7 +281,6 @@
     function closeModal(modal) {
         if (!modal) return;
         modal.classList.remove('show');
-        // Cek apakah masih ada modal lain yang open
         const anyOpen = document.querySelector('.cn-modal.show');
         if (!anyOpen) {
             document.body.classList.remove('cn-body-locked');
@@ -326,39 +320,20 @@
         startLaunchProcess(10);
     });
 
-    // === LAUNCH PROCESS ===
+    // === LAUNCH PROCESS (NO MODAL DURING COUNTDOWN) ===
     function startLaunchProcess(seconds) {
         closeModal(hddModal);
 
         // Reset state
         appOpened = false;
-        loadingState.style.display = 'block';
-        failedState.style.display = 'none';
-        if (btnSuccessManual) btnSuccessManual.style.display = 'none';
-        countdownText.textContent = '';
+        cleanupLaunchProcess();
 
-        // Show loading modal
-        openModal(statusModal);
+        // Reset failed state modal (tapi jangan buka)
+        if (failedState) failedState.style.display = 'none';
 
-        // Show timer
+        // Show countdown di pojok kanan atas
         loadingTimer.innerText = `Estimate ${seconds}s`;
         loadingTimer.style.display = 'block';
-
-        // Countdown
-        let remaining = seconds;
-        countdownInterval = setInterval(() => {
-            remaining--;
-            if (remaining > 0) {
-                loadingTimer.innerText = `Estimate ${remaining}s`;
-                countdownText.textContent = `Sisa waktu: ${remaining}s`;
-            } else {
-                clearInterval(countdownInterval);
-                loadingTimer.innerText = 'Checking...';
-                countdownText.textContent = '';
-                // Show manual success button
-                if (btnSuccessManual) btnSuccessManual.style.display = 'inline-block';
-            }
-        }, 1000);
 
         // Trigger custom protocol
         try {
@@ -372,10 +347,23 @@
             console.warn('Protocol trigger failed:', e);
         }
 
-        // Auto-detect: kalau window blur (user pindah app), anggap launcher buka
+        // Detect window blur (user pindah ke app launcher)
         window.addEventListener('blur', onAppOpen, { once: true });
 
-        // Auto timeout
+        // Countdown interval
+        let remaining = seconds;
+        countdownInterval = setInterval(() => {
+            remaining--;
+            if (remaining > 0) {
+                loadingTimer.innerText = `Estimate ${remaining}s`;
+            } else {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+                loadingTimer.innerText = 'Checking...';
+            }
+        }, 1000);
+
+        // Auto timeout (buffer +3 detik)
         autoTimeout = setTimeout(() => {
             if (!appOpened) {
                 onLaunchFailed();
@@ -387,44 +375,34 @@
         if (appOpened) return;
         appOpened = true;
         cleanupLaunchProcess();
-        closeAllModals();
     }
 
     function onLaunchFailed() {
         if (appOpened) return;
         cleanupLaunchProcess();
-        loadingState.style.display = 'none';
-        failedState.style.display = 'block';
+        // Baru munculin modal failed
+        if (failedState) failedState.style.display = 'block';
+        openModal(statusModal);
     }
 
     function cleanupLaunchProcess() {
         if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
         if (autoTimeout) { clearTimeout(autoTimeout); autoTimeout = null; }
-        loadingTimer.style.display = 'none';
+        if (loadingTimer) loadingTimer.style.display = 'none';
     }
 
-    // Manual success button
-    if (btnSuccessManual) {
-        btnSuccessManual.addEventListener('click', function() {
-            appOpened = true;
-            cleanupLaunchProcess();
-            closeAllModals();
-        });
-    }
-
-    // Download buttons
+    // === DOWNLOAD BUTTONS (di dalam status modal) ===
     document.getElementById('btnDownloadYes').addEventListener('click', function() {
         window.open(DOWNLOAD_URL, '_blank');
         cleanupLaunchProcess();
         closeAllModals();
     });
     document.getElementById('btnDownloadNo').addEventListener('click', function() {
-        window.location.replace("https://www.crackednetwork.run.place");
         cleanupLaunchProcess();
         closeAllModals();
     });
 
-    // ESC to close
+    // === ESC key ===
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             if (hddModal && hddModal.classList.contains('show')) { closeModal(hddModal); return; }
