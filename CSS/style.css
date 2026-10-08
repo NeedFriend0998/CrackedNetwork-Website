@@ -1666,8 +1666,14 @@ body.modal-open {
    ABANDONED STATE — Server Sepi
    ============================================ */
 
-body.abandoned {
+/* Apply ke konten visual, BUKAN body */
+body.abandoned .bg-canvas,
+body.abandoned .nav,
+body.abandoned main.pages,
+body.abandoned .footer,
+body.abandoned #particles {
     filter: grayscale(0.75) brightness(0.6) contrast(0.9);
+    transition: filter 0.8s ease;
 }
 
 /* Player Box kelap-kelip */
