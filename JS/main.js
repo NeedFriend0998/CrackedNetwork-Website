@@ -1,9 +1,9 @@
 // Inject abandoned overlay (sekali aja)
-if (!document.querySelector('.abandoned-overlay')) {
-    const overlay = document.createElement('div');
-    overlay.className = 'abandoned-overlay';
-    document.body.appendChild(overlay);
-}
+//if (!document.querySelector('.abandoned-overlay')) {
+//    const overlay = document.createElement('div');
+//    overlay.className = 'abandoned-overlay';
+//    document.body.appendChild(overlay);
+//}
 
 // ============================================
 // SOUND EFFECT — WEB AUDIO API
