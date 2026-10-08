@@ -220,7 +220,16 @@
 <!-- Modal Status (cuma buat failed) -->
 <div id="statusModal" class="cn-modal">
     <div class="cn-modal-box">
-        <div id="failedState">
+        <div id="loadingState">
+            <div class="cn-spinner"></div>
+            <h3>Membuka Launcher...</h3>
+            <p id="loadingText">Harap tunggu sebentar.<br>Jangan tutup tab ini saat proses berjalan.</p>
+            <p id="countdownText" style="color:#00e5a0;font-weight:bold;"></p>
+            <button id="btnSuccessManual" class="cn-btn cn-btn-no" style="margin-top:20px;display:none;">
+                ✅ Launcher sudah terbuka
+            </button>
+        </div>
+        <div id="failedState" style="display: none;">
             <h3>⚠️ Launcher Isn't installed</h3>
             <p>Would you like to download it?</p>
             <div class="cn-modal-actions">
