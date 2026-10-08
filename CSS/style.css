@@ -1769,3 +1769,69 @@ body.modal-open {
 body.cn-body-locked {
     overflow: hidden !important;
 }
+
+/* ============================================
+   ABANDONED STATE v3 — Overlay
+   ============================================ */
+.abandoned-overlay {
+    position: fixed;
+    inset: 0;
+    background: #0a0805;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1010;
+    transition: opacity 0.15s ease;
+}
+
+body.abandoned .abandoned-overlay {
+    animation: abandonedFlicker 6s infinite;
+}
+
+body.abandoned .hero-visual {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+body.abandoned .stat-card.featured {
+    position: relative;
+    z-index: 1020;
+    animation: boxGlow 6s infinite;
+    will-change: opacity, box-shadow;
+}
+
+@keyframes abandonedFlicker {
+    0%, 18%   { opacity: 0; }
+    19%       { opacity: 0.75; }
+    20%, 36%  { opacity: 0; }
+    37%       { opacity: 0.75; }
+    38%       { opacity: 0; }
+    39.5%     { opacity: 0.75; }
+    41%, 55%  { opacity: 0; }
+    56%       { opacity: 0.75; }
+    57%, 69%  { opacity: 0; }
+    70%       { opacity: 0.75; }
+    71%       { opacity: 0; }
+    72.5%     { opacity: 0.75; }
+    74%       { opacity: 0; }
+    75.5%     { opacity: 0.75; }
+    77%, 100% { opacity: 0; }
+}
+
+@keyframes boxGlow {
+    0%, 18%   { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    19%       { opacity: 0.45; box-shadow: none; }
+    20%, 36%  { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    37%       { opacity: 0.45; box-shadow: none; }
+    38%       { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    39.5%     { opacity: 0.45; box-shadow: none; }
+    41%, 55%  { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    56%       { opacity: 0.45; box-shadow: none; }
+    57%, 69%  { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    70%       { opacity: 0.45; box-shadow: none; }
+    71%       { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    72.5%     { opacity: 0.45; box-shadow: none; }
+    74%       { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+    75.5%     { opacity: 0.45; box-shadow: none; }
+    77%, 100% { opacity: 1;    box-shadow: 0 0 60px 15px rgba(92, 184, 92, 0.35); }
+}
