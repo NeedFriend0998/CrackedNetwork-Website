@@ -88,6 +88,8 @@
         if (href.startsWith('http') || href.startsWith('//')) return;
         // Skip anchor, mailto, tel
         if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        // Skip custom protocol (crackedlauncher://, ftp://, dll)
+if (href.includes('://') && !href.startsWith('http://') && !href.startsWith('https://')) return;
         // Skip target="_blank" atau download
         if (link.target === '_blank' || link.hasAttribute('download')) return;
         // Skip kalau ditandai no-pjax
