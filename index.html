@@ -344,6 +344,7 @@
             tempLink.href = 'crackedlauncher://play';
             tempLink.style.display = 'none';
             document.body.appendChild(tempLink);
+            tempLink.setAttribute('data-no-pjax', 'true');
             tempLink.click();
             document.body.removeChild(tempLink);
         } catch (e) {
