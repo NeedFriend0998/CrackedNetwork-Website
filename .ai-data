@@ -1,1 +1,3 @@
-test
+This is information about CrackedNetwork Website
+### HOME PAGE ###
+Added "Join Server" button and used for run a launcher if user have it, if user don't have it user will asked to download from github repo 
