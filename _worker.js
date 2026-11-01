@@ -33,7 +33,7 @@ export default {
       if (path === '/store') {
         const storeUrl = new URL(request.url);
         storeUrl.hostname = 'store.crackednetwork.run.place';
-        storeUrl.pathname = '/'; // Kembalikan ke root subdomain store
+        storeUrl.pathname = '/store'; // Kembalikan ke root subdomain store
         return Response.redirect(storeUrl.toString(), 301);
       }
     }
