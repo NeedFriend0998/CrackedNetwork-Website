@@ -8,16 +8,14 @@ export default {
     // 1. LOGIKA UNTUK SUBDOMAIN STORE
     // ==========================================================
     if (host === 'store.crackednetwork.run.place') {
-      // Jika membuka root ("/"), tampilkan file /store TANPA redirect
+      // a. Jika buka root (/), redirect ke /store
       if (path === '/') {
-        // Buat URL baru dengan path /store
         const storeUrl = new URL('/store', request.url);
-        // Ambil file /store dan tampilkan seolah-olah itu root
-        return env.ASSETS.fetch(storeUrl);
+        return Response.redirect(storeUrl.toString(), 301);
       }
 
-      // Jika mengakses path lain selain /store (misal /home), 
-      // barulah redirect ke domain utama (www)
+      // b. Jika buka halaman selain /store dan bukan file aset (seperti .css, .js), 
+      // lempar ke domain utama (www)
       if (path !== '/store' && !path.includes('.')) {
         const wwwUrl = new URL(request.url);
         wwwUrl.hostname = 'www.crackednetwork.run.place';
@@ -29,19 +27,18 @@ export default {
     // 2. LOGIKA UNTUK DOMAIN UTAMA (WWW)
     // ==========================================================
     if (host === 'www.crackednetwork.run.place' || host === 'crackednetwork.run.place') {
-      // Jika mengakses /store, redirect ke subdomain store
+      // Jika buka /store, redirect ke subdomain store
       if (path === '/store') {
         const storeUrl = new URL(request.url);
         storeUrl.hostname = 'store.crackednetwork.run.place';
-        storeUrl.pathname = '/'; // Kembalikan ke root subdomain store
+        // Kita biarkan path tetap /store karena tadi udah work
         return Response.redirect(storeUrl.toString(), 301);
       }
     }
 
     // ==========================================================
-    // 3. DEFAULT: LAYANI FILE STATIS LAINNYA
+    // 3. DEFAULT: LAYANI FILE
     // ==========================================================
-    // Penting: Jangan ubah request, biarkan Cloudflare yang mengurus
     return env.ASSETS.fetch(request);
   },
 };
