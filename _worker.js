@@ -4,35 +4,39 @@ export default {
     const host = url.hostname;
     const path = url.pathname;
 
-    // ==========================================
-    // LOGIKA REDIRECT ANTAR DOMAIN
-    // ==========================================
-
-    // 1. Jika di subdomain STORE tapi minta halaman selain /store (misal /home)
-    // JANGAN redirect kalau yang diminta adalah file aset (.css, .js, .png)
-    if (host === 'store.crackednetwork.run.place' && path !== '/' && path !== '/store' && !path.includes('.')) {
-      url.hostname = 'www.crackednetwork.run.place';
-      return Response.redirect(url.toString(), 301); // Redirect permanen
-    }
-
-    // 2. Jika di domain WWW tapi minta halaman /store
-    if ((host === 'www.crackednetwork.run.place' || host === 'crackednetwork.run.place') && path === '/store') {
-      url.hostname = 'store.crackednetwork.run.place';
-      url.pathname = '/'; // Ubah /store jadi / karena di subdomain store, root (/) udah nampilin toko
-      return Response.redirect(url.toString(), 301);
-    }
-
-    // ==========================================
-    // LOGIKA REWRITE (Tampilan Awal)
-    // ==========================================
-    
-    // 3. Jika di subdomain STORE dan buka root (/), tampilkan file /store
+    // ==========================================================
+    // LOGIKA 1: REWRITE (Tampilkan konten tanpa ganti URL)
+    // ==========================================================
+    // Jika user membuka domain store DAN berada di root ("/")
     if (host === 'store.crackednetwork.run.place' && path === '/') {
+      // Ubah path secara internal menjadi /store
       url.pathname = '/store';
+      // Ambil file /store dan tampilkan seolah-olah itu halaman utama
       return env.ASSETS.fetch(new Request(url.toString(), request));
     }
 
-    // Default behavior (Load file asli)
+    // ==========================================================
+    // LOGIKA 2: REDIRECT (Pindah domain)
+    // ==========================================================
+    
+    // Jika user berada di domain store tapi mencoba akses halaman lain (misal /home)
+    // Maka lempar ke domain utama (www)
+    if (host === 'store.crackednetwork.run.place' && path !== '/' && !path.includes('.')) {
+      url.hostname = 'www.crackednetwork.run.place';
+      return Response.redirect(url.toString(), 301);
+    }
+
+    // Jika user berada di domain utama (www) tapi mencoba akses /store
+    // Maka lempar ke subdomain store
+    if ((host === 'www.crackednetwork.run.place' || host === 'crackednetwork.run.place') && path === '/store') {
+      url.hostname = 'store.crackednetwork.run.place';
+      url.pathname = '/'; // Kembalikan ke root subdomain store
+      return Response.redirect(url.toString(), 301);
+    }
+
+    // ==========================================================
+    // DEFAULT: Biarkan Cloudflare menangani file statis lainnya
+    // ==========================================================
     return env.ASSETS.fetch(request);
   },
 };
