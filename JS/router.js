@@ -101,6 +101,20 @@ if (href.includes('://') && !href.startsWith('http://') && !href.startsWith('htt
         if (currentPath === targetPath) return;
 
         e.preventDefault();
+
+        // 🚨 TAMBAHKAN LOGIKA INI 🚨
+        // Cek apakah domain tujuan berbeda dengan domain saat ini
+        const currentHost = window.location.hostname;
+        const targetUrlObj = new URL(href, window.location.origin);
+        
+        if (currentHost !== targetUrlObj.hostname) {
+            // Kalau beda domain (misal dari store ke www, atau sebaliknya)
+            // Paksa browser buat reload halaman (gak bisa pake navigateTo/PJAX)
+            window.location.href = href; 
+            return; 
+        }
+
+        // Kalau domain sama, panggil PJAX seperti biasa
         navigateTo(href);
     });
 
