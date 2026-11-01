@@ -10,11 +10,6 @@ export default {
       return Response.redirect(storeUrl.toString(), 301);
     }
 
-    if (host === 'store.crackednetwork.run.place' && path === '/ai') {
-      const storeUrl = new URL('/store', request.url);
-      return Response.redirect(storeUrl.toString(), 301);
-    }
-
     // Biarkan Cloudflare menangani permintaan lainnya (termasuk file aset)
     return env.ASSETS.fetch(request);
   },
