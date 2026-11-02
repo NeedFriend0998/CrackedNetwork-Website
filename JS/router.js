@@ -3,71 +3,64 @@
   const STORE = "https://store.crackednetwork.run.place";
   const onStoreHost = location.hostname.startsWith("store.");
   const isStore = (p) => p === "/store" || p.startsWith("/store/");
-  const cache = new Map();
 
-  const load = (path) => {
-    if (!cache.has(path)) cache.set(path, fetch(path).then((r) => r.text()));
-    return cache.get(path);
-  };
-
-  async function navigate(path, push = true) {
-    try {
-      const html = await load(path);
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      document.title = doc.title;
-      document.body.replaceWith(doc.body);
-      if (push) history.pushState({}, "", path);
-      window.scrollTo(0, 0);
-    } catch {
-      location.href = path; // fallback aman
-    }
+  // Di domain store: path tampil /store supaya main.js memuat isi store
+  if (onStoreHost && location.pathname === "/") {
+    history.replaceState(null, "", "/store" + location.search + location.hash);
   }
 
+  // Pindah domain = navigasi normal (tanpa swap body)
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a[href]");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
-
     const u = new URL(a.href, location.href);
-    const ours = u.origin === MAIN || u.origin === STORE;
-    if (!ours) return; // link luar (instagram, youtube) biarkan normal
-
-    const path = u.pathname + u.search;
+    if (u.origin !== MAIN && u.origin !== STORE) return; // link luar: biarkan
+    const path = u.pathname + u.search + u.hash;
 
     if (onStoreHost) {
-      // di store: link ke halaman selain store -> pindah ke www (normal)
-      if (u.pathname !== "/" && !isStore(u.pathname)) {
-        e.preventDefault();
-        location.href = MAIN + path;
-      } else if (isStore(u.pathname)) {
-        e.preventDefault();
-        location.href = STORE + "/";
-      }
-      return;
-    }
-
-    // di www: ke /store -> pindah domain (normal, tidak instan)
-    if (isStore(u.pathname)) {
+      if (isStore(u.pathname) || u.pathname === "/") return; // tetap di store
+      e.preventDefault();
+      location.href = MAIN + path;
+    } else if (isStore(u.pathname)) {
       e.preventDefault();
       location.href = STORE + "/";
-      return;
     }
-
-    // di www: halaman lain instan
-    if (u.origin !== location.origin) return;
-    e.preventDefault();
-    navigate(path);
   });
 
-  // router instan hanya aktif di www
+  // Percepat halaman di www: prefetch + prerender saat hover/sentuh
   if (!onStoreHost) {
-    const prefetch = (e) => {
-      const a = e.target.closest?.("a[href]");
-      if (!a) return;
-      const u = new URL(a.href, location.href);
-      if (u.origin === location.origin && !isStore(u.pathname)) load(u.pathname);
+    const done = new Set();
+    const prefetch = (path) => {
+      if (done.has(path)) return;
+      done.add(path);
+      const l = document.createElement("link");
+      l.rel = "prefetch";
+      l.href = path;
+      document.head.appendChild(l);
     };
-    document.addEventListener("mouseover", prefetch);
-    document.addEventListener("touchstart", prefetch, { passive: true });
-    window.addEventListener("popstate", () => navigate(location.pathname, false));
+
+    const idle = window.requestIdleCallback || ((f) => setTimeout(f, 800));
+    idle(() => {
+      document.querySelectorAll("a[href^='/']").forEach((a) => {
+        const p = new URL(a.href).pathname;
+        if (!isStore(p)) prefetch(p);
+      });
+    });
+
+    if (HTMLScriptElement.supports && HTMLScriptElement.supports("speculationrules")) {
+      const s = document.createElement("script");
+      s.type = "speculationrules";
+      s.textContent = JSON.stringify({
+        prerender: [{
+          where: { and: [
+            { href_matches: "/*" },
+            { not: { href_matches: "/store*" } },
+            { not: { href_matches: "/*.*" } }
+          ] },
+          eagerness: "moderate"
+        }]
+      });
+      document.head.appendChild(s);
+    }
   }
 })();
