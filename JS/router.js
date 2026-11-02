@@ -4,6 +4,14 @@
   const onStoreHost = location.hostname.startsWith("store.");
   const isStore = (p) => p === "/store" || p.startsWith("/store/");
 
+// kompatibel dengan main.js: navigasi normal + sadar domain
+window.pjaxNavigate = (path) => {
+  const toStore = isStore(path);
+  if (onStoreHost && !toStore) location.href = MAIN + path;
+  else if (!onStoreHost && toStore) location.href = STORE + "/";
+  else location.href = path;
+};
+
   // Di domain store: path tampil /store supaya main.js memuat isi store
   if (onStoreHost && location.pathname === "/") {
     history.replaceState(null, "", "/store" + location.search + location.hash);
