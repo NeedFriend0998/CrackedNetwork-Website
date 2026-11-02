@@ -26,7 +26,7 @@ export default {
     // 1) www + /store  ->  store.crackednetwork.run.place
     if (hostname === MAIN && isStorePath) {
       const rest = pathname.slice("/store".length) || "/";
-      return Response.redirect(`https://${STORE}${rest}${search}`, 302);
+      return Response.redirect(`https://${STORE}${rest}${search}`, 301);
     }
 
     // 2) domain store
@@ -40,7 +40,7 @@ export default {
         return env.ASSETS.fetch(request);
       }
       // halaman lain (/home, /gamemodes, /wiki, /rules, dll) -> www
-      return Response.redirect(`https://${MAIN}${pathname}${search}`, 302);
+      return Response.redirect(`https://${MAIN}${pathname}${search}`, 301);
     }
 
     // 3) domain lain (www, pages.dev, dll): layani seperti biasa
