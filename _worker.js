@@ -8,20 +8,17 @@ export default {
     // 1. LOGIKA UNTUK SUBDOMAIN STORE
     // ==========================================================
     if (host === 'store.crackednetwork.run.place') {
-      // Jika membuka root ("/"), tampilkan file /store TANPA redirect
+      // a. Jika buka root ("/"), ambil konten /store dari Pages
       if (path === '/') {
-        // Buat URL baru dengan path /store
-        const storeUrl = new URL('/store', request.url);
-        // Ambil file /store dan tampilkan seolah-olah itu root
-        return env.ASSETS.fetch(storeUrl);
+        const storeUrl = new URL('/store', 'https://crackednetwork-website.pages.dev');
+        return fetch(storeUrl, request);
       }
 
-      // Jika mengakses path lain selain /store (misal /home), 
-      // barulah redirect ke domain utama (www)
+      // b. Jika buka halaman lain (misal /ai, /home), lempar ke www
       if (path !== '/store' && !path.includes('.')) {
         const wwwUrl = new URL(request.url);
         wwwUrl.hostname = 'www.crackednetwork.run.place';
-        return Response.redirect(wwwUrl.toString(), 301);
+        return Response.redirect(wwwUrl.toString(), 302);
       }
     }
 
@@ -29,19 +26,20 @@ export default {
     // 2. LOGIKA UNTUK DOMAIN UTAMA (WWW)
     // ==========================================================
     if (host === 'www.crackednetwork.run.place' || host === 'crackednetwork.run.place') {
-      // Jika mengakses /store, redirect ke subdomain store
+      // Jika buka /store, lempar ke subdomain store
       if (path === '/store') {
         const storeUrl = new URL(request.url);
         storeUrl.hostname = 'store.crackednetwork.run.place';
-        storeUrl.pathname = '/'; // Kembalikan ke root subdomain store
-        return Response.redirect(storeUrl.toString(), 301);
+        storeUrl.pathname = '/'; // Ubah jadi root
+        return Response.redirect(storeUrl.toString(), 302);
       }
     }
 
     // ==========================================================
-    // 3. DEFAULT: LAYANI FILE STATIS LAINNYA
+    // 3. DEFAULT: Proxy ke Cloudflare Pages
     // ==========================================================
-    // Penting: Jangan ubah request, biarkan Cloudflare yang mengurus
-    return env.ASSETS.fetch(request);
+    // Jika yang diakses adalah /ai, /home, dll di domain utama, ambil dari Pages
+    const pagesUrl = new URL(url.pathname + url.search, 'https://crackednetwork-website.pages.dev');
+    return fetch(pagesUrl, request);
   },
 };
