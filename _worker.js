@@ -4,9 +4,9 @@ export default {
     const host = url.hostname;
     const path = url.pathname;
 
-    // =======================================================
+    // ==========================================================
     // 1. LOGIKA UNTUK SUBDOMAIN STORE
-    // =======================================================
+    // ==========================================================
     if (host === 'store.crackednetwork.run.place') {
       // a. Jika buka root (/), redirect ke /store
       if (path === '/') {
