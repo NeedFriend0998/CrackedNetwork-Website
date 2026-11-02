@@ -1,5 +1,5 @@
 // _worker.js
-import { handleRequest } from './router.js';
+import { handleRequest } from './JS/router.js';
 
 export default {
   async fetch(request, env, ctx) {
