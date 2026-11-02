@@ -1,13 +1,29 @@
 // router.js
-export function handleRequest(request) {
-  const url = new URL(request.url);
-  // Jika path diawali dengan /store, redirect ke subdomain store.
-  if (url.pathname.startsWith('/store')) {
-    const storeUrl = 'https://store.crackednetwork.run.place';
-    // Gabungkan sisa path setelah /store (jika ada) ke URL tujuan
-    const newUrl = storeUrl + url.pathname.slice('/store'.length) + url.search;
-    return Response.redirect(newUrl, 302); // 302 agar aman & instan
+export const routes = {
+  // Rute untuk /store akan diarahkan ke subdomain.
+  // Tanda '/*' menangkap semua sub-path di bawah /store.
+  '/store/*': {
+    redirectTo: 'https://store.crackednetwork.run.place',
+    // 'preservePath' akan meneruskan path setelah /store.
+    // Contoh: /store/product/1 -> https://store.crackednetwork.run.place/product/1
+    preservePath: true, 
+    status: 301, // 301 untuk permanen, 302 untuk sementara
+  },
+  // Anda bisa menambahkan rute lain di sini jika perlu.
+};
+
+// Fungsi helper untuk mencocokkan path dengan pola di routes
+export function matchRoute(pathname) {
+  for (const pattern in routes) {
+    // Mengubah pola '/store/*' menjadi regex untuk mencocokkan path
+    const regexPattern = pattern
+      .replace(/\*/g, '.*') // Ganti * dengan .*
+      .replace(/\//g, '\\/'); // Escape slash
+    const regex = new RegExp(`^${regexPattern}$`);
+    
+    if (regex.test(pathname)) {
+      return { pattern, config: routes[pattern] };
+    }
   }
-  // Jika bukan /store, kembalikan null agar _worker.js melanjutkan ke aset statis
   return null;
 }
