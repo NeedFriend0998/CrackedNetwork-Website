@@ -1,35 +1,40 @@
-// _worker.js
-import { routes, matchRoute } from './JS/router.js';
+const MAIN = "www.crackednetwork.run.place";
+const STORE = "store.crackednetwork.run.place";
+
+async function serve(env, request, path) {
+  const u = new URL(request.url);
+  u.pathname = path;
+  let res = await env.ASSETS.fetch(new Request(u, request));
+  // Pages sering membalas redirect (/store -> /store/), ikuti manual
+  if (res.status >= 300 && res.status < 400) {
+    const loc = new URL(res.headers.get("Location"), u);
+    res = await env.ASSETS.fetch(new Request(loc, request));
+  }
+  return res;
+}
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
-    const { pathname } = url;
+    const isStorePath =
+      url.pathname === "/store" || url.pathname.startsWith("/store/");
 
-    // 1. Cek apakah ada rute yang cocok di router.js
-    const matched = matchRoute(pathname);
-
-    if (matched) {
-      const { config } = matched;
-
-      // 2. Jika rute adalah redirect (seperti /store)
-      if (config.redirectTo) {
-        let destination = config.redirectTo;
-        
-        // Jika preservePath true, tambahkan sisa path ke URL tujuan
-        if (config.preservePath) {
-          const remainderPath = pathname.replace('/store', ''); // Menghapus '/store' dari path
-          if (remainderPath && remainderPath !== '/') {
-            destination = destination.replace(/\/$/, '') + remainderPath;
-          }
-        }
-        
-        // Lakukan redirect
-        return Response.redirect(destination, config.status || 302);
-      }
+    // www/store -> store.domain
+    if (url.hostname === MAIN && isStorePath) {
+      const rest = url.pathname.slice("/store".length) || "/";
+      return Response.redirect(`https://${STORE}${rest}${url.search}`, 302);
     }
 
-    // 3. Jika tidak ada rute yang cocok (misal: /home, /wiki), lanjutkan request seperti biasa
-    return fetch(request);
+    // store.domain: root menampilkan halaman /store
+    if (url.hostname === STORE) {
+      if (isStorePath) {
+        const rest = url.pathname.slice("/store".length) || "/";
+        return Response.redirect(`https://${STORE}${rest}${url.search}`, 302);
+      }
+      if (url.pathname === "/") return serve(env, request, "/store/");
+      return env.ASSETS.fetch(request); // css/js/gambar
+    }
+
+    return env.ASSETS.fetch(request);
   },
 };
