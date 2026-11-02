@@ -5,35 +5,35 @@ export default {
     const path = url.pathname;
 
     // ==========================================================
-    // 1. LOGIKA SUBDOMAIN STORE
+    // 1. LOGIKA UNTUK SUBDOMAIN STORE
     // ==========================================================
     if (host === 'store.crackednetwork.run.place') {
-      // a. Jika buka root (/), tendang ke /store
+      // a. Jika membuka root ("/"), arahkan ke "/store"
       if (path === '/') {
         return Response.redirect('https://store.crackednetwork.run.place/store', 302);
       }
 
-      // b. Jika buka halaman selain /store (misal /home) dan bukan file aset, lempar ke www
+      // b. Jika membuka halaman selain "/store" (misal "/home"), lempar ke domain utama
       if (path !== '/store' && !path.includes('.')) {
         return Response.redirect(`https://www.crackednetwork.run.place${path}`, 302);
       }
 
-      // c. Layani file /store dan asetnya
+      // c. Jika membuka "/store" atau file aset, tampilkan dari Pages
       return env.ASSETS.fetch(request);
     }
 
     // ==========================================================
-    // 2. LOGIKA DOMAIN UTAMA (WWW)
+    // 2. LOGIKA UNTUK DOMAIN UTAMA (WWW)
     // ==========================================================
     if (host === 'www.crackednetwork.run.place' || host === 'crackednetwork.run.place') {
-      // Jika buka /store, lempar ke subdomain store
+      // Jika membuka "/store", lempar ke subdomain store
       if (path === '/store') {
         return Response.redirect('https://store.crackednetwork.run.place/store', 302);
       }
     }
 
     // ==========================================================
-    // 3. DEFAULT: LAYANI FILE STATIS
+    // 3. DEFAULT: TAMPILKAN FILE STATIS LAINNYA
     // ==========================================================
     return env.ASSETS.fetch(request);
   },
