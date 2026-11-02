@@ -47,23 +47,45 @@
         if (!link) return;
 
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('http') || link.hasAttribute('data-no-pjax')) return;
+        if (!href) return;
+
+        // Abaikan link yang tidak valid atau instruksi khusus
+        if (href.startsWith('http') || href.startsWith('//') || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+        if (link.target === '_blank' || link.hasAttribute('download') || link.hasAttribute('data-no-pjax')) return;
 
         const currentHost = window.location.hostname;
         const isStoreDomain = currentHost === 'store.crackednetwork.run.place';
         const isWwwDomain = currentHost === 'www.crackednetwork.run.place' || currentHost === 'crackednetwork.run.place';
 
-        // Jika pindah domain, biarkan browser reload agar _worker.js bisa redirect
+        // =========================================================
+        // 🚨 JANGAN CEGAT JIKA INI PERPINDAHAN DOMAIN 🚨
+        // =========================================================
+        
+        // Jika di STORE, dan klik link yang BUKAN /store (misal /home)
         if (isStoreDomain && !href.startsWith('/store')) {
-            window.location.href = href;
-            return;
+            // Biarkan browser melakukan loading ulang secara normal
+            return; 
         }
+
+        // Jika di WWW, dan klik link /store
         if (isWwwDomain && href.startsWith('/store')) {
-            window.location.href = href;
-            return;
+            // Biarkan browser melakukan loading ulang secara normal
+            return; 
         }
+
+        // =========================================================
+        // JIKA MASIH DI DOMAIN YANG SAMA, JALANKAN PJAX INSTAN
+        // =========================================================
+        const currentPath = window.location.pathname + window.location.search;
+        const targetPath = href.split('#')[0];
+        if (currentPath === targetPath) return;
 
         e.preventDefault();
         navigateTo(href);
+    });
+
+    window.addEventListener('popstate', function(e) {
+        const url = (e.state && e.state.url) ? e.state.url : window.location.pathname;
+        navigateTo(url, false);
     });
 })();
