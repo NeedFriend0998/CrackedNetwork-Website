@@ -19,30 +19,38 @@
       if (push) history.pushState({}, "", path);
       window.scrollTo(0, 0);
     } catch {
-      location.href = path;
+      location.href = path; // fallback aman
     }
   }
 
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a[href]");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
+
     const u = new URL(a.href, location.href);
-    const isOurs = u.origin === MAIN || u.origin === STORE;
-    if (!isOurs) return;
+    const ours = u.origin === MAIN || u.origin === STORE;
+    if (!ours) return; // link luar (instagram, youtube) biarkan normal
 
     const path = u.pathname + u.search;
-    const wantsStore = isStore(u.pathname);
 
-    // pindah domain = navigasi normal (bukan instan)
-    if (!onStoreHost && wantsStore) {
-      e.preventDefault();
-      return (location.href = STORE + "/");
+    if (onStoreHost) {
+      // di store: link ke halaman selain store -> pindah ke www (normal)
+      if (u.pathname !== "/" && !isStore(u.pathname)) {
+        e.preventDefault();
+        location.href = MAIN + path;
+      } else if (isStore(u.pathname)) {
+        e.preventDefault();
+        location.href = STORE + "/";
+      }
+      return;
     }
-    if (onStoreHost && !wantsStore && u.pathname !== "/") {
+
+    // di www: ke /store -> pindah domain (normal, tidak instan)
+    if (isStore(u.pathname)) {
       e.preventDefault();
-      return (location.href = MAIN + path);
+      location.href = STORE + "/";
+      return;
     }
-    if (onStoreHost) return; // di store: biarkan link normal
 
     // di www: halaman lain instan
     if (u.origin !== location.origin) return;
@@ -50,6 +58,7 @@
     navigate(path);
   });
 
+  // router instan hanya aktif di www
   if (!onStoreHost) {
     const prefetch = (e) => {
       const a = e.target.closest?.("a[href]");
