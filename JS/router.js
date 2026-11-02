@@ -1,29 +1,47 @@
-// router.js
-export const routes = {
-  // Rute untuk /store akan diarahkan ke subdomain.
-  // Tanda '/*' menangkap semua sub-path di bawah /store.
-  '/store/*': {
-    redirectTo: 'https://store.crackednetwork.run.place',
-    // 'preservePath' akan meneruskan path setelah /store.
-    // Contoh: /store/product/1 -> https://store.crackednetwork.run.place/product/1
-    preservePath: true, 
-    status: 301, // 301 untuk permanen, 302 untuk sementara
-  },
-  // Anda bisa menambahkan rute lain di sini jika perlu.
-};
+(() => {
+  const STORE_URL = "https://store.crackednetwork.run.place/";
+  const isStore = (p) => p === "/store" || p.startsWith("/store/");
+  const cache = new Map();
 
-// Fungsi helper untuk mencocokkan path dengan pola di routes
-export function matchRoute(pathname) {
-  for (const pattern in routes) {
-    // Mengubah pola '/store/*' menjadi regex untuk mencocokkan path
-    const regexPattern = pattern
-      .replace(/\*/g, '.*') // Ganti * dengan .*
-      .replace(/\//g, '\\/'); // Escape slash
-    const regex = new RegExp(`^${regexPattern}$`);
-    
-    if (regex.test(pathname)) {
-      return { pattern, config: routes[pattern] };
+  async function load(path) {
+    if (!cache.has(path)) {
+      cache.set(path, fetch(path).then((r) => r.text()));
+    }
+    return cache.get(path);
+  }
+
+  async function navigate(path, push = true) {
+    if (isStore(path)) return (location.href = STORE_URL);
+    try {
+      const html = await load(path);
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      document.title = doc.title;
+      document.body.replaceWith(doc.body);
+      if (push) history.pushState({}, "", path);
+      window.scrollTo(0, 0);
+    } catch {
+      location.href = path; // fallback aman
     }
   }
-  return null;
-}
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
+    const u = new URL(a.href, location.href);
+    if (u.origin !== location.origin) return;
+    e.preventDefault();
+    navigate(u.pathname + u.search);
+  });
+
+  // prefetch saat hover/sentuh = terasa instan
+  const prefetch = (e) => {
+    const a = e.target.closest?.("a[href]");
+    if (!a) return;
+    const u = new URL(a.href, location.href);
+    if (u.origin === location.origin && !isStore(u.pathname)) load(u.pathname);
+  };
+  document.addEventListener("mouseover", prefetch);
+  document.addEventListener("touchstart", prefetch, { passive: true });
+
+  window.addEventListener("popstate", () => navigate(location.pathname, false));
+})();
