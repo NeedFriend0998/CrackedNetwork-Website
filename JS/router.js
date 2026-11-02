@@ -63,7 +63,8 @@ window.pjaxNavigate = (path) => {
           where: { and: [
             { href_matches: "/*" },
             { not: { href_matches: "/store*" } },
-            { not: { href_matches: "/*.*" } }
+            { not: { href_matches: "/*.*" } },
+            { not: { href_matches: "/staff-detail*" } },
           ] },
           eagerness: "moderate"
         }]
