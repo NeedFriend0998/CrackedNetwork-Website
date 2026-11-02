@@ -1,7 +1,7 @@
 // ============================================
 // PJAX ROUTER - Navigasi Instan Tanpa Reload
 // CrackedNetwork
-// ===========================================
+// ============================================
 
 (function() {
     'use strict';
@@ -88,48 +88,42 @@
         if (href.startsWith('http') || href.startsWith('//')) return;
         // Skip anchor, mailto, tel
         if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
-        // Skip custom protocol (crackedlauncher://, ftp://, dll)
-if (href.includes('://') && !href.startsWith('http://') && !href.startsWith('https://')) return;
+        // Skip custom protocol
+        if (href.includes('://') && !href.startsWith('http://') && !href.startsWith('https://')) return;
         // Skip target="_blank" atau download
         if (link.target === '_blank' || link.hasAttribute('download')) return;
         // Skip kalau ditandai no-pjax
         if (link.hasAttribute('data-no-pjax')) return;
 
-        // Skip kalau cuma beda hash
+        const currentHost = window.location.hostname;
+        const isStoreDomain = currentHost === 'store.crackednetwork.run.place';
+        const isWwwDomain = currentHost === 'www.crackednetwork.run.place' || currentHost === 'crackednetwork.run.place';
+
+        // =========================================================
+        // 🚨 LOGIKA PENGECEKAN DOMAIN 🚨
+        // =========================================================
+        
+        // 1. Jika sedang di STORE, dan klik link yang BUKAN /store
+        if (isStoreDomain && !href.startsWith('/store')) {
+            // Biarkan browser reload dan biarkan Worker yang redirect
+            window.location.href = href;
+            return;
+        }
+
+        // 2. Jika sedang di WWW, dan klik link /store
+        if (isWwwDomain && href.startsWith('/store')) {
+            // Biarkan browser reload dan biarkan Worker yang redirect
+            window.location.href = href;
+            return;
+        }
+
+        // 3. Cek jika hanya beda hash
         const currentPath = window.location.pathname + window.location.search;
         const targetPath = href.split('#')[0];
         if (currentPath === targetPath) return;
 
+        // Jika lolos semua filter (masih domain & konteks yang sama), jalankan PJAX
         e.preventDefault();
-
-        // =========================================================
-        // 🚨 LOGIKA BARU: CEGAT PINDAH DOMAIN 🚨
-        // =========================================================
-        const currentHost = window.location.hostname;
-        
-        // Cek jika user ada di domain STORE
-        if (currentHost === 'store.crackednetwork.run.place') {
-            // Jika link yang diklik BUKAN /store (misal /home, /ai, dll)
-            if (!href.startsWith('/store')) {
-                // Jangan pakai PJAX, biarkan browser reload dan biarkan Worker yang nge-redirect
-                window.location.href = href; 
-                return;
-            }
-        }
-
-        // Cek jika user ada di domain WWW
-        if (currentHost === 'www.crackednetwork.run.place' || currentHost === 'crackednetwork.run.place') {
-            // Jika link yang diklik adalah /store
-            if (href.startsWith('/store')) {
-                // Jangan pakai PJAX, biarkan browser reload dan biarkan Worker yang nge-redirect
-                window.location.href = href;
-                return;
-            }
-        }
-        // =========================================================
-
-        // Kalau masih di domain dan path yang sama (misal dari /home ke /ai di www), 
-        // baru panggil PJAX seperti biasa
         navigateTo(href);
     });
 
