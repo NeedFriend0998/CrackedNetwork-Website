@@ -102,19 +102,34 @@ if (href.includes('://') && !href.startsWith('http://') && !href.startsWith('htt
 
         e.preventDefault();
 
-        // 🚨 TAMBAHKAN LOGIKA INI 🚨
-        // Cek apakah domain tujuan berbeda dengan domain saat ini
+        // =========================================================
+        // 🚨 LOGIKA BARU: CEGAT PINDAH DOMAIN 🚨
+        // =========================================================
         const currentHost = window.location.hostname;
-        const targetUrlObj = new URL(href, window.location.origin);
         
-        if (currentHost !== targetUrlObj.hostname) {
-            // Kalau beda domain (misal dari store ke www, atau sebaliknya)
-            // Paksa browser buat reload halaman (gak bisa pake navigateTo/PJAX)
-            window.location.href = href; 
-            return; 
+        // Cek jika user ada di domain STORE
+        if (currentHost === 'store.crackednetwork.run.place') {
+            // Jika link yang diklik BUKAN /store (misal /home, /ai, dll)
+            if (!href.startsWith('/store')) {
+                // Jangan pakai PJAX, biarkan browser reload dan biarkan Worker yang nge-redirect
+                window.location.href = href; 
+                return;
+            }
         }
 
-        // Kalau domain sama, panggil PJAX seperti biasa
+        // Cek jika user ada di domain WWW
+        if (currentHost === 'www.crackednetwork.run.place' || currentHost === 'crackednetwork.run.place') {
+            // Jika link yang diklik adalah /store
+            if (href.startsWith('/store')) {
+                // Jangan pakai PJAX, biarkan browser reload dan biarkan Worker yang nge-redirect
+                window.location.href = href;
+                return;
+            }
+        }
+        // =========================================================
+
+        // Kalau masih di domain dan path yang sama (misal dari /home ke /ai di www), 
+        // baru panggil PJAX seperti biasa
         navigateTo(href);
     });
 
