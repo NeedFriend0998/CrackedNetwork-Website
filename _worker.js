@@ -5,12 +5,13 @@ const STORE = "store.crackednetwork.run.place";
 const isAsset = (p) => /\.(?!html?$)[a-z0-9]+$/i.test(p);
 
 async function serve(env, request, path) {
-  const u = new URL(request.url);
+  let u = new URL(request.url);
   u.pathname = path;
   let res = await env.ASSETS.fetch(new Request(u, request));
-  if (res.status >= 300 && res.status < 400) {
-    const loc = new URL(res.headers.get("Location"), u);
-    res = await env.ASSETS.fetch(new Request(loc, request));
+  // ikuti redirect berantai milik Pages (/store -> /store/ dst)
+  for (let i = 0; i < 3 && res.status >= 300 && res.status < 400; i++) {
+    u = new URL(res.headers.get("Location"), u);
+    res = await env.ASSETS.fetch(new Request(u, request));
   }
   return res;
 }
@@ -33,11 +34,11 @@ export default {
         const rest = url.pathname.slice("/store".length) || "/";
         return Response.redirect(`https://${STORE}${rest}${url.search}`, 302);
       }
-      // halaman store
-      if (url.pathname === "/") return serve(env, request, "/store/");
-      // file statis tetap dilayani di domain store
+      // root store menampilkan halaman store
+      if (url.pathname === "/") return serve(env, request, "/store");
+      // css/js/img/json dll tetap dilayani di domain store
       if (isAsset(url.pathname)) return env.ASSETS.fetch(request);
-      // SEMUA halaman lain (/home, /wiki, /gamemodes, /rules, dll) -> www
+      // halaman lain (/home, /wiki, /rules, dll) -> www
       return Response.redirect(
         `https://${MAIN}${url.pathname}${url.search}`,
         302
