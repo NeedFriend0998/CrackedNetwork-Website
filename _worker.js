@@ -1,16 +1,35 @@
 // _worker.js
-import { handleRequest } from './JS/router.js';
+import { routes, matchRoute } from './router.js';
 
 export default {
-  async fetch(request, env, ctx) {
-    // 1. Jalankan router untuk cek apakah perlu redirect
-    const redirectResponse = handleRequest(request);
-    if (redirectResponse) {
-      return redirectResponse; // Kembalikan response redirect (jika ada)
+  async fetch(request) {
+    const url = new URL(request.url);
+    const { pathname } = url;
+
+    // 1. Cek apakah ada rute yang cocok di router.js
+    const matched = matchRoute(pathname);
+
+    if (matched) {
+      const { config } = matched;
+
+      // 2. Jika rute adalah redirect (seperti /store)
+      if (config.redirectTo) {
+        let destination = config.redirectTo;
+        
+        // Jika preservePath true, tambahkan sisa path ke URL tujuan
+        if (config.preservePath) {
+          const remainderPath = pathname.replace('/store', ''); // Menghapus '/store' dari path
+          if (remainderPath && remainderPath !== '/') {
+            destination = destination.replace(/\/$/, '') + remainderPath;
+          }
+        }
+        
+        // Lakukan redirect
+        return Response.redirect(destination, config.status || 302);
+      }
     }
 
-    // 2. Jika tidak di-redirect, layani aset statis seperti biasa
-    //    (env.ASSETS.fetch akan mengambil file dari build output Pages)
-    return env.ASSETS.fetch(request);
-  }
+    // 3. Jika tidak ada rute yang cocok (misal: /home, /wiki), lanjutkan request seperti biasa
+    return fetch(request);
+  },
 };
