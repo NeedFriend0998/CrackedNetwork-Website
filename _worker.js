@@ -29,20 +29,15 @@ export default {
     }
 
     if (url.hostname === STORE) {
-      // /store di domain store -> rapikan ke root
-      if (isStorePath) {
-        const rest = url.pathname.slice("/store".length) || "/";
-        return Response.redirect(`https://${STORE}${rest}${url.search}`, 302);
-      }
-      // root store menampilkan halaman store
-      if (url.pathname === "/") return serve(env, request, "/store");
-      // css/js/img/json dll tetap dilayani di domain store
-      if (isAsset(url.pathname)) return env.ASSETS.fetch(request);
-      // halaman lain (/home, /wiki, /rules, dll) -> www
-      return Response.redirect(
-        `https://${MAIN}${url.pathname}${url.search}`,
-        302
-      );
+  // root dan /store sama-sama menampilkan halaman store (tanpa redirect)
+  if (url.pathname === "/" || url.pathname === "/store") {
+    return serve(env, request, "/store");
+  }
+  // file statis (css/js/img/json) dilayani di domain store
+  if (isAsset(url.pathname) || isStorePath) return env.ASSETS.fetch(request);
+  // halaman lain -> www
+  return Response.redirect(`https://${MAIN}${url.pathname}${url.search}`, 302);
+    }
     }
 
     return env.ASSETS.fetch(request);
