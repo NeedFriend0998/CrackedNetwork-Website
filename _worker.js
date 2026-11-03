@@ -61,7 +61,7 @@ export default {
       }
       // URL lama /staff-detail -> tab staff
       if (pathname === "/staff-detail") {
-        return Response.redirect(`https://${MAIN}/wiki#staff`, 302);
+        return Response.redirect(`https://${MAIN}/wiki#staff`, 301);
       }
     }
 
