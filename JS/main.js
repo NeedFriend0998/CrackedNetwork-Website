@@ -223,48 +223,103 @@ function observeElements() {
 }
 
 // ============================================
-// CHECKOUT MODAL (shared)
+// CHECKOUT MODAL (dibuat otomatis kalau belum ada di HTML)
 // ============================================
-(function() {
-    const modal = document.getElementById('checkoutModal');
-    const checkoutFrame = document.getElementById('checkoutFrame');
-    const iframeLoader = document.getElementById('iframeLoader');
-    const closeModalBtn = document.getElementById('closeModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const btnViewBasket = document.getElementById('btnViewBasket');
+(function () {
+    const SHOP = "https://crackedshop.craftingstore.net";
+    let modal = null, frame = null, loader = null, titleEl = null;
+    let loaderTimer = null;
 
-    if (!modal) return;
-
-    window.openCheckout = function(productId) {
-        if (!productId) return;
-        modalTitle.textContent = "Purchase Item";
-        modal.classList.add('active');
-        checkoutFrame.src = "about:blank";
-        iframeLoader.style.display = "flex";
-        checkoutFrame.src = `https://crackedshop.craftingstore.net/package/${productId}`;
-    };
-
-    function openBasket() {
-        modalTitle.textContent = "Shopping Basket / Checkout";
-        modal.classList.add('active');
-        checkoutFrame.src = "about:blank";
-        iframeLoader.style.display = "flex";
-        checkoutFrame.src = `https://crackedshop.craftingstore.net/checkout/basket`;
+    // Style berspesifisitas 0 (:where) -> kalau style.css punya aturan modal sendiri, itu yang menang
+    function injectStyle() {
+        if (document.getElementById('cnCheckoutStyle')) return;
+        const st = document.createElement('style');
+        st.id = 'cnCheckoutStyle';
+        st.textContent = `
+        :where(#checkoutModal){position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,.75)}
+        :where(#checkoutModal.active){display:flex}
+        :where(#checkoutModal .cn-co-box){position:relative;display:flex;flex-direction:column;width:min(960px,100%);height:min(88vh,800px);background:#1c1915;border:2px solid #5cb85c;border-radius:10px;overflow:hidden}
+        :where(#checkoutModal .cn-co-head){display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border-bottom:1px solid rgba(255,255,255,.1);color:#eee;font-weight:600}
+        :where(#checkoutModal .cn-co-close){background:none;border:0;color:#eee;font-size:1.6rem;line-height:1;cursor:pointer;padding:0 .4rem}
+        :where(#checkoutModal .cn-co-body){position:relative;flex:1}
+        :where(#checkoutModal iframe){width:100%;height:100%;border:0;background:#fff}
+        :where(#checkoutModal #iframeLoader){position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#1c1915;color:#bbb}
+        `;
+        document.head.appendChild(st);
     }
-
-    if (btnViewBasket) btnViewBasket.addEventListener('click', openBasket);
-
-    if (checkoutFrame) checkoutFrame.addEventListener('load', () => {
-        if (checkoutFrame.src !== "about:blank") iframeLoader.style.display = "none";
-    });
 
     function closeModal() {
+        if (!modal) return;
         modal.classList.remove('active');
-        setTimeout(() => { checkoutFrame.src = "about:blank"; }, 300);
+        if (typeof lenis !== 'undefined' && lenis) lenis.start();
+        clearTimeout(loaderTimer);
+        setTimeout(() => { if (frame && !modal.classList.contains('active')) frame.src = "about:blank"; }, 300);
     }
 
-    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    function ensureModal() {
+        if (modal) return true;
+
+        modal = document.getElementById('checkoutModal');
+        if (!modal) {
+            injectStyle();
+            modal = document.createElement('div');
+            modal.id = 'checkoutModal';
+            modal.innerHTML = `
+                <div class="cn-co-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                    <div class="cn-co-head">
+                        <span id="modalTitle">Purchase Item</span>
+                        <button class="cn-co-close" id="closeModal" aria-label="Close">&times;</button>
+                    </div>
+                    <div class="cn-co-body">
+                        <div id="iframeLoader">Loading...</div>
+                        <iframe id="checkoutFrame" title="Checkout" src="about:blank"></iframe>
+                    </div>
+                </div>`;
+            document.body.appendChild(modal);
+        }
+
+        frame = document.getElementById('checkoutFrame');
+        loader = document.getElementById('iframeLoader');
+        titleEl = document.getElementById('modalTitle');
+        const closeBtn = document.getElementById('closeModal');
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        if (frame) frame.addEventListener('load', () => {
+            if (frame.src !== "about:blank" && loader) loader.style.display = "none";
+        });
+        return true;
+    }
+
+    function openModal(title, url) {
+        if (!ensureModal()) return;
+        if (titleEl) titleEl.textContent = title;
+        if (loader) loader.style.display = "flex";
+        modal.classList.add('active');
+        if (typeof lenis !== 'undefined' && lenis) lenis.stop();
+        frame.src = "about:blank";
+        setTimeout(() => { frame.src = url; }, 30);
+        // loader jangan nyangkut kalau event load tidak datang
+        clearTimeout(loaderTimer);
+        loaderTimer = setTimeout(() => { if (loader) loader.style.display = "none"; }, 10000);
+    }
+
+    window.openCheckout = function (productId) {
+        if (!productId) return;
+        openModal("Purchase Item", `${SHOP}/package/${encodeURIComponent(productId)}`);
+    };
+
+    window.openBasket = function () {
+        openModal("Shopping Basket / Checkout", `${SHOP}/checkout/basket`);
+    };
+
+    // Tombol "View Cart / Checkout": delegasi, jadi tetap jalan walau tombol dirender ulang
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#btnViewBasket')) {
+            e.preventDefault();
+            window.openBasket();
+        }
+    });
 })();
 
 // ============================================
