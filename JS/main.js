@@ -201,8 +201,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ============================================
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        const modal = document.getElementById('checkoutModal');
-        if (modal) modal.classList.remove('active');
+        if (window.closeCheckout) window.closeCheckout();
         if (window.closeServerModal) window.closeServerModal();
         if (navLinksContainer) navLinksContainer.classList.remove('open');
         if (mobileToggle) mobileToggle.classList.remove('open');
@@ -322,10 +321,11 @@ function observeElements() {
     };
 
     // Tombol "View Cart / Checkout": delegasi, jadi tetap jalan walau tombol dirender ulang
-    document.addEventListener('click', (e) => {
+        document.addEventListener('click', (e) => {
         if (e.target.closest('#btnViewBasket')) {
             e.preventDefault();
-            window.openBasket();
+            if (window.__storeCategory) location.hash = 'cart';
+            else window.openBasket();
         }
     });
 })();
@@ -697,12 +697,15 @@ function initVotePage() {
 }
 
 // --- Store ---
+// --- Store ---
 function initStorePage() {
     const storeCategoriesEl = document.getElementById('storeCategories');
     const productsGrid = document.getElementById('productsGrid');
     if (!storeCategoriesEl || !productsGrid) return;
 
+    const slug = (s) => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     let activeCategory = 'bedwars';
+    window.__storeCategory = activeCategory;
 
     function getProductIcon(category) {
         const icons = {
@@ -737,32 +740,64 @@ function initStorePage() {
                     </div>
                     <div class="product-footer">
                         <div class="product-price">${product.price}</div>
-                        <button class="btn-buy" data-id="${product.id}">Buy Now</button>
+                        <button class="btn-buy" data-cat="${category}" data-slug="${slug(product.name)}">Buy Now</button>
                     </div>
                 </div>
             `;
             productsGrid.appendChild(card);
         });
-        document.querySelectorAll('.btn-buy').forEach(btn => {
-            btn.addEventListener('click', () => window.openCheckout(btn.dataset.id));
-        });
+    }
+
+    // Klik Buy Now -> ubah URL; popup dibuka oleh applyHash()
+    productsGrid.onclick = (e) => {
+        const btn = e.target.closest('.btn-buy');
+        if (!btn) return;
+        location.hash = `${btn.dataset.cat}/${btn.dataset.slug}`;
+    };
+
+    function setCategory(id) {
+        activeCategory = id;
+        window.__storeCategory = id;
+        storeCategoriesEl.querySelectorAll('.category-tab').forEach(t =>
+            t.classList.toggle('active', t.dataset.cat === id)
+        );
+        renderProducts(id);
     }
 
     storeCategoriesEl.innerHTML = '';
     storeCategories.forEach(cat => {
         const tab = document.createElement('button');
-        tab.className = `category-tab ${cat.id === activeCategory ? 'active' : ''}`;
+        tab.className = 'category-tab';
+        tab.dataset.cat = cat.id;
         tab.innerHTML = `${cat.icon}<span>${cat.name}</span>`;
         tab.addEventListener('click', () => {
-            activeCategory = cat.id;
-            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            renderProducts(cat.id);
+            setCategory(cat.id);
+            history.replaceState(null, '', location.pathname + location.search + '#' + cat.id);
         });
         storeCategoriesEl.appendChild(tab);
     });
 
-    renderProducts(activeCategory);
+    // URL -> tampilan: #kategori, #kategori/produk, #cart
+    function applyHash() {
+        const raw = decodeURIComponent(location.hash.slice(1));
+        if (!raw) { window.closeCheckout && window.closeCheckout(); return; }
+        if (raw === 'cart') { window.openBasket(); return; }
+
+        const [cat, prod] = raw.split('/');
+        if (!storeCategories.some(c => c.id === cat)) return;
+        if (cat !== activeCategory) setCategory(cat);
+
+        if (!prod) { window.closeCheckout && window.closeCheckout(); return; }
+        const p = (TIP4SERV_PRODUCTS[cat] || []).find(x => slug(x.name) === slug(prod));
+        if (p) window.openCheckout(p.id);
+    }
+
+    if (window.__storeHashHandler) window.removeEventListener('hashchange', window.__storeHashHandler);
+    window.__storeHashHandler = applyHash;
+    window.addEventListener('hashchange', applyHash);
+
+    setCategory(activeCategory);
+    applyHash(); // buka langsung kalau URL sudah berisi produk
 }
 
 // --- Plugins ---
