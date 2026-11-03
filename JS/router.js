@@ -103,7 +103,7 @@
       location.href = MAIN + path;
     } else if (isStore(u.pathname)) {
       e.preventDefault();
-      location.href = STORE + "/";
+      location.href = STORE + "/" + u.hash;
     }
   });
 
