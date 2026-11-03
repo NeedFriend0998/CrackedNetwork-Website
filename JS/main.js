@@ -248,13 +248,21 @@ function observeElements() {
         document.head.appendChild(st);
     }
 
-    function closeModal() {
+      function closeModal() {
         if (!modal) return;
+        const wasOpen = modal.classList.contains('active');
         modal.classList.remove('active');
         if (typeof lenis !== 'undefined' && lenis) lenis.start();
         clearTimeout(loaderTimer);
         setTimeout(() => { if (frame && !modal.classList.contains('active')) frame.src = "about:blank"; }, 300);
+
+        // URL kembali ke #<kategori> saat popup ditutup
+        const h = location.hash;
+        if (wasOpen && window.__storeCategory && (h.includes('/') || h === '#cart')) {
+            history.replaceState(null, '', location.pathname + location.search + '#' + window.__storeCategory);
+        }
     }
+    window.closeCheckout = closeModal;
 
     function ensureModal() {
         if (modal) return true;
