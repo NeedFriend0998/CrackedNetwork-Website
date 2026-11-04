@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta name="google-site-verification" content="d4_vGx-_yxd_FO6Le8PShhB9aMOh2qfrJzTtAgfKL7Y" />
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://www.crackednetwork.run.place/home">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <title>CrackedNetwork | Non Pay to Win Minecraft Server (1.8 - Latest)</title>
+    <meta name="description" content="Join CrackedNetwork, a premier Minecraft server supporting Java (Premium/Crack). Experience Survival, and custom plugins with 24/7 uptime. IP: crackednetwork.run.place">
+
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.crackednetwork.run.place/img/server-icon.png">
+    <meta property="og:site_name" content="CrackedNetwork">
+    <meta property="og:title" content="CrackedNetwork | Java Minecraft Server">
+    <meta property="og:description" content="The ultimate Minecraft experience. Join our community today!">
+    <meta property="og:url" content="https://www.crackednetwork.run.place">
+
+    <meta name="theme-color" content="#5cb85c">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="Minecraft Server, CrackedNetwork, Minecraft Java Server, BedWars Server, Crack Minecraft Server, Premium Minecraft Server, Minecraft Indonesia">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <link href="/CSS/style.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+
+    <canvas id="particles"></canvas>
+    <div class="bg-canvas"></div>
+
+    <!-- NAV -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-inner">
+            <a href="/home" class="logo">
+                <div class="logo-icon">
+                    <img src="/img/server-icon.png" alt="CrackedNetwork">
+                </div>
+                CrackedNetwork
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="/home" class="nav-link">Home</a>
+                <a href="/gamemodes" class="nav-link">Gamemodes</a>
+                <a href="/wiki" class="nav-link">Wiki</a>
+                <a href="/rules" class="nav-link">Rules</a>
+                <a href="/vote" class="nav-link">Vote</a>
+                <a href="/store" class="nav-link">Store</a>
+                <a href="/ai" class="nav-link">AI (Beta)</a>
+                <span class="nav-divider"></span>
+                <a href="/discord" class="nav-link">Discord</a>
+            </div>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="pages">
+        <section class="page active" id="home">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <div class="hero-badge">
+                            <span class="badge-dot"></span>
+                            Java (Crack & Premium) Support
+                        </div>
+                        <h1 class="hero-title">
+                            Welcome to<br><span>CrackedNetwork</span>
+                        </h1>
+                        <p class="hero-desc">
+                            The best Minecraft server with an active and friendly community.
+                            Survival and other exciting game modes await you!
+                        </p>
+                        <div class="hero-actions">
+                            <a href="/store" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                                Visit Store
+                            </a>
+                            <a href="/vote" class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3zM7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+                                Vote Now
+                            </a>
+                        </div>
+                        <button id="playBtn" class="btn-play join-server-btn"></button>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="stats-grid">
+                            <div class="stat-card featured" id="serverStatusCard">
+                                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                                <div class="stat-value" id="playerCount">Loading...</div>
+                                <div class="stat-label">Players Online</div>
+                                <div class="online-indicator" id="statusIndicator">
+                                    <span class="online-dot" id="statusDot"></span>
+                                    <span id="statusText">Checking...</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div>
+                                <div class="stat-value">2</div>
+                                <div class="stat-label">Available GameMode</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+                                <div class="stat-value">1000+</div>
+                                <div class="stat-label">Total Votes</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="features">
+                <div class="section-header reveal">
+                    <h2 class="section-title">Why Choose Us</h2>
+                    <p class="section-subtitle">A server with complete features and a fun community</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card reveal">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+                        <h3 class="feature-title">24/7 Uptime</h3>
+                        <p class="feature-desc">The server is online 24 hours a day with 99.9% uptime. Play whenever you want!</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                        <h3 class="feature-title">Anti-Cheat System</h3>
+                        <p class="feature-desc">The best anti-cheat system for a fair and enjoyable gaming experience.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+                        <h3 class="feature-title">Active Community</h3>
+                        <p class="feature-desc">An active community and staff who are always ready to help whenever needed.</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
+                        <h3 class="feature-title">Custom Plugins</h3>
+                        <p class="feature-desc">An exclusive custom plugin that makes gameplay more exciting and unique!</p>
+                    </div>
+                    <div class="feature-card reveal">
+                        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></div>
+                        <h3 class="feature-title">Regular Updates</h3>
+                        <p class="feature-desc">Regular updates with new content and bug fixes for the best experience.</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="/home" class="logo">
+                    <div class="logo-icon"><img src="/img/server-icon.png" alt="CrackedNetwork"></div>
+                    CrackedNetwork
+                </a>
+                <p>The best Minecraft server with an active and friendly community. Join now and experience exciting gameplay!</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/gamemodes">Gamemodes</a></li>
+                    <li><a href="/wiki">Wiki</a></li>
+                    <li><a href="/rules">Rules</a></li>
+                    <li><a href="/vote">Vote</a></li>
+                    <li><a href="/store">Store</a></li>
+                    <li><a href="/legal">Legal</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Connect</h4>
+                <ul class="footer-links">
+                    <li><a href="/discord">Discord</a></li>
+                    <li><a href="https://www.instagram.com/bismasyafif/?utm_source=qr&r=nametag" target="_blank" rel="noopener">Instagram</a></li>
+                    <li><a href="https://youtube.com/@needfriend2?si=fLuu8Z8mRetJhIrU" target="_blank" rel="noopener">YouTube</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2026 CrackedNetwork. All rights reserved.</span>
+            <span>Powered by CraftingStore</span>
+            <span><a href="http://dnsexit.com"><img src="http://dnsexit.com/images/dns.gif" border="0"></a></span>
+        </div>
+    </footer>
+
+    <!-- MODALS (shared, biarin di semua halaman) -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-checkout">
+            <div class="modal-header">
+                <h3 id="modalTitle">Complete Your Purchase</h3>
+                <button class="modal-close" id="closeModal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="iframe-container">
+                <div class="loader-container" id="iframeLoader"><div class="loader"></div><span>Loading Payment...</span></div>
+                <iframe id="checkoutFrame" class="checkout-iframe" src="about:blank"></iframe>
+            </div>
+        </div>
+    </div>
+
+<!-- Modal HDD -->
+<div id="hddModal" class="cn-modal">
+    <div class="cn-modal-box">
+        <h3>Storage Type</h3>
+        <p>Are you still using HDD?</p>
+        <div class="cn-modal-actions">
+            <button id="btnHDDYes" class="cn-btn cn-btn-yes">Yes</button>
+            <button id="btnHDDNo" class="cn-btn cn-btn-no">No (SSD)</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Status (cuma buat failed) -->
+<div id="statusModal" class="cn-modal">
+    <div class="cn-modal-box">
+        <div id="loadingState">
+            <div class="cn-spinner"></div>
+            <h3>Membuka Launcher...</h3>
+            <p id="loadingText">Harap tunggu sebentar.<br>Jangan tutup tab ini saat proses berjalan.</p>
+            <p id="countdownText" style="color:#00e5a0;font-weight:bold;"></p>
+            <button id="btnSuccessManual" class="cn-btn cn-btn-no" style="margin-top:20px;display:none;">
+                ✅ Launcher sudah terbuka
+            </button>
+        </div>
+        <div id="failedState" style="display: none;">
+            <h3>⚠️ Launcher Isn't installed</h3>
+            <p>Would you like to download it?</p>
+            <div class="cn-modal-actions">
+                <button id="btnDownloadYes" class="cn-btn cn-btn-yes">Yes, Download</button>
+                <button id="btnDownloadNo" class="cn-btn cn-btn-no">No, Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Mobile -->
+<div id="mobileModal" class="cn-modal">
+    <div class="cn-modal-box">
+        <h3>Device Not Supported</h3>
+        <p>We've detected you're on mobile, our launcher doesn't support mobile right now</p>
+        <div class="cn-modal-actions">
+            <button id="btnMobileClose" class="cn-btn cn-btn-no">OK</button>
+        </div>
+    </div>
+</div>
+<div id="loadingTimer">Estimate 20s</div>
+    
+    <script src="/JS/main.js"></script>
+    <script src="/JS/router.js"></script>
+    
+</body>
+</html>
