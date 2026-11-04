@@ -6,44 +6,63 @@
 <title>CrackedNetwork AI — Server Assistant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lucide-static@latest/font/lucide.css">
 <style>
+/* ==========================================================================
+   STYLE.CSS — CrackedNetwork AI (Calm Edition)
+   Senada dengan situs utama: tema gelap lembut, aksen warm tan,
+   border tipis 1px, sudut membulat, glow diredam, transisi halus.
+   ========================================================================== */
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
 :root {
-  --bg: #0a0b0e;
-  --card: #15171b;
-  --card-hover: #1c1f24;
-  --bubble-ai: #15171b;
-  --input-bg: #16181c;
-  --border: #24272d;
-  --border-soft: #1c1f24;
-  --text: #ececf1;
-  --text-muted: #8b8e96;
-  --text-soft: #5f6368;
-  --accent: #10b981;
-  --accent-2: #059669;
-  --accent-glow: rgba(16, 185, 129, 0.4);
-  --accent-soft: rgba(16, 185, 129, 0.1);
-  --danger: #ef4444;
-  --radius: 14px;
-  --radius-sm: 10px;
+  /* Permukaan */
+  --bg: #1c1a16;
+  --card: #272420;
+  --card-hover: #2e2a25;
+  --bubble-ai: #272420;
+  --input-bg: #211e19;
+
+  /* Garis */
+  --border: #37332b;
+  --border-soft: #2d2a24;
+
+  /* Teks */
+  --text: #d6d0c4;
+  --text-muted: #958d7d;
+  --text-soft: #6e675a;
+
+  /* Aksen — warm tan (senada situs utama) */
+  --accent: #b8a98d;
+  --accent-2: #a08f72;
+  --accent-contrast: #29241b;
+  --accent-glow: rgba(184, 169, 141, 0.18);
+  --accent-soft: rgba(184, 169, 141, 0.1);
+
+  /* Pendukung (diredam) */
+  --danger: #c97676;
+
+  /* Bentuk & bayangan */
+  --radius: 12px;
+  --radius-sm: 8px;
   --radius-bubble: 18px;
-  --shadow: 0 8px 32px rgba(0,0,0,0.4);
-  --think-bg: #2a2d35;
+  --shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  --think-bg: #2e2a25;
 }
 
-html, body { 
-  height: 100%; 
-  overflow: hidden; 
+html, body {
+  height: 100%;
+  overflow: hidden;
   touch-action: manipulation;
 }
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   background-image:
-    radial-gradient(circle at 0% 0%, rgba(16, 185, 129, 0.07), transparent 45%),
-    radial-gradient(circle at 100% 100%, rgba(99, 102, 241, 0.05), transparent 45%);
+    radial-gradient(circle at 0% 0%, rgba(184, 169, 141, 0.045), transparent 45%),
+    radial-gradient(circle at 100% 100%, rgba(110, 93, 75, 0.05), transparent 45%);
   color: var(--text);
   font-size: 15px;
   line-height: 1.6;
@@ -57,10 +76,10 @@ body {
 }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; user-select: none; }
-input, textarea { 
-  font-family: inherit; 
-  outline: none; 
-  -webkit-user-select: text; 
+input, textarea {
+  font-family: inherit;
+  outline: none;
+  -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
   user-select: text;
@@ -69,8 +88,8 @@ input, textarea {
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh; 
-  height: 100dvh; 
+  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   overflow: hidden;
 }
@@ -82,31 +101,26 @@ input, textarea {
   display: flex; align-items: center; justify-content: space-between;
   gap: 12px;
   border-bottom: 1px solid var(--border-soft);
-  background: rgba(10, 11, 14, 0.7);
+  background: rgba(28, 26, 22, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 10;
   flex-shrink: 0;
 }
 .header-left { display: flex; align-items: center; gap: 10px; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 15px; }
 .logo-mark {
   width: 32px; height: 32px;
-  border-radius: 9px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: var(--radius-sm);
+  background: var(--accent);
   display: flex; align-items: center; justify-content: center;
-  color: white; font-weight: 800; font-size: 15px;
-  box-shadow: 0 4px 14px var(--accent-glow);
+  color: var(--accent-contrast); font-weight: 600; font-size: 15px;
   position: relative;
   flex-shrink: 0;
 }
-.logo-mark::after {
-  content: ''; position: absolute; inset: 0; border-radius: 9px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.25), transparent 50%);
-}
 .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
 .logo-text span:last-child {
-  font-size: 10px; font-weight: 500;
+  font-size: 10px; font-weight: 400;
   color: var(--text-soft); margin-top: 2px;
   letter-spacing: 0.04em;
 }
@@ -114,17 +128,17 @@ input, textarea {
 .header-right { display: flex; align-items: center; gap: 8px; }
 .header-title {
   display: flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 600;
+  font-size: 12px; font-weight: 500;
   background: var(--card);
   padding: 6px 12px;
   border-radius: 20px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
+  color: var(--text-muted);
 }
 .header-title .dot {
   width: 7px; height: 7px;
   border-radius: 50%;
   background: var(--accent);
-  box-shadow: 0 0 10px var(--accent-glow);
   animation: pulse 2s infinite;
 }
 @keyframes pulse {
@@ -137,7 +151,7 @@ input, textarea {
   display: flex; align-items: center; justify-content: center;
   color: var(--text-muted);
   transition: background .15s, color .15s;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   background: var(--card);
   flex-shrink: 0;
 }
@@ -147,7 +161,7 @@ input, textarea {
 /* ===== HISTORY DRAWER ===== */
 .overlay-drawer {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.55);
   opacity: 0; visibility: hidden;
   transition: opacity .2s;
   z-index: 40;
@@ -161,7 +175,7 @@ input, textarea {
   top: 0; left: -300px;
   width: 280px; height: 100%;
   background: var(--bg);
-  border-right: 1px solid var(--border);
+  border-right: 1px solid var(--border-soft);
   z-index: 50;
   display: flex;
   flex-direction: column;
@@ -173,7 +187,7 @@ input, textarea {
   display: flex; align-items: center; justify-content: space-between;
   border-bottom: 1px solid var(--border-soft);
 }
-.drawer-header h3 { font-size: 16px; font-weight: 700; }
+.drawer-header h3 { font-size: 16px; font-weight: 600; }
 .drawer-body {
   flex: 1;
   overflow-y: auto;
@@ -189,9 +203,9 @@ input, textarea {
   border: 1px solid transparent;
 }
 .history-item:hover { background: var(--card-hover); }
-.history-item.active { border-color: var(--accent); background: var(--card-hover); }
+.history-item.active { border-color: var(--accent-2); background: var(--card-hover); }
 .history-item .h-title {
-  font-size: 13px; font-weight: 600;
+  font-size: 13px; font-weight: 500;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   margin-bottom: 4px;
 }
@@ -207,8 +221,8 @@ input, textarea {
   padding: 10px;
   border-radius: var(--radius-sm);
   background: var(--accent);
-  color: black;
-  font-weight: 700;
+  color: var(--accent-contrast);
+  font-weight: 600;
   font-size: 13px;
   display: flex; align-items: center; justify-content: center; gap: 8px;
   transition: background .15s;
@@ -226,7 +240,7 @@ input, textarea {
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0; 
+  min-height: 0;
   position: relative;
 }
 
@@ -239,7 +253,7 @@ input, textarea {
   flex-direction: column;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  min-height: 0; 
+  min-height: 0;
 }
 .chat-container {
   max-width: 820px;
@@ -260,33 +274,24 @@ input, textarea {
 }
 .welcome-logo {
   width: 56px; height: 56px;
-  border-radius: 16px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: var(--radius);
+  background: var(--accent);
   display: flex; align-items: center; justify-content: center;
-  color: white; font-weight: 800; font-size: 24px;
+  color: var(--accent-contrast); font-weight: 600; font-size: 24px;
   margin-bottom: 20px;
-  box-shadow: 0 12px 32px var(--accent-glow);
   position: relative;
-  animation: welcomeIn .6s cubic-bezier(.4,0,.2,1);
-}
-.welcome-logo::after {
-  content: ''; position: absolute; inset: 0;
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.3), transparent 50%);
+  animation: welcomeIn .5s ease;
 }
 @keyframes welcomeIn {
-  from { transform: scale(.5) rotate(-15deg); opacity: 0; }
-  to { transform: scale(1) rotate(0); opacity: 1; }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .welcome h1 {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 8px;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ececf1, #8b8e96);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text);
   animation: fadeUp .5s .15s both;
 }
 .welcome p {
@@ -311,26 +316,26 @@ input, textarea {
   text-align: left;
   padding: 12px 14px;
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   color: var(--text);
   font-size: 13px;
-  transition: background .15s, border-color .15s, transform .12s;
+  transition: background .15s, border-color .15s, transform .15s;
   display: flex; flex-direction: column; gap: 3px;
 }
 .suggestion-card:hover {
   background: var(--card-hover);
-  border-color: var(--accent);
-  transform: translateY(-2px);
+  border-color: var(--accent-2);
+  transform: translateY(-1px);
 }
 .suggestion-card:active { transform: translateY(0); }
-.suggestion-title { font-weight: 600; }
+.suggestion-title { font-weight: 500; }
 .suggestion-desc { font-size: 11px; color: var(--text-soft); }
 
 /* ===== MESSAGES ===== */
 .msg {
   margin-bottom: 20px;
-  animation: msgIn .35s cubic-bezier(.4,0,.2,1);
+  animation: msgIn .3s ease;
 }
 @keyframes msgIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -340,18 +345,18 @@ input, textarea {
 .msg-row.user { flex-direction: row-reverse; }
 .msg-avatar {
   width: 30px; height: 30px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700;
-  color: white;
+  font-size: 12px; font-weight: 600;
 }
 .msg-avatar.ai {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 4px 12px var(--accent-glow);
+  background: var(--accent);
+  color: var(--accent-contrast);
 }
 .msg-avatar.user {
-  background: linear-gradient(135deg, #6b7280, #4b5563);
+  background: linear-gradient(135deg, #7a7264, #5f584c);
+  color: var(--text);
 }
 .msg-content-wrap { min-width: 0; max-width: 80%; }
 .msg-row.user .msg-content-wrap { display: flex; flex-direction: column; align-items: flex-end; }
@@ -364,29 +369,29 @@ input, textarea {
   overflow-wrap: anywhere; /* FIX: Mencegah teks panjang tanpa spasi keluar border */
 }
 .msg-row.user .msg-bubble {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: white;
+  background: var(--accent);
+  color: var(--accent-contrast);
   border-bottom-right-radius: 6px;
-  box-shadow: 0 4px 14px var(--accent-glow);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 .msg-row.ai .msg-bubble {
   background: var(--bubble-ai);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-bottom-left-radius: 6px;
 }
 .msg-text p { margin-bottom: 8px; }
 .msg-text p:last-child { margin-bottom: 0; }
 .msg-text code {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.28);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 13px;
   font-family: 'JetBrains Mono', monospace;
 }
-.msg-row.user .msg-text code { background: rgba(255,255,255,0.2); }
+.msg-row.user .msg-text code { background: rgba(255, 255, 255, 0.22); }
 .msg-text pre {
-  background: #0a0b0e;
-  border: 1px solid var(--border);
+  background: var(--bg);
+  border: 1px solid var(--border-soft);
   padding: 12px 14px;
   border-radius: var(--radius-sm);
   overflow-x: auto;
@@ -394,12 +399,12 @@ input, textarea {
   font-size: 13px;
 }
 .msg-text pre code {
-  background: none; padding: 0; color: #c9d1d9;
+  background: none; padding: 0; color: #cfc8ba;
   font-family: 'JetBrains Mono', monospace;
 }
 .msg-text ul, .msg-text ol { margin: 8px 0 8px 22px; }
 .msg-text li { margin-bottom: 4px; }
-.msg-text strong { font-weight: 700; }
+.msg-text strong { font-weight: 600; }
 .msg-text em { font-style: italic; }
 .msg-text a {
   color: var(--accent);
@@ -412,7 +417,7 @@ input, textarea {
   opacity: 0.8;
 }
 .msg-row.user .msg-text a {
-  color: white;
+  color: var(--accent-contrast);
   text-decoration: underline;
 }
 
@@ -462,10 +467,10 @@ input, textarea {
 /* Edit Textarea */
 .edit-textarea {
   width: 100%;
-  background: rgba(0,0,0,0.2);
-  color: white;
-  border: 1px solid var(--accent);
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text);
+  border: 1px solid var(--accent-2);
+  border-radius: var(--radius-sm);
   padding: 8px;
   resize: none;
   font-family: inherit;
@@ -484,14 +489,15 @@ input, textarea {
   padding: 4px 10px;
   border-radius: 6px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
 }
 .edit-btn.cancel { background: var(--card-hover); color: var(--text-muted); }
-.edit-btn.save { background: var(--accent); color: black; }
+.edit-btn.save { background: var(--accent); color: var(--accent-contrast); }
 
 /* ===== THINKING BOX ===== */
 .thinking-box {
   background: var(--think-bg);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   max-width: 80%;
   width: fit-content;
@@ -507,13 +513,13 @@ input, textarea {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text-muted);
   cursor: grab;
 }
 .thinking-header:active { cursor: grabbing; }
 .thinking-box.dragging {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
   opacity: 0.9;
   z-index: 10;
 }
@@ -576,11 +582,11 @@ input, textarea {
 }
 .ai-avatar-thinking { animation: avatarPulse 1.5s infinite; }
 @keyframes avatarPulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow), 0 4px 12px var(--accent-glow); }
-  50% { box-shadow: 0 0 0 8px transparent, 0 4px 12px var(--accent-glow); }
+  0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+  50% { box-shadow: 0 0 0 6px transparent; }
 }
 
-/* ===== INPUT AREA ANIMATION ===== */
+/* ===== INPUT AREA ===== */
 .input-area {
   padding: 10px 16px 16px;
   background: linear-gradient(to top, var(--bg) 60%, transparent);
@@ -591,18 +597,17 @@ input, textarea {
   max-width: 820px;
   margin: 0 auto;
   background: var(--input-bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: 24px;
   padding: 6px 6px 6px 16px;
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .input-wrap:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.15), 0 0 0 4px var(--accent-soft);
-  transform: translateY(-3px);
+  border-color: var(--accent-2);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 .input-textarea {
   flex: 1;
@@ -610,7 +615,7 @@ input, textarea {
   color: var(--text);
   font-size: 15px;
   line-height: 1.5;
-  resize: none; 
+  resize: none;
   -webkit-appearance: none;
   padding: 8px 0;
   max-height: 120px;
@@ -621,8 +626,8 @@ input, textarea {
 .input-wrap:focus-within .input-textarea {
   min-height: 32px;
 }
-.input-textarea::placeholder { 
-  color: var(--text-soft); 
+.input-textarea::placeholder {
+  color: var(--text-soft);
 }
 
 .input-tools { display: flex; gap: 4px; align-items: center; }
@@ -640,7 +645,7 @@ input, textarea {
   width: 34px; height: 34px;
   border-radius: 50%;
   background: var(--accent);
-  color: white;
+  color: var(--accent-contrast);
   display: flex; align-items: center; justify-content: center;
   transition: background .15s, transform .1s, opacity .15s;
   flex-shrink: 0;
@@ -669,19 +674,19 @@ input, textarea {
   .logo-mark { width: 30px; height: 30px; font-size: 14px; }
   .logo-text span:last-child { display: none; }
   .header-title { display: none; }
-  
+
   .welcome h1 { font-size: 20px; }
   .welcome p { font-size: 13px; margin-bottom: 20px; }
   .welcome-logo { width: 48px; height: 48px; font-size: 20px; margin-bottom: 16px; }
-  
+
   .suggestions { grid-template-columns: 1fr; gap: 8px; }
   .suggestion-card { padding: 10px 12px; }
-  
+
   .chat-container { padding: 16px 12px 24px; }
   .input-area { padding: 8px 12px 12px; }
   .msg-content-wrap { max-width: 85%; }
   .msg-bubble { font-size: 13.5px; padding: 10px 12px; }
-  
+
   .thinking-box { max-width: 85%; margin-left: 30px; }
   .history-drawer { width: 260px; left: -280px; }
 }
@@ -689,7 +694,7 @@ input, textarea {
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-soft); }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 /* Toast */
 .toast {
@@ -698,7 +703,7 @@ input, textarea {
   left: 50%;
   transform: translateX(-50%) translateY(20px);
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   color: var(--text);
   padding: 10px 16px;
   border-radius: var(--radius);
@@ -717,7 +722,7 @@ input, textarea {
 /* Modal */
 .modal-overlay {
   position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex; align-items: center; justify-content: center;
@@ -729,7 +734,7 @@ input, textarea {
 .modal-overlay.show { opacity: 1; visibility: visible; }
 .modal {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-soft);
   border-radius: var(--radius);
   padding: 20px;
   max-width: 360px;
@@ -740,27 +745,27 @@ input, textarea {
 .modal-overlay.show .modal { transform: scale(1); }
 .modal-icon {
   width: 40px; height: 40px;
-  border-radius: 10px;
-  background: rgba(239, 68, 68, 0.12);
+  border-radius: var(--radius-sm);
+  background: rgba(201, 118, 118, 0.12);
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 12px;
 }
 .modal-icon i { font-size: 20px; color: var(--danger); }
-.modal h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
 .modal p { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; line-height: 1.6; }
 .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
 .btn {
   padding: 8px 14px;
   border-radius: var(--radius-sm);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   transition: background .15s, transform .1s;
 }
 .btn:active { transform: scale(.97); }
 .btn-ghost { color: var(--text-muted); }
 .btn-ghost:hover { background: var(--card-hover); color: var(--text); }
-.btn-danger { background: var(--danger); color: white; }
-.btn-danger:hover { background: #dc2626; }
+.btn-danger { background: var(--danger); color: #29241b; }
+.btn-danger:hover { background: #b86868; }
 </style>
 </head>
 <body>
@@ -852,611 +857,608 @@ input, textarea {
 </div>
 
 <script>
-  // ===== CONFIG API =====
-  const API_BASE = 'https://crackednetwork.netlify.app/.netlify/functions/ai';
+// ===== CONFIG API =====
+const API_BASE = 'https://crackednetwork.netlify.app/.netlify/functions/ai';
 
-  // ===== STATE MANAGEMENT =====
-  const state = {
-    baseUserId: localStorage.getItem('cn_user_id') || generateUserId(),
-    isWaiting: false,
-    currentSessionId: null,
-    sessions: JSON.parse(localStorage.getItem('cn_sessions') || '{}')
-  };
-  localStorage.setItem('cn_user_id', state.baseUserId);
+// ===== STATE MANAGEMENT =====
+const state = {
+  baseUserId: localStorage.getItem('cn_user_id') || generateUserId(),
+  isWaiting: false,
+  currentSessionId: null,
+  sessions: JSON.parse(localStorage.getItem('cn_sessions') || '{}')
+};
+localStorage.setItem('cn_user_id', state.baseUserId);
 
-  function generateUserId() {
-    return 'guest-' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+function generateUserId() {
+  return 'guest-' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+}
+
+function saveSessions() {
+  localStorage.setItem('cn_sessions', JSON.stringify(state.sessions));
+}
+
+function getApiUserId() {
+  return state.currentSessionId || state.baseUserId;
+}
+
+// ===== ELEMENTS =====
+const $ = (id) => document.getElementById(id);
+const input = $('inputTextarea');
+const sendBtn = $('sendBtn');
+const chatContainer = $('chatContainer');
+const chatArea = $('chatArea');
+const toast = $('toast');
+const toastText = $('toastText');
+
+// ===== HISTORY DRAWER LOGIC =====
+const drawer = $('historyDrawer');
+const drawerOverlay = $('drawerOverlay');
+
+$('historyToggleBtn').addEventListener('click', () => {
+  drawer.classList.add('open');
+  drawerOverlay.classList.add('active');
+  renderHistoryList();
+});
+
+$('closeDrawerBtn').addEventListener('click', closeDrawer);
+drawerOverlay.addEventListener('click', closeDrawer);
+$('newChatDrawerBtn').addEventListener('click', () => {
+  startNewChat();
+  closeDrawer();
+});
+
+function closeDrawer() {
+  drawer.classList.remove('open');
+  drawerOverlay.classList.remove('active');
+}
+
+function renderHistoryList() {
+  const list = $('historyList');
+  list.innerHTML = '';
+  const sessions = Object.values(state.sessions).sort((a, b) => b.timestamp - a.timestamp);
+
+  if (sessions.length === 0) {
+    list.innerHTML = '<div class="empty-history">No history yet</div>';
+    return;
   }
 
-  function saveSessions() {
-    localStorage.setItem('cn_sessions', JSON.stringify(state.sessions));
-  }
+  sessions.forEach(session => {
+    const item = document.createElement('div');
+    item.className = 'history-item';
+    if (session.id === state.currentSessionId) item.classList.add('active');
 
-  function getApiUserId() {
-    return state.currentSessionId || state.baseUserId;
-  }
+    const date = new Date(session.timestamp);
+    const timeStr = date.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' });
 
-  // ===== ELEMENTS =====
-  const $ = (id) => document.getElementById(id);
-  const input = $('inputTextarea');
-  const sendBtn = $('sendBtn');
-  const chatContainer = $('chatContainer');
-  const chatArea = $('chatArea');
-  const toast = $('toast');
-  const toastText = $('toastText');
-
-  // ===== HISTORY DRAWER LOGIC =====
-  const drawer = $('historyDrawer');
-  const drawerOverlay = $('drawerOverlay');
-
-  $('historyToggleBtn').addEventListener('click', () => {
-    drawer.classList.add('open');
-    drawerOverlay.classList.add('active');
-    renderHistoryList();
-  });
-
-  $('closeDrawerBtn').addEventListener('click', closeDrawer);
-  drawerOverlay.addEventListener('click', closeDrawer);
-  $('newChatDrawerBtn').addEventListener('click', () => {
-    startNewChat();
-    closeDrawer();
-  });
-
-  function closeDrawer() {
-    drawer.classList.remove('open');
-    drawerOverlay.classList.remove('active');
-  }
-
-  function renderHistoryList() {
-    const list = $('historyList');
-    list.innerHTML = '';
-    const sessions = Object.values(state.sessions).sort((a, b) => b.timestamp - a.timestamp);
-    
-    if (sessions.length === 0) {
-      list.innerHTML = '<div class="empty-history">No history yet</div>';
-      return;
-    }
-    
-    sessions.forEach(session => {
-      const item = document.createElement('div');
-      item.className = 'history-item';
-      if (session.id === state.currentSessionId) item.classList.add('active');
-      
-      const date = new Date(session.timestamp);
-      const timeStr = date.toLocaleString([], { hour: '2-digit', minute: '2-digit', day: '2-digit', month: 'short' });
-      
-      item.innerHTML = `
-        <div class="h-title">${escapeHtml(session.title)}</div>
-        <div class="h-time">${timeStr}</div>
-      `;
-      
-      item.addEventListener('click', () => {
-        loadSession(session.id);
-        closeDrawer();
-      });
-      list.appendChild(item);
-    });
-  }
-
-  function startNewChat() {
-    state.currentSessionId = null;
-    chatContainer.innerHTML = '';
-    renderWelcome();
-    input.focus();
-  }
-
-  function loadSession(sessionId) {
-    state.currentSessionId = sessionId;
-    const session = state.sessions[sessionId];
-    if (!session) return;
-
-    chatContainer.innerHTML = '';
-    session.messages.forEach((msg, index) => {
-      if (msg.thinking) {
-        const thinkBox = createThinkingBox(msg.thinking, true);
-        chatContainer.appendChild(thinkBox);
-      }
-      addMessage(msg.role, msg.text, false, msg.edited || false, index);
-    });
-    scrollToBottom();
-  }
-
-  // ===== RENDER WELCOME SCREEN =====
-  function renderWelcome() {
-    chatContainer.innerHTML = `
-      <div class="welcome" id="welcome">
-        <div class="welcome-logo">C</div>
-        <h1>Hello, I am CrackedNetwork AI</h1>
-        <p>Smart assistant for the CrackedNetwork server. How can I help you?</p>
-        <div class="suggestions">
-          <button class="suggestion-card" data-prompt="What AI are you?">
-            <span class="suggestion-title">What AI are you?</span>
-            <span class="suggestion-desc">Get to know this AI</span>
-          </button>
-          <button class="suggestion-card" data-prompt="Who made you?">
-            <span class="suggestion-title">Who made you?</span>
-            <span class="suggestion-desc">Ask about the creator</span>
-          </button>
-          <button class="suggestion-card" data-prompt="What is CrackedNetwork?">
-            <span class="suggestion-title">What is CrackedNetwork?</span>
-            <span class="suggestion-desc">Minecraft server info</span>
-          </button>
-          <button class="suggestion-card" data-prompt="Who is owner of CrackedNetwork?">
-            <span class="suggestion-title">Who is the owner?</span>
-            <span class="suggestion-desc">Ask about the owner</span>
-          </button>
-          <button class="suggestion-card" data-prompt="CrackedNetwork discord community">
-            <span class="suggestion-title">Discord Community</span>
-            <span class="suggestion-desc">Join the community</span>
-          </button>
-          <button class="suggestion-card" data-prompt="How to join CrackedNetwork server?">
-            <span class="suggestion-title">How to join server?</span>
-            <span class="suggestion-desc">IP & how to play</span>
-          </button>
-        </div>
-      </div>
-    `;
-    bindSuggestions();
-  }
-
-  // ===== INIT APP =====
-  function initApp() {
-    const sessions = Object.values(state.sessions).sort((a, b) => b.timestamp - a.timestamp);
-    if (sessions.length > 0) {
-      loadSession(sessions[0].id);
-    } else {
-      renderWelcome();
-    }
-  }
-
-  // ===== CLEAR THINKING BOXES =====
-  function clearThinkingBoxes() {
-    document.querySelectorAll('.thinking-box').forEach(el => el.remove());
-  }
-
-  // ===== INPUT AUTO-RESIZE =====
-  input.addEventListener('input', () => {
-    input.style.height = 'auto';
-    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-    sendBtn.disabled = input.value.trim().length === 0 || state.isWaiting;
-  });
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      if (!sendBtn.disabled) sendMessage();
-    }
-  });
-
-  sendBtn.addEventListener('click', () => sendMessage());
-
-  // ===== SUGGESTIONS =====
-  function bindSuggestions() {
-    document.querySelectorAll('.suggestion-card').forEach(card => {
-      card.addEventListener('click', () => {
-        input.value = card.dataset.prompt;
-        input.dispatchEvent(new Event('input'));
-        sendMessage();
-      });
-    });
-  }
-
-  // ===== MODAL RESET =====
-  const modal = $('modalOverlay');
-  $('resetMemoryBtn').addEventListener('click', () => modal.classList.add('show'));
-  $('modalCancel').addEventListener('click', () => modal.classList.remove('show'));
-  $('modalConfirm').addEventListener('click', async () => {
-    modal.classList.remove('show');
-    await resetAllMemory();
-  });
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.remove('show');
-  });
-
-  // ===== SEND MESSAGE =====
-  async function sendMessage(overrideText = null) {
-    const text = overrideText !== null ? overrideText : input.value.trim();
-    if (!text || state.isWaiting) return;
-
-    clearThinkingBoxes();
-
-    const welcome = $('welcome');
-    if (welcome) welcome.remove();
-
-    if (!state.currentSessionId) {
-      state.currentSessionId = 'sess-' + Date.now();
-      state.sessions[state.currentSessionId] = {
-        id: state.currentSessionId,
-        title: text.length > 50 ? text.substring(0, 50) + '...' : text,
-        timestamp: Date.now(),
-        messages: []
-      };
-      saveSessions();
-    }
-
-    if (overrideText === null) {
-      addMessage('user', text, true, false);
-      input.value = '';
-      input.style.height = 'auto';
-    }
-    
-    sendBtn.disabled = true;
-    state.isWaiting = true;
-
-    const thinkingEl = addThinking();
-
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 30000);
-
-      const res = await fetch(`${API_BASE}/chat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: text, user_id: getApiUserId() }),
-        signal: controller.signal
-      });
-      clearTimeout(timeout);
-
-      if (!res.ok) throw new Error('Server error (' + res.status + ')');
-
-      const data = await res.json();
-      thinkingEl.remove();
-      
-      let rawAnswer = data.answer || '(No answer)';
-      let thinkingText = data.thinking || '';
-      
-      // PARSING TAG <think>...</think>
-      const thinkMatch = rawAnswer.match(/<think>([\s\S]*?)<\/think>/i);
-      if (thinkMatch) {
-        thinkingText = thinkMatch[1].trim();
-        rawAnswer = rawAnswer.replace(/<think>[\s\S]*?<\/think>/i, '').trim();
-      }
-      
-      // Bersihkan tag jika kebetulan tersangkut
-      if (thinkingText) {
-        thinkingText = thinkingText.replace(/<\/?think>/gi, '').trim();
-      }
-      
-      if (thinkingText) {
-        const thinkBox = createThinkingBox(thinkingText, false);
-        chatContainer.appendChild(thinkBox);
-        
-        setTimeout(() => {
-          thinkBox.classList.add('collapsed');
-          scrollToBottom();
-        }, 3000);
-      }
-
-      addMessage('ai', rawAnswer, true, false);
-
-    } catch (err) {
-      thinkingEl.remove();
-      const errMsg = err.name === 'AbortError'
-        ? '⏱️ Request timed out. Please try again.'
-        : '⚠️ Sorry, an error occurred: ' + err.message;
-      addMessage('ai', errMsg, true, false);
-      showToast('Failed to send message', 'error');
-    } finally {
-      state.isWaiting = false;
-      sendBtn.disabled = input.value.trim().length === 0;
-      input.focus();
-    }
-  }
-
-  function addMessage(role, text, save = true, isEdited = false, customIndex = null) {
-    const msg = document.createElement('div');
-    msg.className = 'msg';
-    const isUser = role === 'user';
-    const avatarClass = isUser ? 'user' : 'ai';
-    const avatarText = isUser ? 'G' : 'C';
-
-    let msgIndex = customIndex;
-    if (save) {
-      const session = state.sessions[state.currentSessionId];
-      session.messages.push({ role, text, edited: isEdited });
-      msgIndex = session.messages.length - 1;
-      saveSessions();
-      if (isUser) renderHistoryList();
-    }
-
-    msg.innerHTML = `
-      <div class="msg-row ${role}">
-        <div class="msg-avatar ${avatarClass}">${avatarText}</div>
-        <div class="msg-content-wrap">
-          <div class="msg-bubble">
-            <div class="msg-text">${formatMessage(text)} ${isEdited ? '<span class="edited-tag">(edited)</span>' : ''}</div>
-          </div>
-          <div class="msg-meta">
-            ${isUser ? `
-              <button class="msg-action-btn" data-action="edit">
-                <i class="icon-edit-3"></i>Edit
-              </button>
-            ` : `
-              <button class="msg-action-btn" data-action="retry">
-                <i class="icon-refresh-cw"></i>Retry
-              </button>
-            `}
-            <button class="msg-action-btn" data-action="copy">
-              <i class="icon-copy"></i>Copy
-            </button>
-          </div>
-        </div>
-      </div>
+    item.innerHTML = `
+      <div class="h-title">${escapeHtml(session.title)}</div>
+      <div class="h-time">${timeStr}</div>
     `;
 
-    chatContainer.appendChild(msg);
-
-    msg.querySelector('[data-action="copy"]').addEventListener('click', () => {
-      navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard', 'success'));
+    item.addEventListener('click', () => {
+      loadSession(session.id);
+      closeDrawer();
     });
+    list.appendChild(item);
+  });
+}
 
-    const editBtn = msg.querySelector('[data-action="edit"]');
-    if (editBtn) {
-      editBtn.addEventListener('click', () => {
-        startEditMessage(msg, msgIndex);
-      });
+function startNewChat() {
+  state.currentSessionId = null;
+  chatContainer.innerHTML = '';
+  renderWelcome();
+  input.focus();
+}
+
+function loadSession(sessionId) {
+  state.currentSessionId = sessionId;
+  const session = state.sessions[sessionId];
+  if (!session) return;
+
+  chatContainer.innerHTML = '';
+  session.messages.forEach((msg, index) => {
+    if (msg.thinking) {
+      const thinkBox = createThinkingBox(msg.thinking, true);
+      chatContainer.appendChild(thinkBox);
     }
+    addMessage(msg.role, msg.text, false, msg.edited || false, index);
+  });
+  scrollToBottom();
+}
 
-    const retryBtn = msg.querySelector('[data-action="retry"]');
-    if (retryBtn) {
-      retryBtn.addEventListener('click', () => {
-        clearThinkingBoxes();
-        msg.remove();
-        const session = state.sessions[state.currentSessionId];
-        if (session.messages[msgIndex].role === 'ai') {
-          session.messages.pop();
-          saveSessions();
-        }
-        const prevUserMsg = [...session.messages].reverse().find(m => m.role === 'user');
-        if (prevUserMsg) {
-          sendMessage(prevUserMsg.text);
-        }
-      });
-    }
-
-    scrollToBottom();
-    return msg;
-  }
-
-  // ===== EDIT MESSAGE LOGIC =====
-  function startEditMessage(msgEl, msgIndex) {
-    const session = state.sessions[state.currentSessionId];
-    const msgData = session.messages[msgIndex];
-    const bubble = msgEl.querySelector('.msg-bubble');
-    const originalText = msgData.text;
-
-    bubble.innerHTML = `
-      <textarea class="edit-textarea">${escapeHtml(originalText)}</textarea>
-      <div class="edit-actions">
-        <button class="edit-btn cancel">Cancel (Esc)</button>
-        <button class="edit-btn save">Save & Send (Enter)</button>
-      </div>
-    `;
-
-    const textarea = bubble.querySelector('.edit-textarea');
-    textarea.focus();
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
-
-    textarea.addEventListener('input', () => {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight + 'px';
-    });
-
-    textarea.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        saveEdit(textarea.value, msgIndex, msgEl);
-      } else if (e.key === 'Escape') {
-        cancelEdit(msgIndex, msgEl);
-      }
-    });
-
-    bubble.querySelector('.edit-btn.save').addEventListener('click', () => saveEdit(textarea.value, msgIndex, msgEl));
-    bubble.querySelector('.edit-btn.cancel').addEventListener('click', () => cancelEdit(msgIndex, msgEl));
-  }
-
-  function cancelEdit(msgIndex, msgEl) {
-    const session = state.sessions[state.currentSessionId];
-    const msgData = session.messages[msgIndex];
-    msgEl.querySelector('.msg-bubble').innerHTML = `
-      <div class="msg-text">${formatMessage(msgData.text)} ${msgData.edited ? '<span class="edited-tag">(edited)</span>' : ''}</div>
-    `;
-  }
-
-  function saveEdit(newText, msgIndex, msgEl) {
-    newText = newText.trim();
-    if (!newText) return cancelEdit(msgIndex, msgEl);
-
-    const session = state.sessions[state.currentSessionId];
-    
-    session.messages[msgIndex].text = newText;
-    session.messages[msgIndex].edited = true;
-    
-    session.messages = session.messages.slice(0, msgIndex + 1);
-    saveSessions();
-    
-    let currentEl = msgEl.nextElementSibling;
-    while(currentEl) {
-      let next = currentEl.nextElementSibling;
-      currentEl.remove();
-      currentEl = next;
-    }
-    msgEl.remove();
-    
-    addMessage('user', newText, false, true, msgIndex);
-    
-    clearThinkingBoxes();
-    sendMessage(newText);
-  }
-
-  function addThinking() {
-    const msg = document.createElement('div');
-    msg.className = 'msg thinking';
-    msg.innerHTML = `
-      <div class="msg-row ai">
-        <div class="msg-avatar ai ai-avatar-thinking">C</div>
-        <div class="msg-content-wrap">
-          <div class="msg-bubble">
-            <span class="thinking-text">CrackedNetwork AI is thinking</span>
-            <span class="thinking-dots">
-              <span></span><span></span><span></span>
-            </span>
-          </div>
-        </div>
-      </div>
-    `;
-    chatContainer.appendChild(msg);
-    scrollToBottom();
-    return msg;
-  }
-
-  // ===== CREATE THINKING BOX =====
-    // ===== CREATE THINKING BOX =====
-  function createThinkingBox(text, skipAnimation = false) {
-    const box = document.createElement('div');
-    box.className = 'thinking-box';
-    if (skipAnimation) box.classList.add('collapsed');
-    
-    box.innerHTML = `
-      <div class="thinking-header">
-        <span class="brain-icon">🧠</span>
-        <span class="label">AI is thinking...</span>
-        <button class="toggle-btn">
-          <i class="icon-chevron-down"></i>
+// ===== RENDER WELCOME SCREEN =====
+function renderWelcome() {
+  chatContainer.innerHTML = `
+    <div class="welcome" id="welcome">
+      <div class="welcome-logo">C</div>
+      <h1>Hello, I am CrackedNetwork AI</h1>
+      <p>Smart assistant for the CrackedNetwork server. How can I help you?</p>
+      <div class="suggestions">
+        <button class="suggestion-card" data-prompt="What AI are you?">
+          <span class="suggestion-title">What AI are you?</span>
+          <span class="suggestion-desc">Get to know this AI</span>
+        </button>
+        <button class="suggestion-card" data-prompt="Who made you?">
+          <span class="suggestion-title">Who made you?</span>
+          <span class="suggestion-desc">Ask about the creator</span>
+        </button>
+        <button class="suggestion-card" data-prompt="What is CrackedNetwork?">
+          <span class="suggestion-title">What is CrackedNetwork?</span>
+          <span class="suggestion-desc">Minecraft server info</span>
+        </button>
+        <button class="suggestion-card" data-prompt="Who is owner of CrackedNetwork?">
+          <span class="suggestion-title">Who is the owner?</span>
+          <span class="suggestion-desc">Ask about the owner</span>
+        </button>
+        <button class="suggestion-card" data-prompt="CrackedNetwork discord community">
+          <span class="suggestion-title">Discord Community</span>
+          <span class="suggestion-desc">Join the community</span>
+        </button>
+        <button class="suggestion-card" data-prompt="How to join CrackedNetwork server?">
+          <span class="suggestion-title">How to join server?</span>
+          <span class="suggestion-desc">IP & how to play</span>
         </button>
       </div>
-      <div class="thinking-body">${formatMessage(text)}</div>
-    `;
+    </div>
+  `;
+  bindSuggestions();
+}
 
-    const header = box.querySelector('.thinking-header');
-    const toggleBtn = box.querySelector('.toggle-btn');
-    const chevron = toggleBtn.querySelector('i');
-
-    // Minimize / Expand Logic (Drag dihapus)
-    header.addEventListener('click', () => {
-      box.classList.toggle('collapsed');
-      // Reset rotasi icon
-      chevron.style.transform = box.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
-      scrollToBottom();
-    });
-
-    return box;
+// ===== INIT APP =====
+function initApp() {
+  const sessions = Object.values(state.sessions).sort((a, b) => b.timestamp - a.timestamp);
+  if (sessions.length > 0) {
+    loadSession(sessions[0].id);
+  } else {
+    renderWelcome();
   }
+}
 
-  function scrollToBottom() {
-    requestAnimationFrame(() => {
-      chatArea.scrollTop = chatArea.scrollHeight;
-    });
+// ===== CLEAR THINKING BOXES =====
+function clearThinkingBoxes() {
+  document.querySelectorAll('.thinking-box').forEach(el => el.remove());
+}
+
+// ===== INPUT AUTO-RESIZE =====
+input.addEventListener('input', () => {
+  input.style.height = 'auto';
+  input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  sendBtn.disabled = input.value.trim().length === 0 || state.isWaiting;
+});
+
+input.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    if (!sendBtn.disabled) sendMessage();
   }
+});
 
-    // ===== MARKDOWN-LITE FORMATTER =====
-  function formatMessage(text) {
-    if (!text) return '';
-    
-    // 1. Escape HTML tags agar aman
-    let html = text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+sendBtn.addEventListener('click', () => sendMessage());
 
-    // 2. Simpan Code Block sementara agar link di dalamnya tidak ikut diubah
-    const codeBlocks = [];
-    html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (m, lang, code) => {
-      const placeholder = `__CODEBLOCK_${codeBlocks.length}__`;
-      codeBlocks.push(`<pre><code>${code.trim()}</code></pre>`);
-      return placeholder;
+// ===== SUGGESTIONS =====
+function bindSuggestions() {
+  document.querySelectorAll('.suggestion-card').forEach(card => {
+    card.addEventListener('click', () => {
+      input.value = card.dataset.prompt;
+      input.dispatchEvent(new Event('input'));
+      sendMessage();
     });
+  });
+}
 
-    // 3. Simpan Inline Code sementara
-    const inlineCodes = [];
-    html = html.replace(/`([^`]+)`/g, (m, code) => {
-      const placeholder = `__INLINECODE_${inlineCodes.length}__`;
-      inlineCodes.push(`<code>${code}</code>`);
-      return placeholder;
-    });
+// ===== MODAL RESET =====
+const modal = $('modalOverlay');
+$('resetMemoryBtn').addEventListener('click', () => modal.classList.add('show'));
+$('modalCancel').addEventListener('click', () => modal.classList.remove('show'));
+$('modalConfirm').addEventListener('click', async () => {
+  modal.classList.remove('show');
+  await resetAllMemory();
+});
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) modal.classList.remove('show');
+});
 
-    // 4. Format Bold dan Italic
-    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+// ===== SEND MESSAGE =====
+async function sendMessage(overrideText = null) {
+  const text = overrideText !== null ? overrideText : input.value.trim();
+  if (!text || state.isWaiting) return;
 
-    // 5. Ubah teks URL menjadi link yang bisa diklik
-    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
-    html = html.replace(urlRegex, (url) => {
-      let href = url;
-      if (url.startsWith('www.')) {
-        href = 'https://' + url;
-      }
-      return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
-    });
+  clearThinkingBoxes();
 
-    // 6. Kembalikan Inline Code
-    html = html.replace(/__INLINECODE_(\d+)__/g, (m, idx) => inlineCodes[parseInt(idx)]);
+  const welcome = $('welcome');
+  if (welcome) welcome.remove();
 
-    // 7. Kembalikan Code Block
-    html = html.replace(/__CODEBLOCK_(\d+)__/g, (m, idx) => codeBlocks[parseInt(idx)]);
-
-    // 8. Ganti newline jadi <br>
-    html = html.replace(/\n/g, '<br>');
-    
-    return html;
-  }
-
-  // ===== RESET ALL MEMORY =====
-  async function resetAllMemory() {
-    showToast('Resetting all memory...', 'info');
-    try {
-      if (state.currentSessionId) {
-        await fetch(`${API_BASE}/reset`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user_id: getApiUserId() })
-        });
-      }
-
-      localStorage.removeItem('cn_sessions');
-      state.sessions = {};
-      state.currentSessionId = null;
-      
-      chatContainer.innerHTML = '';
-      renderWelcome();
-      renderHistoryList();
-
-      showToast(' All history and memory reset', 'success');
-    } catch (err) {
-      showToast('Failed to reset memory', 'error');
-    }
-  }
-
-  // ===== TOAST =====
-  let toastTimer;
-  function showToast(msg, type = 'success') {
-    const icons = {
-      success: 'icon-check-circle',
-      error: 'icon-alert-circle',
-      info: 'icon-info'
+  if (!state.currentSessionId) {
+    state.currentSessionId = 'sess-' + Date.now();
+    state.sessions[state.currentSessionId] = {
+      id: state.currentSessionId,
+      title: text.length > 50 ? text.substring(0, 50) + '...' : text,
+      timestamp: Date.now(),
+      messages: []
     };
-    toastText.textContent = msg;
-    const iconEl = toast.querySelector('i');
-    iconEl.className = icons[type] || icons.success;
-    toast.classList.toggle('error', type === 'error');
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    saveSessions();
   }
 
-  // ===== UTILS =====
-  function escapeHtml(str) {
-    const div = document.createElement('div');
-    div.textContent = str;
-    return div.innerHTML;
+  if (overrideText === null) {
+    addMessage('user', text, true, false);
+    input.value = '';
+    input.style.height = 'auto';
   }
 
-  // ===== START =====
-  initApp();
-  input.focus();
+  sendBtn.disabled = true;
+  state.isWaiting = true;
 
+  const thinkingEl = addThinking();
 
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+
+    const res = await fetch(`${API_BASE}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: text, user_id: getApiUserId() }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+
+    if (!res.ok) throw new Error('Server error (' + res.status + ')');
+
+    const data = await res.json();
+    thinkingEl.remove();
+
+    let rawAnswer = data.answer || '(No answer)';
+    let thinkingText = data.thinking || '';
+
+    // PARSING TAG <think>...</think>
+    const thinkMatch = rawAnswer.match(/<think>([\s\S]*?)<\/think>/i);
+    if (thinkMatch) {
+      thinkingText = thinkMatch[1].trim();
+      rawAnswer = rawAnswer.replace(/<think>[\s\S]*?<\/think>/i, '').trim();
+    }
+
+    // Bersihkan tag jika kebetulan tersangkut
+    if (thinkingText) {
+      thinkingText = thinkingText.replace(/<\/?think>/gi, '').trim();
+    }
+
+    if (thinkingText) {
+      const thinkBox = createThinkingBox(thinkingText, false);
+      chatContainer.appendChild(thinkBox);
+
+      setTimeout(() => {
+        thinkBox.classList.add('collapsed');
+        scrollToBottom();
+      }, 3000);
+    }
+
+    addMessage('ai', rawAnswer, true, false);
+
+  } catch (err) {
+    thinkingEl.remove();
+    const errMsg = err.name === 'AbortError'
+      ? '⏱️ Request timed out. Please try again.'
+      : '⚠️ Sorry, an error occurred: ' + err.message;
+    addMessage('ai', errMsg, true, false);
+    showToast('Failed to send message', 'error');
+  } finally {
+    state.isWaiting = false;
+    sendBtn.disabled = input.value.trim().length === 0;
+    input.focus();
+  }
+}
+
+function addMessage(role, text, save = true, isEdited = false, customIndex = null) {
+  const msg = document.createElement('div');
+  msg.className = 'msg';
+  const isUser = role === 'user';
+  const avatarClass = isUser ? 'user' : 'ai';
+  const avatarText = isUser ? 'G' : 'C';
+
+  let msgIndex = customIndex;
+  if (save) {
+    const session = state.sessions[state.currentSessionId];
+    session.messages.push({ role, text, edited: isEdited });
+    msgIndex = session.messages.length - 1;
+    saveSessions();
+    if (isUser) renderHistoryList();
+  }
+
+  msg.innerHTML = `
+    <div class="msg-row ${role}">
+      <div class="msg-avatar ${avatarClass}">${avatarText}</div>
+      <div class="msg-content-wrap">
+        <div class="msg-bubble">
+          <div class="msg-text">${formatMessage(text)} ${isEdited ? '<span class="edited-tag">(edited)</span>' : ''}</div>
+        </div>
+        <div class="msg-meta">
+          ${isUser ? `
+            <button class="msg-action-btn" data-action="edit">
+              <i class="icon-edit-3"></i>Edit
+            </button>
+          ` : `
+            <button class="msg-action-btn" data-action="retry">
+              <i class="icon-refresh-cw"></i>Retry
+            </button>
+          `}
+          <button class="msg-action-btn" data-action="copy">
+            <i class="icon-copy"></i>Copy
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  chatContainer.appendChild(msg);
+
+  msg.querySelector('[data-action="copy"]').addEventListener('click', () => {
+    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard', 'success'));
+  });
+
+  const editBtn = msg.querySelector('[data-action="edit"]');
+  if (editBtn) {
+    editBtn.addEventListener('click', () => {
+      startEditMessage(msg, msgIndex);
+    });
+  }
+
+  const retryBtn = msg.querySelector('[data-action="retry"]');
+  if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+      clearThinkingBoxes();
+      msg.remove();
+      const session = state.sessions[state.currentSessionId];
+      if (session.messages[msgIndex].role === 'ai') {
+        session.messages.pop();
+        saveSessions();
+      }
+      const prevUserMsg = [...session.messages].reverse().find(m => m.role === 'user');
+      if (prevUserMsg) {
+        sendMessage(prevUserMsg.text);
+      }
+    });
+  }
+
+  scrollToBottom();
+  return msg;
+}
+
+// ===== EDIT MESSAGE LOGIC =====
+function startEditMessage(msgEl, msgIndex) {
+  const session = state.sessions[state.currentSessionId];
+  const msgData = session.messages[msgIndex];
+  const bubble = msgEl.querySelector('.msg-bubble');
+  const originalText = msgData.text;
+
+  bubble.innerHTML = `
+    <textarea class="edit-textarea">${escapeHtml(originalText)}</textarea>
+    <div class="edit-actions">
+      <button class="edit-btn cancel">Cancel (Esc)</button>
+      <button class="edit-btn save">Save & Send (Enter)</button>
+    </div>
+  `;
+
+  const textarea = bubble.querySelector('.edit-textarea');
+  textarea.focus();
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  });
+
+  textarea.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      saveEdit(textarea.value, msgIndex, msgEl);
+    } else if (e.key === 'Escape') {
+      cancelEdit(msgIndex, msgEl);
+    }
+  });
+
+  bubble.querySelector('.edit-btn.save').addEventListener('click', () => saveEdit(textarea.value, msgIndex, msgEl));
+  bubble.querySelector('.edit-btn.cancel').addEventListener('click', () => cancelEdit(msgIndex, msgEl));
+}
+
+function cancelEdit(msgIndex, msgEl) {
+  const session = state.sessions[state.currentSessionId];
+  const msgData = session.messages[msgIndex];
+  msgEl.querySelector('.msg-bubble').innerHTML = `
+    <div class="msg-text">${formatMessage(msgData.text)} ${msgData.edited ? '<span class="edited-tag">(edited)</span>' : ''}</div>
+  `;
+}
+
+function saveEdit(newText, msgIndex, msgEl) {
+  newText = newText.trim();
+  if (!newText) return cancelEdit(msgIndex, msgEl);
+
+  const session = state.sessions[state.currentSessionId];
+
+  session.messages[msgIndex].text = newText;
+  session.messages[msgIndex].edited = true;
+
+  session.messages = session.messages.slice(0, msgIndex + 1);
+  saveSessions();
+
+  let currentEl = msgEl.nextElementSibling;
+  while(currentEl) {
+    let next = currentEl.nextElementSibling;
+    currentEl.remove();
+    currentEl = next;
+  }
+  msgEl.remove();
+
+  addMessage('user', newText, false, true, msgIndex);
+
+  clearThinkingBoxes();
+  sendMessage(newText);
+}
+
+function addThinking() {
+  const msg = document.createElement('div');
+  msg.className = 'msg thinking';
+  msg.innerHTML = `
+    <div class="msg-row ai">
+      <div class="msg-avatar ai ai-avatar-thinking">C</div>
+      <div class="msg-content-wrap">
+        <div class="msg-bubble">
+          <span class="thinking-text">CrackedNetwork AI is thinking</span>
+          <span class="thinking-dots">
+            <span></span><span></span><span></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  `;
+  chatContainer.appendChild(msg);
+  scrollToBottom();
+  return msg;
+}
+
+// ===== CREATE THINKING BOX =====
+function createThinkingBox(text, skipAnimation = false) {
+  const box = document.createElement('div');
+  box.className = 'thinking-box';
+  if (skipAnimation) box.classList.add('collapsed');
+
+  box.innerHTML = `
+    <div class="thinking-header">
+      <span class="brain-icon">🧠</span>
+      <span class="label">AI is thinking...</span>
+      <button class="toggle-btn">
+        <i class="icon-chevron-down"></i>
+      </button>
+    </div>
+    <div class="thinking-body">${formatMessage(text)}</div>
+  `;
+
+  const header = box.querySelector('.thinking-header');
+  const toggleBtn = box.querySelector('.toggle-btn');
+  const chevron = toggleBtn.querySelector('i');
+
+  // Minimize / Expand Logic (Drag dihapus)
+  header.addEventListener('click', () => {
+    box.classList.toggle('collapsed');
+    // Reset rotasi icon
+    chevron.style.transform = box.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0deg)';
+    scrollToBottom();
+  });
+
+  return box;
+}
+
+function scrollToBottom() {
+  requestAnimationFrame(() => {
+    chatArea.scrollTop = chatArea.scrollHeight;
+  });
+}
+
+// ===== MARKDOWN-LITE FORMATTER =====
+function formatMessage(text) {
+  if (!text) return '';
+
+  // 1. Escape HTML tags agar aman
+  let html = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  // 2. Simpan Code Block sementara agar link di dalamnya tidak ikut diubah
+  const codeBlocks = [];
+  html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (m, lang, code) => {
+    const placeholder = `__CODEBLOCK_${codeBlocks.length}__`;
+    codeBlocks.push(`<pre><code>${code.trim()}</code></pre>`);
+    return placeholder;
+  });
+
+  // 3. Simpan Inline Code sementara
+  const inlineCodes = [];
+  html = html.replace(/`([^`]+)`/g, (m, code) => {
+    const placeholder = `__INLINECODE_${inlineCodes.length}__`;
+    inlineCodes.push(`<code>${code}</code>`);
+    return placeholder;
+  });
+
+  // 4. Format Bold dan Italic
+  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, '<em>$1</em>');
+
+  // 5. Ubah teks URL menjadi link yang bisa diklik
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+  html = html.replace(urlRegex, (url) => {
+    let href = url;
+    if (url.startsWith('www.')) {
+      href = 'https://' + url;
+    }
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+  });
+
+  // 6. Kembalikan Inline Code
+  html = html.replace(/__INLINECODE_(\d+)__/g, (m, idx) => inlineCodes[parseInt(idx)]);
+
+  // 7. Kembalikan Code Block
+  html = html.replace(/__CODEBLOCK_(\d+)__/g, (m, idx) => codeBlocks[parseInt(idx)]);
+
+  // 8. Ganti newline jadi <br>
+  html = html.replace(/\n/g, '<br>');
+
+  return html;
+}
+
+// ===== RESET ALL MEMORY =====
+async function resetAllMemory() {
+  showToast('Resetting all memory...', 'info');
+  try {
+    if (state.currentSessionId) {
+      await fetch(`${API_BASE}/reset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: getApiUserId() })
+      });
+    }
+
+    localStorage.removeItem('cn_sessions');
+    state.sessions = {};
+    state.currentSessionId = null;
+
+    chatContainer.innerHTML = '';
+    renderWelcome();
+    renderHistoryList();
+
+    showToast(' All history and memory reset', 'success');
+  } catch (err) {
+    showToast('Failed to reset memory', 'error');
+  }
+}
+
+// ===== TOAST =====
+let toastTimer;
+function showToast(msg, type = 'success') {
+  const icons = {
+    success: 'icon-check-circle',
+    error: 'icon-alert-circle',
+    info: 'icon-info'
+  };
+  toastText.textContent = msg;
+  const iconEl = toast.querySelector('i');
+  iconEl.className = icons[type] || icons.success;
+  toast.classList.toggle('error', type === 'error');
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+}
+
+// ===== UTILS =====
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ===== START =====
+initApp();
+input.focus();
 </script>
 </body>
 </html>
