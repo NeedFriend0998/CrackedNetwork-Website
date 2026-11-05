@@ -1974,12 +1974,4 @@ body.abandoned .stat-card.featured {
     border-radius: var(--radius-sm);
     transition: color 0.2s ease, background 0.2s ease;
     position: relative;
-}padding: 0.5rem 0.9rem;
-    color: var(--muted);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.85rem;
-    border: 1px solid transparent;
-    border-radius: var(--radius-sm);
-    transition: color 0.2s ease, background 0.2s ease;
-    position: relative;
+}
