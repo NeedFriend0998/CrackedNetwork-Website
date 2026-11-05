@@ -1323,8 +1323,6 @@ function initSuggestionPage() {
     loadSuggestions();
 }
 
-// Tambahkan satu baris ini di dalam window.reinitPage (bersama else-if lainnya):
-//     else if (path === '/suggestion') initSuggestionPage();
 
 
 // Tambahkan satu baris ini di dalam window.reinitPage (bersama else-if lainnya):
