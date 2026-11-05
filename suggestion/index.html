@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://www.crackednetwork.run.place/suggestion">
+<!-- Catatan: meta CSP "upgrade-insecure-requests" sengaja tidak dipasang di halaman ini,
+     supaya fetch ke http://localhost:3000 bisa dites saat development. Pasang lagi kalau server Node sudah HTTPS. -->
+<title>Suggestion | CrackedNetwork</title>
+<meta name="description" content="Kirim saran dan masukan untuk CrackedNetwork Minecraft Server.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.crackednetwork.run.place/img/server-icon.png">
+<meta property="og:site_name" content="CrackedNetwork">
+<meta property="og:title" content="Suggestion | CrackedNetwork">
+<meta property="og:description" content="Kirim saran dan masukan untuk CrackedNetwork.">
+<meta property="og:url" content="https://www.crackednetwork.run.place/suggestion">
+<meta name="theme-color" content="#5cb85c">
+<meta name="robots" content="index, follow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="/CSS/style.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="bg-canvas"></div>
+
+<!-- NAV -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+        <a href="/home" class="logo">
+            <div class="logo-icon">
+                <img src="/img/server-icon.png" alt="CrackedNetwork">
+            </div>
+            CrackedNetwork
+        </a>
+        <div class="nav-links" id="navLinks">
+            <a href="/home" class="nav-link">Home</a>
+            <a href="/gamemodes" class="nav-link">Gamemodes</a>
+            <a href="/wiki" class="nav-link">Wiki</a>
+            <a href="/rules" class="nav-link">Rules</a>
+            <a href="/vote" class="nav-link">Vote</a>
+            <a href="/store" class="nav-link">Store</a>
+            <a href="/ai" class="nav-link">AI (Beta)</a>
+            <a href="/suggestion" class="nav-link active">Suggestion</a>
+            <span class="nav-divider"></span>
+            <a href="/discord" class="nav-link">Discord</a>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- MAIN -->
+<main class="pages">
+    <section class="page active" id="suggestion">
+        <div class="suggestion-page">
+            <div class="suggestion-header section-header">
+                <h1 class="section-title">Suggestion</h1>
+                <p class="section-subtitle">Punya ide atau masukan untuk server? Tulis di sini. Tekan tombol + di pojok kiri bawah untuk mengirim saran.</p>
+            </div>
+
+            <div class="sg-list" id="suggestionList" aria-live="polite"></div>
+        </div>
+    </section>
+</main>
+
+<!-- Tombol tambah (pojok kiri bawah) -->
+<button type="button" class="sg-fab" id="sgOpenBtn" aria-label="Tambah saran" title="Tambah saran">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+</button>
+
+<!-- Modal form saran (memakai sistem .cn-modal yang sudah ada) -->
+<div class="cn-modal" id="sgModal">
+    <div class="cn-modal-box sg-modal-box" role="dialog" aria-modal="true" aria-labelledby="sgModalTitle">
+        <h3 id="sgModalTitle">Kirim Saran</h3>
+        <form id="sgForm" novalidate>
+            <label class="sg-label" for="sgTitle">Judul / Title</label>
+            <input class="sg-input" id="sgTitle" name="title" type="text" maxlength="100" autocomplete="off" placeholder="Contoh: Tambah gamemode baru" required>
+            <div class="sg-count"><span id="sgTitleCount">0</span>/100</div>
+
+            <label class="sg-label" for="sgText">Suggestion / Saran</label>
+            <textarea class="sg-input sg-textarea" id="sgText" name="suggestion" rows="5" maxlength="1000" placeholder="Tulis saran kamu di sini..." required></textarea>
+            <div class="sg-count"><span id="sgTextCount">0</span>/1000</div>
+
+            <p class="sg-error" id="sgError" role="alert" hidden></p>
+
+            <div class="cn-modal-actions">
+                <button type="button" class="cn-btn cn-btn-no" id="sgCancel">Batal</button>
+                <button type="submit" class="cn-btn cn-btn-yes" id="sgSubmit">Kirim</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <a href="/home" class="logo">
+                <div class="logo-icon"><img src="/img/server-icon.png" alt="CrackedNetwork"></div>
+                CrackedNetwork
+            </a>
+            <p>The best Minecraft server with an active and friendly community. Join now and experience exciting gameplay!</p>
+        </div>
+        <div>
+            <h4 class="footer-title">Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/gamemodes">Gamemodes</a></li>
+                <li><a href="/wiki">Wiki</a></li>
+                <li><a href="/rules">Rules</a></li>
+                <li><a href="/vote">Vote</a></li>
+                <li><a href="/store">Store</a></li>
+                <li><a href="/suggestion">Suggestion</a></li>
+                <li><a href="/legal">Legal</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="footer-title">Connect</h4>
+            <ul class="footer-links">
+                <li><a href="/discord">Discord</a></li>
+                <li><a href="https://www.instagram.com/bismasyafif/?utm_source=qr&r=nametag" target="_blank" rel="noopener">Instagram</a></li>
+                <li><a href="https://youtube.com/@needfriend2?si=fLuu8Z8mRetJhIrU" target="_blank" rel="noopener">YouTube</a></li>
+                <li><a href="#">TikTok</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>© 2026 CrackedNetwork. All rights reserved.</span>
+        <span>Powered by CraftingStore</span>
+    </div>
+</footer>
+
+<script src="/JS/main.js"></script>
+<script src="/JS/router.js"></script>
+</body>
+</html>
