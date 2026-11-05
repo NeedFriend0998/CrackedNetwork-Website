@@ -1159,7 +1159,7 @@ function initLauncherPage() {
 const SUGGESTION_API =
     (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
         ? 'http://localhost:3000'
-        : 'https://GANTI-DENGAN-URL-SERVER-NODE';
+        : 'https://fi2.elysiannodes.uk:2502';
 
 function initSuggestionPage() {
     const list = document.getElementById('suggestionList');
@@ -1345,6 +1345,7 @@ window.reinitPage = function() {
     else if (path === '/ai') initAIPage();
     else if (path === '/plugins') initPluginsPage();
     else if (path === '/staff-detail') initStaffDetailPage();
+    else if (path === '/suggestion') initSuggestionPage();
     
 
     // Selalu jalanin scroll reveal di halaman baru
