@@ -1157,8 +1157,8 @@ function initLauncherPage() {
 
 // Alamat server Node.js. Ganti URL produksi dengan alamat server kamu (harus HTTPS).
 const SUGGESTION_API =
-    (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
-        ? 'http://localhost:3000'
+    (location.hostname === 'fi2.elysiannodes.uk:2502' || location.hostname === 'fi2.elysiannodes.uk')
+        ? 'http://fi2.elysiannodes.uk:2502'
         : 'https://fi2.elysiannodes.uk:2502';
 
 function initSuggestionPage() {
