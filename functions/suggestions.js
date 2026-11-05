@@ -1,3 +1,4 @@
+//
 // functions/suggestions.js
 // Proxy HTTPS di Netlify -> server Node.js (HTTP), sama polanya dengan functions/ai.js
 // URL publik: https://crackednetwork.netlify.app/.netlify/functions/suggestions
