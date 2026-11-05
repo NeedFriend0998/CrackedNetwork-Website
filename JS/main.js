@@ -1149,33 +1149,6 @@ function initLauncherPage() {
 
     fetchRelease();
 }
-// ============================================
-// REINIT DISPATCHER (dipanggil router.js)
-// ============================================
-window.reinitPage = function() {
-    const path = window.location.pathname.replace(/\/$/, '') || '/home';
-
-    if (path === '/home' || path === '/' || path === '/index.html') initHomePage();
-    else if (path === '/launcher') initLauncherPage();
-    else if (path === '/gamemodes') initGamemodesPage();
-    else if (path === '/wiki') initWikiPage();
-    else if (path === '/rules') initRulesPage();
-    else if (path === '/vote') initVotePage();
-    else if (path === '/store') initStorePage();
-    else if (path === '/ai') initAIPage();
-    else if (path === '/plugins') initPluginsPage();
-    else if (path === '/staff-detail') initStaffDetailPage();
-    
-
-    // Selalu jalanin scroll reveal di halaman baru
-    observeElements();
-
-    // Reset Lenis
-    if (typeof lenis !== 'undefined' && lenis) {
-        lenis.resize();
-        lenis.scrollTo(0, { immediate: true });
-    }
-};
 
 // ============================================
 // SUGGESTION PAGE
@@ -1355,3 +1328,32 @@ function initSuggestionPage() {
 
 // Tambahkan satu baris ini di dalam window.reinitPage (bersama else-if lainnya):
 //     else if (path === '/suggestion') initSuggestionPage();
+
+// ============================================
+// REINIT DISPATCHER (dipanggil router.js)
+// ============================================
+window.reinitPage = function() {
+    const path = window.location.pathname.replace(/\/$/, '') || '/home';
+
+    if (path === '/home' || path === '/' || path === '/index.html') initHomePage();
+    else if (path === '/launcher') initLauncherPage();
+    else if (path === '/gamemodes') initGamemodesPage();
+    else if (path === '/wiki') initWikiPage();
+    else if (path === '/rules') initRulesPage();
+    else if (path === '/vote') initVotePage();
+    else if (path === '/store') initStorePage();
+    else if (path === '/ai') initAIPage();
+    else if (path === '/plugins') initPluginsPage();
+    else if (path === '/staff-detail') initStaffDetailPage();
+    
+
+    // Selalu jalanin scroll reveal di halaman baru
+    observeElements();
+
+    // Reset Lenis
+    if (typeof lenis !== 'undefined' && lenis) {
+        lenis.resize();
+        lenis.scrollTo(0, { immediate: true });
+    }
+};
+
