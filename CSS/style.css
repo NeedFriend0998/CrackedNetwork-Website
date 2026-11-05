@@ -1860,3 +1860,105 @@ body.abandoned .stat-card.featured {
     75.5%     { opacity: 0.55; box-shadow: none; }
     77%, 100% { opacity: 1;    box-shadow: 0 0 40px 8px rgba(184, 169, 141, 0.18); }
 }
+
+/* ============================================
+   SUGGESTION PAGE
+   (tempel di bagian paling bawah CSS/style.css)
+   ============================================ */
+.suggestion-page { padding: 4rem 2rem 7rem; max-width: 1000px; margin: 0 auto; }
+
+.sg-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.sg-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    animation: fadeInUp 0.35s ease both;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sg-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-dark);
+    box-shadow: var(--shadow);
+}
+
+.sg-card-title { font-size: 1.05rem; font-weight: 600; color: var(--accent); word-break: break-word; }
+.sg-card-text { color: var(--fg); font-size: 0.93rem; line-height: 1.65; white-space: pre-wrap; word-break: break-word; }
+.sg-card-time { margin-top: auto; padding-top: 0.6rem; border-top: 1px solid var(--border-light); font-size: 0.75rem; color: var(--muted); }
+
+.sg-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+}
+
+.sg-state.error { color: var(--danger); border-color: rgba(201, 118, 118, 0.35); }
+.sg-state .cn-btn { margin-top: 1rem; }
+
+/* Tombol + pojok kiri bawah */
+.sg-fab {
+    position: fixed;
+    left: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 1500;
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    border: 1px solid var(--accent-dark);
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: var(--shadow-lg);
+    transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.sg-fab:hover { background: #c2b49a; }
+.sg-fab:active { transform: translateY(1px) scale(0.98); }
+.sg-fab svg { width: 26px; height: 26px; }
+
+/* Modal form (melengkapi .cn-modal-box yang sudah ada) */
+.sg-modal-box { max-width: 480px; text-align: left; }
+.sg-modal-box h3 { color: var(--fg); font-size: 1.2rem; margin-bottom: 1rem; }
+
+.sg-label { display: block; font-size: 0.8rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.4rem; }
+
+.sg-input {
+    width: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease;
+}
+
+.sg-input::placeholder { color: #6f695c; }
+.sg-input:focus { outline: none; border-color: var(--accent-dark); }
+.sg-textarea { resize: vertical; min-height: 110px; max-height: 260px; }
+
+.sg-count { text-align: right; font-size: 0.72rem; color: var(--muted); margin: 0.3rem 0 0.9rem; }
+.sg-error { color: var(--danger); font-size: 0.88rem; margin-bottom: 0.9rem; }
+.sg-modal-box .cn-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+@media (max-width: 768px) {
+    .suggestion-page { padding: 3rem 1rem 7rem; }
+    .sg-fab { left: 1rem; bottom: 1rem; }
+}
