@@ -1155,11 +1155,8 @@ function initLauncherPage() {
 // (tempel ke JS/main.js, di atas blok "REINIT DISPATCHER")
 // ============================================
 
-// Alamat server Node.js. Ganti URL produksi dengan alamat server kamu (harus HTTPS).
-const SUGGESTION_API =
-    (location.hostname === 'fi2.elysiannodes.uk:2502' || location.hostname === 'fi2.elysiannodes.uk')
-        ? 'http://fi2.elysiannodes.uk:2502'
-        : 'https://fi2.elysiannodes.uk:2502';
+// Backend berupa Netlify Function (HTTPS), pola yang sama dengan API halaman AI.
+const SUGGESTION_API = 'https://crackednetwork.netlify.app/.netlify/functions/suggestions';
 
 function initSuggestionPage() {
     const list = document.getElementById('suggestionList');
@@ -1230,7 +1227,7 @@ function initSuggestionPage() {
     async function loadSuggestions() {
         showState('Memuat saran...', false, false);
         try {
-            const res = await fetch(`${SUGGESTION_API}/api/suggestions`);
+            const res = await fetch(SUGGESTION_API);
             if (!res.ok) throw new Error('HTTP ' + res.status);
             const items = await res.json();
             list.innerHTML = '';
@@ -1296,7 +1293,7 @@ function initSuggestionPage() {
         submitBtn.textContent = 'Mengirim...';
 
         try {
-            const res = await fetch(`${SUGGESTION_API}/api/suggestions`, {
+            const res = await fetch(SUGGESTION_API, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ title, suggestion })
@@ -1325,6 +1322,10 @@ function initSuggestionPage() {
 
     loadSuggestions();
 }
+
+// Tambahkan satu baris ini di dalam window.reinitPage (bersama else-if lainnya):
+//     else if (path === '/suggestion') initSuggestionPage();
+
 
 // Tambahkan satu baris ini di dalam window.reinitPage (bersama else-if lainnya):
 //     else if (path === '/suggestion') initSuggestionPage();
