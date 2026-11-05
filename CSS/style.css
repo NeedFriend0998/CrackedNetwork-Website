@@ -1962,3 +1962,8 @@ body.abandoned .stat-card.featured {
     .suggestion-page { padding: 3rem 1rem 7rem; }
     .sg-fab { left: 1rem; bottom: 1rem; }
 }
+
+/* Here*/
+.here{
+  background-color: black;
+}
