@@ -1177,3 +1177,181 @@ window.reinitPage = function() {
     }
 };
 
+// ============================================
+// SUGGESTION PAGE
+// (tempel ke JS/main.js, di atas blok "REINIT DISPATCHER")
+// ============================================
+
+// Alamat server Node.js. Ganti URL produksi dengan alamat server kamu (harus HTTPS).
+const SUGGESTION_API =
+    (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+        ? 'http://localhost:3000'
+        : 'https://GANTI-DENGAN-URL-SERVER-NODE';
+
+function initSuggestionPage() {
+    const list = document.getElementById('suggestionList');
+    const openBtn = document.getElementById('sgOpenBtn');
+    const modal = document.getElementById('sgModal');
+    const form = document.getElementById('sgForm');
+    if (!list || !openBtn || !modal || !form) return;
+    if (openBtn.dataset.bound) return; // cegah binding ganda
+    openBtn.dataset.bound = '1';
+
+    const titleInput = document.getElementById('sgTitle');
+    const textInput = document.getElementById('sgText');
+    const titleCount = document.getElementById('sgTitleCount');
+    const textCount = document.getElementById('sgTextCount');
+    const errorEl = document.getElementById('sgError');
+    const submitBtn = document.getElementById('sgSubmit');
+    const cancelBtn = document.getElementById('sgCancel');
+
+    // ---------- Helper ----------
+    function formatDate(ts) {
+        try {
+            return new Date(ts).toLocaleString('id-ID', {
+                day: 'numeric', month: 'long', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        } catch (e) { return ''; }
+    }
+
+    // Semua teks dari user dimasukkan lewat textContent (aman dari XSS)
+    function buildCard(item) {
+        const card = document.createElement('article');
+        card.className = 'sg-card';
+
+        const title = document.createElement('h3');
+        title.className = 'sg-card-title';
+        title.textContent = item.title;
+
+        const text = document.createElement('p');
+        text.className = 'sg-card-text';
+        text.textContent = item.suggestion;
+
+        const time = document.createElement('time');
+        time.className = 'sg-card-time';
+        time.textContent = formatDate(item.createdAt);
+
+        card.append(title, text, time);
+        return card;
+    }
+
+    function showState(message, isError, withRetry) {
+        list.innerHTML = '';
+        const box = document.createElement('div');
+        box.className = 'sg-state' + (isError ? ' error' : '');
+        const p = document.createElement('p');
+        p.textContent = message;
+        box.appendChild(p);
+        if (withRetry) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'cn-btn cn-btn-no';
+            btn.textContent = 'Coba lagi';
+            btn.addEventListener('click', loadSuggestions);
+            box.appendChild(btn);
+        }
+        list.appendChild(box);
+    }
+
+    async function loadSuggestions() {
+        showState('Memuat saran...', false, false);
+        try {
+            const res = await fetch(`${SUGGESTION_API}/api/suggestions`);
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const items = await res.json();
+            list.innerHTML = '';
+            if (!Array.isArray(items) || items.length === 0) {
+                showState('Belum ada saran. Jadilah yang pertama dengan menekan tombol +.', false, false);
+                return;
+            }
+            items.forEach(item => list.appendChild(buildCard(item)));
+        } catch (err) {
+            console.error('[Suggestion]', err);
+            showState('Gagal memuat saran. Pastikan server aktif.', true, true);
+        }
+    }
+
+    // ---------- Modal ----------
+    function openModal() {
+        errorEl.hidden = true;
+        modal.classList.add('show');
+        if (typeof lenis !== 'undefined' && lenis) lenis.stop();
+        setTimeout(() => titleInput.focus(), 50);
+    }
+
+    function closeModal() {
+        modal.classList.remove('show');
+        if (typeof lenis !== 'undefined' && lenis) lenis.start();
+        openBtn.focus();
+    }
+
+    openBtn.addEventListener('click', openModal);
+    cancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+    if (!window.__sgEscBound) {
+        window.__sgEscBound = true;
+        document.addEventListener('keydown', (e) => {
+            const m = document.getElementById('sgModal');
+            if (e.key === 'Escape' && m && m.classList.contains('show')) {
+                m.classList.remove('show');
+                if (typeof lenis !== 'undefined' && lenis) lenis.start();
+            }
+        });
+    }
+
+    // Penghitung karakter
+    titleInput.addEventListener('input', () => { titleCount.textContent = titleInput.value.length; });
+    textInput.addEventListener('input', () => { textCount.textContent = textInput.value.length; });
+
+    // ---------- Kirim ----------
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        errorEl.hidden = true;
+
+        const title = titleInput.value.trim();
+        const suggestion = textInput.value.trim();
+        if (!title || !suggestion) {
+            errorEl.textContent = 'Judul dan saran wajib diisi.';
+            errorEl.hidden = false;
+            return;
+        }
+
+        submitBtn.disabled = true;
+        const oldLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Mengirim...';
+
+        try {
+            const res = await fetch(`${SUGGESTION_API}/api/suggestions`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ title, suggestion })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+
+            // Hapus pesan kosong/error kalau ada, lalu taruh saran baru di paling atas
+            const state = list.querySelector('.sg-state');
+            if (state) list.innerHTML = '';
+            list.prepend(buildCard(data));
+
+            form.reset();
+            titleCount.textContent = '0';
+            textCount.textContent = '0';
+            closeModal();
+        } catch (err) {
+            console.error('[Suggestion]', err);
+            errorEl.textContent = err.message || 'Gagal mengirim saran.';
+            errorEl.hidden = false;
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = oldLabel;
+        }
+    });
+
+    loadSuggestions();
+}
+
+// Tambahkan satu baris ini di dalam window.reinitPage (bersama else-if lainnya):
+//     else if (path === '/suggestion') initSuggestionPage();
