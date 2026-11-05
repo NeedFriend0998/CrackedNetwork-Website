@@ -1965,5 +1965,5 @@ body.abandoned .stat-card.featured {
 
 /* Here*/
 .here{
-  background-color: white;
+  background: rgba(184, 169, 141, 0.07);
 }
