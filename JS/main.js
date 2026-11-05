@@ -1343,9 +1343,9 @@ window.reinitPage = function() {
     else if (path === '/vote') initVotePage();
     else if (path === '/store') initStorePage();
     else if (path === '/ai') initAIPage();
+    else if (path === '/suggestion') initSuggestionPage();
     else if (path === '/plugins') initPluginsPage();
     else if (path === '/staff-detail') initStaffDetailPage();
-    else if (path === '/suggestion') initSuggestionPage();
     
 
     // Selalu jalanin scroll reveal di halaman baru
