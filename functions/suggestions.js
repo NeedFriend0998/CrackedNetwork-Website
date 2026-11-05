@@ -4,7 +4,7 @@
 
 // Alamat server Node.js. Ganti port sesuai PORT server suggestion-mu.
 // Bisa juga diatur lewat env var SUGGESTION_SERVER di pengaturan Netlify.
-const SERVER = process.env.SUGGESTION_SERVER || '';
+const SERVER = process.env.SUGGESTION_SERVER || 'http://fi2.elysiannodes.uk:2502';
 
 // Rahasia bersama antara function ini dan server Node.js (env var SUGGESTION_SECRET di keduanya).
 const SECRET = process.env.SUGGESTION_SECRET || '';
